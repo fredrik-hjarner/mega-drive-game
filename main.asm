@@ -67,23 +67,7 @@
     dc.l   $0000001C              ; Unused (reserved)
     dc.l   $0000001C              ; Unused (reserved)
 
-    dc.b "SEGA GENESIS    "      ; Console name
-    dc.b "(C)SEGA 2025.MAR"      ; Copyright/date
-    dc.b "HELLO WORLD DEMO                                 " ; Domestic name
-    dc.b "HELLO WORLD DEMO                                 " ; International name
-    dc.b "GM XXXXXXXX-XX"        ; Version number
-    dc.w $0000                   ; Checksum
-    dc.b "J               "      ; I/O support
-    dc.l $00000000               ; ROM start address
-    dc.l $00100000               ; ROM end address
-    dc.l $00FF0000               ; Start of RAM
-    dc.l $00FFFFFF               ; End of RAM
-    dc.l $00000000               ; SRAM enabled
-    dc.l $00000000               ; Unused
-    dc.l $00000000               ; Unused
-    dc.l $00000000               ; Unused
-    dc.b "                                        "         ; Notes
-    dc.b "JUE             "      ; Country codes
+    include "header.inc"
 
 ; Program start at $00000200
     org     $00000200
@@ -179,9 +163,6 @@ Start:
     move.w #$0000,$C00000    ; Color 6: Black
     ;        bbb-ggg-rrr-
     move.w #%000000001110,$C00000    ; Color 7: Red
-    ; move.w #%000111000000,$C00000    ; Color 7: Green
-    ; move.w #%111000000000,$C00000    ; Color 7: Blue
-    ; move.w #%111011101110,$C00000    ; Color 7: White
     
     ; --------------------------------------------------
     ; STEP 4: Set background color and enable display
