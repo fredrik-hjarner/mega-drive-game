@@ -1,5 +1,5 @@
 ; Minimal Sega Genesis "Hello World" program
-; Just displays a solid blue color on screen
+; Displays a solid blue color on screen
 
 ; ROM Header - Required for the Genesis to recognize the ROM
     dc.l   $00000000              ; Initial stack pointer value
@@ -90,65 +90,108 @@
 
 Start:
     ; Initialize the system
-    move.w #$2700,sr           ; Disable interrupts
-    move.l  #$00FF0000,a7       ; Set up stack pointer
+    move.w #$2700,sr             ; Disable interrupts
+    move.l #$00FF0000,a7         ; Set up stack pointer
 
-    ; Initialize VDP (Video Display Processor)
-    lea     VdpData,a5          ; Load address of VDP initialization data
-    move.l  #$C0000000,$C00004  ; Set VDP write register command
-    moveq   #24-1,d7            ; 24 registers to write
-
-.vdpInitLoop:
-    move.b  (a5)+,d0            ; Get VDP register value
-    move.w  d0,$C00004          ; Write to VDP register
-    add.w   #$0100,$C00004      ; Next register
-    dbra    d7,.vdpInitLoop     ; Loop until all registers initialized
-
-    ; Clear VRAM (Video RAM)
-    move.l  #$40000000,$C00004  ; Set VRAM write address to 0
-    move.w  #$0000,d0           ; Clear value
-    move.w  #$7FFF,d7           ; 32KB of VRAM to clear
-
-.clearVramLoop:
-    move.w  d0,$C00000          ; Write clear value to VRAM
-    dbra    d7,.clearVramLoop   ; Loop until all VRAM cleared
-
-    ; Set background color to blue
-    move.l  #$C0000000,$C00004  ; Set VDP register 0
-    move.w  #$8007,$C00004      ; Set VDP register 7 (background color) to blue (7)
-
-    ; Enable display
-    move.w  #$8144,$C00004      ; Set VDP register 1 (enable display)
-
+    ; --------------------------------------------------
+    ; STEP 1: Set up VDP registers in a simplified way
+    ; --------------------------------------------------
+    
+    ; Set register 0: Normal operation
+    move.w #$8004,$C00004
+    
+    ; Set register 1: Display disabled initially
+    move.w #$8104,$C00004
+    
+    ; Set registers 2-6 (mapping in VRAM)
+    move.w #$8230,$C00004
+    move.w #$833C,$C00004
+    move.w #$8407,$C00004
+    move.w #$856C,$C00004
+    move.w #$8600,$C00004
+    
+    ; Set register 7: Background color = palette 0, color 0 initially
+    move.w #$8700,$C00004
+    
+    ; Set registers 8-9 (unused)
+    move.w #$8800,$C00004
+    move.w #$8900,$C00004
+    
+    ; Set register 10: H-Int counter
+    move.w #$8AFF,$C00004
+    
+    ; Set register 11: Scroll mode
+    move.w #$8B00,$C00004
+    
+    ; Set register 12: No interlace, 40 cell display
+    move.w #$8C81,$C00004
+    
+    ; Set register 13: Horizontal scroll table
+    move.w #$8D3F,$C00004
+    
+    ; Set register 14 (unused)
+    move.w #$8E00,$C00004
+    
+    ; Set register 15: Autoincrement by 2
+    move.w #$8F02,$C00004
+    
+    ; Set register 16: Scroll size - 64x32 cell
+    move.w #$9001,$C00004
+    
+    ; Set registers 17-23 (Window, DMA related)
+    move.w #$9100,$C00004
+    move.w #$9200,$C00004
+    move.w #$93FF,$C00004
+    move.w #$94FF,$C00004
+    move.w #$9500,$C00004
+    move.w #$9600,$C00004
+    move.w #$9700,$C00004
+    
+    ; --------------------------------------------------
+    ; STEP 2: Clear VRAM
+    ; --------------------------------------------------
+    
+    ; Set up VRAM write at address 0
+    ; VRAM Write command format: $40000000 + (address << 1)
+    move.l #$40000000,$C00004
+    
+    ; Clear all 32KB of VRAM
+    move.w #$7FFF,d7
+.clearVRAM:
+    move.w #$0000,$C00000
+    dbra d7,.clearVRAM
+    
+    ; --------------------------------------------------
+    ; STEP 3: Set up color palette (CRAM)
+    ; --------------------------------------------------
+    
+    ; Set up CRAM write at address 0
+    ; CRAM Write command format: $C0000000 + (address << 1)
+    move.l #$C0000000,$C00004
+    
+    ; Write colors for palette 0
+    move.w #$0000,$C00000    ; Color 0: Black
+    move.w #$0000,$C00000    ; Color 1: Black
+    move.w #$0000,$C00000    ; Color 2: Black
+    move.w #$0000,$C00000    ; Color 3: Black
+    move.w #$0000,$C00000    ; Color 4: Black
+    move.w #$0000,$C00000    ; Color 5: Black
+    move.w #$0000,$C00000    ; Color 6: Black
+    move.w #$000F,$C00000    ; Color 7: Blue (00 00 0F = 0000 0000 0000 1111)
+    
+    ; --------------------------------------------------
+    ; STEP 4: Set background color and enable display
+    ; --------------------------------------------------
+    
+    ; Set register 7 to use palette 0, color 7 as background
+    move.w #$8707,$C00004
+    
+    ; Enable display (register 1 = $44: display enabled)
+    move.w #$8144,$C00004
+    
+    ; --------------------------------------------------
+    ; STEP 5: Main loop
+    ; --------------------------------------------------
+    
 MainLoop:
-    bra     MainLoop             ; Loop forever
-
-; VDP initialization values for registers 0-23
-VdpData:
-    dc.b $04                     ; Reg 0: Disabled HInt, read 8-color mode
-    dc.b $44                     ; Reg 1: Disabled display, enabled DMA, disabled VInt
-    dc.b $00                     ; Reg 2: Pattern table for Scroll A at VRAM $0000
-    dc.b $00                     ; Reg 3: Pattern table for Window at VRAM $0000
-    dc.b $00                     ; Reg 4: Pattern table for Scroll B at VRAM $0000
-    dc.b $00                     ; Reg 5: Sprite table at VRAM $0000
-    dc.b $00                     ; Reg 6: Unused
-    dc.b $00                     ; Reg 7: Background color - palette 0, color 0
-    dc.b $00                     ; Reg 8: Unused
-    dc.b $00                     ; Reg 9: Unused
-    dc.b $FF                     ; Reg 10: HInt counter
-    dc.b $00                     ; Reg 11: Full-screen scroll
-    dc.b $81                     ; Reg 12: No interlace, 40 cell display
-    dc.b $00                     ; Reg 13: Horizontal scroll table at VRAM $0000
-    dc.b $00                     ; Reg 14: Unused
-    dc.b $02                     ; Reg 15: Autoincrement 2
-    dc.b $00                     ; Reg 16: Scroll size, 32x32 cell
-    dc.b $00                     ; Reg 17: Window horizontal position
-    dc.b $00                     ; Reg 18: Window vertical position
-    dc.b $FF                     ; Reg 19: DMA length counter
-    dc.b $FF                     ; Reg 20: DMA length counter
-    dc.b $00                     ; Reg 21: DMA source address
-    dc.b $00                     ; Reg 22: DMA source address
-    dc.b $00                     ; Reg 23: DMA source address
-
-
-
+    bra MainLoop
