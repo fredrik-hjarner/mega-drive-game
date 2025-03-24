@@ -177,7 +177,11 @@ Start:
     move.w #$0000,$C00000    ; Color 4: Black
     move.w #$0000,$C00000    ; Color 5: Black
     move.w #$0000,$C00000    ; Color 6: Black
-    move.w #$000F,$C00000    ; Color 7: Blue (00 00 0F = 0000 0000 0000 1111)
+    ;        bbb-ggg-rrr-
+    move.w #%000000001110,$C00000    ; Color 7: Red
+    ; move.w #%000111000000,$C00000    ; Color 7: Green
+    ; move.w #%111000000000,$C00000    ; Color 7: Blue
+    ; move.w #%111011101110,$C00000    ; Color 7: White
     
     ; --------------------------------------------------
     ; STEP 4: Set background color and enable display
