@@ -1,5 +1,6 @@
 ; mega drive test. 68k processor.
 ; using vasm assembler.
+; using fasmg to preprocess so I can use fasmg macros.
 
 * to build
   `make build` or just `make`

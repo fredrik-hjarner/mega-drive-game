@@ -1,6 +1,9 @@
-.PHONY: all build hexdump run clean
+.PHONY: all preprocess build hexdump run clean
 
-all: build hexdump
+all: preprocess build hexdump
+
+preprocess:
+	fasm2 fasmg/preprocess.asm -isource=\'main.asm\' preprocessed.asm -e200
 
 # -Fbin
 #     Output formatless raw binary.
@@ -9,7 +12,7 @@ all: build hexdump
 #     Allow whitespace characters in the operand field. Otherwise a whitespace
 #     could start the comment field there.
 build:
-	vasm -Fbin -spaces -o main.bin main.asm
+	vasm -Fbin -spaces -o main.bin preprocessed.asm
 
 hexdump:
 	hexdump -C -v main.bin > main.hex
