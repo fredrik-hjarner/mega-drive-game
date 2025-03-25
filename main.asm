@@ -6,6 +6,7 @@
 ; =====================================================================
 ; VECTORS - Exception Vectors (Required for hardware initialization)
 ; 64 vectors x 4 (long) = 256d bytes = $100 bytes
+; https://web.archive.org/web/20240616180841/https://wiki.megadrive.org/index.php?title=68k_vector_table&t=20170119115405
 ; =====================================================================
     dc.l   $00000000              ; #0: Initial stack pointer (set to zero = use default)
     dc.l   Start                  ; #1: Start of program execution (code begins at $200)
