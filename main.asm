@@ -1,77 +1,78 @@
 ; =====================================================================
 ; Minimal Sega Genesis "Hello World" program
-; Displays a solid blue color on screen
+; Displays a solid red color on screen
 ; =====================================================================
 
 ; =====================================================================
 ; ROM HEADER - Exception Vectors (Required for hardware initialization)
+; 64 vectors x 4 (long) = 256d bytes = $100 bytes
 ; =====================================================================
-    dc.l   $00000000              ; Initial stack pointer (set to zero = use default)
-    dc.l   $00000200              ; Start of program execution (code begins at $200)
-    dc.l   $00000008              ; Bus error handler
-    dc.l   $0000000A              ; Address error handler
-    dc.l   $0000000C              ; Illegal instruction handler
-    dc.l   $0000000E              ; Division by zero handler
-    dc.l   $00000010              ; CHK instruction handler
-    dc.l   $00000012              ; TRAPV instruction handler
-    dc.l   $00000014              ; Privilege violation handler
-    dc.l   $00000016              ; TRACE exception handler
-    dc.l   $00000018              ; Line-A emulator
-    dc.l   $0000001A              ; Line-F emulator
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $00000018              ; Spurious exception
-    dc.l   $0000001C              ; IRQ level 1
-    dc.l   $0000001C              ; IRQ level 2
-    dc.l   $0000001C              ; IRQ level 3
-    dc.l   $0000001C              ; IRQ level 4
-    dc.l   $0000001C              ; IRQ level 5
-    dc.l   $0000001C              ; IRQ level 6
-    dc.l   $0000001C              ; IRQ level 7
-    dc.l   $0000001C              ; TRAP #00 exception
-    dc.l   $0000001C              ; TRAP #01 exception
-    dc.l   $0000001C              ; TRAP #02 exception
-    dc.l   $0000001C              ; TRAP #03 exception
-    dc.l   $0000001C              ; TRAP #04 exception
-    dc.l   $0000001C              ; TRAP #05 exception
-    dc.l   $0000001C              ; TRAP #06 exception
-    dc.l   $0000001C              ; TRAP #07 exception
-    dc.l   $0000001C              ; TRAP #08 exception
-    dc.l   $0000001C              ; TRAP #09 exception
-    dc.l   $0000001C              ; TRAP #10 exception
-    dc.l   $0000001C              ; TRAP #11 exception
-    dc.l   $0000001C              ; TRAP #12 exception
-    dc.l   $0000001C              ; TRAP #13 exception
-    dc.l   $0000001C              ; TRAP #14 exception
-    dc.l   $0000001C              ; TRAP #15 exception
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
-    dc.l   $0000001C              ; (reserved)
+    dc.l   $00000000              ; #0: Initial stack pointer (set to zero = use default)
+    dc.l   $00000200              ; #1: Start of program execution (code begins at $200)
+    dc.l   $00000008              ; #2: Bus error handler
+    dc.l   $0000000A              ; #3: Address error handler
+    dc.l   $0000000C              ; #4: Illegal instruction handler
+    dc.l   $0000000E              ; #5: Division by zero handler
+    dc.l   $00000010              ; #6: CHK instruction handler
+    dc.l   $00000012              ; #7: TRAPV instruction handler
+    dc.l   $00000014              ; #8: Privilege violation handler
+    dc.l   $00000016              ; #9: TRACE exception handler
+    dc.l   $00000018              ; #10: Line-A emulator
+    dc.l   $0000001A              ; #11: Line-F emulator
+    dc.l   $0000001C              ; #12: (reserved)
+    dc.l   $0000001C              ; #13: (reserved)
+    dc.l   $0000001C              ; #14: (reserved)
+    dc.l   $0000001C              ; #15: (reserved)
+    dc.l   $0000001C              ; #16: (reserved)
+    dc.l   $0000001C              ; #17: (reserved)
+    dc.l   $0000001C              ; #18: (reserved)
+    dc.l   $0000001C              ; #19: (reserved)
+    dc.l   $0000001C              ; #20: (reserved)
+    dc.l   $0000001C              ; #21: (reserved)
+    dc.l   $0000001C              ; #22: (reserved)
+    dc.l   $0000001C              ; #23: (reserved)
+    dc.l   $00000018              ; #24: Spurious exception
+    dc.l   $0000001C              ; #25: IRQ level 1
+    dc.l   $0000001C              ; #26: IRQ level 2
+    dc.l   $0000001C              ; #27: IRQ level 3
+    dc.l   $0000001C              ; #28: IRQ level 4
+    dc.l   $0000001C              ; #29: IRQ level 5
+    dc.l   $0000001C              ; #30: IRQ level 6
+    dc.l   $0000001C              ; #31: IRQ level 7
+    dc.l   $0000001C              ; #32: TRAP #00 exception
+    dc.l   $0000001C              ; #33: TRAP #01 exception
+    dc.l   $0000001C              ; #34: TRAP #02 exception
+    dc.l   $0000001C              ; #35: TRAP #03 exception
+    dc.l   $0000001C              ; #36: TRAP #04 exception
+    dc.l   $0000001C              ; #37: TRAP #05 exception
+    dc.l   $0000001C              ; #38: TRAP #06 exception
+    dc.l   $0000001C              ; #39: TRAP #07 exception
+    dc.l   $0000001C              ; #40: TRAP #08 exception
+    dc.l   $0000001C              ; #41: TRAP #09 exception
+    dc.l   $0000001C              ; #42: TRAP #10 exception
+    dc.l   $0000001C              ; #43: TRAP #11 exception
+    dc.l   $0000001C              ; #44: TRAP #12 exception
+    dc.l   $0000001C              ; #45: TRAP #13 exception
+    dc.l   $0000001C              ; #46: TRAP #14 exception
+    dc.l   $0000001C              ; #47: TRAP #15 exception
+    dc.l   $0000001C              ; #48: (reserved)
+    dc.l   $0000001C              ; #49: (reserved)
+    dc.l   $0000001C              ; #50: (reserved)
+    dc.l   $0000001C              ; #51: (reserved)
+    dc.l   $0000001C              ; #52: (reserved)
+    dc.l   $0000001C              ; #53: (reserved)
+    dc.l   $0000001C              ; #54: (reserved)
+    dc.l   $0000001C              ; #55: (reserved)
+    dc.l   $0000001C              ; #56: (reserved)
+    dc.l   $0000001C              ; #57: (reserved)
+    dc.l   $0000001C              ; #58: (reserved)
+    dc.l   $0000001C              ; #59: (reserved)
+    dc.l   $0000001C              ; #60: (reserved)
+    dc.l   $0000001C              ; #61: (reserved)
+    dc.l   $0000001C              ; #62: (reserved)
+    dc.l   $0000001C              ; #63: (reserved)
 
-    include "header.inc"          ; Sega ROM metadata (console name, region, etc.)
+    include "meta.inc"            ; ROM metadata (console name, region, etc.)
 
 ; =====================================================================
 ; PROGRAM START (Code begins at $200 as specified in second vector)
