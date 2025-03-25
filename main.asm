@@ -4,7 +4,7 @@
 ; =====================================================================
 
     include "consts.inc"
-
+    include "macros.inc"
 ; =====================================================================
 ; HEADER 512 bytes ($200 bytes)
 ; =====================================================================
@@ -73,18 +73,17 @@ Start:
     ; CRAM Write Command: $C0000000 | (address << 1)
     ; Color Format: 0BBB0GGG0RRR0 (3 bits per color component)
     ; -----------------------------------------------------------------
-    move.l  #$C0000000,vdp_ctrl    ; Start writing at CRAM $0000
+    move.l  #$C0000000, vdp_ctrl    ; Start writing at CRAM $0000
     
     ; Set all colors to black first
-    move.w  #$0000, vdp_data        ; Color 0: Black
-    move.w  #$0000, vdp_data        ; Color 1: Black
-    move.w  #$0000, vdp_data        ; Color 2: Black
-    move.w  #$0000, vdp_data        ; Color 3: Black
-    move.w  #$0000, vdp_data        ; Color 4: Black
-    move.w  #$0000, vdp_data        ; Color 5: Black
-    move.w  #$0000, vdp_data        ; Color 6: Black
-    ;        bbb-ggg-rrr-
-    move.w #%000000001110, vdp_data    ; Color 7: Red
+    set_palette_color 0, 0, 0        ; Color 0: Black
+    set_palette_color 0, 0, 0        ; Color 1: Black
+    set_palette_color 0, 0, 0        ; Color 2: Black
+    set_palette_color 0, 0, 0        ; Color 3: Black
+    set_palette_color 0, 0, 0        ; Color 4: Black
+    set_palette_color 0, 0, 0        ; Color 5: Black
+    set_palette_color 0, 0, 0        ; Color 6: Black
+    set_palette_color 7, 0, 0
 
     ; =================================================================
     ; STEP 4: ENABLE DISPLAY AND SET BACKGROUND
