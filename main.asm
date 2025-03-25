@@ -24,14 +24,10 @@
     dc.l    0             ; #13 Co-processor protocol violation
     dc.l    0             ; #14 Format error
     dc.l    0             ; #15 Uninitialized Interrupt
-    dc.l    0             ; #16 Reserved (NOT USED)
-    dc.l    0             ; #17 Reserved (NOT USED)
-    dc.l    0             ; #18 Reserved (NOT USED)
-    dc.l    0             ; #19 Reserved (NOT USED)
-    dc.l    0             ; #20 Reserved (NOT USED)
-    dc.l    0             ; #21 Reserved (NOT USED)
-    dc.l    0             ; #22 Reserved (NOT USED)
-    dc.l    0             ; #23 Reserved (NOT USED)
+
+    ; Reserved (NOT USED)
+    dc.l    0,0,0,0,0,0,0,0 ; #16-#23
+
     dc.l    0             ; #24 Spurious Interrupt
     dc.l    0             ; #25 IRQ Level 1
     dc.l    0             ; #26 IRQ Level 2 (EXT Interrupt)
