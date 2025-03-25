@@ -4,11 +4,11 @@
 ; =====================================================================
 
 ; =====================================================================
-; ROM HEADER - Exception Vectors (Required for hardware initialization)
+; VECTORS - Exception Vectors (Required for hardware initialization)
 ; 64 vectors x 4 (long) = 256d bytes = $100 bytes
 ; =====================================================================
     dc.l   $00000000              ; #0: Initial stack pointer (set to zero = use default)
-    dc.l   $00000200              ; #1: Start of program execution (code begins at $200)
+    dc.l   Start                  ; #1: Start of program execution (code begins at $200)
     dc.l   $00000008              ; #2: Bus error handler
     dc.l   $0000000A              ; #3: Address error handler
     dc.l   $0000000C              ; #4: Illegal instruction handler
@@ -75,10 +75,8 @@
     include "meta.inc"            ; ROM metadata (console name, region, etc.)
 
 ; =====================================================================
-; PROGRAM START (Code begins at $200 as specified in second vector)
+; PROGRAM START (Code begins at $200 because the ROM header is $200 bytes)
 ; =====================================================================
-    ; org     $00000200             ; Assemble code starting at $200
-
 Start:
     ; -----------------------------------------------------------------
     ; INITIALIZE SYSTEM
