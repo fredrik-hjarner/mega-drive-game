@@ -1,2 +1,1 @@
-* Automatically generate a hexdump when I build so that I can commit it and diff
-  with git.
+* ~~Automatically make a hexdump on build so I can commit it and diff with git~~

@@ -1,6 +1,6 @@
-.PHONY: all build run clean
+.PHONY: all build hexdump run clean
 
-all: build
+all: build hexdump
 
 # -Fbin
 #     Output formatless raw binary.
@@ -11,10 +11,13 @@ all: build
 build:
 	vasm -Fbin -spaces -o main.bin main.asm
 
+hexdump:
+	hexdump -C -v main.bin > main.hex
+
 run:
 	cd ~/Downloads/Exodus_2.1 && wine exodus
 
 clean:
-	rm -f main.bin
+	rm -f main.bin main.hex
 
 
