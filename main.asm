@@ -8,70 +8,68 @@
 ; 64 vectors x 4 (long) = 256d bytes = $100 bytes
 ; https://web.archive.org/web/20240616180841/https://wiki.megadrive.org/index.php?title=68k_vector_table&t=20170119115405
 ; =====================================================================
-    dc.l   $00000000              ; #0: Initial stack pointer (set to zero = use default)
-    dc.l   Start                  ; #1: Start of program execution (code begins at $200)
-    dc.l   $00000008              ; #2: Bus error handler
-    dc.l   $0000000A              ; #3: Address error handler
-    dc.l   $0000000C              ; #4: Illegal instruction handler
-    dc.l   $0000000E              ; #5: Division by zero handler
-    dc.l   $00000010              ; #6: CHK instruction handler
-    dc.l   $00000012              ; #7: TRAPV instruction handler
-    dc.l   $00000014              ; #8: Privilege violation handler
-    dc.l   $00000016              ; #9: TRACE exception handler
-    dc.l   $00000018              ; #10: Line-A emulator
-    dc.l   $0000001A              ; #11: Line-F emulator
-    dc.l   $0000001C              ; #12: (reserved)
-    dc.l   $0000001C              ; #13: (reserved)
-    dc.l   $0000001C              ; #14: (reserved)
-    dc.l   $0000001C              ; #15: (reserved)
-    dc.l   $0000001C              ; #16: (reserved)
-    dc.l   $0000001C              ; #17: (reserved)
-    dc.l   $0000001C              ; #18: (reserved)
-    dc.l   $0000001C              ; #19: (reserved)
-    dc.l   $0000001C              ; #20: (reserved)
-    dc.l   $0000001C              ; #21: (reserved)
-    dc.l   $0000001C              ; #22: (reserved)
-    dc.l   $0000001C              ; #23: (reserved)
-    dc.l   $00000018              ; #24: Spurious exception
-    dc.l   $0000001C              ; #25: IRQ level 1
-    dc.l   $0000001C              ; #26: IRQ level 2
-    dc.l   $0000001C              ; #27: IRQ level 3
-    dc.l   $0000001C              ; #28: IRQ level 4
-    dc.l   $0000001C              ; #29: IRQ level 5
-    dc.l   $0000001C              ; #30: IRQ level 6
-    dc.l   $0000001C              ; #31: IRQ level 7
-    dc.l   $0000001C              ; #32: TRAP #00 exception
-    dc.l   $0000001C              ; #33: TRAP #01 exception
-    dc.l   $0000001C              ; #34: TRAP #02 exception
-    dc.l   $0000001C              ; #35: TRAP #03 exception
-    dc.l   $0000001C              ; #36: TRAP #04 exception
-    dc.l   $0000001C              ; #37: TRAP #05 exception
-    dc.l   $0000001C              ; #38: TRAP #06 exception
-    dc.l   $0000001C              ; #39: TRAP #07 exception
-    dc.l   $0000001C              ; #40: TRAP #08 exception
-    dc.l   $0000001C              ; #41: TRAP #09 exception
-    dc.l   $0000001C              ; #42: TRAP #10 exception
-    dc.l   $0000001C              ; #43: TRAP #11 exception
-    dc.l   $0000001C              ; #44: TRAP #12 exception
-    dc.l   $0000001C              ; #45: TRAP #13 exception
-    dc.l   $0000001C              ; #46: TRAP #14 exception
-    dc.l   $0000001C              ; #47: TRAP #15 exception
-    dc.l   $0000001C              ; #48: (reserved)
-    dc.l   $0000001C              ; #49: (reserved)
-    dc.l   $0000001C              ; #50: (reserved)
-    dc.l   $0000001C              ; #51: (reserved)
-    dc.l   $0000001C              ; #52: (reserved)
-    dc.l   $0000001C              ; #53: (reserved)
-    dc.l   $0000001C              ; #54: (reserved)
-    dc.l   $0000001C              ; #55: (reserved)
-    dc.l   $0000001C              ; #56: (reserved)
-    dc.l   $0000001C              ; #57: (reserved)
-    dc.l   $0000001C              ; #58: (reserved)
-    dc.l   $0000001C              ; #59: (reserved)
-    dc.l   $0000001C              ; #60: (reserved)
-    dc.l   $0000001C              ; #61: (reserved)
-    dc.l   $0000001C              ; #62: (reserved)
-    dc.l   $0000001C              ; #63: (reserved)
+    dc.l    0             ; #0 Initial Stack Address
+    dc.l    Start         ; #1 Start of program Code
+    dc.l    0             ; #2 Bus error
+    dc.l    0             ; #3 Address error
+    dc.l    0             ; #4 Illegal instruction
+    dc.l    0             ; #5 Division by zero
+    dc.l    0             ; #6 CHK exception
+    dc.l    0             ; #7 TRAPV exception
+    dc.l    0             ; #8 Privilage violation
+    dc.l    0             ; #9 TRACE exception
+    dc.l    0             ; #10 Line-A emulator
+    dc.l    0             ; #11 Line-F emulator
+    dc.l    0             ; #12 Reserved (NOT USED)
+    dc.l    0             ; #13 Co-processor protocol violation
+    dc.l    0             ; #14 Format error
+    dc.l    0             ; #15 Uninitialized Interrupt
+    dc.l    0             ; #16 Reserved (NOT USED)
+    dc.l    0             ; #17 Reserved (NOT USED)
+    dc.l    0             ; #18 Reserved (NOT USED)
+    dc.l    0             ; #19 Reserved (NOT USED)
+    dc.l    0             ; #20 Reserved (NOT USED)
+    dc.l    0             ; #21 Reserved (NOT USED)
+    dc.l    0             ; #22 Reserved (NOT USED)
+    dc.l    0             ; #23 Reserved (NOT USED)
+    dc.l    0             ; #24 Spurious Interrupt
+    dc.l    0             ; #25 IRQ Level 1
+    dc.l    0             ; #26 IRQ Level 2 (EXT Interrupt)
+    dc.l    0             ; #27 IRQ Level 3
+    dc.l    0             ; #28 IRQ Level 4 (VDP Horizontal Interrupt)
+    dc.l    0             ; #29 IRQ Level 5
+    dc.l    0             ; #30 IRQ Level 6 (VDP Vertical Interrupt)
+    dc.l    0             ; #31 IRQ Level 7
+    dc.l    0             ; #32 TRAP #00 Exception
+    dc.l    0             ; #33 TRAP #01 Exception
+    dc.l    0             ; #34 TRAP #02 Exception
+    dc.l    0             ; #35 TRAP #03 Exception
+    dc.l    0             ; #36 TRAP #04 Exception
+    dc.l    0             ; #37 TRAP #05 Exception
+    dc.l    0             ; #38 TRAP #06 Exception
+    dc.l    0             ; #39 TRAP #07 Exception
+    dc.l    0             ; #40 TRAP #08 Exception
+    dc.l    0             ; #41 TRAP #09 Exception
+    dc.l    0             ; #42 TRAP #10 Exception
+    dc.l    0             ; #43 TRAP #11 Exception
+    dc.l    0             ; #44 TRAP #12 Exception
+    dc.l    0             ; #45 TRAP #13 Exception
+    dc.l    0             ; #46 TRAP #14 Exception
+    dc.l    0             ; #47 TRAP #15 Exception
+    dc.l    0             ; #48 (FP) Branch or Set on Unordered Condition
+    dc.l    0             ; #49 (FP) Inexact Result
+    dc.l    0             ; #50 (FP) Divide by Zero
+    dc.l    0             ; #51 (FP) Underflow
+    dc.l    0             ; #52 (FP) Operand Error
+    dc.l    0             ; #53 (FP) Overflow
+    dc.l    0             ; #54 (FP) Signaling NAN
+    dc.l    0             ; #55 (FP) Unimplemented Data Type
+    dc.l    0             ; #56 MMU Configuration Error
+    dc.l    0             ; #57 MMU Illegal Operation Error
+    dc.l    0             ; #58 MMU Access Violation Error
+    
+    ; Reserved (NOT USED)
+    dc.l   0,0,0,0,0              ; #59, #60, #61, #62, #63
 
     include "meta.inc"            ; ROM metadata (console name, region, etc.)
 
