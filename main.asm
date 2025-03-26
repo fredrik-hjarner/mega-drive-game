@@ -40,8 +40,8 @@ Start:
     set_vdp_register 5, $6C        ; Reg 5: Sprite table at VRAM $D800
     set_vdp_register 6, $00        ; Reg 6: Unused
     set_vdp_register 7, $00        ; Reg 7: Background color = palette 0, color 0
-    set_vdp_register 8, $00        ; Reg 8: Unused
-    set_vdp_register 9, $00        ; Reg 9: Unused
+    set_vdp_register 8, $00        ; Reg 8: Unused (Master System stuff)
+    set_vdp_register 9, $00        ; Reg 9: Unused (Master System stuff)
     set_vdp_register 10, $FF        ; Reg 10: H-interrupt timing (every 255 lines)
     set_vdp_register 11, $00        ; Reg 11: Scroll mode = full-screen
     set_vdp_register 12, $81        ; Reg 12: H40 mode (320px), no shadow/highlight
