@@ -31,31 +31,31 @@ Start:
     ; =================================================================
     ; VDP Control Port: $C00004 (write registers by ORing register# with $8000)
     ; -----------------------------------------------------------------
-    move.w  #$8004, vdp_ctrl        ; Reg 0: Enable H-interrupts, HV counter
-    move.w  #$8104, vdp_ctrl        ; Reg 1: Display OFF, V-interrupts OFF
-    move.w  #$8230, vdp_ctrl        ; Reg 2: Plane A at VRAM $C000 (bits 13-15)
-    move.w  #$833C, vdp_ctrl        ; Reg 3: Window plane at VRAM $F000
-    move.w  #$8407, vdp_ctrl        ; Reg 4: Plane B at VRAM $E000
-    move.w  #$856C, vdp_ctrl        ; Reg 5: Sprite table at VRAM $D800
-    move.w  #$8600, vdp_ctrl        ; Reg 6: Unused
-    move.w  #$8700, vdp_ctrl        ; Reg 7: Background color = palette 0, color 0
-    move.w  #$8800, vdp_ctrl        ; Reg 8: Unused
-    move.w  #$8900, vdp_ctrl        ; Reg 9: Unused
-    move.w  #$8AFF, vdp_ctrl        ; Reg 10: H-interrupt timing (every 255 lines)
-    move.w  #$8B00, vdp_ctrl        ; Reg 11: Scroll mode = full-screen
-    move.w  #$8C81, vdp_ctrl        ; Reg 12: H40 mode (320px), no shadow/highlight
-    move.w  #$8D3F, vdp_ctrl        ; Reg 13: Horizontal scroll table at VRAM $FC00
-    move.w  #$8E00, vdp_ctrl        ; Reg 14: Unused
-    move.w  #$8F02, vdp_ctrl        ; Reg 15: VRAM auto-increment = 2 bytes
-    move.w  #$9001, vdp_ctrl        ; Reg 16: 64x32 tilemap size
+    set_vdp_register 0, 4        ; Reg 0: Enable H-interrupts, HV counter
+    set_vdp_register 1, 4        ; Reg 1: Display OFF, V-interrupts OFF
+    set_vdp_register 2, $30        ; Reg 2: Plane A at VRAM $C000 (bits 13-15)
+    set_vdp_register 3, $3C        ; Reg 3: Window plane at VRAM $F000
+    set_vdp_register 4, $07        ; Reg 4: Plane B at VRAM $E000
+    set_vdp_register 5, $6C        ; Reg 5: Sprite table at VRAM $D800
+    set_vdp_register 6, $00        ; Reg 6: Unused
+    set_vdp_register 7, $00        ; Reg 7: Background color = palette 0, color 0
+    set_vdp_register 8, $00        ; Reg 8: Unused
+    set_vdp_register 9, $00        ; Reg 9: Unused
+    set_vdp_register 10, $FF        ; Reg 10: H-interrupt timing (every 255 lines)
+    set_vdp_register 11, $00        ; Reg 11: Scroll mode = full-screen
+    set_vdp_register 12, $81        ; Reg 12: H40 mode (320px), no shadow/highlight
+    set_vdp_register 13, $3F        ; Reg 13: Horizontal scroll table at VRAM $FC00
+    set_vdp_register 14, $00        ; Reg 14: Unused
+    set_vdp_register 15, $02        ; Reg 15: VRAM auto-increment = 2 bytes
+    set_vdp_register 16, $01        ; Reg 16: 64x32 tilemap size
     ; Set registers 17-23 (Window, DMA related)
-    move.w #$9100, vdp_ctrl
-    move.w #$9200, vdp_ctrl
-    move.w #$93FF, vdp_ctrl
-    move.w #$94FF, vdp_ctrl
-    move.w #$9500, vdp_ctrl
-    move.w #$9600, vdp_ctrl
-    move.w #$9700, vdp_ctrl
+    set_vdp_register 17, $00
+    set_vdp_register 18, $00
+    set_vdp_register 19, $FF
+    set_vdp_register 20, $FF
+    set_vdp_register 21, $00
+    set_vdp_register 22, $00
+    set_vdp_register 23, $00
 
     ; =================================================================
     ; STEP 2: CLEAR VRAM (Video RAM)

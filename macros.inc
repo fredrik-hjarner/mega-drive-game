@@ -8,3 +8,10 @@
         ; bbb0 ggg0 rrr0
         move.w  #((\3)<<9) | ((\2)<<5) | ((\1)<<1), vdp_data
     endm
+
+    ; arguments:
+    ;     \1: register number: 0-23d
+    ;     \2: value: 8 bits
+    macro set_vdp_register
+        move.w  #(1<<15 | ((\1)<<8) | (\2)), vdp_ctrl
+    endm
