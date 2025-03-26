@@ -33,7 +33,7 @@ Start:
     ; https://segaretro.org/Sega_Mega_Drive/VDP_general_usage
     ; -----------------------------------------------------------------
     set_vdp_register 0, 4        ; Reg 0: Enable H-interrupts, HV counter
-    set_vdp_register 1, 4        ; Reg 1: Display OFF, V-interrupts OFF
+    set_vdp_register 1, %00000100        ; Reg 1: Display OFF, V-interrupts OFF
     set_vdp_register 2, $30        ; Reg 2: Plane A at VRAM $C000 (bits 13-15)
     set_vdp_register 3, $3C        ; Reg 3: Window plane at VRAM $F000
     set_vdp_register 4, $07        ; Reg 4: Plane B at VRAM $E000
@@ -91,10 +91,25 @@ Start:
     ; STEP 4: ENABLE DISPLAY AND SET BACKGROUND
     ; =================================================================
     set_vdp_register 7, $07        ; Reg 7: Background color = palette 0, color 7
-    set_vdp_register 1, $44        ; Reg 1: Display ON, V-interrupts ON 
+    ; set_vdp_register 1, $44        ; Reg 1: Display ON, V-interrupts ON
+    set_vdp_register 1, %01100100    ; Reg 1: Display ON, V-interrupts ON
 
     ; =================================================================
     ; STEP 5: MAIN LOOP (Do nothing forever)
     ; =================================================================
 MainLoop:
     bra   MainLoop              ; Infinite loop (real programs would handle VBLANK)
+
+color_toggle: dc.b 0
+vblank:
+    ; if color_toggle is zero then set color 7, else set color 1
+    tst.b color_toggle
+    beq.s .set_color_7
+    set_vdp_register 7, $01
+    bra.s .end
+.set_color_7:
+    set_vdp_register 7, $07
+.end:
+    ; invert color_toggle
+    eor.b #1, color_toggle
+    rte

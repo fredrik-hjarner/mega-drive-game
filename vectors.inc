@@ -29,7 +29,7 @@
     dc.l    0             ; #27 IRQ Level 3
     dc.l    0             ; #28 IRQ Level 4 (VDP Horizontal Interrupt)
     dc.l    0             ; #29 IRQ Level 5
-    dc.l    0             ; #30 IRQ Level 6 (VDP Vertical Interrupt)
+    dc.l    vblank        ; #30 IRQ Level 6 (VDP Vertical Interrupt)
     dc.l    0             ; #31 IRQ Level 7
     dc.l    0             ; #32 TRAP #00 Exception
     dc.l    0             ; #33 TRAP #01 Exception
