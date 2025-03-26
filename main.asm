@@ -30,6 +30,7 @@ Start:
     ; STEP 1: CONFIGURE VDP REGISTERS (Video Display Processor)
     ; =================================================================
     ; VDP Control Port: $C00004 (write registers by ORing register# with $8000)
+    ; https://segaretro.org/Sega_Mega_Drive/VDP_general_usage
     ; -----------------------------------------------------------------
     set_vdp_register 0, 4        ; Reg 0: Enable H-interrupts, HV counter
     set_vdp_register 1, 4        ; Reg 1: Display OFF, V-interrupts OFF
@@ -84,13 +85,13 @@ Start:
     set_palette_color 0, 0, 0        ; Color 4: Black
     set_palette_color 0, 0, 0        ; Color 5: Black
     set_palette_color 0, 0, 0        ; Color 6: Black
-    set_palette_color 7, 0, 0
+    set_palette_color 7, 0, 0        ; Color 7: Red
 
     ; =================================================================
     ; STEP 4: ENABLE DISPLAY AND SET BACKGROUND
     ; =================================================================
-    move.w  #$8707, vdp_ctrl        ; Reg 7: Background color = palette 0, color 7
-    move.w  #$8144, vdp_ctrl        ; Reg 1: Display ON, V-interrupts ON
+    set_vdp_register 7, $07        ; Reg 7: Background color = palette 0, color 7
+    set_vdp_register 1, $44        ; Reg 1: Display ON, V-interrupts ON 
 
     ; =================================================================
     ; STEP 5: MAIN LOOP (Do nothing forever)
