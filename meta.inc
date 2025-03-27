@@ -8,15 +8,15 @@
     ; 16d = 10h
 
 
-    dc.b "(C)SEGA 2025.MAR"      ; 16 bytes: Copyright/date
+    dc.b "                "      ; 16 bytes: Copyright/date
     ; 32d = 20h
 
 
-    dc.b "HELLO WORLD DEMO                                " ; 48 bytes: Domestic name
+    dc.b "EPIC LEGENDS OF DESTINY                         " ; 48 bytes: Domestic name
     ; 80d = 50h
 
 
-    dc.b "HELLO WORLD DEMO                                " ; 48 bytes: International name
+    dc.b "EPIC LEGENDS OF DESTINY                         " ; 48 bytes: International name
     ; 128d = 80h
 
 
