@@ -116,11 +116,12 @@ vdp_ctrl2 equ $C00006
     vblank:
     movem.l d1-d2,-(sp)
     add.w #1, color_index
-    cmpi.w #7, color_index
+    cmpi.w #(8<<4), color_index
     bne.s .done
     move.w #0, color_index
     .done:
     move.w color_index, d1
+    lsr.w #4, d1
     jsr set_bg_color
     movem.l (sp)+,d1-d2
     rte
