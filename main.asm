@@ -162,5 +162,4 @@ error:
 ; to always be word-aligned?
 ; =================================================================
 
-; TODO: declare_var macro??
-color_toggle equ $FF0000 ; byte
+word color_toggle

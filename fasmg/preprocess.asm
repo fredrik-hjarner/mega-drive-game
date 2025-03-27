@@ -29,6 +29,29 @@ namespace MACROS
         emit 1, 10
     end macro
 
+    ; TODO: Name sucks.
+    ; TODO: Maybe I can match to see if it contains equ here like macro above?
+    macro calminstruction?.assemble2? &line&
+        stringify line
+        ; In vasm labels need to NOT be prefixed with whitespace.
+        emit lengthof line, line
+        emit 1, 13
+        emit 1, 10
+    end macro
+
+    ; curr_var_addr stores where to place the next variable in RAM.
+    ; It is initialized to the start of RAM.
+    curr_var_addr = $FF0000
+
+    ; Declares a word variable in RAM.
+    calminstruction word var_name
+        local tmp
+        arrange tmp, var_name =equ= curr_var_addr
+        assemble2 tmp
+        ; increment the address for the next variable
+        compute curr_var_addr, curr_var_addr + 2
+    end calminstruction
+
     ; bappend
     ; Util macro for CALM to concatenate strings with shorter syntax.
     ; Only works when added to preprocess.asm
@@ -127,6 +150,7 @@ namespace MACROS
 
     ; Make visible to the preprocessor
     ; define bappend +bappend
+    define word +word
     define @enter +@enter
     define @pushall +@pushall
     define @popall +@popall
