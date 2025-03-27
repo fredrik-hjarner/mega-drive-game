@@ -5,13 +5,18 @@
 
     include "consts.inc"
     include "macros.inc"
-
 ; =====================================================================
 ; HEADER 512 bytes ($200 bytes)
 ; =====================================================================
 
     include "vectors.inc"         ; interrupt vectors
     include "meta.inc"            ; ROM metadata (console name, region, etc.)
+
+; =====================================================================
+; OTHER INCLUDES
+; =====================================================================
+
+    include "functions.inc"
 
 ; =====================================================================
 ; PROGRAM START (Code begins at $200 because the ROM header is $200 bytes)
@@ -115,14 +120,17 @@ hblank:
     rte
 
 vblank:
-        tst.b color_toggle
-        beq.s .set_color_5
-        set_vdp_register 7, $04 ; green
-        bra.s .done
-    .set_color_5:
-        set_vdp_register 7, $05 ; blue
+        ; Save registers we'll modify
+        movem.l d1-d2,-(sp)
+        add.w #1, color_index
+        cmpi.w #7, color_index
+        bne.s .done
+        move.w #0, color_index
     .done:
-        not.b color_toggle
+        move.w color_index, d1
+        jsr set_bg_color
+        ; Restore registers
+        movem.l (sp)+,d1-d2
         rte
 
 
@@ -162,4 +170,4 @@ error:
 ; to always be word-aligned?
 ; =================================================================
 
-word color_toggle
+word color_index

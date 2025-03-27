@@ -81,6 +81,11 @@ vdp_ctrl2 equ $C00006
     dc.b '                '
     dc.b '                '
     dc.b 'JUE             '
+    set_bg_color:
+    move.w #(1<<15 | (7<<8)), d2
+    or.w d1, d2
+    move.w d2, vdp_ctrl
+    rts
     Start:
     move.w #$2700,sr
     move.l #$FF0000,sp
@@ -109,14 +114,15 @@ vdp_ctrl2 equ $C00006
     hblank:
     rte
     vblank:
-    tst.b color_toggle
-    beq.s .set_color_5
-    set_vdp_register 7, $04
-    bra.s .done
-    .set_color_5:
-    set_vdp_register 7, $05
+    movem.l d1-d2,-(sp)
+    add.w #1, color_index
+    cmpi.w #7, color_index
+    bne.s .done
+    move.w #0, color_index
     .done:
-    not.b color_toggle
+    move.w color_index, d1
+    jsr set_bg_color
+    movem.l (sp)+,d1-d2
     rte
     int2_bus_error:
     nop
@@ -136,4 +142,4 @@ vdp_ctrl2 equ $C00006
     error:
     nop
     bra error
-color_toggle equ 16711680
+color_index equ 16711680
