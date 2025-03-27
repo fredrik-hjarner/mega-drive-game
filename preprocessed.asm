@@ -99,13 +99,21 @@ vdp_ctrl2 equ $C00006
     dbra d7,.ClearVRAM
     move.l #$C0000000, vdp_ctrl
     set_palette_color 0, 0, 0
-    set_palette_color 3, 3, 3
-    set_palette_color 7, 7, 7
+    set_palette_color 1, 0, 0
+    set_palette_color 2, 0, 0
+    set_palette_color 3, 0, 0
+    set_palette_color 4, 0, 0
+    set_palette_color 5, 0, 0
+    set_palette_color 6, 0, 0
     set_palette_color 7, 0, 0
-    set_palette_color 0, 7, 0
-    set_palette_color 0, 0, 7
-    set_palette_color 7, 7, 0
-    set_palette_color 4, 0, 4
+    set_palette_color 7, 0, 1
+    set_palette_color 7, 0, 2
+    set_palette_color 7, 0, 3
+    set_palette_color 7, 0, 4
+    set_palette_color 7, 0, 5
+    set_palette_color 7, 0, 6
+    set_palette_color 7, 0, 7
+    set_palette_color 7, 1, 7
     set_vdp_register 7, $07
     set_vdp_register 1, %00101100
     move #$2300, sr
@@ -116,12 +124,12 @@ vdp_ctrl2 equ $C00006
     vblank:
     movem.l d1-d2,-(sp)
     add.w #1, color_index
-    cmpi.w #(8<<4), color_index
+    cmpi.w #(16<<2), color_index
     bne.s .done
     move.w #0, color_index
     .done:
     move.w color_index, d1
-    lsr.w #4, d1
+    lsr.w #2, d1
     jsr set_bg_color
     movem.l (sp)+,d1-d2
     rte

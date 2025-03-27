@@ -79,18 +79,28 @@ Start:
     ; =================================================================
     ; CRAM Write Command: $C0000000 | (address << 1)
     ; Color Format: 0BBB0GGG0RRR0 (3 bits per color component)
+    ; VDP supports4 palettes with 16 colors each.
     ; -----------------------------------------------------------------
     move.l  #$C0000000, vdp_ctrl    ; Start writing at CRAM $0000
     
     ; Set some colors
-    set_palette_color 0, 0, 0        ; Color 0: Black
-    set_palette_color 3, 3, 3        ; Color 1: Gray
-    set_palette_color 7, 7, 7        ; Color 2: White
-    set_palette_color 7, 0, 0        ; Color 3: Red
-    set_palette_color 0, 7, 0        ; Color 4: Green
-    set_palette_color 0, 0, 7        ; Color 5: Blue
-    set_palette_color 7, 7, 0        ; Color 6: Yellow
-    set_palette_color 4, 0, 4        ; Color 7: Purple
+    set_palette_color 0, 0, 0        ; Color 0
+    set_palette_color 1, 0, 0        ; Color 1
+    set_palette_color 2, 0, 0        ; Color 2
+    set_palette_color 3, 0, 0        ; Color 3
+    set_palette_color 4, 0, 0        ; Color 4
+    set_palette_color 5, 0, 0        ; Color 5
+    set_palette_color 6, 0, 0        ; Color 6
+    set_palette_color 7, 0, 0        ; Color 7
+    set_palette_color 7, 0, 1        ; Color 8
+    set_palette_color 7, 0, 2        ; Color 9
+    set_palette_color 7, 0, 3        ; Color 10
+    set_palette_color 7, 0, 4        ; Color 11
+    set_palette_color 7, 0, 5        ; Color 12
+    set_palette_color 7, 0, 6        ; Color 13
+    set_palette_color 7, 0, 7        ; Color 14
+    set_palette_color 7, 1, 7        ; Color 15
+    
 
     ; =================================================================
     ; STEP 4: ENABLE DISPLAY AND SET BACKGROUND
@@ -123,13 +133,13 @@ vblank:
         ; Save registers we'll modify
         movem.l d1-d2,-(sp)
         add.w #1, color_index
-        cmpi.w #(8<<4), color_index
+        cmpi.w #(16<<2), color_index
         bne.s .done
         move.w #0, color_index
     .done:
         move.w color_index, d1
         ; right shift d1 to get the color index
-        lsr.w #4, d1
+        lsr.w #2, d1
         jsr set_bg_color
         ; Restore registers
         movem.l (sp)+,d1-d2
