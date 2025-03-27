@@ -114,6 +114,8 @@ MainLoop:
 color_toggle: dc.b 0
 even ; TODO: Whys is this alignment needed again?
 hblank:
+    rte
+
 vblank:
     set_vdp_register 7, $05
     rte
