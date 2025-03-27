@@ -3,22 +3,22 @@
 ; 64 vectors x 4 (long) = 256d bytes = $100 bytes
 ; https://web.archive.org/web/20240616180841/https://wiki.megadrive.org/index.php?title=68k_vector_table&t=20170119115405
 ; =====================================================================
-    dc.l    0             ; #0 Initial Stack Address
-    dc.l    Start         ; #1 Start of program Code
-    dc.l    0             ; #2 Bus error
-    dc.l    0             ; #3 Address error
-    dc.l    0             ; #4 Illegal instruction
-    dc.l    0             ; #5 Division by zero
-    dc.l    0             ; #6 CHK exception
-    dc.l    0             ; #7 TRAPV exception
-    dc.l    0             ; #8 Privilage violation
-    dc.l    0             ; #9 TRACE exception
-    dc.l    0             ; #10 Line-A emulator
-    dc.l    0             ; #11 Line-F emulator
-    dc.l    0             ; #12 Reserved (NOT USED)
-    dc.l    0             ; #13 Co-processor protocol violation
-    dc.l    0             ; #14 Format error
-    dc.l    0             ; #15 Uninitialized Interrupt
+    dc.l    0                           ; #0 Initial Stack Address
+    dc.l    Start                       ; #1 Start of program Code
+    dc.l    int2_bus_error              ; #2 Bus error
+    dc.l    int3_address_error          ; #3 Address error
+    dc.l    int4_illegal_instruction    ; #4 Illegal instruction
+    dc.l    error          ; #5 Division by zero
+    dc.l    error          ; #6 CHK exception
+    dc.l    error          ; #7 TRAPV exception
+    dc.l    error          ; #8 Privilage violation
+    dc.l    error          ; #9 TRACE exception
+    dc.l    0              ; #10 Line-A emulator
+    dc.l    0              ; #11 Line-F emulator
+    dc.l    0              ; #12 Reserved (NOT USED)
+    dc.l    error          ; #13 Co-processor protocol violation
+    dc.l    error          ; #14 Format error
+    dc.l    error          ; #15 Uninitialized Interrupt
 
     ; Reserved (NOT USED)
     dc.l    0,0,0,0,0,0,0,0 ; #16-#23
@@ -27,7 +27,7 @@
     dc.l    0             ; #25 IRQ Level 1
     dc.l    0             ; #26 IRQ Level 2 (EXT Interrupt)
     dc.l    0             ; #27 IRQ Level 3
-    dc.l    0             ; #28 IRQ Level 4 (VDP Horizontal Interrupt)
+    dc.l    hblank        ; #28 IRQ Level 4 (VDP Horizontal Interrupt)
     dc.l    0             ; #29 IRQ Level 5
     dc.l    vblank        ; #30 IRQ Level 6 (VDP Vertical Interrupt)
     dc.l    0             ; #31 IRQ Level 7
