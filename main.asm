@@ -111,14 +111,19 @@ Start:
 MainLoop:
     bra   MainLoop              ; Infinite loop (real programs would handle VBLANK)
 
-color_toggle: dc.b 0
-even ; TODO: Whys is this alignment needed again?
 hblank:
     rte
 
 vblank:
-    set_vdp_register 7, $05
-    rte
+        tst.b color_toggle
+        beq.s .set_color_5
+        set_vdp_register 7, $04 ; green
+        bra.s .done
+    .set_color_5:
+        set_vdp_register 7, $05 ; blue
+    .done:
+        not.b color_toggle
+        rte
 
 
 ; =================================================================
@@ -146,3 +151,16 @@ int4_illegal_instruction:
 error:
     nop
     bra error
+
+; =================================================================
+; VARIABLES
+; RAM starts at $FF0000
+; TODO: I should probably clear RAM at startup?
+; TODO: Using equs at hard-coded addresses is the only methods I've
+; found to declare RAM variables. It seems dumb though.
+; TODO: How does alignment and data work now again? Does data need
+; to always be word-aligned?
+; =================================================================
+
+; TODO: declare_var macro??
+color_toggle equ $FF0000 ; byte
