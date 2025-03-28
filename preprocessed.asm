@@ -82,7 +82,8 @@ vdp_ctrl2 equ $C00006
     move.w #(1<<15 | (7<<8)), d2
     or.w d1, d2
     move.w d2, vdp_ctrl
-    rts
+    dc.b %01001110
+    dc.b %01110101
     Start:
     move.w #$2700,sr
     move.l #$FF0000,sp
@@ -117,7 +118,8 @@ vdp_ctrl2 equ $C00006
     MainLoop:
     bra MainLoop
     hblank:
-    rte
+    dc.b %01001110
+    dc.b %01110011
     vblank:
     movem.l d1-d2,-(sp)
     add.w #1, color_index
@@ -129,23 +131,34 @@ vdp_ctrl2 equ $C00006
     lsr.w #2, d1
     jsr set_bg_color
     movem.l (sp)+,d1-d2
-    rte
+    dc.b %01001110
+    dc.b %01110011
     int2_bus_error:
-    nop
-    nop
+    dc.b %01001110
+    dc.b %01110001
+    dc.b %01001110
+    dc.b %01110001
     bra int2_bus_error
     int3_address_error:
-    nop
-    nop
-    nop
+    dc.b %01001110
+    dc.b %01110001
+    dc.b %01001110
+    dc.b %01110001
+    dc.b %01001110
+    dc.b %01110001
     bra int3_address_error
     int4_illegal_instruction:
-    nop
-    nop
-    nop
-    nop
+    dc.b %01001110
+    dc.b %01110001
+    dc.b %01001110
+    dc.b %01110001
+    dc.b %01001110
+    dc.b %01110001
+    dc.b %01001110
+    dc.b %01110001
     bra int4_illegal_instruction
     error:
-    nop
+    dc.b %01001110
+    dc.b %01110001
     bra error
 color_index equ 16711680
