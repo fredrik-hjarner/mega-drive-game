@@ -12,6 +12,6 @@
     ; arguments:
     ;     \1: register number: 0-23d
     ;     \2: value: 8 bits
-    macro set_vdp_register
-        move.w  #(1<<15 | ((\1)<<8) | (\2)), vdp_ctrl
-    endm
+    ; macro set_vdp_register
+    ;     move.w  #(1<<15 | ((\1)<<8) | (\2)), vdp_ctrl
+    ; endm

@@ -52,6 +52,22 @@ namespace MACROS
         compute curr_var_addr, curr_var_addr + 2
     end calminstruction
 
+    ; arguments:
+    ;     reg_nr: register number: 0-23d
+    ;     value:  value: 8 bits
+    calminstruction set_vdp_register reg_nr, value
+        local set_reg
+        local reg
+        local res
+        local cmd
+
+        compute set_reg, 1 shl 15
+        compute reg, reg_nr shl 8
+        compute res, set_reg or reg or value
+        arrange cmd,=move.=w #res,=vdp_ctrl
+        assemble cmd
+    end calminstruction
+
     ; bappend
     ; Util macro for CALM to concatenate strings with shorter syntax.
     ; Only works when added to preprocess.asm
@@ -151,6 +167,7 @@ namespace MACROS
     ; Make visible to the preprocessor
     ; define bappend +bappend
     define word +word
+    define set_vdp_register +set_vdp_register
     define @enter +@enter
     define @pushall +@pushall
     define @popall +@popall

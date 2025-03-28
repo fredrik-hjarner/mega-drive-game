@@ -5,9 +5,6 @@ vdp_ctrl2 equ $C00006
     macro set_palette_color
     move.w #((\3)<<9) | ((\2)<<5) | ((\1)<<1), vdp_data
     endm
-    macro set_vdp_register
-    move.w #(1<<15 | ((\1)<<8) | (\2)), vdp_ctrl
-    endm
     dc.l 0
     dc.l Start
     dc.l int2_bus_error
@@ -89,9 +86,9 @@ vdp_ctrl2 equ $C00006
     Start:
     move.w #$2700,sr
     move.l #$FF0000,sp
-    set_vdp_register 0, 4
-    set_vdp_register 1, %00000100
-    set_vdp_register 15, $02
+    move.w #32772,vdp_ctrl
+    move.w #33028,vdp_ctrl
+    move.w #36610,vdp_ctrl
     move.l #$40000000, vdp_ctrl
     move.w #$7FFF, d7
     .ClearVRAM:
@@ -114,8 +111,8 @@ vdp_ctrl2 equ $C00006
     set_palette_color 7, 0, 6
     set_palette_color 7, 0, 7
     set_palette_color 7, 1, 7
-    set_vdp_register 7, $07
-    set_vdp_register 1, %00101100
+    move.w #34567,vdp_ctrl
+    move.w #33068,vdp_ctrl
     move #$2300, sr
     MainLoop:
     bra MainLoop

@@ -38,7 +38,7 @@ Start:
     ; https://segaretro.org/Sega_Mega_Drive/VDP_general_usage
     ; -----------------------------------------------------------------
     set_vdp_register 0, 4        ; Reg 0: Enable H-interrupts, HV counter
-    set_vdp_register 1, %00000100        ; Reg 1: Display OFF, V-interrupts OFF
+    set_vdp_register 1, 00000100b        ; Reg 1: Display OFF, V-interrupts OFF
     ; set_vdp_register 2, $30        ; Reg 2: Plane A at VRAM $C000 (bits 13-15)
     ; set_vdp_register 3, $3C        ; Reg 3: Window plane at VRAM $F000
     ; set_vdp_register 4, $07        ; Reg 4: Plane B at VRAM $E000
@@ -107,15 +107,15 @@ Start:
     ; =================================================================
     set_vdp_register 7, $07        ; Reg 7: Background color = palette 0, color 7
 
-    ;                    +--------- #7: 0 - Use 64kB of VRAM
-    ;                    | +------- #5: 1 - Enable vertical interrupts
-    ;                    | | +----- #3: 1 - PAL mode
+    ;                   +--------- #7: 0 - Use 64kB of VRAM
+    ;                   | +------- #5: 1 - Enable vertical interrupts
+    ;                   | | +----- #3: 1 - PAL mode
+    ;                   | | |
+    set_vdp_register 1, 00101100b   ; bits 0 and 1 are unused and always 0
     ;                    | | |
-    set_vdp_register 1, %00101100   ; bits 0 and 1 are unused and always 0
-    ;                     | | |
-    ;                     | | +---- #2: 1 - Mega Drive  (mode 5) display
-    ;                     | +------ #4: 0 - Disable DMA
-    ;                     +-------- #6: 0 - Disable display & show bg color
+    ;                    | | +---- #2: 1 - Mega Drive  (mode 5) display
+    ;                    | +------ #4: 0 - Disable DMA
+    ;                    +-------- #6: 0 - Disable display & show bg color
 
 
     move    #$2300, sr		; Enable interrupts.
