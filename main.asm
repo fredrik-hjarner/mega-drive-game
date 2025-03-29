@@ -69,21 +69,38 @@ Start:
     ;                      +-------- #6: 0 - disable display
     ;                                    1 - enable display
 
+    ; Mode Register 3
+    ;                         +----- #3: 0 - disable external interrupts
+    ;                         |          1 - enable external interrupts
+    ;                         | +--#1-0: 00 - horizontal scroll mode full screen
+    ;                         | |        01 - invalid
+    ;                         | |        10 - horizontal scroll mode 8px
+    ;                         | |        11 - horizontal scroll mode 1px
+    ;                         | |
+    set_vdp_register $0B, 00000000b      ; bits 7, 6, 5 & 4 are always 0
+    ;                          |
+    ;                          +---- #2: 0 - vertical scroll mode full screen
+    ;                                    1 - vertical scroll mode 16px
+
     set_vdp_register $0F, $02 ; Reg 15: VRAM auto-increment = 2 bytes
-    
 
     ; Plane Size
-    ;                       +------- #5-4: 00 - 256 pixels (32 cells)
-    ;                       |              01 - 512 pixels (64 cells)
-    ;                       |              10 - invalid
-    ;                       |              11 - 1024 pixels (128 cells)
+    ;                       +----- #5-4: 00 - 256 pixels (32 cells)
+    ;                       |            01 - 512 pixels (64 cells)
+    ;                       |            10 - invalid
+    ;                       |            11 - 1024 pixels (128 cells)
     ;                       |
     set_vdp_register $10, 00000000b      ; bits 7, 6, 3 & 2 are always 0
     ;                           |
-    ;                           +--- #1-0: 00 - 256 pixels (32 cells)
-    ;                                      01 - 512 pixels (64 cells)
-    ;                                      10 - invalid
-    ;                                      11 - 1024 pixels (128 cells)
+    ;                           +- #1-0: 00 - 256 pixels (32 cells)
+    ;                                    01 - 512 pixels (64 cells)
+    ;                                    10 - invalid
+    ;                                    11 - 1024 pixels (128 cells)
+
+    ; Window Plane Horizontal Position
+    set_vdp_register $11, 00000000b      ; no window
+    ; Window Plane Horizontal Position
+    set_vdp_register $12, 00000000b      ; no window
 
     ; =================================================================
     ; STEP 2: CLEAR VRAM (Video RAM)
