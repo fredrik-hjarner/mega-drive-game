@@ -36,8 +36,23 @@ Start:
     ; =================================================================
     ; VDP Control Port: $C00004 (write registers by ORing register# with $8000)
     ; https://segaretro.org/Sega_Mega_Drive/VDP_general_usage
+    ; https://segaretro.org/Sega_Mega_Drive/VDP_registers
     ; -----------------------------------------------------------------
-    set_vdp_register 0, 4        ; Reg 0: Enable H-interrupts, HV counter
+
+    ;                     +------- #5: 0 - left 8 pix not blanked (i.e. normal)
+    ;                     |            1 - leftmost 8 pix are blanked to bg col
+    ;                     |   +--- #1: 0 - enable H/V counter
+    ;                     |   |        1 - freeze H/V counter on lvl 2 interrupt
+    ;                     |   |
+    set_vdp_register 0, 00000101b      ; bits 7, 6 & 3 are always 0
+    ;                      | | |
+    ;                      | | +-- #0: 0 - enable display
+    ;                      | |         1 - disable display
+    ;                      | +---- #2: 0 - some master system stuff
+    ;                      |           1 - normal operation
+    ;                      +------ #4: 0 - disable h-blank interrupts
+    ;                                  1 - enable h-blank interrupts
+
     set_vdp_register 1, 00000100b        ; Reg 1: Display OFF, V-interrupts OFF
     ; set_vdp_register 2, $30        ; Reg 2: Plane A at VRAM $C000 (bits 13-15)
     ; set_vdp_register 3, $3C        ; Reg 3: Window plane at VRAM $F000

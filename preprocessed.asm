@@ -87,7 +87,7 @@ vdp_ctrl2 equ $C00006
     Start:
     move.w #$2700,sr
     move.l #$FF0000,sp
-    move.w #32772,vdp_ctrl
+    move.w #32773,vdp_ctrl
     move.w #33028,vdp_ctrl
     move.w #36610,vdp_ctrl
     move.l #$40000000, vdp_ctrl
