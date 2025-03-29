@@ -53,7 +53,22 @@ Start:
     ;                      +------ #4: 0 - disable h-blank interrupts
     ;                                  1 - enable h-blank interrupts
 
-    set_vdp_register 1, 00000100b        ; Reg 1: Display OFF, V-interrupts OFF
+    ;                   +--------- #7: 0 - 64kB of VRAM
+    ;                   |              1 - 128kB of VRAM
+    ;                   | +------- #5: 0 - disable v-blank interrupts
+    ;                   | |            1 - enable v-blank interrupts
+    ;                   | | +----- #3: 0 - 224 pixel (28 cell) NTSC mode
+    ;                   | | |          1 - 240 pixel (30 cell) PAL mode
+    ;                   | | |
+    set_vdp_register 1, 00001100b      ; bits 1, 0 are always 0
+    ;                    | | |
+    ;                    | | +---- #2: 0 - Master System (mode 4) display
+    ;                    | |           1 - Mega Drive (mode 5) display
+    ;                    | +------ #4: 0 - disable DMA
+    ;                    |             1 - enable DMA
+    ;                    +-------- #6: 0 - disable display
+    ;                                  1 - enable display
+
     ; set_vdp_register 2, $30        ; Reg 2: Plane A at VRAM $C000 (bits 13-15)
     ; set_vdp_register 3, $3C        ; Reg 3: Window plane at VRAM $F000
     ; set_vdp_register 4, $07        ; Reg 4: Plane B at VRAM $E000
