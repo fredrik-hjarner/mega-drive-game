@@ -39,59 +39,51 @@ Start:
     ; https://segaretro.org/Sega_Mega_Drive/VDP_registers
     ; -----------------------------------------------------------------
 
-    ;                     +------- #5: 0 - left 8 pix not blanked (i.e. normal)
-    ;                     |            1 - leftmost 8 pix are blanked to bg col
-    ;                     |   +--- #1: 0 - enable H/V counter
-    ;                     |   |        1 - freeze H/V counter on lvl 2 interrupt
-    ;                     |   |
-    set_vdp_register 0, 00000101b      ; bits 7, 6 & 3 are always 0
+    ;                       +------- #5: 0 - left 8 pix not blanked (i.e. normal)
+    ;                       |            1 - leftmost 8 pix are blanked to bg col
+    ;                       |   +--- #1: 0 - enable H/V counter
+    ;                       |   |        1 - freeze H/V counter on lvl 2 interrupt
+    ;                       |   |
+    set_vdp_register $00, 00000101b      ; bits 7, 6 & 3 are always 0
+    ;                        | | |
+    ;                        | | +-- #0: 0 - enable display
+    ;                        | |         1 - disable display
+    ;                        | +---- #2: 0 - some master system stuff
+    ;                        |           1 - normal operation
+    ;                        +------ #4: 0 - disable h-blank interrupts
+    ;                                    1 - enable h-blank interrupts
+
+    ;                     +--------- #7: 0 - 64kB of VRAM
+    ;                     |              1 - 128kB of VRAM
+    ;                     | +------- #5: 0 - disable v-blank interrupts
+    ;                     | |            1 - enable v-blank interrupts
+    ;                     | | +----- #3: 0 - 224 pixel (28 cell) NTSC mode
+    ;                     | | |          1 - 240 pixel (30 cell) PAL mode
+    ;                     | | |
+    set_vdp_register $01, 00001100b      ; bits 1, 0 are always 0
     ;                      | | |
-    ;                      | | +-- #0: 0 - enable display
-    ;                      | |         1 - disable display
-    ;                      | +---- #2: 0 - some master system stuff
-    ;                      |           1 - normal operation
-    ;                      +------ #4: 0 - disable h-blank interrupts
-    ;                                  1 - enable h-blank interrupts
+    ;                      | | +---- #2: 0 - Master System (mode 4) display
+    ;                      | |           1 - Mega Drive (mode 5) display
+    ;                      | +------ #4: 0 - disable DMA
+    ;                      |             1 - enable DMA
+    ;                      +-------- #6: 0 - disable display
+    ;                                    1 - enable display
 
-    ;                   +--------- #7: 0 - 64kB of VRAM
-    ;                   |              1 - 128kB of VRAM
-    ;                   | +------- #5: 0 - disable v-blank interrupts
-    ;                   | |            1 - enable v-blank interrupts
-    ;                   | | +----- #3: 0 - 224 pixel (28 cell) NTSC mode
-    ;                   | | |          1 - 240 pixel (30 cell) PAL mode
-    ;                   | | |
-    set_vdp_register 1, 00001100b      ; bits 1, 0 are always 0
-    ;                    | | |
-    ;                    | | +---- #2: 0 - Master System (mode 4) display
-    ;                    | |           1 - Mega Drive (mode 5) display
-    ;                    | +------ #4: 0 - disable DMA
-    ;                    |             1 - enable DMA
-    ;                    +-------- #6: 0 - disable display
-    ;                                  1 - enable display
+    set_vdp_register $0F, $02 ; Reg 15: VRAM auto-increment = 2 bytes
+    
 
-    ; set_vdp_register 2, $30        ; Reg 2: Plane A at VRAM $C000 (bits 13-15)
-    ; set_vdp_register 3, $3C        ; Reg 3: Window plane at VRAM $F000
-    ; set_vdp_register 4, $07        ; Reg 4: Plane B at VRAM $E000
-    ; set_vdp_register 5, $6C        ; Reg 5: Sprite table at VRAM $D800
-    ; set_vdp_register 6, $00        ; Reg 6: Unused
-    ; set_vdp_register 7, $00        ; Reg 7: Background color = palette 0, color 0
-    ; set_vdp_register 8, $00        ; Reg 8: Unused (Master System stuff)
-    ; set_vdp_register 9, $00        ; Reg 9: Unused (Master System stuff)
-    ; set_vdp_register 10, $FF        ; Reg 10: H-interrupt timing (every 255 lines)
-    ; set_vdp_register 11, $00        ; Reg 11: Scroll mode = full-screen
-    ; set_vdp_register 12, $81        ; Reg 12: H40 mode (320px), no shadow/highlight
-    ; set_vdp_register 13, $3F        ; Reg 13: Horizontal scroll table at VRAM $FC00
-    ; set_vdp_register 14, $00        ; Reg 14: Unused
-    set_vdp_register 15, $02        ; Reg 15: VRAM auto-increment = 2 bytes
-    ; set_vdp_register 16, $01        ; Reg 16: 64x32 tilemap size
-    ; Set registers 17-23 (Window, DMA related)
-    ; set_vdp_register 17, $00
-    ; set_vdp_register 18, $00
-    ; set_vdp_register 19, $FF
-    ; set_vdp_register 20, $FF
-    ; set_vdp_register 21, $00
-    ; set_vdp_register 22, $00
-    ; set_vdp_register 23, $00
+    ; Plane Size
+    ;                       +------- #5-4: 00 - 256 pixels (32 cells)
+    ;                       |              01 - 512 pixels (64 cells)
+    ;                       |              10 - invalid
+    ;                       |              11 - 1024 pixels (128 cells)
+    ;                       |
+    set_vdp_register $10, 00000000b      ; bits 7, 6, 3 & 2 are always 0
+    ;                           |
+    ;                           +--- #1-0: 00 - 256 pixels (32 cells)
+    ;                                      01 - 512 pixels (64 cells)
+    ;                                      10 - invalid
+    ;                                      11 - 1024 pixels (128 cells)
 
     ; =================================================================
     ; STEP 2: CLEAR VRAM (Video RAM)
