@@ -37,6 +37,7 @@ Start:
     ; VDP Control Port: $C00004 (write registers by ORing register# with $8000)
     ; https://segaretro.org/Sega_Mega_Drive/VDP_general_usage
     ; https://segaretro.org/Sega_Mega_Drive/VDP_registers
+    ; https://wiki.megadrive.org/index.php?title=VDP_Registers
     ; -----------------------------------------------------------------
 
     ;                       +------- #5: 0 - left 8 pix not blanked (i.e. normal)
@@ -81,6 +82,27 @@ Start:
     ;                          |
     ;                          +---- #2: 0 - vertical scroll mode full screen
     ;                                    1 - vertical scroll mode 16px
+
+    ; Mode Register 4
+    ;                     +--------- #7: 0 - 256 pixel (32 cell) wide mode
+    ;                     |              1 - 320 pixel (40 cell) wide mode
+    ;                     | +------- #5: 0 - 
+    ;                     | |            1 - replace vsync pixel clock (??)
+    ;                     | | +----- #3: 0 - disable shadow / highlight
+    ;                     | | |          1 - enable shadow / highlight
+    ;                     | | |  +-- #0: 0 - 256 pixel (32 cell) wide mode
+    ;                     | | |  |       1 - 320 pixel (40 cell) wide mode
+    ;                     | | |  |
+    set_vdp_register $0C, 10000001b      ; bits 7 & 0 must be the same value
+    ;                      | | |
+    ;                      | | +-- #2-1: 00 - no interlace
+    ;                      | |           01 - interlace
+    ;                      | |           10 - invalid
+    ;                      | |           11 - interlace (double resolution)
+    ;                      | +------ #4: 0 - disable external pixel bus
+    ;                      |             1 - enable external pixel bus
+    ;                      +-------- #6: 0 - ??
+    ;                                    1 - ??
 
     set_vdp_register $0F, $02 ; Reg 15: VRAM auto-increment = 2 bytes
 

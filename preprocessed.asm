@@ -90,6 +90,7 @@ vdp_ctrl2 equ $C00006
     move.w #32773,vdp_ctrl
     move.w #33036,vdp_ctrl
     move.w #35584,vdp_ctrl
+    move.w #35969,vdp_ctrl
     move.w #36610,vdp_ctrl
     move.w #36864,vdp_ctrl
     move.w #37120,vdp_ctrl
