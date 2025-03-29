@@ -79,7 +79,7 @@ Start:
     ; =================================================================
     ; CRAM Write Command: $C0000000 | (address << 1)
     ; Color Format: 0BBB0GGG0RRR0 (3 bits per color component)
-    ; VDP supports4 palettes with 16 colors each.
+    ; VDP supports 4 palettes with 16 colors each.
     ; -----------------------------------------------------------------
     move.l  #$C0000000, vdp_ctrl    ; Start writing at CRAM $0000
     
