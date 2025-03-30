@@ -94,17 +94,17 @@ vdp_ctrl2 equ $C00006
     skip_tmss:
     move.w #32773,vdp_ctrl
     move.w #33036,vdp_ctrl
-    move.w #33280,vdp_ctrl
-    move.w #33544,vdp_ctrl
-    move.w #33794,vdp_ctrl
-    move.w #34096,vdp_ctrl
+    move.w #33288,vdp_ctrl
+    move.w #33552,vdp_ctrl
+    move.w #33795,vdp_ctrl
+    move.w #34112,vdp_ctrl
     move.w #34304,vdp_ctrl
     move.w #34816,vdp_ctrl
     move.w #35072,vdp_ctrl
     move.w #35328,vdp_ctrl
     move.w #35584,vdp_ctrl
     move.w #35969,vdp_ctrl
-    move.w #36128,vdp_ctrl
+    move.w #36136,vdp_ctrl
     move.w #36352,vdp_ctrl
     move.w #36610,vdp_ctrl
     move.w #36864,vdp_ctrl
@@ -142,9 +142,28 @@ vdp_ctrl2 equ $C00006
     set_palette_color 7, 0, 6
     set_palette_color 7, 0, 7
     set_palette_color 7, 7, 7
+    move.l #$40000000, vdp_ctrl
+    move.w #$0011, vdp_data
+    move.w #$1100, vdp_data
+    move.w #$0122, vdp_data
+    move.w #$2210, vdp_data
+    move.w #$1222, vdp_data
+    move.w #$2211, vdp_data
+    move.w #$1222, vdp_data
+    move.w #$2211, vdp_data
+    move.w #$1222, vdp_data
+    move.w #$2211, vdp_data
+    move.w #$0122, vdp_data
+    move.w #$2210, vdp_data
+    move.w #$0011, vdp_data
+    move.w #$1100, vdp_data
+    move.w #$0011, vdp_data
+    move.w #$1100, vdp_data
+    move.w #$0011, vdp_data
+    move.w #$1100, vdp_data
     move.w #34567,vdp_ctrl
-    move.w #32772,vdp_ctrl
-    move.w #33068,vdp_ctrl
+    move.w #32773,vdp_ctrl
+    move.w #33132,vdp_ctrl
     move #$2300, sr
     MainLoop:
     bra MainLoop

@@ -76,20 +76,20 @@ skip_tmss:
     ;                                    1 - enable display
 
     ; Plane A Name Table Location
-    ; Place it as $0
+    ; Place it as $2000
     ;                       +------- #5: 0 - + 0 to address
     ;                       |            1 - + $8000 (32768) to address
     ;                       | +----- #3: 0 - + 0 to address
     ;                       | |          1 - + $2000 (8192) to address
     ;                       | |
-    set_vdp_register $02, 00000000b      ; bits 7, 2, 1 & 0 are always 0
+    set_vdp_register $02, 00001000b      ; bits 7, 2, 1 & 0 are always 0
     ;                      | |
     ;                      | +------ #4: 0 - + 0 to address
     ;                      |             1 - + $4000 (16384) to address
     ;                      +-------- #6: Used for 128kB VRAM.
 
     ; Window Name Table Location
-    ; Place it at $2000
+    ; Place it at $4000
     ;                       +------- #5: 0 - + 0 to address
     ;                       |            1 - + $8000 (32768) to address
     ;                       | +----- #3: 0 - + 0 to address
@@ -98,7 +98,7 @@ skip_tmss:
     ;                       | | |        1 - + $800 (2048) to address
     ;                       | | |        note: #1 is ignored in 320 wide mode
     ;                       | | |
-    set_vdp_register $03, 00001000b      ; bits 7 & 0 are always 0
+    set_vdp_register $03, 00010000b      ; bits 7 & 0 are always 0
     ;                      | | |
     ;                      | | +---- #2: 0 - + 0 to address
     ;                      | |           1 - + $1000 (4096) to address
@@ -107,20 +107,20 @@ skip_tmss:
     ;                      +-------- #6: Used for 128kB VRAM.
 
     ; Plane B Name Table Location
-    ; Place it at $4000
+    ; Place it at $6000
     ;                          +---- #2: 0 - + 0 to address
     ;                          |         1 - + $8000 (32768) to address
     ;                          | +-- #0: 0 - + 0 to address
     ;                          | |       1 - + $2000 (8192) to address
     ;                          | |
-    set_vdp_register $04, 00000010b      ; bits 7, 6, 5 & 4 are always 0
+    set_vdp_register $04, 00000011b      ; bits 7, 6, 5 & 4 are always 0
     ;                         | |
     ;                         | +--- #1: 0 - + 0 to address
     ;                         |          1 - + $4000 (16384) to address
     ;                         +----- #3: Used for 128kB VRAM.
 
     ; Sprite Table Location
-    ; Place it at $6000
+    ; Place it at $8000
     ;                     +--------- #7: Used for 128kB VRAM.
     ;                     |           
     ;                     | +------- #5: 0 - + 0 to address
@@ -130,7 +130,7 @@ skip_tmss:
     ;                     | | | +--- #1: 0 - + 0 to address
     ;                     | | | |        1 - + $400 (1024) to address
     ;                     | | | |
-    set_vdp_register $05, 00110000b
+    set_vdp_register $05, 01000000b
     ;                      | | | |
     ;                      | | | +-- #0: 0 - + 0 to address
     ;                      | | |         1 - + $200 (512) to address
@@ -191,7 +191,7 @@ skip_tmss:
     ;                                    1 - ??
 
     ; Horizontal Scroll Data Location
-    ; Place it at $8000
+    ; Place it at $10000
     ;                       +------- #5: 0 - + 0 to address
     ;                       |            1 - + $8000 (32768) to address
     ;                       | +----- #3: 0 - + 0 to address
@@ -199,7 +199,7 @@ skip_tmss:
     ;                       | | +--- #1: 0 - + 0 to address
     ;                       | | |        1 - + $800 (2048) to address
     ;                       | | |
-    set_vdp_register $0D, 00100000b
+    set_vdp_register $0D, 00101000b
     ;                      | | | |
     ;                      | | | +-- #0: 0 - + 0 to address
     ;                      | | |         1 - + $400 (1024) to address
@@ -289,7 +289,52 @@ skip_tmss:
     set_palette_color 7, 0, 6        ; Color 13
     set_palette_color 7, 0, 7        ; Color 14
     set_palette_color 7, 7, 7        ; Color 15
+
+
+    ; =================================================================
+    ; CREATE TILES
+    ; =================================================================
     
+    ; 2 * 8 words
+    ; 1   2     3   4
+    ;
+    ; 0 0 1 1   1 1 0 0   1
+    ; 0 1 2 2   2 2 1 0   2
+    ; 1 2 2 2   2 2 2 1   3
+    ; 1 2 2 3   3 2 2 1   4
+    ; 1 2 2 3   3 2 2 1   5
+    ; 1 2 2 2   2 2 2 1   6
+    ; 0 1 2 2   2 2 1 0   7
+    ; 0 0 1 1   1 1 0 0   8
+
+    move.l  #$40000000, vdp_ctrl    ; Start writing at VRAM $0000
+
+    move.w  #$0011, vdp_data ; row 1
+    move.w  #$1100, vdp_data
+
+    move.w  #$0122, vdp_data ; row 2
+    move.w  #$2210, vdp_data
+
+    move.w  #$1222, vdp_data ; row 3
+    move.w  #$2211, vdp_data
+
+    move.w  #$1222, vdp_data ; row 4
+    move.w  #$2211, vdp_data
+
+    move.w  #$1222, vdp_data ; row 4
+    move.w  #$2211, vdp_data
+
+    move.w  #$0122, vdp_data ; row 5
+    move.w  #$2210, vdp_data
+
+    move.w  #$0011, vdp_data ; row 6
+    move.w  #$1100, vdp_data
+
+    move.w  #$0011, vdp_data ; row 7
+    move.w  #$1100, vdp_data
+
+    move.w  #$0011, vdp_data ; row 8
+    move.w  #$1100, vdp_data
 
     ; =================================================================
     ; STEP 4: ENABLE DISPLAY AND SET BACKGROUND
@@ -302,7 +347,7 @@ skip_tmss:
     ;                       |   +--- #1: 0 - enable H/V counter
     ;                       |   |        1 - freeze H/V counter on lvl 2 interrupt
     ;                       |   |
-    set_vdp_register $00, 00000100b      ; bits 7, 6 & 3 are always 0
+    set_vdp_register $00, 00000101b      ; bits 7, 6 & 3 are always 0
     ;                        | | |
     ;                        | | +-- #0: 0 - enable display
     ;                        | |         1 - disable display
@@ -319,7 +364,7 @@ skip_tmss:
     ;                     | | +----- #3: 0 - 224 pixel (28 cell) NTSC mode
     ;                     | | |          1 - 240 pixel (30 cell) PAL mode
     ;                     | | |
-    set_vdp_register $01, 00101100b      ; bits 1, 0 are always 0
+    set_vdp_register $01, 01101100b      ; bits 1, 0 are always 0
     ;                      | | |
     ;                      | | +---- #2: 0 - Master System (mode 4) display
     ;                      | |           1 - Mega Drive (mode 5) display
