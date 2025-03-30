@@ -29,7 +29,14 @@ Start:
     move.w  #$2700,sr             ; Disable interrupts (status register)
     move.l  #$FF0000,sp           ; Set stack pointer to end of work RAM
                                   ; it will wrap down to FFFFFF.
-                                  ; TODO: sp is confusing.
+                                  ; TODO: sp is confusing
+
+    ; TMSS (TraceMark Security System)
+    move.b  ($A10001),d0		; Get hardware version.
+	andi.b  #$F,d0			    ; Compare.
+	beq.s   skip_tmss		    ; If the console has no TMSS, skip the security stuff.
+	move.l  #'SEGA',($A14000)	; Make the TMSS happy.
+skip_tmss:
 
     ; =================================================================
     ; STEP 1: CONFIGURE VDP REGISTERS (Video Display Processor)
