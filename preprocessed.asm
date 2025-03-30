@@ -116,9 +116,9 @@ vdp_ctrl2 equ $C00006
     move.w #38400,vdp_ctrl
     move.w #38656,vdp_ctrl
     move.l #$40000000, vdp_ctrl
-    move.w #$7FFF, d7
+    move.w #$3FFF, d7
     .ClearVRAM:
-    move.w #$0000, vdp_data
+    move.l #$00000000, vdp_data
     dbra d7,.ClearVRAM
     move.l #$7FFF, d7
     move.l #$FF0000, a0
@@ -143,24 +143,14 @@ vdp_ctrl2 equ $C00006
     set_palette_color 7, 0, 7
     set_palette_color 7, 7, 7
     move.l #$40000000, vdp_ctrl
-    move.w #$0011, vdp_data
-    move.w #$1100, vdp_data
-    move.w #$0122, vdp_data
-    move.w #$2210, vdp_data
-    move.w #$1222, vdp_data
-    move.w #$2211, vdp_data
-    move.w #$1222, vdp_data
-    move.w #$2211, vdp_data
-    move.w #$1222, vdp_data
-    move.w #$2211, vdp_data
-    move.w #$0122, vdp_data
-    move.w #$2210, vdp_data
-    move.w #$0011, vdp_data
-    move.w #$1100, vdp_data
-    move.w #$0011, vdp_data
-    move.w #$1100, vdp_data
-    move.w #$0011, vdp_data
-    move.w #$1100, vdp_data
+    move.l #$10000000, vdp_data
+    move.l #$11000000, vdp_data
+    move.l #$11100000, vdp_data
+    move.l #$11110000, vdp_data
+    move.l #$11111000, vdp_data
+    move.l #$11111100, vdp_data
+    move.l #$11111110, vdp_data
+    move.l #$11111111, vdp_data
     move.w #34567,vdp_ctrl
     move.w #32773,vdp_ctrl
     move.w #33132,vdp_ctrl

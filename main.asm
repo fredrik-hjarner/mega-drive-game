@@ -248,9 +248,9 @@ skip_tmss:
     ; This seems to clear all VRAM...
     ; -----------------------------------------------------------------
     move.l  #$40000000, vdp_ctrl    ; Start writing at VRAM $0000
-    move.w  #$7FFF, d7             ; Loop counter (32,768 words = 64KB VRAM)
+    move.w  #$3FFF, d7             ; Loop counter (32,768 words = 64KB VRAM)
 .ClearVRAM:
-    move.w  #$0000, vdp_data        ; Write zero to VRAM (fill with empty tiles)
+    move.l  #$00000000, vdp_data        ; Write zero to VRAM (fill with empty tiles)
     dbra    d7,.ClearVRAM         ; Decrement and branch until done
 
     ; =================================================================
@@ -294,47 +294,17 @@ skip_tmss:
     ; =================================================================
     ; CREATE TILES
     ; =================================================================
-    
-    ; 2 * 8 words
-    ; 1   2     3   4
-    ;
-    ; 0 0 1 1   1 1 0 0   1
-    ; 0 1 2 2   2 2 1 0   2
-    ; 1 2 2 2   2 2 2 1   3
-    ; 1 2 2 3   3 2 2 1   4
-    ; 1 2 2 3   3 2 2 1   5
-    ; 1 2 2 2   2 2 2 1   6
-    ; 0 1 2 2   2 2 1 0   7
-    ; 0 0 1 1   1 1 0 0   8
 
     move.l  #$40000000, vdp_ctrl    ; Start writing at VRAM $0000
 
-    move.w  #$0011, vdp_data ; row 1
-    move.w  #$1100, vdp_data
-
-    move.w  #$0122, vdp_data ; row 2
-    move.w  #$2210, vdp_data
-
-    move.w  #$1222, vdp_data ; row 3
-    move.w  #$2211, vdp_data
-
-    move.w  #$1222, vdp_data ; row 4
-    move.w  #$2211, vdp_data
-
-    move.w  #$1222, vdp_data ; row 4
-    move.w  #$2211, vdp_data
-
-    move.w  #$0122, vdp_data ; row 5
-    move.w  #$2210, vdp_data
-
-    move.w  #$0011, vdp_data ; row 6
-    move.w  #$1100, vdp_data
-
-    move.w  #$0011, vdp_data ; row 7
-    move.w  #$1100, vdp_data
-
-    move.w  #$0011, vdp_data ; row 8
-    move.w  #$1100, vdp_data
+    move.l #$10000000, vdp_data ; row 1
+    move.l #$11000000, vdp_data ; row 2
+    move.l #$11100000, vdp_data ; row 3
+    move.l #$11110000, vdp_data ; row 4
+    move.l #$11111000, vdp_data ; row 5
+    move.l #$11111100, vdp_data ; row 6
+    move.l #$11111110, vdp_data ; row 7
+    move.l #$11111111, vdp_data ; row 8
 
     ; =================================================================
     ; STEP 4: ENABLE DISPLAY AND SET BACKGROUND
