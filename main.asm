@@ -191,7 +191,8 @@ skip_tmss:
     ;                                    1 - ??
 
     ; Horizontal Scroll Data Location
-    ; Place it at $10000
+    ; Only needs 2 words (4 bytes) when in full screen scroll mode.
+    ; Place it at $400
     ;                       +------- #5: 0 - + 0 to address
     ;                       |            1 - + $8000 (32768) to address
     ;                       | +----- #3: 0 - + 0 to address
@@ -199,7 +200,7 @@ skip_tmss:
     ;                       | | +--- #1: 0 - + 0 to address
     ;                       | | |        1 - + $800 (2048) to address
     ;                       | | |
-    set_vdp_register $0D, 00101000b
+    set_vdp_register $0D, 00000001b
     ;                      | | | |
     ;                      | | | +-- #0: 0 - + 0 to address
     ;                      | | |         1 - + $400 (1024) to address
@@ -288,7 +289,7 @@ skip_tmss:
     set_palette_color 7, 0, 5        ; Color 12
     set_palette_color 7, 0, 6        ; Color 13
     set_palette_color 7, 0, 7        ; Color 14
-    set_palette_color 7, 7, 7        ; Color 15
+    set_palette_color 7, 1, 7        ; Color 15
 
 
     ; =================================================================
@@ -368,6 +369,12 @@ vblank:
         ; right shift d1 to get the color index
         lsr.w #2, d1
         jsr set_bg_color
+
+    ; now also scroll plane A and plane B
+        set_write_vram vdp_hscroll_addr
+        move.w d1, vdp_data
+        move.w d1, vdp_data
+
         ; Restore registers
         movem.l (sp)+,d1-d2
         rte

@@ -2,8 +2,13 @@ vdp_data equ $C00000
 vdp_data2 equ $C00002
 vdp_ctrl equ $C00004
 vdp_ctrl2 equ $C00006
+vdp_hscroll_addr equ $400
+vdp_tiles_addr equ $0000
     macro set_palette_color
     move.w #((\3)<<9) | ((\2)<<5) | ((\1)<<1), vdp_data
+    endm
+    macro set_write_vram
+    move.l #$40000000+(((\1)&$3FFF)<<16)+(((\1)&$C000)>>14),vdp_ctrl
     endm
     dc.l 0
     dc.l Start
@@ -104,7 +109,7 @@ vdp_ctrl2 equ $C00006
     move.w #35328,vdp_ctrl
     move.w #35584,vdp_ctrl
     move.w #35969,vdp_ctrl
-    move.w #36136,vdp_ctrl
+    move.w #36097,vdp_ctrl
     move.w #36352,vdp_ctrl
     move.w #36610,vdp_ctrl
     move.w #36864,vdp_ctrl
@@ -141,7 +146,7 @@ vdp_ctrl2 equ $C00006
     set_palette_color 7, 0, 5
     set_palette_color 7, 0, 6
     set_palette_color 7, 0, 7
-    set_palette_color 7, 7, 7
+    set_palette_color 7, 1, 7
     move.l #$40000000, vdp_ctrl
     move.l #$10000000, vdp_data
     move.l #$11000000, vdp_data
@@ -170,6 +175,9 @@ vdp_ctrl2 equ $C00006
     move.w color_index, d1
     lsr.w #2, d1
     jsr set_bg_color
+    set_write_vram vdp_hscroll_addr
+    move.w d1, vdp_data
+    move.w d1, vdp_data
     movem.l (sp)+,d1-d2
     dc.b %01001110
     dc.b %01110011

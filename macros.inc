@@ -15,3 +15,10 @@
     ; macro set_vdp_register
     ;     move.w  #(1<<15 | ((\1)<<8) | (\2)), vdp_ctrl
     ; endm
+
+    ; arguments:
+    ;     \1: address: $0000-$FFFF
+    ; https://segaretro.org/Sega_Mega_Drive/VDP_general_usage
+    macro set_write_vram
+        move.l #$40000000+(((\1)&$3FFF)<<16)+(((\1)&$C000)>>14),vdp_ctrl
+    endm
