@@ -1,10 +1,6 @@
-; =====================================================================
-; Minimal Sega Genesis "Hello World" program
-; Displays a solid red color on screen
-; =====================================================================
-
     include "consts.inc"
     include "macros.inc"
+
 ; =====================================================================
 ; HEADER 512 bytes ($200 bytes)
 ; =====================================================================
@@ -32,10 +28,10 @@ Start:
                                   ; TODO: sp is confusing
 
     ; TMSS (TraceMark Security System)
-    move.b  ($A10001),d0		; Get hardware version.
+    move.b  $A10001,d0		; Get hardware version.
 	andi.b  #$F,d0			    ; Compare.
 	beq.s   skip_tmss		    ; If the console has no TMSS, skip the security stuff.
-	move.l  #'SEGA',($A14000)	; Make the TMSS happy.
+	move.l  #'SEGA',$A14000 	; Make the TMSS happy.
 skip_tmss:
 
     ; =================================================================
@@ -90,6 +86,18 @@ skip_tmss:
     ;                      | +------ #4: 0 - + 0 to address
     ;                      |             1 - + $4000 (16384) to address
     ;                      +-------- #6: Used for 128kB VRAM.
+
+    ; Plane B Name Table Location
+    ;                          +---- #2: 0 - + 0 to address
+    ;                          |         1 - + $8000 (32768) to address
+    ;                          | +-- #0: 0 - + 0 to address
+    ;                          | |       1 - + $2000 (8192) to address
+    ;                          | |
+    set_vdp_register $04, 00000001b      ; bits 7, 6, 5 & 4 are always 0
+    ;                         | |
+    ;                         | +--- #1: 0 - + 0 to address
+    ;                         |          1 - + $4000 (16384) to address
+    ;                         +----- #3: Used for 128kB VRAM.
 
     ; Mode Register 3
     ;                         +----- #3: 0 - disable external interrupts

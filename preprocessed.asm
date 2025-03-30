@@ -87,14 +87,15 @@ vdp_ctrl2 equ $C00006
     Start:
     move.w #$2700,sr
     move.l #$FF0000,sp
-    move.b ($A10001),d0
+    move.b $A10001,d0
     andi.b #$F,d0
     beq.s skip_tmss
-    move.l #'SEGA',($A14000)
+    move.l #'SEGA',$A14000
     skip_tmss:
     move.w #32773,vdp_ctrl
     move.w #33036,vdp_ctrl
     move.w #33280,vdp_ctrl
+    move.w #33793,vdp_ctrl
     move.w #35584,vdp_ctrl
     move.w #35969,vdp_ctrl
     move.w #36610,vdp_ctrl
