@@ -214,14 +214,14 @@ skip_tmss:
 
     set_vdp_register $0F, $02 ; Reg 15: VRAM auto-increment = 2 bytes
 
-    ; Plane Size
+    ; Plane Size                   height
     ;                       +----- #5-4: 00 - 256 pixels (32 cells)
     ;                       |            01 - 512 pixels (64 cells)
     ;                       |            10 - invalid
     ;                       |            11 - 1024 pixels (128 cells)
     ;                       |
     set_vdp_register $10, 00000000b      ; bits 7, 6, 3 & 2 are always 0
-    ;                           |
+    ;                           |   width
     ;                           +- #1-0: 00 - 256 pixels (32 cells)
     ;                                    01 - 512 pixels (64 cells)
     ;                                    10 - invalid
@@ -297,6 +297,7 @@ skip_tmss:
 
     move.l  #$40000000, vdp_ctrl    ; Start writing at VRAM $0000
 
+    ; Tile $0
     move.l #$10000000, vdp_data ; row 1
     move.l #$11000000, vdp_data ; row 2
     move.l #$11100000, vdp_data ; row 3
