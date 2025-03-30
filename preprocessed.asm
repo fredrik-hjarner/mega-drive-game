@@ -94,6 +94,7 @@ vdp_ctrl2 equ $C00006
     skip_tmss:
     move.w #32773,vdp_ctrl
     move.w #33036,vdp_ctrl
+    move.w #33280,vdp_ctrl
     move.w #35584,vdp_ctrl
     move.w #35969,vdp_ctrl
     move.w #36610,vdp_ctrl
@@ -123,6 +124,7 @@ vdp_ctrl2 equ $C00006
     set_palette_color 7, 0, 7
     set_palette_color 7, 1, 7
     move.w #34567,vdp_ctrl
+    move.w #32788,vdp_ctrl
     move.w #33068,vdp_ctrl
     move #$2300, sr
     MainLoop:

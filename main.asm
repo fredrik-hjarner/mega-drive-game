@@ -47,6 +47,7 @@ skip_tmss:
     ; https://wiki.megadrive.org/index.php?title=VDP_Registers
     ; -----------------------------------------------------------------
 
+    ; Mode Register 1
     ;                       +------- #5: 0 - left 8 pix not blanked (i.e. normal)
     ;                       |            1 - leftmost 8 pix are blanked to bg col
     ;                       |   +--- #1: 0 - enable H/V counter
@@ -61,6 +62,7 @@ skip_tmss:
     ;                        +------ #4: 0 - disable h-blank interrupts
     ;                                    1 - enable h-blank interrupts
 
+    ; Mode Register 2
     ;                     +--------- #7: 0 - 64kB of VRAM
     ;                     |              1 - 128kB of VRAM
     ;                     | +------- #5: 0 - disable v-blank interrupts
@@ -76,6 +78,18 @@ skip_tmss:
     ;                      |             1 - enable DMA
     ;                      +-------- #6: 0 - disable display
     ;                                    1 - enable display
+
+    ; Plane A Name Table Location
+    ;                       +------- #5: 0 - + 0 to address
+    ;                       |            1 - + $8000 (32768) to address
+    ;                       | +----- #3: 0 - + 0 to address
+    ;                       | |          1 - + $2000 (8192) to address
+    ;                       | |
+    set_vdp_register $02, 00000000b      ; bits 7, 2, 1 & 0 are always 0
+    ;                      | |
+    ;                      | +------ #4: 0 - + 0 to address
+    ;                      |             1 - + $4000 (16384) to address
+    ;                      +-------- #6: Used for 128kB VRAM.
 
     ; Mode Register 3
     ;                         +----- #3: 0 - disable external interrupts
@@ -175,15 +189,37 @@ skip_tmss:
     ; =================================================================
     set_vdp_register 7, $07        ; Reg 7: Background color = palette 0, color 7
 
-    ;                   +--------- #7: 0 - Use 64kB of VRAM
-    ;                   | +------- #5: 1 - Enable vertical interrupts
-    ;                   | | +----- #3: 1 - PAL mode
-    ;                   | | |
-    set_vdp_register 1, 00101100b   ; bits 0 and 1 are unused and always 0
-    ;                    | | |
-    ;                    | | +---- #2: 1 - Mega Drive  (mode 5) display
-    ;                    | +------ #4: 0 - Disable DMA
-    ;                    +-------- #6: 0 - Disable display & show bg color
+    ; Mode Register 1
+    ;                       +------- #5: 0 - left 8 pix not blanked (i.e. normal)
+    ;                       |            1 - leftmost 8 pix are blanked to bg col
+    ;                       |   +--- #1: 0 - enable H/V counter
+    ;                       |   |        1 - freeze H/V counter on lvl 2 interrupt
+    ;                       |   |
+    set_vdp_register $00, 00010100b      ; bits 7, 6 & 3 are always 0
+    ;                        | | |
+    ;                        | | +-- #0: 0 - enable display
+    ;                        | |         1 - disable display
+    ;                        | +---- #2: 0 - some master system stuff
+    ;                        |           1 - normal operation
+    ;                        +------ #4: 0 - disable h-blank interrupts
+    ;                                    1 - enable h-blank interrupts
+
+    ; Mode Register 2
+    ;                     +--------- #7: 0 - 64kB of VRAM
+    ;                     |              1 - 128kB of VRAM
+    ;                     | +------- #5: 0 - disable v-blank interrupts
+    ;                     | |            1 - enable v-blank interrupts
+    ;                     | | +----- #3: 0 - 224 pixel (28 cell) NTSC mode
+    ;                     | | |          1 - 240 pixel (30 cell) PAL mode
+    ;                     | | |
+    set_vdp_register $01, 00101100b      ; bits 1, 0 are always 0
+    ;                      | | |
+    ;                      | | +---- #2: 0 - Master System (mode 4) display
+    ;                      | |           1 - Mega Drive (mode 5) display
+    ;                      | +------ #4: 0 - disable DMA
+    ;                      |             1 - enable DMA
+    ;                      +-------- #6: 0 - disable display
+    ;                                    1 - enable display
 
 
     move    #$2300, sr		; Enable interrupts.
