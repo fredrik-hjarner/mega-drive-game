@@ -98,14 +98,23 @@ vdp_ctrl2 equ $C00006
     move.w #33544,vdp_ctrl
     move.w #33794,vdp_ctrl
     move.w #34096,vdp_ctrl
+    move.w #34304,vdp_ctrl
+    move.w #34816,vdp_ctrl
+    move.w #35072,vdp_ctrl
     move.w #35328,vdp_ctrl
     move.w #35584,vdp_ctrl
     move.w #35969,vdp_ctrl
+    move.w #36128,vdp_ctrl
     move.w #36352,vdp_ctrl
     move.w #36610,vdp_ctrl
     move.w #36864,vdp_ctrl
     move.w #37120,vdp_ctrl
     move.w #37376,vdp_ctrl
+    move.w #37632,vdp_ctrl
+    move.w #37888,vdp_ctrl
+    move.w #38144,vdp_ctrl
+    move.w #38400,vdp_ctrl
+    move.w #38656,vdp_ctrl
     move.l #$40000000, vdp_ctrl
     move.w #$7FFF, d7
     .ClearVRAM:

@@ -140,16 +140,18 @@ skip_tmss:
     ;                      | +------ #4: 0 - + 0 to address
     ;                      |             1 - + $2000 (8192) to address
     ;                      +-------- #6: 0 - + 0 to address
-    ;                                    1 - + $8000 (32768) to address\
+    ;                                    1 - + $8000 (32768) to address
 
-    ; ; Bit 16 of sprite table address. Only used with 128kB VRAM.
-    ; set_vdp_register $06, 00000000b
+    ; Bit 16 of sprite table address. Only used with 128kB VRAM.
+    set_vdp_register $06, 00000000b
 
-    ; ; Master System horizontal scroll register 
-    ; set_vdp_register $08, 00000000b
+    ; TODO: 7
 
-    ; ; Master System vertical scroll register  
-    ; set_vdp_register $09, 00000000b
+    ; Master System horizontal scroll register 
+    set_vdp_register $08, 00000000b
+
+    ; Master System vertical scroll register  
+    set_vdp_register $09, 00000000b
 
     ; Horizontal Interrupt Counter
     set_vdp_register $0A, 00000000b ; interrupt every 1 scanline(s).
@@ -188,6 +190,25 @@ skip_tmss:
     ;                      +-------- #6: 0 - ??
     ;                                    1 - ??
 
+    ; Horizontal Scroll Data Location
+    ; Place it at $8000
+    ;                       +------- #5: 0 - + 0 to address
+    ;                       |            1 - + $8000 (32768) to address
+    ;                       | +----- #3: 0 - + 0 to address
+    ;                       | |          1 - + $2000 (8192) to address
+    ;                       | | +--- #1: 0 - + 0 to address
+    ;                       | | |        1 - + $800 (2048) to address
+    ;                       | | |
+    set_vdp_register $0D, 00100000b
+    ;                      | | | |
+    ;                      | | | +-- #0: 0 - + 0 to address
+    ;                      | | |         1 - + $400 (1024) to address
+    ;                      | | +---- #2: 0 - + 0 to address
+    ;                      | |           1 - + $1000 (4096) to address
+    ;                      | +------ #4: 0 - + 0 to address
+    ;                      |             1 - + $4000 (16384) to address
+    ;                      +-------- #6: Used for 128kB VRAM.
+
     ; Horizontal Scroll Data Location (this reg only has stuff for 128kB VRAM)
     set_vdp_register $0E, 00000000b     
 
@@ -208,17 +229,17 @@ skip_tmss:
 
     ; Window Plane Horizontal Position
     set_vdp_register $11, 00000000b      ; no window
-    ; Window Plane Horizontal Position
+    ; Window Plane Vertical Position
     set_vdp_register $12, 00000000b      ; no window
 
-    ; ; DMA Length Registers $13-$14
-    ; set_vdp_register $13, 00000000b
-    ; set_vdp_register $14, 00000000b
+    ; DMA Length Registers $13-$14
+    set_vdp_register $13, 00000000b
+    set_vdp_register $14, 00000000b
 
-    ; ; DMA Source Registers $15-$17
-    ; set_vdp_register $15, 00000000b
-    ; set_vdp_register $16, 00000000b
-    ; set_vdp_register $17, 00000000b
+    ; DMA Source Registers $15-$17
+    set_vdp_register $15, 00000000b
+    set_vdp_register $16, 00000000b
+    set_vdp_register $17, 00000000b
 
     ; =================================================================
     ; STEP 2: CLEAR VRAM (Video RAM)
