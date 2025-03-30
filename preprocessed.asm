@@ -98,9 +98,7 @@ vdp_ctrl2 equ $C00006
     move.w #33544,vdp_ctrl
     move.w #33794,vdp_ctrl
     move.w #34096,vdp_ctrl
-    move.w #34304,vdp_ctrl
-    move.w #34816,vdp_ctrl
-    move.w #35072,vdp_ctrl
+    move.w #35328,vdp_ctrl
     move.w #35584,vdp_ctrl
     move.w #35969,vdp_ctrl
     move.w #36352,vdp_ctrl
@@ -108,16 +106,16 @@ vdp_ctrl2 equ $C00006
     move.w #36864,vdp_ctrl
     move.w #37120,vdp_ctrl
     move.w #37376,vdp_ctrl
-    move.w #37632,vdp_ctrl
-    move.w #37888,vdp_ctrl
-    move.w #38144,vdp_ctrl
-    move.w #38400,vdp_ctrl
-    move.w #38656,vdp_ctrl
     move.l #$40000000, vdp_ctrl
     move.w #$7FFF, d7
     .ClearVRAM:
     move.w #$0000, vdp_data
     dbra d7,.ClearVRAM
+    move.l #$FFFF, d7
+    move.l #$FF0000, a0
+    .ClearRAM:
+    move.b #$00, (a0)+
+    dbra d7,.ClearRAM
     move.l #$C0000000, vdp_ctrl
     set_palette_color 0, 0, 0
     set_palette_color 1, 0, 0
@@ -134,9 +132,9 @@ vdp_ctrl2 equ $C00006
     set_palette_color 7, 0, 5
     set_palette_color 7, 0, 6
     set_palette_color 7, 0, 7
-    set_palette_color 7, 1, 7
+    set_palette_color 7, 7, 7
     move.w #34567,vdp_ctrl
-    move.w #32788,vdp_ctrl
+    move.w #32772,vdp_ctrl
     move.w #33068,vdp_ctrl
     move #$2300, sr
     MainLoop:
@@ -148,7 +146,7 @@ vdp_ctrl2 equ $C00006
     movem.l d1-d2,-(sp)
     add.w #1, color_index
     cmpi.w #(16<<2), color_index
-    bne.s .done
+    blo.s .done
     move.w #0, color_index
     .done:
     move.w color_index, d1

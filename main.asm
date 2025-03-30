@@ -142,14 +142,17 @@ skip_tmss:
     ;                      +-------- #6: 0 - + 0 to address
     ;                                    1 - + $8000 (32768) to address\
 
-    ; Bit 16 of sprite table address. Only used with 128kB VRAM.
-    set_vdp_register $06, 00000000b
+    ; ; Bit 16 of sprite table address. Only used with 128kB VRAM.
+    ; set_vdp_register $06, 00000000b
 
-    ; Master System horizontal scroll register 
-    set_vdp_register $08, 00000000b
+    ; ; Master System horizontal scroll register 
+    ; set_vdp_register $08, 00000000b
 
-    ; Master System vertical scroll register  
-    set_vdp_register $09, 00000000b
+    ; ; Master System vertical scroll register  
+    ; set_vdp_register $09, 00000000b
+
+    ; Horizontal Interrupt Counter
+    set_vdp_register $0A, 00000000b ; interrupt every 1 scanline(s).
 
     ; Mode Register 3
     ;                         +----- #3: 0 - disable external interrupts
@@ -208,25 +211,36 @@ skip_tmss:
     ; Window Plane Horizontal Position
     set_vdp_register $12, 00000000b      ; no window
 
-    ; DMA Length Registers $13-$14
-    set_vdp_register $13, 00000000b
-    set_vdp_register $14, 00000000b
+    ; ; DMA Length Registers $13-$14
+    ; set_vdp_register $13, 00000000b
+    ; set_vdp_register $14, 00000000b
 
-    ; DMA Source Registers $15-$17
-    set_vdp_register $15, 00000000b
-    set_vdp_register $16, 00000000b
-    set_vdp_register $17, 00000000b
+    ; ; DMA Source Registers $15-$17
+    ; set_vdp_register $15, 00000000b
+    ; set_vdp_register $16, 00000000b
+    ; set_vdp_register $17, 00000000b
 
     ; =================================================================
     ; STEP 2: CLEAR VRAM (Video RAM)
     ; =================================================================
-    ; VRAM Write Command: $40000000 | (address << 1)
+    ; VRAM Write Command: $40000000
+    ; This seems to clear all VRAM...
     ; -----------------------------------------------------------------
     move.l  #$40000000, vdp_ctrl    ; Start writing at VRAM $0000
     move.w  #$7FFF, d7             ; Loop counter (32,768 words = 64KB VRAM)
 .ClearVRAM:
     move.w  #$0000, vdp_data        ; Write zero to VRAM (fill with empty tiles)
     dbra    d7,.ClearVRAM         ; Decrement and branch until done
+
+    ; =================================================================
+    ; CLEAR "NORMAL" RAM
+    ; $FF0000 - $FFFFFF (64kb)
+    ; =================================================================
+    move.l  #$FFFF, d7             ; Loop counter (64KB)
+    move.l  #$FF0000, a0
+.ClearRAM:
+    move.b  #$00, (a0)+          ; Write zero toVRAM 
+    dbra    d7,.ClearRAM         ; Decrement and branch until done
 
     ; =================================================================
     ; STEP 3: SET UP COLOR PALETTE (CRAM - Color RAM)
@@ -253,7 +267,7 @@ skip_tmss:
     set_palette_color 7, 0, 5        ; Color 12
     set_palette_color 7, 0, 6        ; Color 13
     set_palette_color 7, 0, 7        ; Color 14
-    set_palette_color 7, 1, 7        ; Color 15
+    set_palette_color 7, 7, 7        ; Color 15
     
 
     ; =================================================================
@@ -267,7 +281,7 @@ skip_tmss:
     ;                       |   +--- #1: 0 - enable H/V counter
     ;                       |   |        1 - freeze H/V counter on lvl 2 interrupt
     ;                       |   |
-    set_vdp_register $00, 00010100b      ; bits 7, 6 & 3 are always 0
+    set_vdp_register $00, 00000100b      ; bits 7, 6 & 3 are always 0
     ;                        | | |
     ;                        | | +-- #0: 0 - enable display
     ;                        | |         1 - disable display
@@ -310,7 +324,7 @@ vblank:
         movem.l d1-d2,-(sp)
         add.w #1, color_index
         cmpi.w #(16<<2), color_index
-        bne.s .done
+        blo.s .done
         move.w #0, color_index
     .done:
         move.w color_index, d1
