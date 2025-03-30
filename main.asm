@@ -145,6 +145,12 @@ skip_tmss:
     ; Bit 16 of sprite table address. Only used with 128kB VRAM.
     set_vdp_register $06, 00000000b
 
+    ; Master System horizontal scroll register 
+    set_vdp_register $08, 00000000b
+
+    ; Master System vertical scroll register  
+    set_vdp_register $09, 00000000b
+
     ; Mode Register 3
     ;                         +----- #3: 0 - disable external interrupts
     ;                         |          1 - enable external interrupts
@@ -179,6 +185,9 @@ skip_tmss:
     ;                      +-------- #6: 0 - ??
     ;                                    1 - ??
 
+    ; Horizontal Scroll Data Location (this reg only has stuff for 128kB VRAM)
+    set_vdp_register $0E, 00000000b     
+
     set_vdp_register $0F, $02 ; Reg 15: VRAM auto-increment = 2 bytes
 
     ; Plane Size
@@ -198,6 +207,15 @@ skip_tmss:
     set_vdp_register $11, 00000000b      ; no window
     ; Window Plane Horizontal Position
     set_vdp_register $12, 00000000b      ; no window
+
+    ; DMA Length Registers $13-$14
+    set_vdp_register $13, 00000000b
+    set_vdp_register $14, 00000000b
+
+    ; DMA Source Registers $15-$17
+    set_vdp_register $15, 00000000b
+    set_vdp_register $16, 00000000b
+    set_vdp_register $17, 00000000b
 
     ; =================================================================
     ; STEP 2: CLEAR VRAM (Video RAM)
