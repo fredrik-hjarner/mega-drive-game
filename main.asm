@@ -76,6 +76,7 @@ skip_tmss:
     ;                                    1 - enable display
 
     ; Plane A Name Table Location
+    ; Place it as $0
     ;                       +------- #5: 0 - + 0 to address
     ;                       |            1 - + $8000 (32768) to address
     ;                       | +----- #3: 0 - + 0 to address
@@ -87,13 +88,33 @@ skip_tmss:
     ;                      |             1 - + $4000 (16384) to address
     ;                      +-------- #6: Used for 128kB VRAM.
 
+    ; Window Name Table Location
+    ; Place it at $2000
+    ;                       +------- #5: 0 - + 0 to address
+    ;                       |            1 - + $8000 (32768) to address
+    ;                       | +----- #3: 0 - + 0 to address
+    ;                       | |          1 - + $2000 (8192) to address
+    ;                       | | +--- #1: 0 - + 0 to address
+    ;                       | | |        1 - + $800 (2048) to address
+    ;                       | | |        note: #1 is ignored in 320 wide mode
+    ;                       | | |
+    set_vdp_register $03, 00001000b      ; bits 7 & 0 are always 0
+    ;                      | | |
+    ;                      | | +---- #2: 0 - + 0 to address
+    ;                      | |           1 - + $1000 (4096) to address
+    ;                      | |
+    ;                      | +------ #4: 0 - + 0 to address
+    ;                      |             1 - + $4000 (16384) to address
+    ;                      +-------- #6: Used for 128kB VRAM.
+
     ; Plane B Name Table Location
+    ; Place it at $4000
     ;                          +---- #2: 0 - + 0 to address
     ;                          |         1 - + $8000 (32768) to address
     ;                          | +-- #0: 0 - + 0 to address
     ;                          | |       1 - + $2000 (8192) to address
     ;                          | |
-    set_vdp_register $04, 00000001b      ; bits 7, 6, 5 & 4 are always 0
+    set_vdp_register $04, 00000010b      ; bits 7, 6, 5 & 4 are always 0
     ;                         | |
     ;                         | +--- #1: 0 - + 0 to address
     ;                         |          1 - + $4000 (16384) to address
