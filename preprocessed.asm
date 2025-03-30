@@ -111,10 +111,10 @@ vdp_ctrl2 equ $C00006
     .ClearVRAM:
     move.w #$0000, vdp_data
     dbra d7,.ClearVRAM
-    move.l #$FFFF, d7
+    move.l #$7FFF, d7
     move.l #$FF0000, a0
     .ClearRAM:
-    move.b #$00, (a0)+
+    move.w #$0000, (a0)+
     dbra d7,.ClearRAM
     move.l #$C0000000, vdp_ctrl
     set_palette_color 0, 0, 0

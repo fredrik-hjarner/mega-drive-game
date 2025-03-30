@@ -236,10 +236,10 @@ skip_tmss:
     ; CLEAR "NORMAL" RAM
     ; $FF0000 - $FFFFFF (64kb)
     ; =================================================================
-    move.l  #$FFFF, d7             ; Loop counter (64KB)
+    move.l  #$7FFF, d7             ; Loop counter (64KB / 2 = 32kb)
     move.l  #$FF0000, a0
 .ClearRAM:
-    move.b  #$00, (a0)+          ; Write zero toVRAM 
+    move.w  #$0000, (a0)+          ; Write zero toVRAM 
     dbra    d7,.ClearRAM         ; Decrement and branch until done
 
     ; =================================================================
