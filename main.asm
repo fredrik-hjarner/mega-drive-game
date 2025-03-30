@@ -102,7 +102,6 @@ skip_tmss:
     ;                      | | |
     ;                      | | +---- #2: 0 - + 0 to address
     ;                      | |           1 - + $1000 (4096) to address
-    ;                      | |
     ;                      | +------ #4: 0 - + 0 to address
     ;                      |             1 - + $4000 (16384) to address
     ;                      +-------- #6: Used for 128kB VRAM.
@@ -119,6 +118,32 @@ skip_tmss:
     ;                         | +--- #1: 0 - + 0 to address
     ;                         |          1 - + $4000 (16384) to address
     ;                         +----- #3: Used for 128kB VRAM.
+
+    ; Sprite Table Location
+    ; Place it at $6000
+    ;                     +--------- #7: Used for 128kB VRAM.
+    ;                     |           
+    ;                     | +------- #5: 0 - + 0 to address
+    ;                     | |            1 - + $4000 (16384) to address
+    ;                     | | +----- #3: 0 - + 0 to address
+    ;                     | | |          1 - + $1000 (4096) to address
+    ;                     | | | +--- #1: 0 - + 0 to address
+    ;                     | | | |        1 - + $400 (1024) to address
+    ;                     | | | |
+    set_vdp_register $05, 00110000b
+    ;                      | | | |
+    ;                      | | | +-- #0: 0 - + 0 to address
+    ;                      | | |         1 - + $200 (512) to address
+    ;                      | | |         Note: #0 is ignored in 320 wide mode
+    ;                      | | +---- #2: 0 - + 0 to address
+    ;                      | |           1 - + $800 (2048) to address
+    ;                      | +------ #4: 0 - + 0 to address
+    ;                      |             1 - + $2000 (8192) to address
+    ;                      +-------- #6: 0 - + 0 to address
+    ;                                    1 - + $8000 (32768) to address\
+
+    ; Bit 16 of sprite table address. Only used with 128kB VRAM.
+    set_vdp_register $06, 00000000b
 
     ; Mode Register 3
     ;                         +----- #3: 0 - disable external interrupts
