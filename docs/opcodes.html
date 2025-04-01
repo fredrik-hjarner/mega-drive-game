@@ -15,94 +15,261 @@
             /* width: auto !important; */
         }
         span { padding: 0 !important; }
-        .darkgreen { background-color: rgb(0, 170, 0); }
-        .darkblue { background-color: #3399ff; }
-        .blue { background-color: #33ccff; }
+
+        .lightred { background-color: #ff0d5e; }
+        .darkred { background-color: #a10036; }
+
+        .darkgreen { background-color: #33cc33; }
+        .lightgreen { background-color: #84e084; }
+
         .lightblue { background-color: #83c1ff; }
-        .purple { background-color: rgb(173, 83, 173); }
-        .pink { background-color: rgb(255, 100, 100); }
+        .blue { background-color: #33ccff; }
+        .darkblue { background-color: #3399ff; }
+
+        .lightpurple { background-color: #cc66ff; }
+        .purple { background-color: #ae0dff; }
+        .darkpurple { background-color: #7700b2; }
+
+        .lightpink { background-color: #ffc1d6; }
+        .pink { background-color: #ff6699; }
+
         .lightorange { background-color: rgb(255, 173, 83); }
     </style>
 
     <table>
         <th>Addressing mode</th>
         <th>Format</th>
-        <th>M</th>
-        <th>Xn</th>
+        <th class="pink">M</th>
+        <th class="lightorange">Xn</th>
         <tr>
             <td>Data register</td>
             <td>Dn</td>
-            <td>000</td>
-            <td>reg</td>
+            <td class="pink">000</td>
+            <td class="lightorange">reg</td>
         </tr>
         <tr>
             <td>Address register</td>
             <td>An</td>
-            <td>001</td>
-            <td>reg</td>
+            <td class="pink">001</td>
+            <td class="lightorange">reg</td>
         </tr>
         <tr>
             <td>Address</td>
             <td>(An)</td>
-            <td>010</td>
-            <td>reg</td>
+            <td class="pink">010</td>
+            <td class="lightorange">reg</td>
         </tr>
         <tr>
             <td>Address with Postincrement</td>
             <td>(An)+</td>
-            <td>011</td>
-            <td>reg</td>
+            <td class="pink">011</td>
+            <td class="lightorange">reg</td>
         </tr>
         <tr>
             <td>Address with Predecrement</td>
             <td>-(An)</td>
-            <td>100</td>
-            <td>reg</td>
+            <td class="pink">100</td>
+            <td class="lightorange">reg</td>
         </tr>
         <tr>
             <td>Address with Displacement</td>
             <td>(d16, An)</td>
-            <td>101</td>
-            <td>reg</td>
+            <td class="pink">101</td>
+            <td class="lightorange">reg</td>
         </tr>
         <tr>
-            <td>Address with Index</td>
-            <td>(d8, An, Xn)</td>
-            <td>110</td>
-            <td>reg</td>
+            <td class="lightpink">Address with Index</td>
+            <td class="lightpink">(d8, An, Xn)</td>
+            <td class="pink">110</td>
+            <td class="lightorange">reg</td>
         </tr>
         <tr>
             <td>Program Counter with Displacement</td>
             <td>(d16, PC)</td>
-            <td>111</td>
-            <td>010</td>
+            <td class="pink">111</td>
+            <td class="lightorange">010</td>
         </tr>
         <tr>
-            <td>Program Counter with Index</td>
-            <td>(d8, PC, Xn)</td>
-            <td>111</td>
-            <td>011</td>
+            <td class="lightpink">Program Counter with Index</td>
+            <td class="lightpink">(d8, PC, Xn)</td>
+            <td class="pink">111</td>
+            <td class="lightorange">011</td>
         </tr>
         <tr>
             <td>Absolute Short</td>
             <td>(xxx).W</td>
-            <td>111</td>
-            <td>000</td>
+            <td class="pink">111</td>
+            <td class="lightorange">000</td>
         </tr>
         <tr>
             <td>Absolute Long</td>
             <td>(xxx).L</td>
-            <td>111</td>
-            <td>001</td>
+            <td class="pink">111</td>
+            <td class="lightorange">001</td>
         </tr>
         <tr>
             <td>Immediate</td>
             <td>#imm</td>
-            <td>111</td>
-            <td>100</td>
+            <td class="pink">111</td>
+            <td class="lightorange">100</td>
         </tr>
-        
-        
+    </table>
+
+    <table>
+        <th>Operation Size</th>
+        <th>Suffix</th>
+        <th class="lightpurple">S</th>
+        <th class="purple">S</th>
+        <th class="darkpurple">S</th>
+        <tr>
+            <td>Byte</td>
+            <td>.b</td>
+            <td class="lightpurple">00</td>
+            <td class="purple">/</td>
+            <td class="darkpurple">01</td>
+        </tr>
+        <tr>
+            <td>Word</td>
+            <td>.w</td>
+            <td class="lightpurple">01</td>
+            <td class="purple">0</td>
+            <td class="darkpurple">11</td>
+        </tr>
+        <tr>
+            <td>Long</td>
+            <td>.l</td>
+            <td class="lightpurple">10</td>
+            <td class="purple">1</td>
+            <td class="darkpurple">10</td>
+        </tr>
+    </table>
+
+    <table>
+        <th>Direction</th>
+        <th class="lightgreen">d</th>
+        <th class="darkgreen">D</th>
+        <tr>
+            <td>Byte</td>
+            <td class="lightgreen">R</td>
+            <td class="darkgreen">0</td>
+        </tr>
+        <tr>
+            <td>Word</td>
+            <td class="lightgreen">L</td>
+            <td class="darkgreen">1</td>
+        </tr>
+    </table>
+
+    <table>
+        <th>Rotation</th>
+        <th>M</th>
+        <tr>
+            <td>Immediate</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>Register</td>
+            <td>1</td>
+        </tr>
+    </table>
+
+    <table>
+        <th>Mode</th>
+        <th class="lightred">M</th>
+        <tr>
+            <td>Dn</td>
+            <td class="lightred">0</td>
+        </tr>
+        <tr>
+            <td>-(An)</td>
+            <td class="lightred">1</td>
+        </tr>
+    </table>
+
+    <table>
+        <th>Condition</th>
+        <th>Mnemonic</th>
+        <th>Cond</th>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+    <table>
+        <th>Data Type</th>
+        <th>Letter</th>
+        <tr>
+            <td>Immediate</td>
+            <td>I</td>
+        </tr>
+        <tr>
+            <td>Bit Index</td>
+            <td>N</td>
+        </tr>
+        <tr>
+            <td>Displacement</td>
+            <td>D</td>
+        </tr>
+        <tr>
+            <td>Optional Displacement</td>
+            <td>D</td>
+        </tr>
+        <tr>
+            <td>Register List Mask</td>
+            <td>M</td>
+        </tr>
+    </table>
+
+    <table>
+        <th>Data Size</th>
+        <th>Letter</th>
+        <tr>
+            <td>Byte</td>
+            <td>B</td>
+        </tr>
+        <tr>
+            <td>Word</td>
+            <td>W</td>
+        </tr>
+        <tr>
+            <td>Long</td>
+            <td>L</td>
+        </tr>
+        <tr>
+            <td>Any</td>
+            <td>/</td>
+        </tr>
+    </table>
+
+    <table>
+        <th>Direction</th>
+        <th class="lightred">D</th>
+        <th class="darkred">D</th>
+        <tr>
+            <td>Register to memory</td>
+            <td class="lightred">0</td>
+            <td class="darkred">1</td>
+        </tr>
+        <tr>
+            <td>Memory to register</td>
+            <td class="lightred">1</td>
+            <td class="darkred">0</td>
+        </tr>
+    </table>
+
+    <table>
+        <th>Direction</th>
+        <th>D</th>
+        <tr>
+            <td>Dn ♦ &lt;ea&gt; → Dn</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>&lt;ea&gt; ♦ Dn → &lt;ea&gt;</td>
+            <td>1</td>
+        </tr>
     </table>
 
     <table>
@@ -118,7 +285,7 @@
             <td class="darkblue"    colspan="4">0000</td>
             <td class="lightblue"   colspan="3">000</td>
             <td class="lightblue"   colspan="1">0</td>
-            <td class="purple"      colspan="2">00</td>
+            <td class="lightpurple"      colspan="2">00</td>
             <td class="pink"        colspan="3">111</td>
             <td class="lightorange" colspan="3">100</td>
             <td class="blue">B</td>
@@ -133,7 +300,7 @@
             <td class="darkblue"    colspan="4">0000</td>
             <td class="lightblue"   colspan="3">000</td>
             <td class="lightblue"   colspan="1">0</td>
-            <td class="purple"      colspan="2">01</td>
+            <td class="lightpurple"      colspan="2">01</td>
             <td class="pink"        colspan="3">111</td>
             <td class="lightorange" colspan="3">100</td>
             <td class="blue">B</td>
@@ -148,7 +315,7 @@
             <td class="darkblue"    colspan="4">0000</td>
             <td class="lightblue"   colspan="3">000</td>
             <td class="lightblue"   colspan="1">0</td>
-            <td class="purple"      colspan="2">S</td>
+            <td class="lightpurple"      colspan="2">S</td>
             <td class="pink"        colspan="3">M</td>
             <td class="lightorange" colspan="3">Xn</td>
             <td class="blue">/</td>
@@ -163,7 +330,7 @@
             <td class="darkblue"    colspan="4">0000</td>
             <td class="lightblue"   colspan="3">001</td>
             <td class="lightblue"   colspan="1">0</td>
-            <td class="purple"      colspan="2">00</td>
+            <td class="lightpurple"      colspan="2">00</td>
             <td class="pink"        colspan="3">111</td>
             <td class="lightorange" colspan="3">100</td>
             <td class="blue">B</td>
@@ -178,7 +345,7 @@
             <td class="darkblue"    colspan="4">0000</td>
             <td class="lightblue"   colspan="3">001</td>
             <td class="lightblue"   colspan="1">0</td>
-            <td class="purple"      colspan="2">01</td>
+            <td class="lightpurple"      colspan="2">01</td>
             <td class="pink"        colspan="3">111</td>
             <td class="lightorange" colspan="3">100</td>
             <td class="blue">W</td>
@@ -193,7 +360,7 @@
             <td class="darkblue"    colspan="4">0000</td>
             <td class="lightblue"   colspan="3">001</td>
             <td class="lightblue"   colspan="1">0</td>
-            <td class="purple"      colspan="2">S</td>
+            <td class="lightpurple"      colspan="2">S</td>
             <td class="pink"        colspan="3">M</td>
             <td class="lightorange" colspan="3">Xn</td>
             <td class="blue">/</td>
@@ -208,7 +375,7 @@
             <td class="darkblue"    colspan="4">0000</td>
             <td class="lightblue"   colspan="3">010</td>
             <td class="lightblue"   colspan="1">0</td>
-            <td class="purple"      colspan="2">S</td>
+            <td class="lightpurple"      colspan="2">S</td>
             <td class="pink"        colspan="3">M</td>
             <td class="lightorange" colspan="3">Xn</td>
             <td class="blue">/</td>
@@ -223,7 +390,7 @@
             <td class="darkblue"    colspan="4">0000</td>
             <td class="lightblue"   colspan="3">011</td>
             <td class="lightblue"   colspan="1">0</td>
-            <td class="purple"      colspan="2">S</td>
+            <td class="lightpurple"      colspan="2">S</td>
             <td class="pink"        colspan="3">M</td>
             <td class="lightorange" colspan="3">Xn</td>
             <td class="blue">/</td>
@@ -238,7 +405,7 @@
             <td class="darkblue"    colspan="4">0000</td>
             <td class="lightblue"   colspan="3">101</td>
             <td class="lightblue"   colspan="1">0</td>
-            <td class="purple"      colspan="2">00</td>
+            <td class="lightpurple"      colspan="2">00</td>
             <td class="pink"        colspan="3">111</td>
             <td class="lightorange" colspan="3">100</td>
             <td class="blue">B</td>
@@ -253,7 +420,7 @@
             <td class="darkblue"    colspan="4">0000</td>
             <td class="lightblue"   colspan="3">101</td>
             <td class="lightblue"   colspan="1">0</td>
-            <td class="purple"      colspan="2">01</td>
+            <td class="lightpurple"      colspan="2">01</td>
             <td class="pink"        colspan="3">111</td>
             <td class="lightorange" colspan="3">100</td>
             <td class="blue">W</td>
@@ -268,7 +435,7 @@
             <td class="darkblue"    colspan="4">0000</td>
             <td class="lightblue"   colspan="3">101</td>
             <td class="lightblue"   colspan="1">0</td>
-            <td class="purple"      colspan="2">S</td>
+            <td class="lightpurple"      colspan="2">S</td>
             <td class="pink"        colspan="3">M</td>
             <td class="lightorange" colspan="3">Xn</td>
             <td class="blue">/</td>
@@ -283,7 +450,7 @@
             <td class="darkblue"    colspan="4">0000</td>
             <td class="lightblue"   colspan="3">110</td>
             <td class="lightblue"   colspan="1">0</td>
-            <td class="purple"      colspan="2">S</td>
+            <td class="lightpurple"      colspan="2">S</td>
             <td class="pink"        colspan="3">M</td>
             <td class="lightorange" colspan="3">Xn</td>
             <td class="blue">/</td>
