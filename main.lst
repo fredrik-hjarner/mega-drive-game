@@ -1,0 +1,212 @@
+00000000                            vdp_data equ $C00000
+00000000                            vdp_data2 equ $C00002
+00000000                            vdp_ctrl equ $C00004
+00000000                            vdp_ctrl2 equ $C00006
+00000000                            vdp_hscroll_addr equ $400
+00000000                            vdp_tiles_addr equ $0000
+00000000                            set_palette_color macro
+00000000                                move.w #((\3)<<9) | ((\2)<<5) | ((\1)<<1), vdp_data
+00000000                                endm
+00000000                            set_write_vram macro
+00000000                                move.l #$40000000+(((\1)&$3FFF)<<16)+(((\1)&$C000)>>14),vdp_ctrl
+00000000                                endm
+00000000 0000 0000                      dc.l 0
+00000004 0000 0000                      dc.l Start
+00000008 0000 0000                      dc.l int2_bus_error
+0000000C 0000 0000                      dc.l int3_address_error
+00000010 0000 0000                      dc.l int4_illegal_instruction
+00000014 0000 0000                      dc.l error
+00000018 0000 0000                      dc.l error
+0000001C 0000 0000                      dc.l error
+00000020 0000 0000                      dc.l error
+00000024 0000 0000                      dc.l error
+00000028 0000 0000                      dc.l 0
+0000002C 0000 0000                      dc.l 0
+00000030 0000 0000                      dc.l 0
+00000034 0000 0000                      dc.l error
+00000038 0000 0000                      dc.l error
+0000003C 0000 0000                      dc.l error
+00000040 0000 0000 0000 0000 0000+     dc.l 0,0,0,0,0,0,0,0
+00000060 0000 0000                      dc.l 0
+00000064 0000 0000                      dc.l 0
+00000068 0000 0000                      dc.l 0
+0000006C 0000 0000                      dc.l 0
+00000070 0000 0000                      dc.l hblank
+00000074 0000 0000                      dc.l 0
+00000078 0000 0000                      dc.l vblank
+0000007C 0000 0000                      dc.l 0
+00000080 0000 0000                      dc.l 0
+00000084 0000 0000                      dc.l 0
+00000088 0000 0000                      dc.l 0
+0000008C 0000 0000                      dc.l 0
+00000090 0000 0000                      dc.l 0
+00000094 0000 0000                      dc.l 0
+00000098 0000 0000                      dc.l 0
+0000009C 0000 0000                      dc.l 0
+000000A0 0000 0000                      dc.l 0
+000000A4 0000 0000                      dc.l 0
+000000A8 0000 0000                      dc.l 0
+000000AC 0000 0000                      dc.l 0
+000000B0 0000 0000                      dc.l 0
+000000B4 0000 0000                      dc.l 0
+000000B8 0000 0000                      dc.l 0
+000000BC 0000 0000                      dc.l 0
+000000C0 0000 0000                      dc.l 0
+000000C4 0000 0000                      dc.l 0
+000000C8 0000 0000                      dc.l 0
+000000CC 0000 0000                      dc.l 0
+000000D0 0000 0000                      dc.l 0
+000000D4 0000 0000                      dc.l 0
+000000D8 0000 0000                      dc.l 0
+000000DC 0000 0000                      dc.l 0
+000000E0 0000 0000                      dc.l 0
+000000E4 0000 0000                      dc.l 0
+000000E8 0000 0000                      dc.l 0
+000000EC 0000 0000 0000 0000 0000+     dc.l 0,0,0,0,0
+00000100 5345 4741 2047 454E 4553+     dc.b 'SEGA GENESIS    '
+00000110 2020 2020 2020 2020 2020+     dc.b '                '
+00000120 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
+00000150 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
+00000180 474D 2058 5858 5858 5858+     dc.b 'GM XXXXXXXX-XX'
+0000018E 0000                           dc.w $0000
+00000190 4A20 2020 2020 2020 2020+     dc.b 'J               '
+000001A0 0000 0000                      dc.l $00000000
+000001A4 0010 0000                      dc.l $00100000
+000001A8 00FF 0000                      dc.l $00FF0000
+000001AC 00FF FFFF                      dc.l $00FFFFFF
+000001B0 0000 0000                      dc.l $00000000
+000001B4 0000 0000                      dc.l $00000000
+000001B8 0000 0000                      dc.l $00000000
+000001BC 2020 2020                      dc.b '    '
+000001C0 2020 2020 2020 2020            dc.b '        '
+000001C8 2020 2020 2020 2020            dc.b '        '
+000001D0 2020 2020 2020 2020 2020+     dc.b '                '
+000001E0 2020 2020 2020 2020 2020+     dc.b '                '
+000001F0 4A55 4520 2020 2020 2020+     dc.b 'JUE             '
+00000200                                set_bg_color:
+00000200 343C 8700                      move.w #(1<<15 | (7<<8)), d2
+00000204 8441                           or.w d1, d2
+00000206 33C2 00C0 0004                 move.w d2, vdp_ctrl
+0000020C 4E                              dc.b %01001110
+0000020D 75                              dc.b %01110101
+0000020E                                Start:
+0000020E 46FC 2700                      move.w #$2700,sr
+00000212 2E7C 00FF 0000                 movea.l #$FF0000,sp
+00000218 1039 00A1 0001                 move.b $A10001,d0
+0000021E 0200 000F                      andi.b #$F,d0
+00000222 67FE                           beq.s skip_tmss
+00000224 23FC 5345 4741 00A1 4000       move.l #'SEGA',$A14000
+0000022E                                skip_tmss:
+0000022E 33FC 8005 00C0 0004            move.w #32773,vdp_ctrl
+00000236 33FC 810C 00C0 0004            move.w #33036,vdp_ctrl
+0000023E 33FC 8208 00C0 0004            move.w #33288,vdp_ctrl
+00000246 33FC 8310 00C0 0004            move.w #33552,vdp_ctrl
+0000024E 33FC 8403 00C0 0004            move.w #33795,vdp_ctrl
+00000256 33FC 8540 00C0 0004            move.w #34112,vdp_ctrl
+0000025E 33FC 8600 00C0 0004            move.w #34304,vdp_ctrl
+00000266 33FC 8800 00C0 0004            move.w #34816,vdp_ctrl
+0000026E 33FC 8900 00C0 0004            move.w #35072,vdp_ctrl
+00000276 33FC 8A00 00C0 0004            move.w #35328,vdp_ctrl
+0000027E 33FC 8B00 00C0 0004            move.w #35584,vdp_ctrl
+00000286 33FC 8C81 00C0 0004            move.w #35969,vdp_ctrl
+0000028E 33FC 8D01 00C0 0004            move.w #36097,vdp_ctrl
+00000296 33FC 8E00 00C0 0004            move.w #36352,vdp_ctrl
+0000029E 33FC 8F02 00C0 0004            move.w #36610,vdp_ctrl
+000002A6 33FC 9000 00C0 0004            move.w #36864,vdp_ctrl
+000002AE 33FC 9100 00C0 0004            move.w #37120,vdp_ctrl
+000002B6 33FC 9200 00C0 0004            move.w #37376,vdp_ctrl
+000002BE 33FC 9300 00C0 0004            move.w #37632,vdp_ctrl
+000002C6 33FC 9400 00C0 0004            move.w #37888,vdp_ctrl
+000002CE 33FC 9500 00C0 0004            move.w #38144,vdp_ctrl
+000002D6 33FC 9600 00C0 0004            move.w #38400,vdp_ctrl
+000002DE 33FC 9700 00C0 0004            move.w #38656,vdp_ctrl
+000002E6 23FC 4000 0000 00C0 0004       move.l #$40000000, vdp_ctrl
+000002F0 3E3C 3FFF                      move.w #$3FFF, d7
+000002F4                                .ClearVRAM:
+000002F4 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data
+000002FE 51CF FFF4                      dbra d7,.ClearVRAM
+00000302 2E3C 0000 7FFF                 move.l #$7FFF, d7
+00000308 207C 00FF 0000                 movea.l #$FF0000, a0
+0000030E                                .ClearRAM:
+0000030E 30FC 0000                      move.w #$0000, (a0)+
+00000312 51CF FFFA                      dbra d7,.ClearRAM
+00000316 23FC C000 0000 00C0 0004       move.l #$C0000000, vdp_ctrl
+00000320 33FC 0000 00C0 0000            set_palette_color 0, 0, 0
+00000328 33FC 0002 00C0 0000            set_palette_color 1, 0, 0
+00000330 33FC 0004 00C0 0000            set_palette_color 2, 0, 0
+00000338 33FC 0006 00C0 0000            set_palette_color 3, 0, 0
+00000340 33FC 0008 00C0 0000            set_palette_color 4, 0, 0
+00000348 33FC 000A 00C0 0000            set_palette_color 5, 0, 0
+00000350 33FC 000C 00C0 0000            set_palette_color 6, 0, 0
+00000358 33FC 000E 00C0 0000            set_palette_color 7, 0, 0
+00000360 33FC 020E 00C0 0000            set_palette_color 7, 0, 1
+00000368 33FC 040E 00C0 0000            set_palette_color 7, 0, 2
+00000370 33FC 060E 00C0 0000            set_palette_color 7, 0, 3
+00000378 33FC 080E 00C0 0000            set_palette_color 7, 0, 4
+00000380 33FC 0A0E 00C0 0000            set_palette_color 7, 0, 5
+00000388 33FC 0C0E 00C0 0000            set_palette_color 7, 0, 6
+00000390 33FC 0E0E 00C0 0000            set_palette_color 7, 0, 7
+00000398 33FC 0E2E 00C0 0000            set_palette_color 7, 1, 7
+000003A0 23FC 4000 0000 00C0 0004       move.l #$40000000, vdp_ctrl
+000003AA 23FC 1000 0000 00C0 0000       move.l #$10000000, vdp_data
+000003B4 23FC 1100 0000 00C0 0000       move.l #$11000000, vdp_data
+000003BE 23FC 1110 0000 00C0 0000       move.l #$11100000, vdp_data
+000003C8 23FC 1111 0000 00C0 0000       move.l #$11110000, vdp_data
+000003D2 23FC 1111 1000 00C0 0000       move.l #$11111000, vdp_data
+000003DC 23FC 1111 1100 00C0 0000       move.l #$11111100, vdp_data
+000003E6 23FC 1111 1110 00C0 0000       move.l #$11111110, vdp_data
+000003F0 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
+000003FA 33FC 8707 00C0 0004            move.w #34567,vdp_ctrl
+00000402 33FC 8005 00C0 0004            move.w #32773,vdp_ctrl
+0000040A 33FC 816C 00C0 0004            move.w #33132,vdp_ctrl
+00000412 46FC 2300                      move #$2300, sr
+00000416                                MainLoop:
+00000416 60FE                           bra.b MainLoop
+00000418                                hblank:
+00000418 4E                              dc.b %01001110
+00000419 73                              dc.b %01110011
+0000041A                                vblank:
+0000041A 48E7 6000                      movem.l d1-d2,-(sp)
+0000041E 5279 0000 0000                 addq.w #1, color_index
+00000424 0C79 0040 0000 0000            cmpi.w #(16<<2), color_index
+0000042C 65FE                           blo.s .done
+0000042E 33FC 0000 0000 0000            move.w #0, color_index
+00000436                                .done:
+00000436 3239 0000 0000                 move.w color_index, d1
+0000043C E449                           lsr.w #2, d1
+0000043E 4EB8 0200                      jsr (set_bg_color).w
+00000442 23FC 4400 0000 00C0 0004       set_write_vram vdp_hscroll_addr
+0000044C 33C1 00C0 0000                 move.w d1, vdp_data
+00000452 33C1 00C0 0000                 move.w d1, vdp_data
+00000458 4CDF 0006                      movem.l (sp)+,d1-d2
+0000045C 4E                              dc.b %01001110
+0000045D 73                              dc.b %01110011
+0000045E                                int2_bus_error:
+0000045E 4E                              dc.b %01001110
+0000045F 71                              dc.b %01110001
+00000460 4E                              dc.b %01001110
+00000461 71                              dc.b %01110001
+00000462 60FA                           bra.b int2_bus_error
+00000464                                int3_address_error:
+00000464 4E                              dc.b %01001110
+00000465 71                              dc.b %01110001
+00000466 4E                              dc.b %01001110
+00000467 71                              dc.b %01110001
+00000468 4E                              dc.b %01001110
+00000469 71                              dc.b %01110001
+0000046A 60F8                           bra.b int3_address_error
+0000046C                                int4_illegal_instruction:
+0000046C 4E                              dc.b %01001110
+0000046D 71                              dc.b %01110001
+0000046E 4E                              dc.b %01001110
+0000046F 71                              dc.b %01110001
+00000470 4E                              dc.b %01001110
+00000471 71                              dc.b %01110001
+00000472 4E                              dc.b %01001110
+00000473 71                              dc.b %01110001
+00000474 60F6                           bra.b int4_illegal_instruction
+00000476                                error:
+00000476 4E                              dc.b %01001110
+00000477 71                              dc.b %01110001
+00000478 60FC                           bra.b error
+0000047A                            color_index equ 16711680

@@ -23,7 +23,7 @@ Start:
     ; INITIALIZE SYSTEM
     ; -----------------------------------------------------------------
     move.w  #$2700,sr             ; Disable interrupts (status register)
-    move.l  #$FF0000,sp           ; Set stack pointer to end of work RAM
+    movea.l  #$FF0000,sp           ; Set stack pointer to end of work RAM
                                   ; it will wrap down to FFFFFF.
                                   ; TODO: sp is confusing
 
@@ -259,7 +259,7 @@ skip_tmss:
     ; $FF0000 - $FFFFFF (64kb)
     ; =================================================================
     move.l  #$7FFF, d7             ; Loop counter (64KB / 2 = 32kb)
-    move.l  #$FF0000, a0
+    movea.l  #$FF0000, a0
 .ClearRAM:
     move.w  #$0000, (a0)+          ; Write zero toVRAM 
     dbra    d7,.ClearRAM         ; Decrement and branch until done
@@ -352,7 +352,7 @@ skip_tmss:
     ; STEP 5: MAIN LOOP (Do nothing forever)
     ; =================================================================
 MainLoop:
-    bra   MainLoop              ; Infinite loop (real programs would handle VBLANK)
+    bra.b   MainLoop              ; Infinite loop (real programs would handle VBLANK)
 
 hblank:
     rte
@@ -360,7 +360,7 @@ hblank:
 vblank:
         ; Save registers we'll modify
         movem.l d1-d2,-(sp)
-        add.w #1, color_index
+        addq.w #1, color_index
         cmpi.w #(16<<2), color_index
         blo.s .done
         move.w #0, color_index
@@ -368,7 +368,7 @@ vblank:
         move.w color_index, d1
         ; right shift d1 to get the color index
         lsr.w #2, d1
-        jsr set_bg_color
+        jsr (set_bg_color).w
 
     ; now also scroll plane A and plane B
         set_write_vram vdp_hscroll_addr
@@ -387,24 +387,24 @@ vblank:
 int2_bus_error:
     nop
     nop
-    bra int2_bus_error
+    bra.b int2_bus_error
 
 int3_address_error:
     nop
     nop
     nop
-    bra int3_address_error
+    bra.b int3_address_error
 
 int4_illegal_instruction:
     nop
     nop
     nop
     nop
-    bra int4_illegal_instruction
+    bra.b int4_illegal_instruction
 
 error:
     nop
-    bra error
+    bra.b error
 
 ; =================================================================
 ; VARIABLES

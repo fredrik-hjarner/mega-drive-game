@@ -4,10 +4,10 @@ vdp_ctrl equ $C00004
 vdp_ctrl2 equ $C00006
 vdp_hscroll_addr equ $400
 vdp_tiles_addr equ $0000
-    macro set_palette_color
+set_palette_color macro
     move.w #((\3)<<9) | ((\2)<<5) | ((\1)<<1), vdp_data
     endm
-    macro set_write_vram
+set_write_vram macro
     move.l #$40000000+(((\1)&$3FFF)<<16)+(((\1)&$C000)>>14),vdp_ctrl
     endm
     dc.l 0
@@ -91,7 +91,7 @@ vdp_tiles_addr equ $0000
     dc.b %01110101
     Start:
     move.w #$2700,sr
-    move.l #$FF0000,sp
+    movea.l #$FF0000,sp
     move.b $A10001,d0
     andi.b #$F,d0
     beq.s skip_tmss
@@ -126,7 +126,7 @@ vdp_tiles_addr equ $0000
     move.l #$00000000, vdp_data
     dbra d7,.ClearVRAM
     move.l #$7FFF, d7
-    move.l #$FF0000, a0
+    movea.l #$FF0000, a0
     .ClearRAM:
     move.w #$0000, (a0)+
     dbra d7,.ClearRAM
@@ -161,20 +161,20 @@ vdp_tiles_addr equ $0000
     move.w #33132,vdp_ctrl
     move #$2300, sr
     MainLoop:
-    bra MainLoop
+    bra.b MainLoop
     hblank:
     dc.b %01001110
     dc.b %01110011
     vblank:
     movem.l d1-d2,-(sp)
-    add.w #1, color_index
+    addq.w #1, color_index
     cmpi.w #(16<<2), color_index
     blo.s .done
     move.w #0, color_index
     .done:
     move.w color_index, d1
     lsr.w #2, d1
-    jsr set_bg_color
+    jsr (set_bg_color).w
     set_write_vram vdp_hscroll_addr
     move.w d1, vdp_data
     move.w d1, vdp_data
@@ -186,7 +186,7 @@ vdp_tiles_addr equ $0000
     dc.b %01110001
     dc.b %01001110
     dc.b %01110001
-    bra int2_bus_error
+    bra.b int2_bus_error
     int3_address_error:
     dc.b %01001110
     dc.b %01110001
@@ -194,7 +194,7 @@ vdp_tiles_addr equ $0000
     dc.b %01110001
     dc.b %01001110
     dc.b %01110001
-    bra int3_address_error
+    bra.b int3_address_error
     int4_illegal_instruction:
     dc.b %01001110
     dc.b %01110001
@@ -204,9 +204,9 @@ vdp_tiles_addr equ $0000
     dc.b %01110001
     dc.b %01001110
     dc.b %01110001
-    bra int4_illegal_instruction
+    bra.b int4_illegal_instruction
     error:
     dc.b %01001110
     dc.b %01110001
-    bra error
+    bra.b error
 color_index equ 16711680
