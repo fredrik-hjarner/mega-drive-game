@@ -1,0 +1,354 @@
+<html>
+    <style>
+        html {
+            background-color: white;
+            /* width: 500px; */
+        }
+        th, td { outline: 1px solid black !important; }
+        * {
+            padding: 2px !important;
+            color: black;
+            font-family: monospace;
+            font-size: 13px;
+        }
+        table {
+            /* width: auto !important; */
+        }
+        span { padding: 0 !important; }
+        .darkgreen { background-color: rgb(0, 170, 0); }
+        .darkblue { background-color: #3399ff; }
+        .blue { background-color: #33ccff; }
+        .lightblue { background-color: #83c1ff; }
+        .purple { background-color: rgb(173, 83, 173); }
+        .pink { background-color: rgb(255, 100, 100); }
+        .lightorange { background-color: rgb(255, 173, 83); }
+    </style>
+
+    <table>
+        <th>Addressing mode</th>
+        <th>Format</th>
+        <th>M</th>
+        <th>Xn</th>
+        <tr>
+            <td>Data register</td>
+            <td>Dn</td>
+            <td>000</td>
+            <td>reg</td>
+        </tr>
+        <tr>
+            <td>Address register</td>
+            <td>An</td>
+            <td>001</td>
+            <td>reg</td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>(An)</td>
+            <td>010</td>
+            <td>reg</td>
+        </tr>
+        <tr>
+            <td>Address with Postincrement</td>
+            <td>(An)+</td>
+            <td>011</td>
+            <td>reg</td>
+        </tr>
+        <tr>
+            <td>Address with Predecrement</td>
+            <td>-(An)</td>
+            <td>100</td>
+            <td>reg</td>
+        </tr>
+        <tr>
+            <td>Address with Displacement</td>
+            <td>(d16, An)</td>
+            <td>101</td>
+            <td>reg</td>
+        </tr>
+        <tr>
+            <td>Address with Index</td>
+            <td>(d8, An, Xn)</td>
+            <td>110</td>
+            <td>reg</td>
+        </tr>
+        <tr>
+            <td>Program Counter with Displacement</td>
+            <td>(d16, PC)</td>
+            <td>111</td>
+            <td>010</td>
+        </tr>
+        <tr>
+            <td>Program Counter with Index</td>
+            <td>(d8, PC, Xn)</td>
+            <td>111</td>
+            <td>011</td>
+        </tr>
+        <tr>
+            <td>Absolute Short</td>
+            <td>(xxx).W</td>
+            <td>111</td>
+            <td>000</td>
+        </tr>
+        <tr>
+            <td>Absolute Long</td>
+            <td>(xxx).L</td>
+            <td>111</td>
+            <td>001</td>
+        </tr>
+        <tr>
+            <td>Immediate</td>
+            <td>#imm</td>
+            <td>111</td>
+            <td>100</td>
+        </tr>
+        
+        
+    </table>
+
+    <table>
+        <th>Mnemonic</th>
+        <th colspan="3">Size</th>
+        <th colspan="16">Single Effective Address Operation Word</th>
+        <th colspan="2">Data</th>
+        <tr>
+            <td>ORI to CCR</td>
+            <td>B</td>
+            <td></td>
+            <td></td>
+            <td class="darkblue"    colspan="4">0000</td>
+            <td class="lightblue"   colspan="3">000</td>
+            <td class="lightblue"   colspan="1">0</td>
+            <td class="purple"      colspan="2">00</td>
+            <td class="pink"        colspan="3">111</td>
+            <td class="lightorange" colspan="3">100</td>
+            <td class="blue">B</td>
+            <td class="blue">I</td>
+        </tr>
+        <!--------------------------------->
+        <tr>
+            <td class="darkgreen">ORI to SR</td>
+            <td></td>
+            <td>W</td>
+            <td></td>
+            <td class="darkblue"    colspan="4">0000</td>
+            <td class="lightblue"   colspan="3">000</td>
+            <td class="lightblue"   colspan="1">0</td>
+            <td class="purple"      colspan="2">01</td>
+            <td class="pink"        colspan="3">111</td>
+            <td class="lightorange" colspan="3">100</td>
+            <td class="blue">B</td>
+            <td class="blue">I</td>
+        </tr>
+        <!--------------------------------->
+        <tr>
+            <td>ORI</td>
+            <td>B</td>
+            <td>W</td>
+            <td>L</td>
+            <td class="darkblue"    colspan="4">0000</td>
+            <td class="lightblue"   colspan="3">000</td>
+            <td class="lightblue"   colspan="1">0</td>
+            <td class="purple"      colspan="2">S</td>
+            <td class="pink"        colspan="3">M</td>
+            <td class="lightorange" colspan="3">Xn</td>
+            <td class="blue">/</td>
+            <td class="blue">I</td>
+        </tr>
+        <!--------------------------------->
+        <tr>
+            <td>ANDI to CCR</td>
+            <td>B</td>
+            <td></td>
+            <td></td>
+            <td class="darkblue"    colspan="4">0000</td>
+            <td class="lightblue"   colspan="3">001</td>
+            <td class="lightblue"   colspan="1">0</td>
+            <td class="purple"      colspan="2">00</td>
+            <td class="pink"        colspan="3">111</td>
+            <td class="lightorange" colspan="3">100</td>
+            <td class="blue">B</td>
+            <td class="blue">I</td>
+        </tr>
+        <!--------------------------------->
+        <tr>
+            <td>ANDI to SR</td>
+            <td></td>
+            <td>W</td>
+            <td></td>
+            <td class="darkblue"    colspan="4">0000</td>
+            <td class="lightblue"   colspan="3">001</td>
+            <td class="lightblue"   colspan="1">0</td>
+            <td class="purple"      colspan="2">01</td>
+            <td class="pink"        colspan="3">111</td>
+            <td class="lightorange" colspan="3">100</td>
+            <td class="blue">W</td>
+            <td class="blue">I</td>
+        </tr>
+        <!--------------------------------->
+        <tr>
+            <td>ANDI</td>
+            <td>B</td>
+            <td>W</td>
+            <td>L</td>
+            <td class="darkblue"    colspan="4">0000</td>
+            <td class="lightblue"   colspan="3">001</td>
+            <td class="lightblue"   colspan="1">0</td>
+            <td class="purple"      colspan="2">S</td>
+            <td class="pink"        colspan="3">M</td>
+            <td class="lightorange" colspan="3">Xn</td>
+            <td class="blue">/</td>
+            <td class="blue">I</td>
+        </tr>
+        <!--------------------------------->
+        <tr>
+            <td>SUBI</td>
+            <td>B</td>
+            <td>W</td>
+            <td>L</td>
+            <td class="darkblue"    colspan="4">0000</td>
+            <td class="lightblue"   colspan="3">010</td>
+            <td class="lightblue"   colspan="1">0</td>
+            <td class="purple"      colspan="2">S</td>
+            <td class="pink"        colspan="3">M</td>
+            <td class="lightorange" colspan="3">Xn</td>
+            <td class="blue">/</td>
+            <td class="blue">I</td>
+        </tr>
+        <!--------------------------------->
+        <tr>
+            <td>ADDI</td>
+            <td>B</td>
+            <td>W</td>
+            <td>L</td>
+            <td class="darkblue"    colspan="4">0000</td>
+            <td class="lightblue"   colspan="3">011</td>
+            <td class="lightblue"   colspan="1">0</td>
+            <td class="purple"      colspan="2">S</td>
+            <td class="pink"        colspan="3">M</td>
+            <td class="lightorange" colspan="3">Xn</td>
+            <td class="blue">/</td>
+            <td class="blue">I</td>
+        </tr>
+        <!--------------------------------->
+        <tr>
+            <td>EORI to CCR</td>
+            <td>B</td>
+            <td></td>
+            <td></td>
+            <td class="darkblue"    colspan="4">0000</td>
+            <td class="lightblue"   colspan="3">101</td>
+            <td class="lightblue"   colspan="1">0</td>
+            <td class="purple"      colspan="2">00</td>
+            <td class="pink"        colspan="3">111</td>
+            <td class="lightorange" colspan="3">100</td>
+            <td class="blue">B</td>
+            <td class="blue">I</td>
+        </tr>
+        <!--------------------------------->
+        <tr>
+            <td class="darkgreen">EORI to SR</td>
+            <td></td>
+            <td>W</td>
+            <td></td>
+            <td class="darkblue"    colspan="4">0000</td>
+            <td class="lightblue"   colspan="3">101</td>
+            <td class="lightblue"   colspan="1">0</td>
+            <td class="purple"      colspan="2">01</td>
+            <td class="pink"        colspan="3">111</td>
+            <td class="lightorange" colspan="3">100</td>
+            <td class="blue">W</td>
+            <td class="blue">I</td>
+        </tr>
+        <!--------------------------------->
+        <tr>
+            <td>EORI</td>
+            <td>B</td>
+            <td>W</td>
+            <td>L</td>
+            <td class="darkblue"    colspan="4">0000</td>
+            <td class="lightblue"   colspan="3">101</td>
+            <td class="lightblue"   colspan="1">0</td>
+            <td class="purple"      colspan="2">S</td>
+            <td class="pink"        colspan="3">M</td>
+            <td class="lightorange" colspan="3">Xn</td>
+            <td class="blue">/</td>
+            <td class="blue">I</td>
+        </tr>
+        <!--------------------------------->
+        <tr>
+            <td>CMPI</td>
+            <td>B</td>
+            <td>W</td>
+            <td>L</td>
+            <td class="darkblue"    colspan="4">0000</td>
+            <td class="lightblue"   colspan="3">110</td>
+            <td class="lightblue"   colspan="1">0</td>
+            <td class="purple"      colspan="2">S</td>
+            <td class="pink"        colspan="3">M</td>
+            <td class="lightorange" colspan="3">Xn</td>
+            <td class="blue">/</td>
+            <td class="blue">I</td>
+        </tr>
+        <!--------------------------------->
+        <tr>
+            <td>BTST (static)</td>
+            <td>B</td>
+            <td></td>
+            <td>L</td>
+            <td class="darkblue"    colspan="4">0000</td>
+            <td class="lightblue"   colspan="3">100</td>
+            <td class="lightblue"   colspan="1">0</td>
+            <td class="lightblue"   colspan="2">00</td>
+            <td class="pink"        colspan="3">M</td>
+            <td class="lightorange" colspan="3">Xn</td>
+            <td class="blue">B</td>
+            <td class="blue">N</td>
+        </tr>
+        <!--------------------------------->
+        <tr>
+            <td>BCHG (static)</td>
+            <td>B</td>
+            <td></td>
+            <td>L</td>
+            <td class="darkblue"    colspan="4">0000</td>
+            <td class="lightblue"   colspan="3">100</td>
+            <td class="lightblue"   colspan="1">0</td>
+            <td class="lightblue"   colspan="2">01</td>
+            <td class="pink"        colspan="3">M</td>
+            <td class="lightorange" colspan="3">Xn</td>
+            <td class="blue">B</td>
+            <td class="blue">N</td>
+        </tr>
+        <!--------------------------------->
+        <tr>
+            <td>BCLR (static)</td>
+            <td>B</td>
+            <td></td>
+            <td>L</td>
+            <td class="darkblue"    colspan="4">0000</td>
+            <td class="lightblue"   colspan="3">100</td>
+            <td class="lightblue"   colspan="1">0</td>
+            <td class="lightblue"   colspan="2">10</td>
+            <td class="pink"        colspan="3">M</td>
+            <td class="lightorange" colspan="3">Xn</td>
+            <td class="blue">B</td>
+            <td class="blue">N</td>
+        </tr>
+        <!--------------------------------->
+        <tr>
+            <td>BSET (static)</td>
+            <td>B</td>
+            <td></td>
+            <td>L</td>
+            <td class="darkblue"    colspan="4">0000</td>
+            <td class="lightblue"   colspan="3">100</td>
+            <td class="lightblue"   colspan="1">0</td>
+            <td class="lightblue"   colspan="2">11</td>
+            <td class="pink"        colspan="3">M</td>
+            <td class="lightorange" colspan="3">Xn</td>
+            <td class="blue">B</td>
+            <td class="blue">N</td>
+        </tr>
+        <!--------------------------------->
+    </table>
+</html>
