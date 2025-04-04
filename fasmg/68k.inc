@@ -10,6 +10,22 @@ calminstruction illegal?
     assemble tmp
 end calminstruction
 
+; arguments:
+;     vector: 0000 - 1111
+; TODO: Test.
+; TODO: Give error if vector is out of range.
+calminstruction trap? vector
+    local tmp
+    arrange tmp, =dc.=b= =%01001110
+    assemble tmp
+
+    ; second byte
+    compute tmp, 01000000b + vector
+
+    arrange tmp, =dc.=b= tmp
+    assemble tmp
+end calminstruction
+
 calminstruction reset?
     local tmp
     arrange tmp, =dc.=b= =%01001110
@@ -58,14 +74,31 @@ calminstruction rtr?
     assemble tmp
 end calminstruction
 
+; arguments:
+;     data: 0000_0000 - 1111_1111
+;     dn: d0 - d7
+; TODO: Test.
+; TODO: Give error if data is out of range.
+; TODO: Handle # character.
+calminstruction moveq? data, dn
+    local tmp
+    arrange tmp, =dc.=b= =%01110000 + dn
+    assemble tmp
+    compute tmp, data
+    arrange tmp, =dc.=b= tmp
+    assemble tmp
+end calminstruction
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Make visible to the preprocessor                                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 define illegal +illegal
+define trap +trap
 define reset +reset
 define nop +nop
 define rte +rte
 define rts +rts
 define trapv +trapv
 define rtr +rtr
+define moveq +moveq
