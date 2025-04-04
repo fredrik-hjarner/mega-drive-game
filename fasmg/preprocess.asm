@@ -69,29 +69,7 @@ namespace MACROS
         assemble cmd
     end calminstruction
 
-    calminstruction nop
-        local tmp
-        arrange tmp, =dc.=b= =%01001110
-        assemble tmp
-        arrange tmp, =dc.=b= =%01110001
-        assemble tmp
-    end calminstruction
-
-    calminstruction rte
-        local tmp
-        arrange tmp, =dc.=b= =%01001110
-        assemble tmp
-        arrange tmp, =dc.=b= =%01110011
-        assemble tmp
-    end calminstruction
-
-    calminstruction rts
-        local tmp
-        arrange tmp, =dc.=b= =%01001110
-        assemble tmp
-        arrange tmp, =dc.=b= =%01110101
-        assemble tmp
-    end calminstruction
+    include "68k.inc"
 
     ; bappend
     ; Util macro for CALM to concatenate strings with shorter syntax.
@@ -193,9 +171,6 @@ namespace MACROS
     ; define bappend +bappend
     define word +word
     define set_vdp_register +set_vdp_register
-    define nop +nop
-    define rte +rte
-    define rts +rts
     define @enter +@enter
     define @pushall +@pushall
     define @popall +@popall
