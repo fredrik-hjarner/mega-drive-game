@@ -32,6 +32,10 @@ Start:
 	andi.b  #$F,d0			    ; Compare.
 	beq.s   skip_tmss		    ; If the console has no TMSS, skip the security stuff.
 	move.l  #'SEGA',$A14000 	; Make the TMSS happy.
+
+    ; Initialize gamepads
+    ; init_gampads ; TODO: This does not seem to work.
+
 skip_tmss:
 
     ; =================================================================
@@ -360,6 +364,9 @@ hblank:
 vblank:
         ; Save registers we'll modify
         movem.l d1-d2,-(sp)
+
+        gamepads_get_input
+
         addq.w #1, color_index
         cmpi.w #(16<<2), color_index
         blo.s .done
@@ -417,3 +424,5 @@ error:
 ; =================================================================
 
 word color_index
+word gamepad1
+word gamepad2

@@ -4,11 +4,45 @@ vdp_ctrl equ $C00004
 vdp_ctrl2 equ $C00006
 vdp_hscroll_addr equ $400
 vdp_tiles_addr equ $0000
+gamepad1_ctrl equ $A10009
+gamepad1_data equ $A10003
+gamepad2_ctrl equ $A1000B
+gamepad2_data equ $A10005
+button_up equ %00000001
+button_down equ %00000010
+button_left equ %00000100
+button_right equ %00001000
+button_b equ %00010000
+button_c equ %00100000
+button_a equ %01000000
+button_start equ %10000000
 set_palette_color macro
     move.w #((\3)<<9) | ((\2)<<5) | ((\1)<<1), vdp_data
     endm
 set_write_vram macro
     move.l #$40000000+(((\1)&$3FFF)<<16)+(((\1)&$C000)>>14),vdp_ctrl
+    endm
+gamepads_get_input macro
+    move.b #$40, gamepad1_ctrl
+    lea gamepad1_data, a0
+    move.b #$40, (a0)
+    dc.b %01001110
+    dc.b %01110001
+    dc.b %01001110
+    dc.b %01110001
+    move.b (a0), d0
+    move.b #$00, (a0)
+    dc.b %01001110
+    dc.b %01110001
+    dc.b %01001110
+    dc.b %01110001
+    move.b (a0), d1
+    andi.b #$3F, d0
+    andi.b #$30, d1
+    lsl.b #2, d1
+    or.b d1, d0
+    not.b d0
+    move.b d0, gamepad1
     endm
     dc.l 0
     dc.l Start
@@ -167,6 +201,7 @@ set_write_vram macro
     dc.b %01110011
     vblank:
     movem.l d1-d2,-(sp)
+    gamepads_get_input
     addq.w #1, color_index
     cmpi.w #(16<<2), color_index
     blo.s .done
@@ -210,3 +245,5 @@ set_write_vram macro
     dc.b %01110001
     bra.b error
 color_index equ 16711680
+gamepad1 equ 16711682
+gamepad2 equ 16711684
