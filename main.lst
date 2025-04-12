@@ -151,7 +151,7 @@
 00000224 23FC 5345 4741 00A1 4000       move.l #'SEGA',$A14000
 0000022E                                skip_tmss:
 0000022E 33FC 8005 00C0 0004            move.w #32773,vdp_ctrl
-00000236 33FC 810C 00C0 0004            move.w #33036,vdp_ctrl
+00000236 33FC 8104 00C0 0004            move.w #33028,vdp_ctrl
 0000023E 33FC 8208 00C0 0004            move.w #33288,vdp_ctrl
 00000246 33FC 8310 00C0 0004            move.w #33552,vdp_ctrl
 0000024E 33FC 8403 00C0 0004            move.w #33795,vdp_ctrl
@@ -211,7 +211,7 @@
 000003F0 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
 000003FA 33FC 8707 00C0 0004            move.w #34567,vdp_ctrl
 00000402 33FC 8005 00C0 0004            move.w #32773,vdp_ctrl
-0000040A 33FC 816C 00C0 0004            move.w #33132,vdp_ctrl
+0000040A 33FC 8164 00C0 0004            move.w #33124,vdp_ctrl
 00000412 46FC 2300                      move #$2300, sr
 00000416                                MainLoop:
 00000416 60FE                           bra.b MainLoop

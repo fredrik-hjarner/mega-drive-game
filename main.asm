@@ -70,7 +70,7 @@ skip_tmss:
     ;                     | | +----- #3: 0 - 224 pixel (28 cell) NTSC mode
     ;                     | | |          1 - 240 pixel (30 cell) PAL mode
     ;                     | | |
-    set_vdp_register $01, 00001100b      ; bits 1, 0 are always 0
+    set_vdp_register $01, 00000100b      ; bits 1, 0 are always 0
     ;                      | | |
     ;                      | | +---- #2: 0 - Master System (mode 4) display
     ;                      | |           1 - Mega Drive (mode 5) display
@@ -340,7 +340,7 @@ skip_tmss:
     ;                     | | +----- #3: 0 - 224 pixel (28 cell) NTSC mode
     ;                     | | |          1 - 240 pixel (30 cell) PAL mode
     ;                     | | |
-    set_vdp_register $01, 01101100b      ; bits 1, 0 are always 0
+    set_vdp_register $01, 01100100b      ; bits 1, 0 are always 0
     ;                      | | |
     ;                      | | +---- #2: 0 - Master System (mode 4) display
     ;                      | |           1 - Mega Drive (mode 5) display

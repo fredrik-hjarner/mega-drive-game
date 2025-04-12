@@ -151,7 +151,7 @@ gamepads_get_input macro
     move.l #'SEGA',$A14000
     skip_tmss:
     move.w #32773,vdp_ctrl
-    move.w #33036,vdp_ctrl
+    move.w #33028,vdp_ctrl
     move.w #33288,vdp_ctrl
     move.w #33552,vdp_ctrl
     move.w #33795,vdp_ctrl
@@ -211,7 +211,7 @@ gamepads_get_input macro
     move.l #$11111111, vdp_data
     move.w #34567,vdp_ctrl
     move.w #32773,vdp_ctrl
-    move.w #33132,vdp_ctrl
+    move.w #33124,vdp_ctrl
     move #$2300, sr
     MainLoop:
     bra.b MainLoop
