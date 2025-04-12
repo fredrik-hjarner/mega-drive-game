@@ -8,14 +8,6 @@ gamepad1_ctrl equ $A10009
 gamepad1_data equ $A10003
 gamepad2_ctrl equ $A1000B
 gamepad2_data equ $A10005
-button_up equ %00000001
-button_down equ %00000010
-button_left equ %00000100
-button_right equ %00001000
-button_b equ %00010000
-button_c equ %00100000
-button_a equ %01000000
-button_start equ %10000000
 set_palette_color macro
     move.w #((\3)<<9) | ((\2)<<5) | ((\1)<<1), vdp_data
     endm
@@ -31,18 +23,45 @@ gamepads_get_input macro
     dc.b %01001110
     dc.b %01110001
     move.b (a0), d0
+    not.b d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_up
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_down
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_left
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_right
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_b
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_c
     move.b #$00, (a0)
     dc.b %01001110
     dc.b %01110001
     dc.b %01001110
     dc.b %01110001
-    move.b (a0), d1
-    andi.b #$3F, d0
-    andi.b #$30, d1
-    lsl.b #2, d1
-    or.b d1, d0
+    move.b (a0), d0
     not.b d0
-    move.b d0, gamepad1
+    lsr.b #4, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_a
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_start
     endm
     dc.l 0
     dc.l Start
@@ -202,6 +221,8 @@ gamepads_get_input macro
     vblank:
     movem.l d1-d2,-(sp)
     gamepads_get_input
+    tst.b gamepad1_a
+    beq.b .skip
     addq.w #1, color_index
     cmpi.w #(16<<2), color_index
     blo.s .done
@@ -213,6 +234,7 @@ gamepads_get_input macro
     set_write_vram vdp_hscroll_addr
     move.w d1, vdp_data
     move.w d1, vdp_data
+    .skip:
     movem.l (sp)+,d1-d2
     dc.b %01001110
     dc.b %01110011
@@ -245,5 +267,19 @@ gamepads_get_input macro
     dc.b %01110001
     bra.b error
 color_index equ 16711680
-gamepad1 equ 16711682
-gamepad2 equ 16711684
+gamepad1_up equ 16711682
+gamepad1_down equ 16711683
+gamepad1_left equ 16711684
+gamepad1_right equ 16711685
+gamepad1_b equ 16711686
+gamepad1_c equ 16711687
+gamepad1_a equ 16711688
+gamepad1_start equ 16711689
+gamepad2_up equ 16711690
+gamepad2_down equ 16711691
+gamepad2_left equ 16711692
+gamepad2_right equ 16711693
+gamepad2_b equ 16711694
+gamepad2_c equ 16711695
+gamepad2_a equ 16711696
+gamepad2_start equ 16711697

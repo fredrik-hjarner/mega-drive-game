@@ -53,6 +53,15 @@ namespace MACROS
         compute curr_var_addr, curr_var_addr + 2
     end calminstruction
 
+    ; Declares a byte variable in RAM.
+    calminstruction byte var_name
+        local tmp
+        arrange tmp, var_name =equ= curr_var_addr
+        assemble2 tmp
+        ; increment the address for the next variable
+        compute curr_var_addr, curr_var_addr + 1
+    end calminstruction
+
     ; arguments:
     ;     reg_nr: register number: 0-23d
     ;     value:  value: 8 bits
@@ -170,6 +179,7 @@ namespace MACROS
     ; Make visible to the preprocessor
     ; define bappend +bappend
     define word +word
+    define byte +byte
     define set_vdp_register +set_vdp_register
     define @enter +@enter
     define @pushall +@pushall

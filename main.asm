@@ -367,6 +367,10 @@ vblank:
 
         gamepads_get_input
 
+        ; if not a then skip
+        tst.b gamepad1_a
+        beq.b .skip
+
         addq.w #1, color_index
         cmpi.w #(16<<2), color_index
         blo.s .done
@@ -381,6 +385,8 @@ vblank:
         set_write_vram vdp_hscroll_addr
         move.w d1, vdp_data
         move.w d1, vdp_data
+
+    .skip:
 
         ; Restore registers
         movem.l (sp)+,d1-d2
@@ -424,5 +430,21 @@ error:
 ; =================================================================
 
 word color_index
-word gamepad1
-word gamepad2
+
+byte gamepad1_up
+byte gamepad1_down
+byte gamepad1_left
+byte gamepad1_right
+byte gamepad1_b
+byte gamepad1_c
+byte gamepad1_a
+byte gamepad1_start
+
+byte gamepad2_up
+byte gamepad2_down
+byte gamepad2_left
+byte gamepad2_right
+byte gamepad2_b
+byte gamepad2_c
+byte gamepad2_a
+byte gamepad2_start

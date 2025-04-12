@@ -47,24 +47,68 @@
         nop                 ; D-pad, B and C
         nop
         move.b  (a0), d0
+        not.b d0 ; invert so pressed = 1 instead of 0
+        ; d0 will now contain
+        ; Bit5 	Bit4 	Bit3 	Bit2 	Bit1 	Bit0
+        ; C 	B 	    Right 	Left 	Down 	Up
+
+        ; Up
+        move.b d0, d1
+        andi.b #1, d1
+        move.b d1, gamepad1_up
+
+        ; Down
+        lsr.b #1, d0
+        move.b d0, d1
+        andi.b #1, d1
+        move.b d1, gamepad1_down
+
+        ; Left
+        lsr.b #1, d0
+        move.b d0, d1
+        andi.b #1, d1
+        move.b d1, gamepad1_left
+
+        ; Right
+        lsr.b #1, d0
+        move.b d0, d1
+        andi.b #1, d1
+        move.b d1, gamepad1_right
+
+        ; B
+        lsr.b #1, d0
+        move.b d0, d1
+        andi.b #1, d1
+        move.b d1, gamepad1_b
+
+        ; C
+        lsr.b #1, d0
+        move.b d0, d1
+        andi.b #1, d1
+        move.b d1, gamepad1_c
         
-        ; set bit 6 (TH) to 0 to get second group of buttons
-        move.b  #$00, (a0)  ; Do 2nd step
-        nop                 ; A and Start
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;; 2nd set of buttons                                                 ;;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        move.b  #$00, (a0)
         nop
-        move.b  (a0), d1
-        
-        andi.b   #$3F, d0    ; Rearrange bits
-        andi.b   #$30, d1    ; into SACBRLDU
-        lsl.b   #2, d1
-        or.b    d1, d0
+        nop
+        move.b  (a0), d0
+        not.b d0 ; invert so pressed = 1 instead of 0
+        ; d0 will now contain
+        ; Bit5   Bit4
+        ; Start  A
 
-        ; invert
-        not.b d0
+        ; A
+        lsr.b #4, d0
+        move.b d0, d1
+        andi.b #1, d1
+        move.b d1, gamepad1_a
 
-        move.b d0, gamepad1
-        
-        ; Now d0 contains all the buttons
-        ; May want to use a NOT if you prefer
-        ; 1 = pressed and 0 = released
+        ; Start
+        lsr.b #1, d0
+        move.b d0, d1
+        andi.b #1, d1
+        move.b d1, gamepad1_start
     endm
