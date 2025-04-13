@@ -120,7 +120,7 @@ gamepads_get_input macro
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 148301 '
+    dc.b 'GM 148332 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -148,7 +148,7 @@ gamepads_get_input macro
     beq.b .skip
     addq.w #1, color_index
     cmpi.w #(16<<2), color_index
-    blo.s .increment
+    blo.b .increment
     move.w #0, color_index
     .increment:
     move.w color_index, d1
@@ -158,19 +158,21 @@ gamepads_get_input macro
     dc.b %01001110
     dc.b %01110101
     update_hscroll:
+    tst.b gamepad1_left
+    beq.b .skip_left
+    add.w #-1, hscroll_amount
+    bra.b .increment
+    .skip_left:
     tst.b gamepad1_right
-    beq.b .skip
-    addq.w #1, hscroll_amount
-    cmpi.w #(16<<2), hscroll_amount
-    blo.s .increment
-    move.w #0, hscroll_amount
+    beq.b .skip_right
+    add.w #1, hscroll_amount
     .increment:
     move.w hscroll_amount, d1
     lsr.w #2, d1
     set_write_vram vdp_hscroll_addr
     move.w d1, vdp_data
     move.w d1, vdp_data
-    .skip:
+    .skip_right:
     dc.b %01001110
     dc.b %01110011
     Start:
@@ -178,7 +180,7 @@ gamepads_get_input macro
     movea.l #$FF0000,sp
     move.b $A10001,d0
     andi.b #$F,d0
-    beq.s skip_tmss
+    beq.b skip_tmss
     move.l #'SEGA',$A14000
     skip_tmss:
     move.w #33028,vdp_ctrl

@@ -120,7 +120,7 @@
 00000110 2020 2020 2020 2020 2020+     dc.b '                '
 00000120 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
 00000150 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
-00000180 474D 2031 3438 3330 3120       dc.b 'GM 148301 '
+00000180 474D 2031 3438 3333 3220       dc.b 'GM 148332 '
 0000018A                                org $18E
 0000018E 0000                           dc.w $0000
 00000190 4A20 2020 2020 2020 2020+     dc.b 'J               '
@@ -148,7 +148,7 @@
 00000214 67FE                           beq.b .skip
 00000216 5279 0000 0000                 addq.w #1, color_index
 0000021C 0C79 0040 0000 0000            cmpi.w #(16<<2), color_index
-00000224 65FE                           blo.s .increment
+00000224 65FE                           blo.b .increment
 00000226 33FC 0000 0000 0000            move.w #0, color_index
 0000022E                                .increment:
 0000022E 3239 0000 0000                 move.w color_index, d1
@@ -158,142 +158,144 @@
 0000023C 4E                              dc.b %01001110
 0000023D 75                              dc.b %01110101
 0000023E                                update_hscroll:
-0000023E 4A39 0000 0000                 tst.b gamepad1_right
-00000244 67FE                           beq.b .skip
-00000246 5279 0000 0000                 addq.w #1, hscroll_amount
-0000024C 0C79 0040 0000 0000            cmpi.w #(16<<2), hscroll_amount
-00000254 65FE                           blo.s .increment
-00000256 33FC 0000 0000 0000            move.w #0, hscroll_amount
-0000025E                                .increment:
-0000025E 3239 0000 0000                 move.w hscroll_amount, d1
-00000264 E449                           lsr.w #2, d1
-00000266 23FC 4400 0000 00C0 0004       set_write_vram vdp_hscroll_addr
-00000270 33C1 00C0 0000                 move.w d1, vdp_data
-00000276 33C1 00C0 0000                 move.w d1, vdp_data
-0000027C                                .skip:
-0000027C 4E                              dc.b %01001110
-0000027D 73                              dc.b %01110011
-0000027E                                Start:
-0000027E 46FC 2700                      move.w #$2700,sr
-00000282 2E7C 00FF 0000                 movea.l #$FF0000,sp
-00000288 1039 00A1 0001                 move.b $A10001,d0
-0000028E 0200 000F                      andi.b #$F,d0
-00000292 67FE                           beq.s skip_tmss
-00000294 23FC 5345 4741 00A1 4000       move.l #'SEGA',$A14000
-0000029E                                skip_tmss:
-0000029E 33FC 8104 00C0 0004            move.w #33028,vdp_ctrl
-000002A6 33FC 8208 00C0 0004            move.w #33288,vdp_ctrl
-000002AE 33FC 8310 00C0 0004            move.w #33552,vdp_ctrl
-000002B6 33FC 8403 00C0 0004            move.w #33795,vdp_ctrl
-000002BE 33FC 8540 00C0 0004            move.w #34112,vdp_ctrl
-000002C6 33FC 8600 00C0 0004            move.w #34304,vdp_ctrl
-000002CE 33FC 8800 00C0 0004            move.w #34816,vdp_ctrl
-000002D6 33FC 8900 00C0 0004            move.w #35072,vdp_ctrl
-000002DE 33FC 8A00 00C0 0004            move.w #35328,vdp_ctrl
-000002E6 33FC 8B00 00C0 0004            move.w #35584,vdp_ctrl
-000002EE 33FC 8C81 00C0 0004            move.w #35969,vdp_ctrl
-000002F6 33FC 8D01 00C0 0004            move.w #36097,vdp_ctrl
-000002FE 33FC 8E00 00C0 0004            move.w #36352,vdp_ctrl
-00000306 33FC 8F02 00C0 0004            move.w #36610,vdp_ctrl
-0000030E 33FC 9000 00C0 0004            move.w #36864,vdp_ctrl
-00000316 33FC 9100 00C0 0004            move.w #37120,vdp_ctrl
-0000031E 33FC 9200 00C0 0004            move.w #37376,vdp_ctrl
-00000326 23FC 4000 0000 00C0 0004       move.l #$40000000, vdp_ctrl
-00000330 3E3C 3FFF                      move.w #$3FFF, d7
-00000334                                .ClearVRAM:
-00000334 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data
-0000033E 51CF FFF4                      dbra d7,.ClearVRAM
-00000342 2E3C 0000 7FFF                 move.l #$7FFF, d7
-00000348 207C 00FF 0000                 movea.l #$FF0000, a0
-0000034E                                .ClearRAM:
-0000034E 30FC 0000                      move.w #$0000, (a0)+
-00000352 51CF FFFA                      dbra d7,.ClearRAM
-00000356 23FC C000 0000 00C0 0004       move.l #$C0000000, vdp_ctrl
-00000360 33FC 0000 00C0 0000            set_palette_color 0, 0, 0
-00000368 33FC 0002 00C0 0000            set_palette_color 1, 0, 0
-00000370 33FC 0004 00C0 0000            set_palette_color 2, 0, 0
-00000378 33FC 0006 00C0 0000            set_palette_color 3, 0, 0
-00000380 33FC 0008 00C0 0000            set_palette_color 4, 0, 0
-00000388 33FC 000A 00C0 0000            set_palette_color 5, 0, 0
-00000390 33FC 000C 00C0 0000            set_palette_color 6, 0, 0
-00000398 33FC 000E 00C0 0000            set_palette_color 7, 0, 0
-000003A0 33FC 020E 00C0 0000            set_palette_color 7, 0, 1
-000003A8 33FC 040E 00C0 0000            set_palette_color 7, 0, 2
-000003B0 33FC 060E 00C0 0000            set_palette_color 7, 0, 3
-000003B8 33FC 080E 00C0 0000            set_palette_color 7, 0, 4
-000003C0 33FC 0A0E 00C0 0000            set_palette_color 7, 0, 5
-000003C8 33FC 0C0E 00C0 0000            set_palette_color 7, 0, 6
-000003D0 33FC 0E0E 00C0 0000            set_palette_color 7, 0, 7
-000003D8 33FC 0E2E 00C0 0000            set_palette_color 7, 1, 7
-000003E0 23FC 4000 0000 00C0 0004       move.l #$40000000, vdp_ctrl
-000003EA 23FC 1000 0000 00C0 0000       move.l #$10000000, vdp_data
-000003F4 23FC 1100 0000 00C0 0000       move.l #$11000000, vdp_data
-000003FE 23FC 1110 0000 00C0 0000       move.l #$11100000, vdp_data
-00000408 23FC 1111 0000 00C0 0000       move.l #$11110000, vdp_data
-00000412 23FC 1111 1000 00C0 0000       move.l #$11111000, vdp_data
-0000041C 23FC 1111 1100 00C0 0000       move.l #$11111100, vdp_data
-00000426 23FC 1111 1110 00C0 0000       move.l #$11111110, vdp_data
-00000430 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
-0000043A 33FC 8707 00C0 0004            move.w #34567,vdp_ctrl
-00000442 33FC 8004 00C0 0004            move.w #32772,vdp_ctrl
-0000044A 33FC 8164 00C0 0004            move.w #33124,vdp_ctrl
-00000452 46FC 2300                      move #$2300, sr
-00000456                                MainLoop:
-00000456 60FE                           bra.b MainLoop
-00000458                                hblank:
-00000458 4E                              dc.b %01001110
-00000459 73                              dc.b %01110011
-0000045A                                vblank:
-0000045A 48E7 6000                      movem.l d1-d2,-(sp)
-0000045E 13FC 0040 00A1 0009 41F9+     gamepads_get_input
-000004F2 4EB9 0000 020E                 jsr update_color
-000004F8 4EB9 0000 023E                 jsr update_hscroll
-000004FE 4CDF 0006                      movem.l (sp)+,d1-d2
-00000502 4E                              dc.b %01001110
-00000503 73                              dc.b %01110011
-00000504                                int2_bus_error:
+0000023E 4A39 0000 0000                 tst.b gamepad1_left
+00000244 67FE                           beq.b .skip_left
+00000246 0679 FFFF 0000 0000            add.w #-1, hscroll_amount
+0000024E 60FE                           bra.b .increment
+00000250                                .skip_left:
+00000250 4A39 0000 0000                 tst.b gamepad1_right
+00000256 67FE                           beq.b .skip_right
+00000258 0679 0001 0000 0000            add.w #1, hscroll_amount
+00000260                                .increment:
+00000260 3239 0000 0000                 move.w hscroll_amount, d1
+00000266 E449                           lsr.w #2, d1
+00000268 23FC 4400 0000 00C0 0004       set_write_vram vdp_hscroll_addr
+00000272 33C1 00C0 0000                 move.w d1, vdp_data
+00000278 33C1 00C0 0000                 move.w d1, vdp_data
+0000027E                                .skip_right:
+0000027E 4E                              dc.b %01001110
+0000027F 73                              dc.b %01110011
+00000280                                Start:
+00000280 46FC 2700                      move.w #$2700,sr
+00000284 2E7C 00FF 0000                 movea.l #$FF0000,sp
+0000028A 1039 00A1 0001                 move.b $A10001,d0
+00000290 0200 000F                      andi.b #$F,d0
+00000294 67FE                           beq.b skip_tmss
+00000296 23FC 5345 4741 00A1 4000       move.l #'SEGA',$A14000
+000002A0                                skip_tmss:
+000002A0 33FC 8104 00C0 0004            move.w #33028,vdp_ctrl
+000002A8 33FC 8208 00C0 0004            move.w #33288,vdp_ctrl
+000002B0 33FC 8310 00C0 0004            move.w #33552,vdp_ctrl
+000002B8 33FC 8403 00C0 0004            move.w #33795,vdp_ctrl
+000002C0 33FC 8540 00C0 0004            move.w #34112,vdp_ctrl
+000002C8 33FC 8600 00C0 0004            move.w #34304,vdp_ctrl
+000002D0 33FC 8800 00C0 0004            move.w #34816,vdp_ctrl
+000002D8 33FC 8900 00C0 0004            move.w #35072,vdp_ctrl
+000002E0 33FC 8A00 00C0 0004            move.w #35328,vdp_ctrl
+000002E8 33FC 8B00 00C0 0004            move.w #35584,vdp_ctrl
+000002F0 33FC 8C81 00C0 0004            move.w #35969,vdp_ctrl
+000002F8 33FC 8D01 00C0 0004            move.w #36097,vdp_ctrl
+00000300 33FC 8E00 00C0 0004            move.w #36352,vdp_ctrl
+00000308 33FC 8F02 00C0 0004            move.w #36610,vdp_ctrl
+00000310 33FC 9000 00C0 0004            move.w #36864,vdp_ctrl
+00000318 33FC 9100 00C0 0004            move.w #37120,vdp_ctrl
+00000320 33FC 9200 00C0 0004            move.w #37376,vdp_ctrl
+00000328 23FC 4000 0000 00C0 0004       move.l #$40000000, vdp_ctrl
+00000332 3E3C 3FFF                      move.w #$3FFF, d7
+00000336                                .ClearVRAM:
+00000336 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data
+00000340 51CF FFF4                      dbra d7,.ClearVRAM
+00000344 2E3C 0000 7FFF                 move.l #$7FFF, d7
+0000034A 207C 00FF 0000                 movea.l #$FF0000, a0
+00000350                                .ClearRAM:
+00000350 30FC 0000                      move.w #$0000, (a0)+
+00000354 51CF FFFA                      dbra d7,.ClearRAM
+00000358 23FC C000 0000 00C0 0004       move.l #$C0000000, vdp_ctrl
+00000362 33FC 0000 00C0 0000            set_palette_color 0, 0, 0
+0000036A 33FC 0002 00C0 0000            set_palette_color 1, 0, 0
+00000372 33FC 0004 00C0 0000            set_palette_color 2, 0, 0
+0000037A 33FC 0006 00C0 0000            set_palette_color 3, 0, 0
+00000382 33FC 0008 00C0 0000            set_palette_color 4, 0, 0
+0000038A 33FC 000A 00C0 0000            set_palette_color 5, 0, 0
+00000392 33FC 000C 00C0 0000            set_palette_color 6, 0, 0
+0000039A 33FC 000E 00C0 0000            set_palette_color 7, 0, 0
+000003A2 33FC 020E 00C0 0000            set_palette_color 7, 0, 1
+000003AA 33FC 040E 00C0 0000            set_palette_color 7, 0, 2
+000003B2 33FC 060E 00C0 0000            set_palette_color 7, 0, 3
+000003BA 33FC 080E 00C0 0000            set_palette_color 7, 0, 4
+000003C2 33FC 0A0E 00C0 0000            set_palette_color 7, 0, 5
+000003CA 33FC 0C0E 00C0 0000            set_palette_color 7, 0, 6
+000003D2 33FC 0E0E 00C0 0000            set_palette_color 7, 0, 7
+000003DA 33FC 0E2E 00C0 0000            set_palette_color 7, 1, 7
+000003E2 23FC 4000 0000 00C0 0004       move.l #$40000000, vdp_ctrl
+000003EC 23FC 1000 0000 00C0 0000       move.l #$10000000, vdp_data
+000003F6 23FC 1100 0000 00C0 0000       move.l #$11000000, vdp_data
+00000400 23FC 1110 0000 00C0 0000       move.l #$11100000, vdp_data
+0000040A 23FC 1111 0000 00C0 0000       move.l #$11110000, vdp_data
+00000414 23FC 1111 1000 00C0 0000       move.l #$11111000, vdp_data
+0000041E 23FC 1111 1100 00C0 0000       move.l #$11111100, vdp_data
+00000428 23FC 1111 1110 00C0 0000       move.l #$11111110, vdp_data
+00000432 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
+0000043C 33FC 8707 00C0 0004            move.w #34567,vdp_ctrl
+00000444 33FC 8004 00C0 0004            move.w #32772,vdp_ctrl
+0000044C 33FC 8164 00C0 0004            move.w #33124,vdp_ctrl
+00000454 46FC 2300                      move #$2300, sr
+00000458                                MainLoop:
+00000458 60FE                           bra.b MainLoop
+0000045A                                hblank:
+0000045A 4E                              dc.b %01001110
+0000045B 73                              dc.b %01110011
+0000045C                                vblank:
+0000045C 48E7 6000                      movem.l d1-d2,-(sp)
+00000460 13FC 0040 00A1 0009 41F9+     gamepads_get_input
+000004F4 4EB9 0000 020E                 jsr update_color
+000004FA 4EB9 0000 023E                 jsr update_hscroll
+00000500 4CDF 0006                      movem.l (sp)+,d1-d2
 00000504 4E                              dc.b %01001110
-00000505 71                              dc.b %01110001
+00000505 73                              dc.b %01110011
+00000506                                int2_bus_error:
 00000506 4E                              dc.b %01001110
 00000507 71                              dc.b %01110001
-00000508 60FA                           bra.b int2_bus_error
-0000050A                                int3_address_error:
-0000050A 4E                              dc.b %01001110
-0000050B 71                              dc.b %01110001
+00000508 4E                              dc.b %01001110
+00000509 71                              dc.b %01110001
+0000050A 60FA                           bra.b int2_bus_error
+0000050C                                int3_address_error:
 0000050C 4E                              dc.b %01001110
 0000050D 71                              dc.b %01110001
 0000050E 4E                              dc.b %01001110
 0000050F 71                              dc.b %01110001
-00000510 60F8                           bra.b int3_address_error
-00000512                                int4_illegal_instruction:
-00000512 4E                              dc.b %01001110
-00000513 71                              dc.b %01110001
+00000510 4E                              dc.b %01001110
+00000511 71                              dc.b %01110001
+00000512 60F8                           bra.b int3_address_error
+00000514                                int4_illegal_instruction:
 00000514 4E                              dc.b %01001110
 00000515 71                              dc.b %01110001
 00000516 4E                              dc.b %01001110
 00000517 71                              dc.b %01110001
 00000518 4E                              dc.b %01001110
 00000519 71                              dc.b %01110001
-0000051A 60F6                           bra.b int4_illegal_instruction
-0000051C                                error:
-0000051C 4E                              dc.b %01001110
-0000051D 71                              dc.b %01110001
-0000051E 60FC                           bra.b error
-00000520                            color_index equ 16711680
-00000520                            hscroll_amount equ 16711682
-00000520                            gamepad1_up equ 16711684
-00000520                            gamepad1_down equ 16711685
-00000520                            gamepad1_left equ 16711686
-00000520                            gamepad1_right equ 16711687
-00000520                            gamepad1_b equ 16711688
-00000520                            gamepad1_c equ 16711689
-00000520                            gamepad1_a equ 16711690
-00000520                            gamepad1_start equ 16711691
-00000520                            gamepad2_up equ 16711692
-00000520                            gamepad2_down equ 16711693
-00000520                            gamepad2_left equ 16711694
-00000520                            gamepad2_right equ 16711695
-00000520                            gamepad2_b equ 16711696
-00000520                            gamepad2_c equ 16711697
-00000520                            gamepad2_a equ 16711698
-00000520                            gamepad2_start equ 16711699
+0000051A 4E                              dc.b %01001110
+0000051B 71                              dc.b %01110001
+0000051C 60F6                           bra.b int4_illegal_instruction
+0000051E                                error:
+0000051E 4E                              dc.b %01001110
+0000051F 71                              dc.b %01110001
+00000520 60FC                           bra.b error
+00000522                            color_index equ 16711680
+00000522                            hscroll_amount equ 16711682
+00000522                            gamepad1_up equ 16711684
+00000522                            gamepad1_down equ 16711685
+00000522                            gamepad1_left equ 16711686
+00000522                            gamepad1_right equ 16711687
+00000522                            gamepad1_b equ 16711688
+00000522                            gamepad1_c equ 16711689
+00000522                            gamepad1_a equ 16711690
+00000522                            gamepad1_start equ 16711691
+00000522                            gamepad2_up equ 16711692
+00000522                            gamepad2_down equ 16711693
+00000522                            gamepad2_left equ 16711694
+00000522                            gamepad2_right equ 16711695
+00000522                            gamepad2_b equ 16711696
+00000522                            gamepad2_c equ 16711697
+00000522                            gamepad2_a equ 16711698
+00000522                            gamepad2_start equ 16711699

@@ -7,3 +7,4 @@
 * Add github flows where binary is generated maybe?
 * Add an "artifacts" folder where all artifacts (in binary) are stored.
 * Make a hexdump that is one byte per line.
+* Prefix all macros with `%`.
