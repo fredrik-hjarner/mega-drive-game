@@ -20,9 +20,11 @@
     ; 128d = 80h
 
 
-    dc.b "GM XXXXXXXX-XX"        ; 14 bytes: Version number
+    ; dc.b "GM XXXXXXXX-XX"        ; 14 bytes: Version number
+    meta_version
     ; 142d = 8Eh
 
+    org $18E                     ; Just to be 100% sure we're at the right place
 
     dc.w $0000                   ; 2 bytes: Checksum
     ; 144d = 90h

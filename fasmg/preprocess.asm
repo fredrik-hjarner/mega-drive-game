@@ -78,6 +78,19 @@ namespace MACROS
         assemble cmd
     end calminstruction
 
+    calminstruction meta_version
+        local tmp, quote, s_since_2025, m_since_2025
+
+        arrange quote, '
+
+        compute tmp, __time__
+        compute s_since_2025, tmp - 1735686000
+        compute m_since_2025, s_since_2025 / 60
+
+        arrange tmp, =dc.=b quote=GM m_since_2025 quote
+        assemble tmp
+    end calminstruction
+
     include "68k.inc"
 
     ; bappend
@@ -104,87 +117,12 @@ namespace MACROS
     ;     end iterate
     ; end macro
 
-    ; faster enter
-    calminstruction @enter
-        local tmp
-        arrange tmp, =push =bp
-        assemble tmp
-        arrange tmp, =mov =bp, =sp
-        assemble tmp
-    end calminstruction
-
-    calminstruction @pushall
-        local tmp
-        arrange tmp, =pushad
-        assemble tmp
-        arrange tmp, =push =ds
-        assemble tmp
-        arrange tmp, =push =es
-        assemble tmp
-    end calminstruction
-
-    calminstruction @popall
-        local tmp
-        arrange tmp, =pop =es
-        assemble tmp
-        arrange tmp, =pop =ds
-        assemble tmp
-        arrange tmp, =popad
-        assemble tmp
-    end calminstruction
-
-    ; int 3
-    ; so that I can do BPINT 3 in dosbox-x debugger.
-    calminstruction @breakpoint
-        local tmp
-        arrange tmp, =int 3h
-        assemble tmp
-    end calminstruction
-
-    iterate <__a, __b>, \
-        a, na, \
-        b, nb, \
-        c, nc, \
-        e, ne, \
-        g, ng, \
-        l, nl, \
-        o, no, \
-        p, np, \
-        s, ns, \
-        z, nz
-
-        calminstruction @if#__a line&
-                local tmp
-                arrange tmp, =j=__b =@=f
-                assemble tmp
-                assemble line
-                arrange tmp, =@=@:
-                assemble tmp
-        end calminstruction
-
-        calminstruction @if#__b line&
-                local tmp
-                arrange tmp, =j=__a =@=f
-                assemble tmp
-                assemble line
-                arrange tmp, =@=@:
-                assemble tmp
-        end calminstruction
-
-        ; Make visible to the preprocessor
-        define @if#__a +@if#__a
-        define @if#__b +@if#__b
-    end iterate
-
     ; Make visible to the preprocessor
     ; define bappend +bappend
     define word +word
     define byte +byte
     define set_vdp_register +set_vdp_register
-    define @enter +@enter
-    define @pushall +@pushall
-    define @popall +@popall
-    define @breakpoint +@breakpoint
+    define meta_version +meta_version
 end namespace
 
 PREPROCESSOR := __FILE__
