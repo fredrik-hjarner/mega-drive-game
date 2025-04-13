@@ -205,7 +205,7 @@ gamepads_get_input macro
     move.l #$11111110, vdp_data
     move.l #$11111111, vdp_data
     move.w #34567,vdp_ctrl
-    move.w #32773,vdp_ctrl
+    move.w #32772,vdp_ctrl
     move.w #33124,vdp_ctrl
     move #$2300, sr
     MainLoop:

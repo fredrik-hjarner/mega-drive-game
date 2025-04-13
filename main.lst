@@ -205,7 +205,7 @@
 000003BE 23FC 1111 1110 00C0 0000       move.l #$11111110, vdp_data
 000003C8 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
 000003D2 33FC 8707 00C0 0004            move.w #34567,vdp_ctrl
-000003DA 33FC 8005 00C0 0004            move.w #32773,vdp_ctrl
+000003DA 33FC 8004 00C0 0004            move.w #32772,vdp_ctrl
 000003E2 33FC 8164 00C0 0004            move.w #33124,vdp_ctrl
 000003EA 46FC 2300                      move #$2300, sr
 000003EE                                MainLoop:

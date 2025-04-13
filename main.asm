@@ -325,7 +325,7 @@ skip_tmss:
     ;                       |   +--- #1: 0 - enable H/V counter
     ;                       |   |        1 - freeze H/V counter on lvl 2 interrupt
     ;                       |   |
-    set_vdp_register $00, 00000101b      ; bits 7, 6 & 3 are always 0
+    set_vdp_register $00, 00000100b      ; bits 7, 6 & 3 are always 0
     ;                        | | |
     ;                        | | +-- #0: 0 - enable display
     ;                        | |         1 - disable display
