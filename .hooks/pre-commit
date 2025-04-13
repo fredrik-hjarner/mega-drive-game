@@ -1,0 +1,27 @@
+#!/bin/sh
+
+echo "Running make to build binary..."
+make
+
+# Check if make succeeded
+if [ $? -ne 0 ]; then
+    echo "make failed, aborting commit"
+    exit 1
+fi
+
+# Small pause to ensure filesystem operations complete
+# This helps prevent race conditions with the binary file
+sleep 1
+
+# Assuming your binary is named "mybinary" - replace with actual name
+echo "Adding binary to commit..."
+git add main.*
+git add preprocessed.*
+
+# Important: Git tracks what was staged before the hook ran
+# This command restages everything to include our new binary
+git update-index -q --refresh
+
+echo "Binary successfully built and staged for commit"
+
+exit 0

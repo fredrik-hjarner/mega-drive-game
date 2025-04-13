@@ -5,6 +5,9 @@
 * to build
   `make build` or just `make`
 
+* to install git hooks:
+  `git config core.hooksPath .hooks`
+
 * vasm is a bit retarded
   This is not allowed:
     `move.w #$2700, sr`
