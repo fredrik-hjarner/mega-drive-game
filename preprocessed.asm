@@ -14,6 +14,9 @@ set_palette_color macro
 set_write_vram macro
     move.l #$40000000+(((\1)&$3FFF)<<16)+(((\1)&$C000)>>14),vdp_ctrl
     endm
+set_write_vsram macro
+    move.l #$40000010+((\1)<<16),vdp_ctrl
+    endm
 gamepads_get_input macro
     move.b #$40, gamepad1_ctrl
     lea gamepad1_data, a0
@@ -120,7 +123,7 @@ gamepads_get_input macro
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 148332 '
+    dc.b 'GM 148354 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -160,16 +163,19 @@ gamepads_get_input macro
     update_hscroll:
     tst.b gamepad1_left
     beq.b .skip_left
-    add.w #-1, hscroll_amount
+    addi.w #-1, hscroll_amount
     bra.b .increment
     .skip_left:
     tst.b gamepad1_right
     beq.b .skip_right
-    add.w #1, hscroll_amount
+    addi.w #1, hscroll_amount
     .increment:
     move.w hscroll_amount, d1
     lsr.w #2, d1
     set_write_vram vdp_hscroll_addr
+    move.w d1, vdp_data
+    move.w d1, vdp_data
+    set_write_vsram vdp_hscroll_addr
     move.w d1, vdp_data
     move.w d1, vdp_data
     .skip_right:

@@ -23,6 +23,13 @@
         move.l #$40000000+(((\1)&$3FFF)<<16)+(((\1)&$C000)>>14),vdp_ctrl
     endm
 
+    ; arguments:
+    ;     \1: address: $00-$FF
+    ; https://segaretro.org/Sega_Mega_Drive/VDP_general_usage
+    set_write_vsram macro
+        move.l #$40000010+((\1)<<16),vdp_ctrl
+    endm
+
     ; https://plutiedev.com/controllers
     ; #$40 needs to be sent to control and data ports for some reason.
     ; init_gampads macro

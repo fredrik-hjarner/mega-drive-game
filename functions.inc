@@ -30,18 +30,22 @@ update_color:
 update_hscroll:
         tst.b gamepad1_left
         beq.b .skip_left
-        add.w #-1, hscroll_amount
+        addi.w #-1, hscroll_amount
         bra.b .increment
     .skip_left:
         tst.b gamepad1_right
         beq.b .skip_right
-        add.w #1, hscroll_amount
+        addi.w #1, hscroll_amount
     .increment:
         move.w hscroll_amount, d1
         ; right shift d1 to slower speed or something.
         lsr.w #2, d1
-        ; now also scroll plane A and plane B
+        ; now also h.scroll plane A and plane B
         set_write_vram vdp_hscroll_addr
+        move.w d1, vdp_data
+        move.w d1, vdp_data
+        ; now also v.scroll plane A and plane B
+        set_write_vsram vdp_hscroll_addr
         move.w d1, vdp_data
         move.w d1, vdp_data
     .skip_right:
