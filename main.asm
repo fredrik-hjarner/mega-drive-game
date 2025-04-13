@@ -237,14 +237,16 @@ skip_tmss:
     ; Window Plane Vertical Position
     set_vdp_register $12, 00000000b      ; no window
 
-    ; DMA Length Registers $13-$14
-    set_vdp_register $13, 00000000b
-    set_vdp_register $14, 00000000b
-
-    ; DMA Source Registers $15-$17
-    set_vdp_register $15, 00000000b
-    set_vdp_register $16, 00000000b
-    set_vdp_register $17, 00000000b
+    ; Commenting out setting these regisers because for some reason the rom
+    ; stops working on real hardware when these are set......
+    ; TODO: Figure out why.
+    ; ; DMA Length Registers $13-$14
+    ; set_vdp_register $13, 00000000b
+    ; set_vdp_register $14, 00000000b
+    ; ; DMA Source Registers $15-$17
+    ; set_vdp_register $15, 00000000b
+    ; set_vdp_register $16, 00000000b
+    ; set_vdp_register $17, 00000000b
 
     ; =================================================================
     ; STEP 2: CLEAR VRAM (Video RAM)

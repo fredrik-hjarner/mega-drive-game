@@ -168,11 +168,6 @@ gamepads_get_input macro
     move.w #36864,vdp_ctrl
     move.w #37120,vdp_ctrl
     move.w #37376,vdp_ctrl
-    move.w #37632,vdp_ctrl
-    move.w #37888,vdp_ctrl
-    move.w #38144,vdp_ctrl
-    move.w #38400,vdp_ctrl
-    move.w #38656,vdp_ctrl
     move.l #$40000000, vdp_ctrl
     move.w #$3FFF, d7
     .ClearVRAM:
