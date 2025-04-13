@@ -120,7 +120,7 @@ gamepads_get_input macro
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 147853 '
+    dc.b 'GM 147858 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -151,7 +151,6 @@ gamepads_get_input macro
     beq.s skip_tmss
     move.l #'SEGA',$A14000
     skip_tmss:
-    move.w #32773,vdp_ctrl
     move.w #33028,vdp_ctrl
     move.w #33288,vdp_ctrl
     move.w #33552,vdp_ctrl
