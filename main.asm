@@ -367,28 +367,12 @@ vblank:
         ; Save registers we'll modify
         movem.l d1-d2,-(sp)
 
+        ; place inputs into variables gamepad1_up, gamepad1_down, etc.
         gamepads_get_input
 
-        ; if not a then skip
-        tst.b gamepad1_a
-        beq.b .skip
+        jsr update_color
 
-        addq.w #1, color_index
-        cmpi.w #(16<<2), color_index
-        blo.s .done
-        move.w #0, color_index
-    .done:
-        move.w color_index, d1
-        ; right shift d1 to get the color index
-        lsr.w #2, d1
-        jsr (set_bg_color).w
-
-    ; now also scroll plane A and plane B
-        set_write_vram vdp_hscroll_addr
-        move.w d1, vdp_data
-        move.w d1, vdp_data
-
-    .skip:
+        jsr update_hscroll
 
         ; Restore registers
         movem.l (sp)+,d1-d2
@@ -432,6 +416,8 @@ error:
 ; =================================================================
 
 word color_index
+word hscroll_amount
+; word vscroll_amount
 
 byte gamepad1_up
 byte gamepad1_down

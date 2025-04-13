@@ -120,7 +120,7 @@ gamepads_get_input macro
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 147878 '
+    dc.b 'GM 148301 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -143,6 +143,36 @@ gamepads_get_input macro
     move.w d2, vdp_ctrl
     dc.b %01001110
     dc.b %01110101
+    update_color:
+    tst.b gamepad1_a
+    beq.b .skip
+    addq.w #1, color_index
+    cmpi.w #(16<<2), color_index
+    blo.s .increment
+    move.w #0, color_index
+    .increment:
+    move.w color_index, d1
+    lsr.w #2, d1
+    jsr set_bg_color
+    .skip:
+    dc.b %01001110
+    dc.b %01110101
+    update_hscroll:
+    tst.b gamepad1_right
+    beq.b .skip
+    addq.w #1, hscroll_amount
+    cmpi.w #(16<<2), hscroll_amount
+    blo.s .increment
+    move.w #0, hscroll_amount
+    .increment:
+    move.w hscroll_amount, d1
+    lsr.w #2, d1
+    set_write_vram vdp_hscroll_addr
+    move.w d1, vdp_data
+    move.w d1, vdp_data
+    .skip:
+    dc.b %01001110
+    dc.b %01110011
     Start:
     move.w #$2700,sr
     movea.l #$FF0000,sp
@@ -216,20 +246,8 @@ gamepads_get_input macro
     vblank:
     movem.l d1-d2,-(sp)
     gamepads_get_input
-    tst.b gamepad1_a
-    beq.b .skip
-    addq.w #1, color_index
-    cmpi.w #(16<<2), color_index
-    blo.s .done
-    move.w #0, color_index
-    .done:
-    move.w color_index, d1
-    lsr.w #2, d1
-    jsr (set_bg_color).w
-    set_write_vram vdp_hscroll_addr
-    move.w d1, vdp_data
-    move.w d1, vdp_data
-    .skip:
+    jsr update_color
+    jsr update_hscroll
     movem.l (sp)+,d1-d2
     dc.b %01001110
     dc.b %01110011
@@ -262,19 +280,20 @@ gamepads_get_input macro
     dc.b %01110001
     bra.b error
 color_index equ 16711680
-gamepad1_up equ 16711682
-gamepad1_down equ 16711683
-gamepad1_left equ 16711684
-gamepad1_right equ 16711685
-gamepad1_b equ 16711686
-gamepad1_c equ 16711687
-gamepad1_a equ 16711688
-gamepad1_start equ 16711689
-gamepad2_up equ 16711690
-gamepad2_down equ 16711691
-gamepad2_left equ 16711692
-gamepad2_right equ 16711693
-gamepad2_b equ 16711694
-gamepad2_c equ 16711695
-gamepad2_a equ 16711696
-gamepad2_start equ 16711697
+hscroll_amount equ 16711682
+gamepad1_up equ 16711684
+gamepad1_down equ 16711685
+gamepad1_left equ 16711686
+gamepad1_right equ 16711687
+gamepad1_b equ 16711688
+gamepad1_c equ 16711689
+gamepad1_a equ 16711690
+gamepad1_start equ 16711691
+gamepad2_up equ 16711692
+gamepad2_down equ 16711693
+gamepad2_left equ 16711694
+gamepad2_right equ 16711695
+gamepad2_b equ 16711696
+gamepad2_c equ 16711697
+gamepad2_a equ 16711698
+gamepad2_start equ 16711699
