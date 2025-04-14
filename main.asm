@@ -67,8 +67,8 @@ skip_tmss:
     ;                     |              1 - 128kB of VRAM
     ;                     | +------- #5: 0 - disable v-blank interrupts
     ;                     | |            1 - enable v-blank interrupts
-    ;                     | | +----- #3: 0 - 224 pixel (28 cell) NTSC mode
-    ;                     | | |          1 - 240 pixel (30 cell) PAL mode
+    ;                     | | +----- #3: 0 - 224 pixel high (28 cell) NTSC mode
+    ;                     | | |          1 - 240 pixel high (30 cell) PAL mode
     ;                     | | |
     set_vdp_register $01, 00000100b      ; bits 1, 0 are always 0
     ;                      | | |
