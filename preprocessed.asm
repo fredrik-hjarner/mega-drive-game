@@ -123,7 +123,7 @@ gamepads_get_input macro
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 149373 '
+    dc.b 'GM 149530 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -181,6 +181,47 @@ gamepads_get_input macro
     .skip_right:
     dc.b %01001110
     dc.b %01110011
+hblanks_per_100Hz_tick equ 156
+hblanks_per_50Hz_tick equ 312
+hblanks_per_1Hz_tick equ 15600
+timer_100Hz_counter equ 16711680
+timer_50Hz_counter equ 16711682
+timer_1Hz_counter equ 16711684
+    hblank:
+    move.w d0, -(sp)
+    addi.w #1, timer_100Hz_counter
+    move.w timer_100Hz_counter, d0
+    cmpi.w #hblanks_per_100Hz_tick, d0
+    blt .skip100HzCallback
+    move.w #0, timer_100Hz_counter
+    jsr timer_100Hz_callback
+    .skip100HzCallback:
+    addi.w #1, timer_50Hz_counter
+    move.w timer_50Hz_counter, d0
+    cmpi.w #hblanks_per_50Hz_tick, d0
+    blt .skip50HzCallback
+    move.w #0, timer_50Hz_counter
+    jsr timer_50Hz_callback
+    .skip50HzCallback:
+    addi.w #1, timer_1Hz_counter
+    move.w timer_1Hz_counter, d0
+    cmpi.w #hblanks_per_1Hz_tick, d0
+    blt .skip1HzCallback
+    move.w #0, timer_1Hz_counter
+    jsr timer_1Hz_callback
+    .skip1HzCallback:
+    move.w (sp)+, d0
+    dc.b %01001110
+    dc.b %01110011
+    timer_100Hz_callback:
+    dc.b %01001110
+    dc.b %01110101
+    timer_50Hz_callback:
+    dc.b %01001110
+    dc.b %01110101
+    timer_1Hz_callback:
+    dc.b %01001110
+    dc.b %01110101
     Start:
     move.w #$2700,sr
     movea.l #$FF0000,sp
@@ -248,9 +289,6 @@ gamepads_get_input macro
     move #$2300, sr
     MainLoop:
     bra.b MainLoop
-    hblank:
-    dc.b %01001110
-    dc.b %01110011
     vblank:
     movem.l d1-d2,-(sp)
     gamepads_get_input
@@ -287,21 +325,21 @@ gamepads_get_input macro
     dc.b %01001110
     dc.b %01110001
     bra.b error
-color_index equ 16711680
-hscroll_amount equ 16711682
-gamepad1_up equ 16711684
-gamepad1_down equ 16711685
-gamepad1_left equ 16711686
-gamepad1_right equ 16711687
-gamepad1_b equ 16711688
-gamepad1_c equ 16711689
-gamepad1_a equ 16711690
-gamepad1_start equ 16711691
-gamepad2_up equ 16711692
-gamepad2_down equ 16711693
-gamepad2_left equ 16711694
-gamepad2_right equ 16711695
-gamepad2_b equ 16711696
-gamepad2_c equ 16711697
-gamepad2_a equ 16711698
-gamepad2_start equ 16711699
+color_index equ 16711686
+hscroll_amount equ 16711688
+gamepad1_up equ 16711690
+gamepad1_down equ 16711691
+gamepad1_left equ 16711692
+gamepad1_right equ 16711693
+gamepad1_b equ 16711694
+gamepad1_c equ 16711695
+gamepad1_a equ 16711696
+gamepad1_start equ 16711697
+gamepad2_up equ 16711698
+gamepad2_down equ 16711699
+gamepad2_left equ 16711700
+gamepad2_right equ 16711701
+gamepad2_b equ 16711702
+gamepad2_c equ 16711703
+gamepad2_a equ 16711704
+gamepad2_start equ 16711705

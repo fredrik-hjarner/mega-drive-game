@@ -13,6 +13,7 @@
 ; =====================================================================
 
     include "functions.inc"
+    include "timers.inc"
 
 ; =====================================================================
 ; PROGRAM START (Code begins at $200 because the ROM header is $200 bytes)
@@ -358,10 +359,7 @@ skip_tmss:
     ; STEP 5: MAIN LOOP (Do nothing forever)
     ; =================================================================
 MainLoop:
-    bra.b   MainLoop              ; Infinite loop (real programs would handle VBLANK)
-
-hblank:
-    rte
+    bra.b   MainLoop              ; Infinite loop
 
 vblank:
         ; Save registers we'll modify
