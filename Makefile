@@ -3,13 +3,13 @@
 all: preprocess build-preprocessed hexdump
 
 preprocess:
-	fasm2 fasmg/preprocess.asm -isource=\'src/main.asm\' preprocessed.asm -e200
+	fasm2 src/fasmg/preprocess.asm -isource=\'src/main.asm\' preprocessed.asm -e200
 
 build-preprocessed:
 	clownassembler -c -l main.lst -o main.bin -i preprocessed.asm
 
-build:
-	clownassembler -c -l main.lst -o main.bin -i main.asm
+# build:
+# 	clownassembler -c -l main.lst -o main.bin -i main.asm
 
 hexdump:
 	hexdump -C -v main.bin > main.hex
