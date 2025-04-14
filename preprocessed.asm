@@ -2,7 +2,8 @@ vdp_data equ $C00000
 vdp_data2 equ $C00002
 vdp_ctrl equ $C00004
 vdp_ctrl2 equ $C00006
-vdp_hscroll_addr equ $400
+vram_hscroll_addr equ $0400
+vram_plane_a_addr equ $2000
 vdp_tiles_addr equ $0000
 gamepad1_ctrl equ $A10009
 gamepad1_data equ $A10003
@@ -123,7 +124,7 @@ gamepads_get_input macro
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 149748 '
+    dc.b 'GM 149791 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -172,10 +173,10 @@ gamepads_get_input macro
     .increment:
     move.w hscroll_amount, d1
     lsr.w #2, d1
-    set_write_vram vdp_hscroll_addr
+    set_write_vram vram_hscroll_addr
     move.w d1, vdp_data
     move.w d1, vdp_data
-    set_write_vsram vdp_hscroll_addr
+    set_write_vsram $0
     move.w d1, vdp_data
     move.w d1, vdp_data
     .skip_right:
@@ -280,6 +281,22 @@ timer_1Hz_counter equ 16711684
     set_palette_color 7, 0, 7
     set_palette_color 7, 1, 7
     move.l #$40000000, vdp_ctrl
+    move.l #$00000000, vdp_data
+    move.l #$00000000, vdp_data
+    move.l #$00000000, vdp_data
+    move.l #$00000000, vdp_data
+    move.l #$00000000, vdp_data
+    move.l #$00000000, vdp_data
+    move.l #$00000000, vdp_data
+    move.l #$00000000, vdp_data
+    move.l #$10000000, vdp_data
+    move.l #$11000000, vdp_data
+    move.l #$11100000, vdp_data
+    move.l #$11110000, vdp_data
+    move.l #$11111000, vdp_data
+    move.l #$11111100, vdp_data
+    move.l #$11111110, vdp_data
+    move.l #$11111111, vdp_data
     move.l #$00011000, vdp_data
     move.l #$00011000, vdp_data
     move.l #$00011000, vdp_data
@@ -288,6 +305,43 @@ timer_1Hz_counter equ 16711684
     move.l #$00011000, vdp_data
     move.l #$00011000, vdp_data
     move.l #$00011000, vdp_data
+    move.l #$11111111, vdp_data
+    move.l #$11111111, vdp_data
+    move.l #$11111111, vdp_data
+    move.l #$11111111, vdp_data
+    move.l #$11111111, vdp_data
+    move.l #$11111111, vdp_data
+    move.l #$11111111, vdp_data
+    move.l #$11111111, vdp_data
+    move.l #$00111100, vdp_data
+    move.l #$01111110, vdp_data
+    move.l #$11010111, vdp_data
+    move.l #$11111111, vdp_data
+    move.l #$10111011, vdp_data
+    move.l #$11000111, vdp_data
+    move.l #$01111110, vdp_data
+    move.l #$00111100, vdp_data
+    set_write_vram vram_plane_a_addr
+    move.w #$FF, d1
+    .loop:
+    move.w #$1, d0
+    jsr set_plane_tile
+    dbra d1, .loop
+    move.w #$FF, d1
+    .loop2:
+    move.w #$2, d0
+    jsr set_plane_tile
+    dbra d1, .loop2
+    move.w #$FF, d1
+    .loop3:
+    move.w #$3, d0
+    jsr set_plane_tile
+    dbra d1, .loop3
+    move.w #$FF, d1
+    .loop4:
+    move.w #$4, d0
+    jsr set_plane_tile
+    dbra d1, .loop4
     move.w #34567,vdp_ctrl
     move.w #33124,vdp_ctrl
     move #$2300, sr

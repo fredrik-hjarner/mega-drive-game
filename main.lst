@@ -2,7 +2,8 @@
 00000000                            vdp_data2 equ $C00002
 00000000                            vdp_ctrl equ $C00004
 00000000                            vdp_ctrl2 equ $C00006
-00000000                            vdp_hscroll_addr equ $400
+00000000                            vram_hscroll_addr equ $0400
+00000000                            vram_plane_a_addr equ $2000
 00000000                            vdp_tiles_addr equ $0000
 00000000                            gamepad1_ctrl equ $A10009
 00000000                            gamepad1_data equ $A10003
@@ -123,7 +124,7 @@
 00000110 2020 2020 2020 2020 2020+     dc.b '                '
 00000120 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
 00000150 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
-00000180 474D 2031 3439 3734 3820       dc.b 'GM 149748 '
+00000180 474D 2031 3439 3739 3120       dc.b 'GM 149791 '
 0000018A                                org $18E
 0000018E 0000                           dc.w $0000
 00000190 4A20 2020 2020 2020 2020+     dc.b 'J               '
@@ -172,10 +173,10 @@
 00000260                                .increment:
 00000260 3239 0000 0000                 move.w hscroll_amount, d1
 00000266 E449                           lsr.w #2, d1
-00000268 23FC 4400 0000 00C0 0004       set_write_vram vdp_hscroll_addr
+00000268 23FC 4400 0000 00C0 0004       set_write_vram vram_hscroll_addr
 00000272 33C1 00C0 0000                 move.w d1, vdp_data
 00000278 33C1 00C0 0000                 move.w d1, vdp_data
-0000027E 23FC 4400 0010 00C0 0004       set_write_vsram vdp_hscroll_addr
+0000027E 23FC 4000 0010 00C0 0004       set_write_vsram $0
 00000288 33C1 00C0 0000                 move.w d1, vdp_data
 0000028E 33C1 00C0 0000                 move.w d1, vdp_data
 00000294                                .skip_right:
@@ -280,70 +281,123 @@
 00000470 33FC 0E0E 00C0 0000            set_palette_color 7, 0, 7
 00000478 33FC 0E2E 00C0 0000            set_palette_color 7, 1, 7
 00000480 23FC 4000 0000 00C0 0004       move.l #$40000000, vdp_ctrl
-0000048A 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
-00000494 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
-0000049E 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
-000004A8 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
-000004B2 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
-000004BC 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
-000004C6 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
-000004D0 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
-000004DA 33FC 8707 00C0 0004            move.w #34567,vdp_ctrl
-000004E2 33FC 8164 00C0 0004            move.w #33124,vdp_ctrl
-000004EA 46FC 2300                      move #$2300, sr
-000004EE                                MainLoop:
-000004EE 60FE                           bra.b MainLoop
-000004F0                                vblank:
-000004F0 48E7 6000                      movem.l d1-d2,-(sp)
-000004F4 13FC 0040 00A1 0009 41F9+     gamepads_get_input
-00000588 4EB9 0000 020E                 jsr update_color
-0000058E 4EB9 0000 023E                 jsr update_hscroll
-00000594 4CDF 0006                      movem.l (sp)+,d1-d2
-00000598 4E                              dc.b %01001110
-00000599 73                              dc.b %01110011
-0000059A                                int2_bus_error:
-0000059A 4E                              dc.b %01001110
-0000059B 71                              dc.b %01110001
-0000059C 4E                              dc.b %01001110
-0000059D 71                              dc.b %01110001
-0000059E 60FA                           bra.b int2_bus_error
-000005A0                                int3_address_error:
-000005A0 4E                              dc.b %01001110
-000005A1 71                              dc.b %01110001
-000005A2 4E                              dc.b %01001110
-000005A3 71                              dc.b %01110001
-000005A4 4E                              dc.b %01001110
-000005A5 71                              dc.b %01110001
-000005A6 60F8                           bra.b int3_address_error
-000005A8                                int4_illegal_instruction:
-000005A8 4E                              dc.b %01001110
-000005A9 71                              dc.b %01110001
-000005AA 4E                              dc.b %01001110
-000005AB 71                              dc.b %01110001
-000005AC 4E                              dc.b %01001110
-000005AD 71                              dc.b %01110001
-000005AE 4E                              dc.b %01001110
-000005AF 71                              dc.b %01110001
-000005B0 60F6                           bra.b int4_illegal_instruction
-000005B2                                error:
-000005B2 4E                              dc.b %01001110
-000005B3 71                              dc.b %01110001
-000005B4 60FC                           bra.b error
-000005B6                            color_index equ 16711686
-000005B6                            hscroll_amount equ 16711688
-000005B6                            gamepad1_up equ 16711690
-000005B6                            gamepad1_down equ 16711691
-000005B6                            gamepad1_left equ 16711692
-000005B6                            gamepad1_right equ 16711693
-000005B6                            gamepad1_b equ 16711694
-000005B6                            gamepad1_c equ 16711695
-000005B6                            gamepad1_a equ 16711696
-000005B6                            gamepad1_start equ 16711697
-000005B6                            gamepad2_up equ 16711698
-000005B6                            gamepad2_down equ 16711699
-000005B6                            gamepad2_left equ 16711700
-000005B6                            gamepad2_right equ 16711701
-000005B6                            gamepad2_b equ 16711702
-000005B6                            gamepad2_c equ 16711703
-000005B6                            gamepad2_a equ 16711704
-000005B6                            gamepad2_start equ 16711705
+0000048A 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data
+00000494 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data
+0000049E 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data
+000004A8 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data
+000004B2 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data
+000004BC 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data
+000004C6 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data
+000004D0 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data
+000004DA 23FC 1000 0000 00C0 0000       move.l #$10000000, vdp_data
+000004E4 23FC 1100 0000 00C0 0000       move.l #$11000000, vdp_data
+000004EE 23FC 1110 0000 00C0 0000       move.l #$11100000, vdp_data
+000004F8 23FC 1111 0000 00C0 0000       move.l #$11110000, vdp_data
+00000502 23FC 1111 1000 00C0 0000       move.l #$11111000, vdp_data
+0000050C 23FC 1111 1100 00C0 0000       move.l #$11111100, vdp_data
+00000516 23FC 1111 1110 00C0 0000       move.l #$11111110, vdp_data
+00000520 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
+0000052A 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
+00000534 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
+0000053E 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
+00000548 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
+00000552 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
+0000055C 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
+00000566 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
+00000570 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
+0000057A 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
+00000584 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
+0000058E 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
+00000598 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
+000005A2 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
+000005AC 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
+000005B6 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
+000005C0 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
+000005CA 23FC 0011 1100 00C0 0000       move.l #$00111100, vdp_data
+000005D4 23FC 0111 1110 00C0 0000       move.l #$01111110, vdp_data
+000005DE 23FC 1101 0111 00C0 0000       move.l #$11010111, vdp_data
+000005E8 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
+000005F2 23FC 1011 1011 00C0 0000       move.l #$10111011, vdp_data
+000005FC 23FC 1100 0111 00C0 0000       move.l #$11000111, vdp_data
+00000606 23FC 0111 1110 00C0 0000       move.l #$01111110, vdp_data
+00000610 23FC 0011 1100 00C0 0000       move.l #$00111100, vdp_data
+0000061A 23FC 6000 0000 00C0 0004       set_write_vram vram_plane_a_addr
+00000624 323C 00FF                      move.w #$FF, d1
+00000628                                .loop:
+00000628 303C 0001                      move.w #$1, d0
+0000062C 4EB9 0000 0296                 jsr set_plane_tile
+00000632 51C9 FFF4                      dbra d1, .loop
+00000636 323C 00FF                      move.w #$FF, d1
+0000063A                                .loop2:
+0000063A 303C 0002                      move.w #$2, d0
+0000063E 4EB9 0000 0296                 jsr set_plane_tile
+00000644 51C9 FFF4                      dbra d1, .loop2
+00000648 323C 00FF                      move.w #$FF, d1
+0000064C                                .loop3:
+0000064C 303C 0003                      move.w #$3, d0
+00000650 4EB9 0000 0296                 jsr set_plane_tile
+00000656 51C9 FFF4                      dbra d1, .loop3
+0000065A 323C 00FF                      move.w #$FF, d1
+0000065E                                .loop4:
+0000065E 303C 0004                      move.w #$4, d0
+00000662 4EB9 0000 0296                 jsr set_plane_tile
+00000668 51C9 FFF4                      dbra d1, .loop4
+0000066C 33FC 8707 00C0 0004            move.w #34567,vdp_ctrl
+00000674 33FC 8164 00C0 0004            move.w #33124,vdp_ctrl
+0000067C 46FC 2300                      move #$2300, sr
+00000680                                MainLoop:
+00000680 60FE                           bra.b MainLoop
+00000682                                vblank:
+00000682 48E7 6000                      movem.l d1-d2,-(sp)
+00000686 13FC 0040 00A1 0009 41F9+     gamepads_get_input
+0000071A 4EB9 0000 020E                 jsr update_color
+00000720 4EB9 0000 023E                 jsr update_hscroll
+00000726 4CDF 0006                      movem.l (sp)+,d1-d2
+0000072A 4E                              dc.b %01001110
+0000072B 73                              dc.b %01110011
+0000072C                                int2_bus_error:
+0000072C 4E                              dc.b %01001110
+0000072D 71                              dc.b %01110001
+0000072E 4E                              dc.b %01001110
+0000072F 71                              dc.b %01110001
+00000730 60FA                           bra.b int2_bus_error
+00000732                                int3_address_error:
+00000732 4E                              dc.b %01001110
+00000733 71                              dc.b %01110001
+00000734 4E                              dc.b %01001110
+00000735 71                              dc.b %01110001
+00000736 4E                              dc.b %01001110
+00000737 71                              dc.b %01110001
+00000738 60F8                           bra.b int3_address_error
+0000073A                                int4_illegal_instruction:
+0000073A 4E                              dc.b %01001110
+0000073B 71                              dc.b %01110001
+0000073C 4E                              dc.b %01001110
+0000073D 71                              dc.b %01110001
+0000073E 4E                              dc.b %01001110
+0000073F 71                              dc.b %01110001
+00000740 4E                              dc.b %01001110
+00000741 71                              dc.b %01110001
+00000742 60F6                           bra.b int4_illegal_instruction
+00000744                                error:
+00000744 4E                              dc.b %01001110
+00000745 71                              dc.b %01110001
+00000746 60FC                           bra.b error
+00000748                            color_index equ 16711686
+00000748                            hscroll_amount equ 16711688
+00000748                            gamepad1_up equ 16711690
+00000748                            gamepad1_down equ 16711691
+00000748                            gamepad1_left equ 16711692
+00000748                            gamepad1_right equ 16711693
+00000748                            gamepad1_b equ 16711694
+00000748                            gamepad1_c equ 16711695
+00000748                            gamepad1_a equ 16711696
+00000748                            gamepad1_start equ 16711697
+00000748                            gamepad2_up equ 16711698
+00000748                            gamepad2_down equ 16711699
+00000748                            gamepad2_left equ 16711700
+00000748                            gamepad2_right equ 16711701
+00000748                            gamepad2_b equ 16711702
+00000748                            gamepad2_c equ 16711703
+00000748                            gamepad2_a equ 16711704
+00000748                            gamepad2_start equ 16711705

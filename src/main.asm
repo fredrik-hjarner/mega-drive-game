@@ -306,24 +306,24 @@ skip_tmss:
     move.l  #$40000000, vdp_ctrl    ; Start writing at VRAM $0000
 
     ; Tile $0
-    ; move.l #$00000000, vdp_data ; row 1
-    ; move.l #$00000000, vdp_data ; row 2
-    ; move.l #$00000000, vdp_data ; row 3
-    ; move.l #$00000000, vdp_data ; row 4
-    ; move.l #$00000000, vdp_data ; row 5
-    ; move.l #$00000000, vdp_data ; row 6
-    ; move.l #$00000000, vdp_data ; row 7
-    ; move.l #$00000000, vdp_data ; row 8
+    move.l #$00000000, vdp_data ; row 1
+    move.l #$00000000, vdp_data ; row 2
+    move.l #$00000000, vdp_data ; row 3
+    move.l #$00000000, vdp_data ; row 4
+    move.l #$00000000, vdp_data ; row 5
+    move.l #$00000000, vdp_data ; row 6
+    move.l #$00000000, vdp_data ; row 7
+    move.l #$00000000, vdp_data ; row 8
 
     ; Tile $1
-    ; move.l #$10000000, vdp_data ; row 1
-    ; move.l #$11000000, vdp_data ; row 2
-    ; move.l #$11100000, vdp_data ; row 3
-    ; move.l #$11110000, vdp_data ; row 4
-    ; move.l #$11111000, vdp_data ; row 5
-    ; move.l #$11111100, vdp_data ; row 6
-    ; move.l #$11111110, vdp_data ; row 7
-    ; move.l #$11111111, vdp_data ; row 8
+    move.l #$10000000, vdp_data ; row 1
+    move.l #$11000000, vdp_data ; row 2
+    move.l #$11100000, vdp_data ; row 3
+    move.l #$11110000, vdp_data ; row 4
+    move.l #$11111000, vdp_data ; row 5
+    move.l #$11111100, vdp_data ; row 6
+    move.l #$11111110, vdp_data ; row 7
+    move.l #$11111111, vdp_data ; row 8
 
     ; Tile $2
     move.l #$00011000, vdp_data ; row 1
@@ -334,6 +334,54 @@ skip_tmss:
     move.l #$00011000, vdp_data ; row 6
     move.l #$00011000, vdp_data ; row 7
     move.l #$00011000, vdp_data ; row 8
+
+    ; Tile $3
+    move.l #$11111111, vdp_data ; row 1
+    move.l #$11111111, vdp_data ; row 2
+    move.l #$11111111, vdp_data ; row 3
+    move.l #$11111111, vdp_data ; row 4
+    move.l #$11111111, vdp_data ; row 5
+    move.l #$11111111, vdp_data ; row 6
+    move.l #$11111111, vdp_data ; row 7
+    move.l #$11111111, vdp_data ; row 8
+
+    ; Tile $4
+    move.l #$00111100, vdp_data ; row 1
+    move.l #$01111110, vdp_data ; row 2
+    move.l #$11010111, vdp_data ; row 3
+    move.l #$11111111, vdp_data ; row 4
+    move.l #$10111011, vdp_data ; row 5
+    move.l #$11000111, vdp_data ; row 6
+    move.l #$01111110, vdp_data ; row 7
+    move.l #$00111100, vdp_data ; row 8
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; TRYIN' SOME STUFF                                                          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    set_write_vram vram_plane_a_addr
+    ; 3FF tiles seems to completely fill the plane
+    ; i.e. $FF x $4
+    move.w  #$FF, d1
+    .loop:
+        move.w  #$1, d0      ; Set parameter
+        jsr     set_plane_tile ; Call subroutine
+        dbra    d1, .loop     ; Decrement d1 and loop until -1
+    move.w  #$FF, d1
+    .loop2:
+        move.w  #$2, d0      ; Set parameter
+        jsr     set_plane_tile ; Call subroutine
+        dbra    d1, .loop2     ; Decrement d1 and loop until -1
+    move.w  #$FF, d1
+    .loop3:
+        move.w  #$3, d0      ; Set parameter
+        jsr     set_plane_tile ; Call subroutine
+        dbra    d1, .loop3     ; Decrement d1 and loop until -1
+    move.w  #$FF, d1
+    .loop4:
+        move.w  #$4, d0      ; Set parameter
+        jsr     set_plane_tile ; Call subroutine
+        dbra    d1, .loop4     ; Decrement d1 and loop until -1
 
     ; =================================================================
     ; STEP 4: ENABLE DISPLAY AND SET BACKGROUND

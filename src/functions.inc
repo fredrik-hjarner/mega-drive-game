@@ -41,11 +41,11 @@ update_hscroll:
         ; right shift d1 to slower speed or something.
         lsr.w #2, d1
         ; now also h.scroll plane A and plane B
-        set_write_vram vdp_hscroll_addr
+        set_write_vram vram_hscroll_addr
         move.w d1, vdp_data
         move.w d1, vdp_data
         ; now also v.scroll plane A and plane B
-        set_write_vsram vdp_hscroll_addr
+        set_write_vsram $0
         move.w d1, vdp_data
         move.w d1, vdp_data
     .skip_right:
