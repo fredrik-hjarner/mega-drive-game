@@ -13,3 +13,4 @@
   maybe some movzx or something that zero extends after a move, dunno.
   maybe push.w, pop.w, push.l, pop.l, etc.
 * Remake all macros in fasmg so all macros are fasmg macros.
+* Move tiles into a separate file.

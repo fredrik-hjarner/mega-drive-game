@@ -123,7 +123,7 @@ gamepads_get_input macro
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 149548 '
+    dc.b 'GM 149748 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -181,6 +181,10 @@ gamepads_get_input macro
     .skip_right:
     dc.b %01001110
     dc.b %01110011
+    set_plane_tile:
+    move.w d0, vdp_data
+    dc.b %01001110
+    dc.b %01110101
 hblanks_per_100Hz_tick equ 156
 hblanks_per_50Hz_tick equ 312
 hblanks_per_1Hz_tick equ 15600
@@ -230,6 +234,7 @@ timer_1Hz_counter equ 16711684
     beq.b skip_tmss
     move.l #'SEGA',$A14000
     skip_tmss:
+    move.w #32772,vdp_ctrl
     move.w #33028,vdp_ctrl
     move.w #33288,vdp_ctrl
     move.w #33552,vdp_ctrl
@@ -275,16 +280,15 @@ timer_1Hz_counter equ 16711684
     set_palette_color 7, 0, 7
     set_palette_color 7, 1, 7
     move.l #$40000000, vdp_ctrl
-    move.l #$10000000, vdp_data
-    move.l #$11000000, vdp_data
-    move.l #$11100000, vdp_data
-    move.l #$11110000, vdp_data
-    move.l #$11111000, vdp_data
-    move.l #$11111100, vdp_data
-    move.l #$11111110, vdp_data
+    move.l #$00011000, vdp_data
+    move.l #$00011000, vdp_data
+    move.l #$00011000, vdp_data
     move.l #$11111111, vdp_data
+    move.l #$11111111, vdp_data
+    move.l #$00011000, vdp_data
+    move.l #$00011000, vdp_data
+    move.l #$00011000, vdp_data
     move.w #34567,vdp_ctrl
-    move.w #32772,vdp_ctrl
     move.w #33124,vdp_ctrl
     move #$2300, sr
     MainLoop:

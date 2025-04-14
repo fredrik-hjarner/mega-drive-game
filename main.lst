@@ -123,7 +123,7 @@
 00000110 2020 2020 2020 2020 2020+     dc.b '                '
 00000120 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
 00000150 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
-00000180 474D 2031 3439 3534 3820       dc.b 'GM 149548 '
+00000180 474D 2031 3439 3734 3820       dc.b 'GM 149748 '
 0000018A                                org $18E
 0000018E 0000                           dc.w $0000
 00000190 4A20 2020 2020 2020 2020+     dc.b 'J               '
@@ -181,165 +181,169 @@
 00000294                                .skip_right:
 00000294 4E                              dc.b %01001110
 00000295 73                              dc.b %01110011
-00000296                            hblanks_per_100Hz_tick equ 156
-00000296                            hblanks_per_50Hz_tick equ 312
-00000296                            hblanks_per_1Hz_tick equ 15600
-00000296                            timer_100Hz_counter equ 16711680
-00000296                            timer_50Hz_counter equ 16711682
-00000296                            timer_1Hz_counter equ 16711684
-00000296                                hblank:
-00000296 3F00                           move.w d0, -(sp)
-00000298 0679 0001 00FF 0000            addi.w #1, timer_100Hz_counter
-000002A0 3039 00FF 0000                 move.w timer_100Hz_counter, d0
-000002A6 0C40 009C                      cmpi.w #hblanks_per_100Hz_tick, d0
-000002AA 6D00 FFFE                      blt .skip100HzCallback
-000002AE 33FC 0000 00FF 0000            move.w #0, timer_100Hz_counter
-000002B6 4EB9 0000 0000                 jsr timer_100Hz_callback
-000002BC                                .skip100HzCallback:
-000002BC 0679 0001 00FF 0002            addi.w #1, timer_50Hz_counter
-000002C4 3039 00FF 0002                 move.w timer_50Hz_counter, d0
-000002CA 0C40 0138                      cmpi.w #hblanks_per_50Hz_tick, d0
-000002CE 6D00 FFFE                      blt .skip50HzCallback
-000002D2 33FC 0000 00FF 0002            move.w #0, timer_50Hz_counter
-000002DA 4EB9 0000 0000                 jsr timer_50Hz_callback
-000002E0                                .skip50HzCallback:
-000002E0 0679 0001 00FF 0004            addi.w #1, timer_1Hz_counter
-000002E8 3039 00FF 0004                 move.w timer_1Hz_counter, d0
-000002EE 0C40 3CF0                      cmpi.w #hblanks_per_1Hz_tick, d0
-000002F2 6D00 FFFE                      blt .skip1HzCallback
-000002F6 33FC 0000 00FF 0004            move.w #0, timer_1Hz_counter
-000002FE 4EB9 0000 0000                 jsr timer_1Hz_callback
-00000304                                .skip1HzCallback:
-00000304 301F                           move.w (sp)+, d0
-00000306 4E                              dc.b %01001110
-00000307 73                              dc.b %01110011
-00000308                                timer_100Hz_callback:
-00000308 4E                              dc.b %01001110
-00000309 75                              dc.b %01110101
-0000030A                                timer_50Hz_callback:
-0000030A 4E                              dc.b %01001110
-0000030B 75                              dc.b %01110101
-0000030C                                timer_1Hz_callback:
-0000030C 4E                              dc.b %01001110
-0000030D 75                              dc.b %01110101
-0000030E                                Start:
-0000030E 46FC 2700                      move.w #$2700,sr
-00000312 2E7C 00FF 0000                 movea.l #$FF0000,sp
-00000318 1039 00A1 0001                 move.b $A10001,d0
-0000031E 0200 000F                      andi.b #$F,d0
-00000322 67FE                           beq.b skip_tmss
-00000324 23FC 5345 4741 00A1 4000       move.l #'SEGA',$A14000
-0000032E                                skip_tmss:
-0000032E 33FC 8104 00C0 0004            move.w #33028,vdp_ctrl
-00000336 33FC 8208 00C0 0004            move.w #33288,vdp_ctrl
-0000033E 33FC 8310 00C0 0004            move.w #33552,vdp_ctrl
-00000346 33FC 8403 00C0 0004            move.w #33795,vdp_ctrl
-0000034E 33FC 8540 00C0 0004            move.w #34112,vdp_ctrl
-00000356 33FC 8600 00C0 0004            move.w #34304,vdp_ctrl
-0000035E 33FC 8800 00C0 0004            move.w #34816,vdp_ctrl
-00000366 33FC 8900 00C0 0004            move.w #35072,vdp_ctrl
-0000036E 33FC 8A00 00C0 0004            move.w #35328,vdp_ctrl
-00000376 33FC 8B00 00C0 0004            move.w #35584,vdp_ctrl
-0000037E 33FC 8C81 00C0 0004            move.w #35969,vdp_ctrl
-00000386 33FC 8D01 00C0 0004            move.w #36097,vdp_ctrl
-0000038E 33FC 8E00 00C0 0004            move.w #36352,vdp_ctrl
-00000396 33FC 8F02 00C0 0004            move.w #36610,vdp_ctrl
-0000039E 33FC 9000 00C0 0004            move.w #36864,vdp_ctrl
-000003A6 33FC 9100 00C0 0004            move.w #37120,vdp_ctrl
-000003AE 33FC 9200 00C0 0004            move.w #37376,vdp_ctrl
-000003B6 23FC 4000 0000 00C0 0004       move.l #$40000000, vdp_ctrl
-000003C0 3E3C 3FFF                      move.w #$3FFF, d7
-000003C4                                .ClearVRAM:
-000003C4 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data
-000003CE 51CF FFF4                      dbra d7,.ClearVRAM
-000003D2 2E3C 0000 7FFF                 move.l #$7FFF, d7
-000003D8 207C 00FF 0000                 movea.l #$FF0000, a0
-000003DE                                .ClearRAM:
-000003DE 30FC 0000                      move.w #$0000, (a0)+
-000003E2 51CF FFFA                      dbra d7,.ClearRAM
-000003E6 23FC C000 0000 00C0 0004       move.l #$C0000000, vdp_ctrl
-000003F0 33FC 0000 00C0 0000            set_palette_color 0, 0, 0
-000003F8 33FC 0002 00C0 0000            set_palette_color 1, 0, 0
-00000400 33FC 0004 00C0 0000            set_palette_color 2, 0, 0
-00000408 33FC 0006 00C0 0000            set_palette_color 3, 0, 0
-00000410 33FC 0008 00C0 0000            set_palette_color 4, 0, 0
-00000418 33FC 000A 00C0 0000            set_palette_color 5, 0, 0
-00000420 33FC 000C 00C0 0000            set_palette_color 6, 0, 0
-00000428 33FC 000E 00C0 0000            set_palette_color 7, 0, 0
-00000430 33FC 020E 00C0 0000            set_palette_color 7, 0, 1
-00000438 33FC 040E 00C0 0000            set_palette_color 7, 0, 2
-00000440 33FC 060E 00C0 0000            set_palette_color 7, 0, 3
-00000448 33FC 080E 00C0 0000            set_palette_color 7, 0, 4
-00000450 33FC 0A0E 00C0 0000            set_palette_color 7, 0, 5
-00000458 33FC 0C0E 00C0 0000            set_palette_color 7, 0, 6
-00000460 33FC 0E0E 00C0 0000            set_palette_color 7, 0, 7
-00000468 33FC 0E2E 00C0 0000            set_palette_color 7, 1, 7
-00000470 23FC 4000 0000 00C0 0004       move.l #$40000000, vdp_ctrl
-0000047A 23FC 1000 0000 00C0 0000       move.l #$10000000, vdp_data
-00000484 23FC 1100 0000 00C0 0000       move.l #$11000000, vdp_data
-0000048E 23FC 1110 0000 00C0 0000       move.l #$11100000, vdp_data
-00000498 23FC 1111 0000 00C0 0000       move.l #$11110000, vdp_data
-000004A2 23FC 1111 1000 00C0 0000       move.l #$11111000, vdp_data
-000004AC 23FC 1111 1100 00C0 0000       move.l #$11111100, vdp_data
-000004B6 23FC 1111 1110 00C0 0000       move.l #$11111110, vdp_data
-000004C0 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
-000004CA 33FC 8707 00C0 0004            move.w #34567,vdp_ctrl
-000004D2 33FC 8004 00C0 0004            move.w #32772,vdp_ctrl
-000004DA 33FC 8164 00C0 0004            move.w #33124,vdp_ctrl
-000004E2 46FC 2300                      move #$2300, sr
-000004E6                                MainLoop:
-000004E6 60FE                           bra.b MainLoop
-000004E8                                vblank:
-000004E8 48E7 6000                      movem.l d1-d2,-(sp)
-000004EC 13FC 0040 00A1 0009 41F9+     gamepads_get_input
-00000580 4EB9 0000 020E                 jsr update_color
-00000586 4EB9 0000 023E                 jsr update_hscroll
-0000058C 4CDF 0006                      movem.l (sp)+,d1-d2
-00000590 4E                              dc.b %01001110
-00000591 73                              dc.b %01110011
-00000592                                int2_bus_error:
-00000592 4E                              dc.b %01001110
-00000593 71                              dc.b %01110001
-00000594 4E                              dc.b %01001110
-00000595 71                              dc.b %01110001
-00000596 60FA                           bra.b int2_bus_error
-00000598                                int3_address_error:
+00000296                                set_plane_tile:
+00000296 33C0 00C0 0000                 move.w d0, vdp_data
+0000029C 4E                              dc.b %01001110
+0000029D 75                              dc.b %01110101
+0000029E                            hblanks_per_100Hz_tick equ 156
+0000029E                            hblanks_per_50Hz_tick equ 312
+0000029E                            hblanks_per_1Hz_tick equ 15600
+0000029E                            timer_100Hz_counter equ 16711680
+0000029E                            timer_50Hz_counter equ 16711682
+0000029E                            timer_1Hz_counter equ 16711684
+0000029E                                hblank:
+0000029E 3F00                           move.w d0, -(sp)
+000002A0 0679 0001 00FF 0000            addi.w #1, timer_100Hz_counter
+000002A8 3039 00FF 0000                 move.w timer_100Hz_counter, d0
+000002AE 0C40 009C                      cmpi.w #hblanks_per_100Hz_tick, d0
+000002B2 6D00 FFFE                      blt .skip100HzCallback
+000002B6 33FC 0000 00FF 0000            move.w #0, timer_100Hz_counter
+000002BE 4EB9 0000 0000                 jsr timer_100Hz_callback
+000002C4                                .skip100HzCallback:
+000002C4 0679 0001 00FF 0002            addi.w #1, timer_50Hz_counter
+000002CC 3039 00FF 0002                 move.w timer_50Hz_counter, d0
+000002D2 0C40 0138                      cmpi.w #hblanks_per_50Hz_tick, d0
+000002D6 6D00 FFFE                      blt .skip50HzCallback
+000002DA 33FC 0000 00FF 0002            move.w #0, timer_50Hz_counter
+000002E2 4EB9 0000 0000                 jsr timer_50Hz_callback
+000002E8                                .skip50HzCallback:
+000002E8 0679 0001 00FF 0004            addi.w #1, timer_1Hz_counter
+000002F0 3039 00FF 0004                 move.w timer_1Hz_counter, d0
+000002F6 0C40 3CF0                      cmpi.w #hblanks_per_1Hz_tick, d0
+000002FA 6D00 FFFE                      blt .skip1HzCallback
+000002FE 33FC 0000 00FF 0004            move.w #0, timer_1Hz_counter
+00000306 4EB9 0000 0000                 jsr timer_1Hz_callback
+0000030C                                .skip1HzCallback:
+0000030C 301F                           move.w (sp)+, d0
+0000030E 4E                              dc.b %01001110
+0000030F 73                              dc.b %01110011
+00000310                                timer_100Hz_callback:
+00000310 4E                              dc.b %01001110
+00000311 75                              dc.b %01110101
+00000312                                timer_50Hz_callback:
+00000312 4E                              dc.b %01001110
+00000313 75                              dc.b %01110101
+00000314                                timer_1Hz_callback:
+00000314 4E                              dc.b %01001110
+00000315 75                              dc.b %01110101
+00000316                                Start:
+00000316 46FC 2700                      move.w #$2700,sr
+0000031A 2E7C 00FF 0000                 movea.l #$FF0000,sp
+00000320 1039 00A1 0001                 move.b $A10001,d0
+00000326 0200 000F                      andi.b #$F,d0
+0000032A 67FE                           beq.b skip_tmss
+0000032C 23FC 5345 4741 00A1 4000       move.l #'SEGA',$A14000
+00000336                                skip_tmss:
+00000336 33FC 8004 00C0 0004            move.w #32772,vdp_ctrl
+0000033E 33FC 8104 00C0 0004            move.w #33028,vdp_ctrl
+00000346 33FC 8208 00C0 0004            move.w #33288,vdp_ctrl
+0000034E 33FC 8310 00C0 0004            move.w #33552,vdp_ctrl
+00000356 33FC 8403 00C0 0004            move.w #33795,vdp_ctrl
+0000035E 33FC 8540 00C0 0004            move.w #34112,vdp_ctrl
+00000366 33FC 8600 00C0 0004            move.w #34304,vdp_ctrl
+0000036E 33FC 8800 00C0 0004            move.w #34816,vdp_ctrl
+00000376 33FC 8900 00C0 0004            move.w #35072,vdp_ctrl
+0000037E 33FC 8A00 00C0 0004            move.w #35328,vdp_ctrl
+00000386 33FC 8B00 00C0 0004            move.w #35584,vdp_ctrl
+0000038E 33FC 8C81 00C0 0004            move.w #35969,vdp_ctrl
+00000396 33FC 8D01 00C0 0004            move.w #36097,vdp_ctrl
+0000039E 33FC 8E00 00C0 0004            move.w #36352,vdp_ctrl
+000003A6 33FC 8F02 00C0 0004            move.w #36610,vdp_ctrl
+000003AE 33FC 9000 00C0 0004            move.w #36864,vdp_ctrl
+000003B6 33FC 9100 00C0 0004            move.w #37120,vdp_ctrl
+000003BE 33FC 9200 00C0 0004            move.w #37376,vdp_ctrl
+000003C6 23FC 4000 0000 00C0 0004       move.l #$40000000, vdp_ctrl
+000003D0 3E3C 3FFF                      move.w #$3FFF, d7
+000003D4                                .ClearVRAM:
+000003D4 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data
+000003DE 51CF FFF4                      dbra d7,.ClearVRAM
+000003E2 2E3C 0000 7FFF                 move.l #$7FFF, d7
+000003E8 207C 00FF 0000                 movea.l #$FF0000, a0
+000003EE                                .ClearRAM:
+000003EE 30FC 0000                      move.w #$0000, (a0)+
+000003F2 51CF FFFA                      dbra d7,.ClearRAM
+000003F6 23FC C000 0000 00C0 0004       move.l #$C0000000, vdp_ctrl
+00000400 33FC 0000 00C0 0000            set_palette_color 0, 0, 0
+00000408 33FC 0002 00C0 0000            set_palette_color 1, 0, 0
+00000410 33FC 0004 00C0 0000            set_palette_color 2, 0, 0
+00000418 33FC 0006 00C0 0000            set_palette_color 3, 0, 0
+00000420 33FC 0008 00C0 0000            set_palette_color 4, 0, 0
+00000428 33FC 000A 00C0 0000            set_palette_color 5, 0, 0
+00000430 33FC 000C 00C0 0000            set_palette_color 6, 0, 0
+00000438 33FC 000E 00C0 0000            set_palette_color 7, 0, 0
+00000440 33FC 020E 00C0 0000            set_palette_color 7, 0, 1
+00000448 33FC 040E 00C0 0000            set_palette_color 7, 0, 2
+00000450 33FC 060E 00C0 0000            set_palette_color 7, 0, 3
+00000458 33FC 080E 00C0 0000            set_palette_color 7, 0, 4
+00000460 33FC 0A0E 00C0 0000            set_palette_color 7, 0, 5
+00000468 33FC 0C0E 00C0 0000            set_palette_color 7, 0, 6
+00000470 33FC 0E0E 00C0 0000            set_palette_color 7, 0, 7
+00000478 33FC 0E2E 00C0 0000            set_palette_color 7, 1, 7
+00000480 23FC 4000 0000 00C0 0004       move.l #$40000000, vdp_ctrl
+0000048A 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
+00000494 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
+0000049E 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
+000004A8 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
+000004B2 23FC 1111 1111 00C0 0000       move.l #$11111111, vdp_data
+000004BC 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
+000004C6 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
+000004D0 23FC 0001 1000 00C0 0000       move.l #$00011000, vdp_data
+000004DA 33FC 8707 00C0 0004            move.w #34567,vdp_ctrl
+000004E2 33FC 8164 00C0 0004            move.w #33124,vdp_ctrl
+000004EA 46FC 2300                      move #$2300, sr
+000004EE                                MainLoop:
+000004EE 60FE                           bra.b MainLoop
+000004F0                                vblank:
+000004F0 48E7 6000                      movem.l d1-d2,-(sp)
+000004F4 13FC 0040 00A1 0009 41F9+     gamepads_get_input
+00000588 4EB9 0000 020E                 jsr update_color
+0000058E 4EB9 0000 023E                 jsr update_hscroll
+00000594 4CDF 0006                      movem.l (sp)+,d1-d2
 00000598 4E                              dc.b %01001110
-00000599 71                              dc.b %01110001
+00000599 73                              dc.b %01110011
+0000059A                                int2_bus_error:
 0000059A 4E                              dc.b %01001110
 0000059B 71                              dc.b %01110001
 0000059C 4E                              dc.b %01001110
 0000059D 71                              dc.b %01110001
-0000059E 60F8                           bra.b int3_address_error
-000005A0                                int4_illegal_instruction:
+0000059E 60FA                           bra.b int2_bus_error
+000005A0                                int3_address_error:
 000005A0 4E                              dc.b %01001110
 000005A1 71                              dc.b %01110001
 000005A2 4E                              dc.b %01001110
 000005A3 71                              dc.b %01110001
 000005A4 4E                              dc.b %01001110
 000005A5 71                              dc.b %01110001
-000005A6 4E                              dc.b %01001110
-000005A7 71                              dc.b %01110001
-000005A8 60F6                           bra.b int4_illegal_instruction
-000005AA                                error:
+000005A6 60F8                           bra.b int3_address_error
+000005A8                                int4_illegal_instruction:
+000005A8 4E                              dc.b %01001110
+000005A9 71                              dc.b %01110001
 000005AA 4E                              dc.b %01001110
 000005AB 71                              dc.b %01110001
-000005AC 60FC                           bra.b error
-000005AE                            color_index equ 16711686
-000005AE                            hscroll_amount equ 16711688
-000005AE                            gamepad1_up equ 16711690
-000005AE                            gamepad1_down equ 16711691
-000005AE                            gamepad1_left equ 16711692
-000005AE                            gamepad1_right equ 16711693
-000005AE                            gamepad1_b equ 16711694
-000005AE                            gamepad1_c equ 16711695
-000005AE                            gamepad1_a equ 16711696
-000005AE                            gamepad1_start equ 16711697
-000005AE                            gamepad2_up equ 16711698
-000005AE                            gamepad2_down equ 16711699
-000005AE                            gamepad2_left equ 16711700
-000005AE                            gamepad2_right equ 16711701
-000005AE                            gamepad2_b equ 16711702
-000005AE                            gamepad2_c equ 16711703
-000005AE                            gamepad2_a equ 16711704
-000005AE                            gamepad2_start equ 16711705
+000005AC 4E                              dc.b %01001110
+000005AD 71                              dc.b %01110001
+000005AE 4E                              dc.b %01001110
+000005AF 71                              dc.b %01110001
+000005B0 60F6                           bra.b int4_illegal_instruction
+000005B2                                error:
+000005B2 4E                              dc.b %01001110
+000005B3 71                              dc.b %01110001
+000005B4 60FC                           bra.b error
+000005B6                            color_index equ 16711686
+000005B6                            hscroll_amount equ 16711688
+000005B6                            gamepad1_up equ 16711690
+000005B6                            gamepad1_down equ 16711691
+000005B6                            gamepad1_left equ 16711692
+000005B6                            gamepad1_right equ 16711693
+000005B6                            gamepad1_b equ 16711694
+000005B6                            gamepad1_c equ 16711695
+000005B6                            gamepad1_a equ 16711696
+000005B6                            gamepad1_start equ 16711697
+000005B6                            gamepad2_up equ 16711698
+000005B6                            gamepad2_down equ 16711699
+000005B6                            gamepad2_left equ 16711700
+000005B6                            gamepad2_right equ 16711701
+000005B6                            gamepad2_b equ 16711702
+000005B6                            gamepad2_c equ 16711703
+000005B6                            gamepad2_a equ 16711704
+000005B6                            gamepad2_start equ 16711705

@@ -50,3 +50,18 @@ update_hscroll:
         move.w d1, vdp_data
     .skip_right:
         rte
+
+; TODO: Comment
+; arguments:
+;     d0.l: Tile index  : 11 bits
+;     d1.b: Palette     : 0-3
+;     d2.b: Vertical    : 1 = flipped, 0 = normal
+;     d3.b: Horizontal  : 1 = flipped, 0 = normal
+;     d4.b: Priority    : 1 = high, 0 = low
+; returns:
+;     nothing
+; https://segaretro.org/Sega_Mega_Drive/Planes
+; TODO: Also use the other arguments.
+set_plane_tile:
+    move.w d0, vdp_data
+    rts

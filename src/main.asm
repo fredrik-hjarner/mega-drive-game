@@ -54,7 +54,7 @@ skip_tmss:
     ;                       |   +--- #1: 0 - enable H/V counter
     ;                       |   |        1 - freeze H/V counter on lvl 2 interrupt
     ;                       |   |
-    ; set_vdp_register $00, 00000100b      ; bits 7, 6 & 3 are always 0
+    set_vdp_register $00, 00000100b      ; bits 7, 6 & 3 are always 0
     ;                        | | |
     ;                        | | +-- #0: 0 - enable display
     ;                        | |         1 - disable display
@@ -306,14 +306,34 @@ skip_tmss:
     move.l  #$40000000, vdp_ctrl    ; Start writing at VRAM $0000
 
     ; Tile $0
-    move.l #$10000000, vdp_data ; row 1
-    move.l #$11000000, vdp_data ; row 2
-    move.l #$11100000, vdp_data ; row 3
-    move.l #$11110000, vdp_data ; row 4
-    move.l #$11111000, vdp_data ; row 5
-    move.l #$11111100, vdp_data ; row 6
-    move.l #$11111110, vdp_data ; row 7
-    move.l #$11111111, vdp_data ; row 8
+    ; move.l #$00000000, vdp_data ; row 1
+    ; move.l #$00000000, vdp_data ; row 2
+    ; move.l #$00000000, vdp_data ; row 3
+    ; move.l #$00000000, vdp_data ; row 4
+    ; move.l #$00000000, vdp_data ; row 5
+    ; move.l #$00000000, vdp_data ; row 6
+    ; move.l #$00000000, vdp_data ; row 7
+    ; move.l #$00000000, vdp_data ; row 8
+
+    ; Tile $1
+    ; move.l #$10000000, vdp_data ; row 1
+    ; move.l #$11000000, vdp_data ; row 2
+    ; move.l #$11100000, vdp_data ; row 3
+    ; move.l #$11110000, vdp_data ; row 4
+    ; move.l #$11111000, vdp_data ; row 5
+    ; move.l #$11111100, vdp_data ; row 6
+    ; move.l #$11111110, vdp_data ; row 7
+    ; move.l #$11111111, vdp_data ; row 8
+
+    ; Tile $2
+    move.l #$00011000, vdp_data ; row 1
+    move.l #$00011000, vdp_data ; row 2
+    move.l #$00011000, vdp_data ; row 3
+    move.l #$11111111, vdp_data ; row 4
+    move.l #$11111111, vdp_data ; row 5
+    move.l #$00011000, vdp_data ; row 6
+    move.l #$00011000, vdp_data ; row 7
+    move.l #$00011000, vdp_data ; row 8
 
     ; =================================================================
     ; STEP 4: ENABLE DISPLAY AND SET BACKGROUND
@@ -326,7 +346,7 @@ skip_tmss:
     ;                       |   +--- #1: 0 - enable H/V counter
     ;                       |   |        1 - freeze H/V counter on lvl 2 interrupt
     ;                       |   |
-    set_vdp_register $00, 00000100b      ; bits 7, 6 & 3 are always 0
+    ; set_vdp_register $00, 00000100b      ; bits 7, 6 & 3 are always 0
     ;                        | | |
     ;                        | | +-- #0: 0 - enable display
     ;                        | |         1 - disable display
