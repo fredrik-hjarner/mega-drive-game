@@ -3,7 +3,7 @@
 all: preprocess build-preprocessed hexdump
 
 preprocess:
-	fasm2 fasmg/preprocess.asm -isource=\'main.asm\' preprocessed.asm -e200
+	fasm2 fasmg/preprocess.asm -isource=\'src/main.asm\' preprocessed.asm -e200
 
 build-preprocessed:
 	clownassembler -c -l main.lst -o main.bin -i preprocessed.asm
@@ -18,6 +18,6 @@ run:
 	cd ~/Downloads/Exodus_2.1 && wine exodus
 
 clean:
-	rm -f main.bin main.hex
+	rm -f main.bin main.hex main.lst preprocessed.asm
 
 
