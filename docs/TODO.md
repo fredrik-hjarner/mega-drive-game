@@ -12,3 +12,4 @@
 * Make some x86 inspired macros such as INC (addq.b #1, d0), DEC (subq.b #1, d0), etc.
   maybe some movzx or something that zero extends after a move, dunno.
   maybe push.w, pop.w, push.l, pop.l, etc.
+* Remake all macros in fasmg so all macros are fasmg macros.
