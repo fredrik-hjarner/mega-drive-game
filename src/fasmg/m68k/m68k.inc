@@ -20,27 +20,13 @@ a5 := 101b
 a6 := 110b
 a7 := 111b
 
-include "niladic.inc"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 68000 instruction set implemented in fasmg                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-; arguments:
-;     vector: 0000 - 1111
-; TODO: Test.
-; TODO: Give error if vector is out of range.
-calminstruction trap? vector
-    local tmp
-    arrange tmp, =dc.=b= =%01001110
-    assemble tmp
-
-    ; second byte
-    compute tmp, 01000000b + vector
-
-    arrange tmp, =dc.=b= tmp
-    assemble tmp
-end calminstruction
+include "niladic.inc"
+include "monoadic.inc"
 
 ; arguments:
 ;     data: 0000_0000 - 1111_1111
@@ -58,10 +44,4 @@ calminstruction moveq? data, dn
     arrange tmp, =dc.=b= tmp
     assemble tmp
 end calminstruction
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Make visible to the preprocessor                                           ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-define trap +trap
 define moveq +moveq
