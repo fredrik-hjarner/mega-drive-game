@@ -1,3 +1,22 @@
+include "../xxcalm.inc"
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; variant of emit so that one can switch between clownassembler mode and
+; fasmg stand-alone mode sort of.
+; _emit emits to clownassembler
+; To generate binary directly, use emit
+; Only handles 1 byte but that will probably suffice.
+macro calminstruction?._emit? number_of_bytes, value
+    local tmp
+    compute tmp, value
+    arrange tmp, =dc.=b= tmp
+    assemble tmp
+end macro
+; _emit equ emit ; Uncomment to generate binary directly.
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -12,72 +12,51 @@
 ;; | 7 | trapv       | yes         |        |                               | ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;Illegal instruction (forces illegal instruction exception)
+; Illegal instruction (forces illegal instruction exception)
 calminstruction illegal?
-    local tmp
-    arrange tmp, =dc.=b= =%01001010
-    assemble tmp
-    arrange tmp, =dc.=b= =%11111100
-    assemble tmp
+    _emit 1, 01001010b
+    _emit 1, 11111100b
 end calminstruction
 define illegal +illegal
 
 ; No operation.
 calminstruction nop?
-    local tmp
-    arrange tmp, =dc.=b= =%01001110
-    assemble tmp
-    arrange tmp, =dc.=b= =%01110001
-    assemble tmp
+    _emit 1, 01001110b
+    _emit 1, 01110001b
 end calminstruction
 define nop +nop
 
 ; Reset external devices (??)
 calminstruction reset?
-    local tmp
-    arrange tmp, =dc.=b= =%01001110
-    assemble tmp
-    arrange tmp, =dc.=b= =%01110000
-    assemble tmp
+    _emit 1, 01001110b
+    _emit 1, 01110000b
 end calminstruction
 define reset +reset
 
 ; Return from Exception
 calminstruction rte?
-    local tmp
-    arrange tmp, =dc.=b= =%01001110
-    assemble tmp
-    arrange tmp, =dc.=b= =%01110011
-    assemble tmp
+    _emit 1, 01001110b
+    _emit 1, 01110011b
 end calminstruction
 define rte +rte
 
 ; Return and Restore condition codes
 calminstruction rtr?
-    local tmp
-    arrange tmp, =dc.=b= =%01001110
-    assemble tmp
-    arrange tmp, =dc.=b= =%01110111
-    assemble tmp
+    _emit 1, 01001110b
+    _emit 1, 01110111b
 end calminstruction
 define rtr +rtr
 
 ; Return from Subroutine
 calminstruction rts?
-    local tmp
-    arrange tmp, =dc.=b= =%01001110
-    assemble tmp
-    arrange tmp, =dc.=b= =%01110101
-    assemble tmp
+    _emit 1, 01001110b
+    _emit 1, 01110101b
 end calminstruction
 define rts +rts
 
 ; Trap on overflow
 calminstruction trapv?
-    local tmp
-    arrange tmp, =dc.=b= =%01001110
-    assemble tmp
-    arrange tmp, =dc.=b= =%01110110
-    assemble tmp
+    _emit 1, 01001110b
+    _emit 1, 01110110b
 end calminstruction
 define trapv +trapv

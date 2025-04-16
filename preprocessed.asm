@@ -22,10 +22,10 @@ gamepads_get_input macro
     move.b #$40, gamepad1_ctrl
     lea gamepad1_data, a0
     move.b #$40, (a0)
-    dc.b %01001110
-    dc.b %01110001
-    dc.b %01001110
-    dc.b %01110001
+    dc.b 78
+    dc.b 113
+    dc.b 78
+    dc.b 113
     move.b (a0), d0
     not.b d0
     move.b d0, d1
@@ -52,10 +52,10 @@ gamepads_get_input macro
     andi.b #1, d1
     move.b d1, gamepad1_c
     move.b #$00, (a0)
-    dc.b %01001110
-    dc.b %01110001
-    dc.b %01001110
-    dc.b %01110001
+    dc.b 78
+    dc.b 113
+    dc.b 78
+    dc.b 113
     move.b (a0), d0
     not.b d0
     lsr.b #4, d0
@@ -124,7 +124,7 @@ gamepads_get_input macro
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 152090 '
+    dc.b 'GM 152138 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -145,8 +145,8 @@ gamepads_get_input macro
     move.w #(1<<15 | (7<<8)), d2
     or.w d1, d2
     move.w d2, vdp_ctrl
-    dc.b %01001110
-    dc.b %01110101
+    dc.b 78
+    dc.b 117
     update_color:
     tst.b gamepad1_a
     beq.b .skip
@@ -159,8 +159,8 @@ gamepads_get_input macro
     lsr.w #2, d1
     jsr set_bg_color
     .skip:
-    dc.b %01001110
-    dc.b %01110101
+    dc.b 78
+    dc.b 117
     update_hscroll:
     tst.b gamepad1_left
     beq.b .skip_left
@@ -180,12 +180,12 @@ gamepads_get_input macro
     move.w d1, vdp_data
     move.w d1, vdp_data
     .skip_right:
-    dc.b %01001110
-    dc.b %01110011
+    dc.b 78
+    dc.b 115
     set_plane_tile:
     move.w d0, vdp_data
-    dc.b %01001110
-    dc.b %01110101
+    dc.b 78
+    dc.b 117
 hblanks_per_100Hz_tick equ 156
 hblanks_per_50Hz_tick equ 312
 hblanks_per_1Hz_tick equ 15600
@@ -216,17 +216,17 @@ timer_1Hz_counter equ 16711684
     jsr timer_1Hz_callback
     .skip1HzCallback:
     move.w (sp)+, d0
-    dc.b %01001110
-    dc.b %01110011
+    dc.b 78
+    dc.b 115
     timer_100Hz_callback:
-    dc.b %01001110
-    dc.b %01110101
+    dc.b 78
+    dc.b 117
     timer_50Hz_callback:
-    dc.b %01001110
-    dc.b %01110101
+    dc.b 78
+    dc.b 117
     timer_1Hz_callback:
-    dc.b %01001110
-    dc.b %01110101
+    dc.b 78
+    dc.b 117
     Start:
     move.w #$2700,sr
     movea.l #$FF0000,sp
@@ -353,35 +353,35 @@ timer_1Hz_counter equ 16711684
     jsr update_color
     jsr update_hscroll
     movem.l (sp)+,d1-d2
-    dc.b %01001110
-    dc.b %01110011
+    dc.b 78
+    dc.b 115
     int2_bus_error:
-    dc.b %01001110
-    dc.b %01110001
-    dc.b %01001110
-    dc.b %01110001
+    dc.b 78
+    dc.b 113
+    dc.b 78
+    dc.b 113
     bra.b int2_bus_error
     int3_address_error:
-    dc.b %01001110
-    dc.b %01110001
-    dc.b %01001110
-    dc.b %01110001
-    dc.b %01001110
-    dc.b %01110001
+    dc.b 78
+    dc.b 113
+    dc.b 78
+    dc.b 113
+    dc.b 78
+    dc.b 113
     bra.b int3_address_error
     int4_illegal_instruction:
-    dc.b %01001110
-    dc.b %01110001
-    dc.b %01001110
-    dc.b %01110001
-    dc.b %01001110
-    dc.b %01110001
-    dc.b %01001110
-    dc.b %01110001
+    dc.b 78
+    dc.b 113
+    dc.b 78
+    dc.b 113
+    dc.b 78
+    dc.b 113
+    dc.b 78
+    dc.b 113
     bra.b int4_illegal_instruction
     error:
-    dc.b %01001110
-    dc.b %01110001
+    dc.b 78
+    dc.b 113
     bra.b error
 color_index equ 16711686
 hscroll_amount equ 16711688
