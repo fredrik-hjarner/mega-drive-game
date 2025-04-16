@@ -18,7 +18,7 @@ define MACROS
 ; The macros to be preprocessed go here
 namespace MACROS
     include "macros.inc"
-    include "68k.inc"
+    include "m68k/m68k.inc"
 end namespace
 
 PREPROCESSOR := __FILE__
