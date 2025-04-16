@@ -3,9 +3,6 @@
 ;;                                                                            ;;
 ;; | # | instruction | implemented | tested | notes                         | ;;
 ;; |---|-------------|-------------|--------|-------------------------------| ;;
-;; |   | asl.b       |             |        |                               | ;;            |             |        |                                   | ;;
-;; |   | asl.l       |             |        |                               | ;;            |             |        |                                   | ;;
-;; |   | asl.w       |             |        |                               | ;;  
 ;; |   | moveq       | yes         | yes    |                               | ;;
 ;; |   |             |             |        |                               | ;;
 ;; |   |             |             |        |                               | ;;
@@ -14,21 +11,6 @@
 ;; |   |             |             |        |                               | ;;
 ;; |   |             |             |        |                               | ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-; Description:
-;     Shift the contents of a memory location by number of bits specified in
-;     the `rotation` operand.
-; Arguments:
-;     rotation:
-;         - either a data register
-;         - or an immediate value 000 - 111
-;     dn: The data register that gets shifted: d0 - d7
-; TODO:
-;     Remember there is also a monadic version of this instruction!!!
-calminstruction asl.b? rotation, dn
-    err "asl.b is not implemented!"
-end calminstruction
-define asl.b +asl.b
 
 ; Description:
 ;     Move the literal to a data register. The literal data is an
@@ -44,7 +26,7 @@ define asl.b +asl.b
 ; TODO: Figure out how to work with signed numbers so it works with
 ;       whatever formats you can use in normal m68k assemblers
 ;       I assume 1111_1111b and -1d are should both be allowed?!
-calminstruction moveq? data, dn
+calminstruction moveq? data*, dn*
     local tmp
 
     assert_data_reg dn

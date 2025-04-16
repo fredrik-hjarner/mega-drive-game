@@ -4,7 +4,7 @@ include "xxcalm.inc"
 ;;                                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-macro calminstruction?.assert_min? value, min
+macro calminstruction?.assert_min? value*, min*
         local tmp
 
         new @done
@@ -17,7 +17,7 @@ macro calminstruction?.assert_min? value, min
     @ @done:
 end macro
 
-macro calminstruction?.assert_max? value, max
+macro calminstruction?.assert_max? value*, max*
         local tmp
 
         new @done
@@ -30,7 +30,7 @@ macro calminstruction?.assert_max? value, max
     @ @done:
 end macro
 
-macro calminstruction?.assert_data_reg? value
+macro calminstruction?.assert_data_reg? value*
         local tmp
 
         new @done
@@ -41,6 +41,11 @@ macro calminstruction?.assert_data_reg? value
         ; TODO: I'd like to have a setting that warns or errors, or something.
         err "Error: assert_data_reg"
     @ @done:
+end macro
+
+; TODO: Implement.
+macro calminstruction?.assert_word_aligned? ea*
+    err "assert_word_aligned is not implemented!"
 end macro
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -76,3 +81,4 @@ a7? := m68k.address_reg + 111b
 include "niladic.inc"
 include "monadic.inc"
 include "dyadic.inc"
+include "variadic.inc"

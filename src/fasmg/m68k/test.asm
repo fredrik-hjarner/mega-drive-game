@@ -73,3 +73,35 @@ moveq 1, d0
 moveq 2, d0
 moveq 3, d0
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; All variadic instructions.                                                 ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; TODO: Seems 0 is interpreted as 8, which makes sense,
+; since a shift of 0 does not make sense.
+; So I wonder if I should allow to input #8 and have it "wrap" or something.
+asl.b 0, d0
+asl.b 0, d1
+asl.b 0, d2
+asl.b 0, d3
+asl.b 0, d4
+asl.b 0, d5
+asl.b 0, d6
+
+asl.b d0, d0
+asl.b d1, d0
+asl.b d2, d0
+asl.b d3, d0
+asl.b d4, d0
+asl.b d5, d0
+asl.b d6, d0
+asl.b d7, d0
+
+asl.b 0, d0
+asl.b 1, d0
+asl.b 2, d0
+asl.b 3, d0
+asl.b 4, d0
+asl.b 5, d0
+asl.b 6, d0
+asl.b 7, d0
