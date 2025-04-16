@@ -3,16 +3,59 @@
 ;;                                                                            ;;
 ;; | instruction | implemented | tested | notes                             | ;;
 ;; |-------------|-------------|--------|-----------------------------------| ;;
-;; | swap        | yes         |        |                                   | ;;
+;; | asl.b       |             |        |                                   | ;;            |             |        |                                   | ;;
+;; | asl.l       |             |        |                                   | ;;            |             |        |                                   | ;;
+;; | asl.w       |             |        |                                   | ;;            |             |        |                                   | ;;
+;; | ext.l       | yes         | yes    |                                   | ;;
+;; | ext.w       | yes         | yes    |                                   | ;;
+;; | swap        | yes         | yes    |                                   | ;;
 ;; | trap        | yes         | yes    |                                   | ;;
 ;; |             |             |        |                                   | ;;
 ;; |             |             |        |                                   | ;;
 ;; |             |             |        |                                   | ;;
 ;; |             |             |        |                                   | ;;
-;; |             |             |        |                                   | ;;
-;; |             |             |        |                                   | ;;
-;; |             |             |        |                                   | ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Description:
+;     Shift the contents of a memory location left by one bit.
+; Arguments:
+;     ea: ???
+; TODO:
+;     Figure out how this one works and how to implement it.
+;     The monadic version of asl/asr seems to take one "effective address"
+;     and then shift 1 bit.
+; calminstruction asl.b? ea
+;     err "asl.b is not implemented!"
+; end calminstruction
+; define asl.b +asl.b
+
+; Description:
+;     Sign-extend a data register.
+;     .w extends from byte to word
+;     .l extends from word to long
+; Arguments:
+;     dn: data register (d0 - d7)
+; TODO: Assert that dn is a data register
+;       with `relativeto` or whatever one is supposed to use.
+calminstruction ext.w? dn
+    local tmp
+
+    emit 1, 01001000b
+    ;            1S000000b ; S = 0-> .w, S = 1-> .l
+    compute tmp, 10000000b + dn
+    emit 1, tmp
+end calminstruction
+define ext.w +ext.w
+
+calminstruction ext.l? dn
+    local tmp
+
+    emit 1, 01001000b
+    ;            1S000000b ; S = 0-> .w, S = 1-> .l
+    compute tmp, 11000000b + dn
+    emit 1, tmp
+end calminstruction
+define ext.l +ext.l
 
 ; Trigger any of the 16 "trap" interrupts.
 ; arguments:
@@ -32,7 +75,8 @@ define trap +trap
 ; Exchange the upper and lower 16-bit words of a data register.
 ; arguments:
 ;     dn: data register (d0 - d7)
-; TODO: Assert that dn is a data register.
+; TODO: Assert that dn is a data register
+;       with `relativeto` or whatever one is supposed to use.
 calminstruction swap? dn
     local tmp
 
