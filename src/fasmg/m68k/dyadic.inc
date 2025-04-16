@@ -46,9 +46,12 @@ define asl.b +asl.b
 ;       I assume 1111_1111b and -1d are should both be allowed?!
 calminstruction moveq? data, dn
     local tmp
+
+    assert_data_reg dn
+
     ; 0 1 2 3 4  5  6  7
     ; 0 1 1 1 dn dn dn 0
-    compute tmp, 01110000b + (dn shl 1) 
+    compute tmp, 01110000b + ((dn - m68k.data_reg) shl 1) 
     emit 1, tmp
     compute tmp, data
     emit 1, tmp

@@ -40,9 +40,11 @@
 calminstruction ext.w? dn
     local tmp
 
+    assert_data_reg dn
+
     emit 1, 01001000b
     ;            1S000000b ; S = 0-> .w, S = 1-> .l
-    compute tmp, 10000000b + dn
+    compute tmp, 10000000b + (dn - m68k.data_reg)
     emit 1, tmp
 end calminstruction
 define ext.w +ext.w
@@ -50,12 +52,30 @@ define ext.w +ext.w
 calminstruction ext.l? dn
     local tmp
 
+    assert_data_reg dn
+
     emit 1, 01001000b
     ;            1S000000b ; S = 0-> .w, S = 1-> .l
-    compute tmp, 11000000b + dn
+    compute tmp, 11000000b + (dn - m68k.data_reg)
     emit 1, tmp
 end calminstruction
 define ext.l +ext.l
+
+; Exchange the upper and lower 16-bit words of a data register.
+; arguments:
+;     dn: data register (d0 - d7)
+; TODO: Assert that dn is a data register
+;       with `relativeto` or whatever one is supposed to use.
+calminstruction swap? dn
+    local tmp
+
+    assert_data_reg dn
+
+    emit 1, 01001000b
+    compute tmp, 01000000b + (dn - m68k.data_reg)
+    emit 1, tmp
+end calminstruction
+define swap +swap
 
 ; Trigger any of the 16 "trap" interrupts.
 ; arguments:
@@ -71,17 +91,3 @@ calminstruction trap? vector
     emit 1, tmp
 end calminstruction
 define trap +trap
-
-; Exchange the upper and lower 16-bit words of a data register.
-; arguments:
-;     dn: data register (d0 - d7)
-; TODO: Assert that dn is a data register
-;       with `relativeto` or whatever one is supposed to use.
-calminstruction swap? dn
-    local tmp
-
-    emit 1, 01001000b
-    compute tmp, 01000000b + dn
-    emit 1, tmp
-end calminstruction
-define swap +swap

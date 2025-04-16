@@ -26,7 +26,7 @@ ext.w d4
 ext.w d5
 ext.w d6
 ext.w d7
-ext.w 8 ; TODO: This should generate error because only d0-d7 are allowed.
+; ext.w 8 ; TODO: This should generate error because only d0-d7 are allowed.
 
 ext.l d0
 ext.l d1
@@ -36,7 +36,7 @@ ext.l d4
 ext.l d5
 ext.l d6
 ext.l d7
-ext.l 8 ; TODO: This should generate error because only d0-d7 are allowed.
+; ext.l 8 ; TODO: This should generate error because only d0-d7 are allowed.
 
 swap d0
 swap d1
@@ -46,14 +46,14 @@ swap d4
 swap d5
 swap d6
 swap d7
-swap 8 ; TODO: This should generate error because only d0-d7 are allowed.
+; swap 8 ; TODO: This should generate error because only d0-d7 are allowed.
 
 ; trap -1 ; TODO: This should generate error. 0 is lowest allowed.
 trap 0
 trap 1
 trap 14
 trap 15
-; trap 16 ; TODO: THis should generate error. 15 is highest allowed.
+; trap 16 ; TODO: This should generate error. 15 is highest allowed.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; All dyadic instructions.                                                   ;;

@@ -124,7 +124,7 @@ gamepads_get_input macro
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 152488 '
+    dc.b 'GM 152565 '
     org $18E
     dc.w $0000
     dc.b 'J               '
