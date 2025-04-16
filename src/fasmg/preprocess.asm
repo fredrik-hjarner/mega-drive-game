@@ -17,6 +17,7 @@ define MACROS
 
 ; The macros to be preprocessed go here
 namespace MACROS
+    include "m68k/format_clownassembler.inc"
     include "macros.inc"
     include "m68k/m68k.inc"
 end namespace

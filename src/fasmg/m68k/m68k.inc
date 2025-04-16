@@ -1,21 +1,34 @@
-include "../xxcalm.inc"
+include "xxcalm.inc"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-; variant of emit so that one can switch between clownassembler mode and
-; fasmg stand-alone mode sort of.
-; _emit emits to clownassembler
-; To generate binary directly, use emit
-; Only handles 1 byte but that will probably suffice.
-macro calminstruction?._emit? number_of_bytes, value
-    local tmp
-    compute tmp, value
-    arrange tmp, =dc.=b= tmp
-    assemble tmp
+macro calminstruction?.assert_min? value, min
+        local tmp
+
+        new @done
+
+        ; compute tmp, value
+        check value >= min
+        @ jyes @done
+        ; TODO: I'd like to have a setting that warns or errors, or something.
+        err "Error: assert_min"
+    @ @done:
 end macro
-; _emit equ emit ; Uncomment to generate binary directly.
+
+macro calminstruction?.assert_max? value, max
+        local tmp
+
+        new @done
+
+        ; compute tmp, value
+        check value <= max
+        @ jyes @done
+        ; TODO: I'd like to have a setting that warns or errors, or something.
+        err "Error: assert_max"
+    @ @done:
+end macro
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
@@ -39,28 +52,10 @@ a5 := 101b
 a6 := 110b
 a7 := 111b
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 68000 instruction set implemented in fasmg                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 include "niladic.inc"
-include "monoadic.inc"
-
-; arguments:
-;     data: 0000_0000 - 1111_1111
-;     dn: d0 - d7
-; TODO: Test.
-; TODO: Give error if data is out of range.
-; TODO: Handle # character.
-; TODO: Validate that dn is a data register.
-calminstruction moveq? data, dn
-    local tmp
-    compute tmp, 01110000b + dn
-    arrange tmp, =dc.=b= tmp
-    assemble tmp
-    compute tmp, data
-    arrange tmp, =dc.=b= tmp
-    assemble tmp
-end calminstruction
-define moveq +moveq
+include "monadic.inc"
+include "dyadic.inc"

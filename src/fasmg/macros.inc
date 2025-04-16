@@ -1,15 +1,15 @@
-macro calminstruction?.assemble? &line&
-    stringify line
-    ; TODO: Shoten this code?
-    ; vasm stuff usually needs to be prefixed with whitespace.
-    emit 1, 20h
-    emit 1, 20h
-    emit 1, 20h
-    emit 1, 20h
-    emit lengthof line, line
-    emit 1, 13
-    emit 1, 10
-end macro
+; macro calminstruction?.assemble? &line&
+;     stringify line
+;     ; TODO: Shoten this code?
+;     ; vasm stuff usually needs to be prefixed with whitespace.
+;     emit 1, 20h
+;     emit 1, 20h
+;     emit 1, 20h
+;     emit 1, 20h
+;     emit lengthof line, line
+;     emit 1, 13
+;     emit 1, 10
+; end macro
 
 ; TODO: Name sucks.
 ; TODO: Maybe I can match to see if it contains equ here like macro above?
@@ -56,7 +56,7 @@ calminstruction set_vdp_register reg_nr, value
     compute reg, reg_nr shl 8
     compute res, set_reg or reg or value
     arrange cmd,=move.=w #res,=vdp_ctrl
-    assemble cmd
+    _assemble cmd
 end calminstruction
 
 calminstruction meta_version
@@ -69,7 +69,7 @@ calminstruction meta_version
     compute m_since_2025, s_since_2025 / 60
 
     arrange tmp, =dc.=b quote=GM m_since_2025 quote
-    assemble tmp
+    _assemble tmp
 end calminstruction
 
 ; bappend
