@@ -60,6 +60,7 @@ include "registers.inc"
 
 ; TODO:
 ;     Test constraints maybe?
+;     use value& to take any number of arguments.
 calminstruction dc.b? value
         local tmp
         ; compute tmp, value ; TODO: Is this needed?
@@ -76,6 +77,7 @@ end calminstruction
 
 ; TODO:
 ;     Test constraints maybe?
+;     use value& to take any number of arguments.
 calminstruction dc.w? value
     local tmp
     ; bswap is needed because famg outputs in little-endian :'/
@@ -86,6 +88,7 @@ end calminstruction
 
 ; TODO:
 ;     Test constraints maybe?
+;     use value& to take any number of arguments.
 calminstruction dc.l? value
     local tmp
     ; bswap is needed because famg outputs in little-endian :'/

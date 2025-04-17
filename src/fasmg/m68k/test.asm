@@ -13,11 +13,11 @@ dc.b 3
 dc.b 4
 dc.b $FE
 dc.b $FF
-
 dc.b ""
 dc.b "a"
 dc.b "ab"
 dc.b "abcd"
+dc.b 0, 1, 2, 3, 4 ; TODO: Implement so this one works.
 
 dc.w 0
 dc.w 1
@@ -25,6 +25,7 @@ dc.w 2
 dc.w $FF
 dc.w $FFFF
 dc.w $1234
+; dc.w 0, 1, 2, 3, 4 ; TODO: Implement so this one works.
 
 dc.l 0
 dc.l 1
@@ -34,6 +35,7 @@ dc.l $FFFF
 dc.l $1234
 dc.l $FFFFFFFF
 dc.l $12345678
+; dc.l 0, 1, 2, 3, 4 ; TODO: Implement so this one works.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; All niladic instructions.                                                  ;;
