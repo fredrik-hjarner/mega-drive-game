@@ -29,9 +29,20 @@ end macro
 ; To generate binary directly, use emit
 ; Only handles 1 byte but that will probably suffice.
 macro calminstruction?._emit? number_of_bytes, value
-    local tmp
-    compute tmp, value
-    arrange tmp, =dc.=b= tmp
-    _assemble tmp
+        new @string
+        new @done
+
+        local tmp
+        compute tmp, value
+        check tmp eqtype ''
+        @ jyes @string
+    ; not_string:
+        arrange tmp, =dc.=b= tmp
+        _assemble tmp
+        @ jump @done
+    @ @string:
+        arrange tmp, =dc.=b= value
+        _assemble tmp
+    @ @done:
 end macro
 ; _emit equ emit ; Uncomment to generate binary directly.

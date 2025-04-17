@@ -2,6 +2,40 @@ include "format_fasmg.inc"
 include "m68k.inc"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Data declaration stuff                                                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; TODO: Test edge cases.
+dc.b 0
+dc.b 1
+dc.b 2
+dc.b 3
+dc.b 4
+dc.b $FE
+dc.b $FF
+
+dc.b ""
+dc.b "a"
+dc.b "ab"
+dc.b "abcd"
+
+dc.w 0
+dc.w 1
+dc.w 2
+dc.w $FF
+dc.w $FFFF
+dc.w $1234
+
+dc.l 0
+dc.l 1
+dc.l 2
+dc.l $FF
+dc.l $FFFF
+dc.l $1234
+dc.l $FFFFFFFF
+dc.l $12345678
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; All niladic instructions.                                                  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

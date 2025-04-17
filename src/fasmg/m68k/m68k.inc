@@ -55,6 +55,46 @@ end macro
 include "registers.inc"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Data declaration stuff                                                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; TODO:
+;     Test constraints maybe?
+calminstruction dc.b? value
+        local tmp
+        ; compute tmp, value ; TODO: Is this needed?
+        check value eqtype ''
+        jyes string
+        _emit 1, value
+        jump done
+    string:
+        compute tmp, lengthof value
+        _emit tmp, value
+    done:
+end calminstruction
+; define dc.b +dc.b
+
+; TODO:
+;     Test constraints maybe?
+calminstruction dc.w? value
+    local tmp
+    ; bswap is needed because famg outputs in little-endian :'/
+    compute tmp, value bswap 2
+    _emit 2, tmp
+end calminstruction
+; define dc.w +dc.w
+
+; TODO:
+;     Test constraints maybe?
+calminstruction dc.l? value
+    local tmp
+    ; bswap is needed because famg outputs in little-endian :'/
+    compute tmp, value bswap 4
+    _emit 4, tmp
+end calminstruction
+; define dc.l +dc.l
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 68000 instruction set implemented in fasmg                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
