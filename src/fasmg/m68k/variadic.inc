@@ -46,10 +46,10 @@ iterate <__suffix, __size>, \
             check op1 relativeto m68k.data_reg
             @ jyes @data_reg
         ; immediate:
-            asl_b_dyadic_imm op1, dn
+            asl_#__suffix#_dyadic_imm op1, dn
             @ jump @done_dyadic
         @ @data_reg:
-            asl_b_dyadic_data_reg op1, dn
+            asl_#__suffix#_dyadic_data_reg op1, dn
         @ @done_dyadic:
     end macro
 
@@ -121,14 +121,13 @@ iterate <__suffix, __size>, \
             match , op2
             jyes one_operand
         ; two_operands:
-            asl_b_dyadic op1, op2
+            asl_#__suffix#_dyadic op1, op2
             jump done
         one_operand:
-            asl_b_monadic op1
+            asl_#__suffix#_monadic op1
         done:
     end calminstruction
 
     ; Make visible to the preprocessor
     define asl.#__suffix +asl.#__suffix
-    ; define asl.b +asl.b
 end iterate
