@@ -162,3 +162,89 @@ asl.l 4, d0
 asl.l 5, d0
 asl.l 6, d0
 asl.l 7, d0
+
+;; ASR.B ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; TODO: Seems 0 is interpreted as 8, which makes sense,
+; since a shift of 0 does not make sense.
+; So I wonder if I should allow to input #8 and have it "wrap" or something.
+asr.b 0, d0
+asr.b 0, d1
+asr.b 0, d2
+asr.b 0, d3
+asr.b 0, d4
+asr.b 0, d5
+asr.b 0, d6
+
+asr.b d0, d0
+asr.b d1, d0
+asr.b d2, d0
+asr.b d3, d0
+asr.b d4, d0
+asr.b d5, d0
+asr.b d6, d0
+asr.b d7, d0
+
+asr.b 0, d0
+asr.b 1, d0
+asr.b 2, d0
+asr.b 3, d0
+asr.b 4, d0
+asr.b 5, d0
+asr.b 6, d0
+asr.b 7, d0
+
+;; ASR.W ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+asr.w 0, d0
+asr.w 0, d1
+asr.w 0, d2
+asr.w 0, d3
+asr.w 0, d4
+asr.w 0, d5
+asr.w 0, d6
+
+asr.w d0, d0
+asr.w d1, d0
+asr.w d2, d0
+asr.w d3, d0
+asr.w d4, d0
+asr.w d5, d0
+asr.w d6, d0
+asr.w d7, d0
+
+asr.w 0, d0
+asr.w 1, d0
+asr.w 2, d0
+asr.w 3, d0
+asr.w 4, d0
+asr.w 5, d0
+asr.w 6, d0
+asr.w 7, d0
+
+;; ASR.L ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+asr.l 0, d1
+asr.l 0, d2
+asr.l 0, d3
+asr.l 0, d4
+asr.l 0, d5
+asr.l 0, d6
+
+asr.l d0, d0
+asr.l d1, d0
+asr.l d2, d0
+asr.l d3, d0
+asr.l d4, d0
+asr.l d5, d0
+asr.l d6, d0
+asr.l d7, d0
+
+asr.l 0, d0
+asr.l 1, d0
+asr.l 2, d0
+asr.l 3, d0
+asr.l 4, d0
+asr.l 5, d0
+asr.l 6, d0
+asr.l 7, d0
