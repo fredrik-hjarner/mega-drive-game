@@ -26,35 +26,35 @@ PREPROCESSOR := __FILE__
 
 namespace PREPROCESSOR
 
-        define symlinks include:macro:purge:if:else:end:namespace:__FILE__:PREPROCESSOR
-        match include:macro:purge:if:else:end:namespace:__FILE__:PREPROCESSOR, symlinks
+    define symlinks include:macro:purge:if:else:end:namespace:__FILE__:PREPROCESSOR
+    match include:macro:purge:if:else:end:namespace:__FILE__:PREPROCESSOR, symlinks
 
-                macro preprocess file
-                        local empty
-                        macro empty.include?! file
-                               include file
-                        end macro
-                        namespace empty
-                                macro ? line&
-                                        if __FILE__ = PREPROCESSOR
-                                                purge ?
-                                                line
-                                        else
-                                                namespace PREPROCESSOR
-                                                        match +command, MACROS.line
-                                                                command
-                                                        else
-                                                                emit line
-                                                        end match
-                                                end namespace
-                                        end if
-                                end macro
-                                include file
-                        end namespace
-                end macro
+        macro preprocess file
+            local empty
+            macro empty.include?! file
+                    include file
+            end macro
+            namespace empty
+                    macro ? line&
+                            if __FILE__ = PREPROCESSOR
+                                    purge ?
+                                    line
+                            else
+                                    namespace PREPROCESSOR
+                                            match +command, MACROS.line
+                                                    command
+                                            else
+                                                    emit line
+                                            end match
+                                    end namespace
+                            end if
+                    end macro
+                    include file
+            end namespace
+        end macro
 
-        end match
+    end match
 
-        preprocess source
+    preprocess source
 
 end namespace    

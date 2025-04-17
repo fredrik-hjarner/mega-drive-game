@@ -31,23 +31,28 @@
 00000000                                move.b d0, d1
 00000000                                andi.b #1, d1
 00000000                                move.b d1, gamepad1_up
-00000000                                lsr.b #1, d0
+00000000                                dc.b 226
+00000000                                dc.b 8
 00000000                                move.b d0, d1
 00000000                                andi.b #1, d1
 00000000                                move.b d1, gamepad1_down
-00000000                                lsr.b #1, d0
+00000000                                dc.b 226
+00000000                                dc.b 8
 00000000                                move.b d0, d1
 00000000                                andi.b #1, d1
 00000000                                move.b d1, gamepad1_left
-00000000                                lsr.b #1, d0
+00000000                                dc.b 226
+00000000                                dc.b 8
 00000000                                move.b d0, d1
 00000000                                andi.b #1, d1
 00000000                                move.b d1, gamepad1_right
-00000000                                lsr.b #1, d0
+00000000                                dc.b 226
+00000000                                dc.b 8
 00000000                                move.b d0, d1
 00000000                                andi.b #1, d1
 00000000                                move.b d1, gamepad1_b
-00000000                                lsr.b #1, d0
+00000000                                dc.b 226
+00000000                                dc.b 8
 00000000                                move.b d0, d1
 00000000                                andi.b #1, d1
 00000000                                move.b d1, gamepad1_c
@@ -58,11 +63,13 @@
 00000000                                dc.b 113
 00000000                                move.b (a0), d0
 00000000                                not.b d0
-00000000                                lsr.b #4, d0
+00000000                                dc.b 232
+00000000                                dc.b 8
 00000000                                move.b d0, d1
 00000000                                andi.b #1, d1
 00000000                                move.b d1, gamepad1_a
-00000000                                lsr.b #1, d0
+00000000                                dc.b 226
+00000000                                dc.b 8
 00000000                                move.b d0, d1
 00000000                                andi.b #1, d1
 00000000                                move.b d1, gamepad1_start
@@ -124,7 +131,7 @@
 00000110 2020 2020 2020 2020 2020+     dc.b '                '
 00000120 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
 00000150 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
-00000180 474D 2031 3533 3439 3020       dc.b 'GM 153490 '
+00000180 474D 2031 3533 3637 3120       dc.b 'GM 153671 '
 0000018A                                org $18E
 0000018E 0000                           dc.w $0000
 00000190 4A20 2020 2020 2020 2020+     dc.b 'J               '
@@ -156,7 +163,8 @@
 00000226 33FC 0000 0000 0000            move.w #0, color_index
 0000022E                                .increment:
 0000022E 3239 0000 0000                 move.w color_index, d1
-00000234 E449                           lsr.w #2, d1
+00000234 E4                              dc.b 228
+00000235 49                              dc.b 73
 00000236 4EB9 0000 0200                 jsr set_bg_color
 0000023C                                .skip:
 0000023C 4E                              dc.b 78
@@ -172,7 +180,8 @@
 00000258 0679 0001 0000 0000            addi.w #1, hscroll_amount
 00000260                                .increment:
 00000260 3239 0000 0000                 move.w hscroll_amount, d1
-00000266 E449                           lsr.w #2, d1
+00000266 E4                              dc.b 228
+00000267 49                              dc.b 73
 00000268 23FC 4400 0000 00C0 0004       set_write_vram vram_hscroll_addr
 00000272 33C1 00C0 0000                 move.w d1, vdp_data
 00000278 33C1 00C0 0000                 move.w d1, vdp_data

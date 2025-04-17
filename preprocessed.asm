@@ -31,23 +31,28 @@ gamepads_get_input macro
     move.b d0, d1
     andi.b #1, d1
     move.b d1, gamepad1_up
-    lsr.b #1, d0
+    dc.b 226
+    dc.b 8
     move.b d0, d1
     andi.b #1, d1
     move.b d1, gamepad1_down
-    lsr.b #1, d0
+    dc.b 226
+    dc.b 8
     move.b d0, d1
     andi.b #1, d1
     move.b d1, gamepad1_left
-    lsr.b #1, d0
+    dc.b 226
+    dc.b 8
     move.b d0, d1
     andi.b #1, d1
     move.b d1, gamepad1_right
-    lsr.b #1, d0
+    dc.b 226
+    dc.b 8
     move.b d0, d1
     andi.b #1, d1
     move.b d1, gamepad1_b
-    lsr.b #1, d0
+    dc.b 226
+    dc.b 8
     move.b d0, d1
     andi.b #1, d1
     move.b d1, gamepad1_c
@@ -58,11 +63,13 @@ gamepads_get_input macro
     dc.b 113
     move.b (a0), d0
     not.b d0
-    lsr.b #4, d0
+    dc.b 232
+    dc.b 8
     move.b d0, d1
     andi.b #1, d1
     move.b d1, gamepad1_a
-    lsr.b #1, d0
+    dc.b 226
+    dc.b 8
     move.b d0, d1
     andi.b #1, d1
     move.b d1, gamepad1_start
@@ -124,7 +131,7 @@ gamepads_get_input macro
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 153490 '
+    dc.b 'GM 153671 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -156,7 +163,8 @@ gamepads_get_input macro
     move.w #0, color_index
     .increment:
     move.w color_index, d1
-    lsr.w #2, d1
+    dc.b 228
+    dc.b 73
     jsr set_bg_color
     .skip:
     dc.b 78
@@ -172,7 +180,8 @@ gamepads_get_input macro
     addi.w #1, hscroll_amount
     .increment:
     move.w hscroll_amount, d1
-    lsr.w #2, d1
+    dc.b 228
+    dc.b 73
     set_write_vram vram_hscroll_addr
     move.w d1, vdp_data
     move.w d1, vdp_data
