@@ -1,4 +1,4 @@
-# Motorola 68000 Instruction Set for Flag Assembler G
+# Motorola 68000 Instruction Set for Flat Assembler G
 
 I am trying to make a m68k instruction set for fasmg.
 
