@@ -61,17 +61,29 @@ include "registers.inc"
 ; TODO:
 ;     Test constraints maybe?
 ;     use value& to take any number of arguments.
-calminstruction dc.b? value
-        local tmp
+calminstruction dc.b? tail&
+        local head, tail, length, last_argument
+        compute last_argument, 0
+    next:
+        match head=,tail, tail
+        jyes at_least_two_arguments
+    ; last argument:
+        match head, tail
+        compute last_argument, 1
+    at_least_two_arguments:
         ; compute tmp, value ; TODO: Is this needed?
-        check value eqtype ''
+        check head eqtype ''
         jyes string
-        _emit 1, value
-        jump done
+        _emit 1, head
+        check last_argument = 0
+        jyes next
+        jump no_more_arguments
     string:
-        compute tmp, lengthof value
-        _emit tmp, value
-    done:
+        compute length, lengthof head
+        _emit length, head
+        check last_argument = 0
+        jyes next
+    no_more_arguments:
 end calminstruction
 ; define dc.b +dc.b
 

@@ -17,7 +17,7 @@ dc.b ""
 dc.b "a"
 dc.b "ab"
 dc.b "abcd"
-dc.b 0, 1, 2, 3, 4 ; TODO: Implement so this one works.
+dc.b 0, 1, 2, 3, 4
 
 dc.w 0
 dc.w 1
