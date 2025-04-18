@@ -60,7 +60,6 @@ include "registers.inc"
 
 ; TODO:
 ;     Test constraints maybe?
-;     use value& to take any number of arguments.
 calminstruction dc.b? tail&
         local head, tail, length, last_argument
         compute last_argument, 0
