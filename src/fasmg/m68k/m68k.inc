@@ -74,37 +74,55 @@ calminstruction dc.b? tail&
         check head eqtype ''
         jyes string
         _emit 1, head
-        check last_argument = 0
-        jyes next
-        jump no_more_arguments
+        jump maybe_next
     string:
         compute length, lengthof head
         _emit length, head
+    maybe_next:
         check last_argument = 0
         jyes next
-    no_more_arguments:
 end calminstruction
 ; define dc.b +dc.b
 
 ; TODO:
 ;     Test constraints maybe?
-;     use value& to take any number of arguments.
-calminstruction dc.w? value
-    local tmp
-    ; bswap is needed because famg outputs in little-endian :'/
-    compute tmp, value bswap 2
-    _emit 2, tmp
+calminstruction dc.w? tail&
+        local head, tail, last_argument
+        compute last_argument, 0
+    next:
+        match head=,tail, tail
+        jyes at_least_two_arguments
+    ; last argument:
+        match head, tail
+        compute last_argument, 1
+    at_least_two_arguments:
+        ; bswap is needed because famg outputs in little-endian :'/
+        compute head, head bswap 2
+        _emit 2, head
+    maybe_next:
+        check last_argument = 0
+        jyes next
 end calminstruction
 ; define dc.w +dc.w
 
 ; TODO:
 ;     Test constraints maybe?
-;     use value& to take any number of arguments.
-calminstruction dc.l? value
-    local tmp
-    ; bswap is needed because famg outputs in little-endian :'/
-    compute tmp, value bswap 4
-    _emit 4, tmp
+calminstruction dc.l? tail&
+        local head, tail, last_argument
+        compute last_argument, 0
+    next:
+        match head=,tail, tail
+        jyes at_least_two_arguments
+    ; last argument:
+        match head, tail
+        compute last_argument, 1
+    at_least_two_arguments:
+        ; bswap is needed because famg outputs in little-endian :'/
+        compute head, head bswap 4
+        _emit 4, head
+    maybe_next:
+        check last_argument = 0
+        jyes next
 end calminstruction
 ; define dc.l +dc.l
 
