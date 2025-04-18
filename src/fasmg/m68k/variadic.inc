@@ -42,6 +42,8 @@
 ;; |   |             |             |        |                               | ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+; Seems all of these only allow the immediate operande to be 1-8
+; though it seems that 8 will be encoded as zero.
 iterate <instr_prefix,  instr>, \
         \ ; Arithmetic Shift
         as,             00b, \
@@ -140,8 +142,8 @@ iterate <instr_prefix,  instr>, \
 
                     local tmp
 
-                    assert_min imm, 0
-                    assert_max imm, 7
+                    assert_min imm, 1
+                    assert_max imm, 8
                     assert_data_reg dn
 
                     ; 0 1 2 3 4    5    6    7      8  9  10 11 12 13 14 15
@@ -149,7 +151,8 @@ iterate <instr_prefix,  instr>, \
                     ; D = 0 -> Right shift
                     ; D = 1 -> Left shift
                     ; S = Size (00 = Byte, 01 = Word, 10 = Long)
-                    compute tmp, imm ; TODO: Is this compute needed?
+                    ; 8 is encoded as 0, I think mod with 8 takes care of that.
+                    compute tmp, imm mod 8 ; TODO: Is this compute needed?
                     ;                                 Direction
                     _emit 1, 11100000b + (tmp shl 1) + dir
 
