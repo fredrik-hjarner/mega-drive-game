@@ -42,7 +42,7 @@ include "m68k.inc"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     ; word-align
-    ; even
+    even
 
     ; TODO: Every instruction must start on a word-aligned address.
     illegal
