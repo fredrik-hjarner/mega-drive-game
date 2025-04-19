@@ -9,8 +9,18 @@ include "m68k.inc"
 
     parse_operand   #10     ; immediate addressing
     parse_operand   #$10    ; immediate addressing
-    parse_operand   10      ; absolute addressing
-    parse_operand   $10     ; absolute addressing
+
+    ; parse_operand   10      ; TODO: Not supported for now! Need explicit .w/.l
+    parse_operand   10.w    ; absolute addressing
+    parse_operand   (10).w  ; absolute addressing
+    parse_operand   $10.w   ; absolute addressing
+    parse_operand   ($10).w ; absolute addressing
+
+    parse_operand   10.l    ; absolute addressing
+    parse_operand   (10).l  ; absolute addressing
+    parse_operand   $10.l   ; absolute addressing
+    parse_operand   ($10).l ; absolute addressing
+
     parse_operand   d0      ; direct data register addressing
     parse_operand   a0      ; direct address register addressing
     parse_operand   sp      ; direct address register addressing

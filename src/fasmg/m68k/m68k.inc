@@ -86,20 +86,28 @@ iterate op, @op1,@op2
         ;     'dn'              (direct data register addressing)
         ;     'an'              (direct address register addressing)
         ;     '(an)'            (indirect address register addressing)
-        ;     'abs'             (absolute addressing)
+        ;     'abs.w'           (absolute word addressing)
+        ;     'abs.l'           (absolute long addressing)
         ;     'imm'             (immediate addressing)
         define type
+
+        ; The value of the immediate operand.
+        define imm
 
         ; abs_size:
         ;     'unknown'         (default. may indicate error)
         ;     'w'               (absolute word addressing)
         ;     'l'               (absolute long addressing)
-        define abs_size
+        ; define abs_size ; TODO I propbably don't need this?
+
+        ; TODO: Think about this...
+        ; define reg_bits
 
         calminstruction m68k.parse_operand#op operand
                     ; locals
                     local opstr
                     local maybe_number
+                    local maybe_abs
 
                     ; stringify operand so I can print it to debug.
                     arrange opstr, operand
@@ -139,23 +147,33 @@ iterate op, @op1,@op2
             ;; imm ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             check_if_immediate:
                     match =# maybe_number, operand
-                    jno check_if_absolute
-            ; hash_prefix:
-                    ; display 'hash prefix' bappend 10
+                    jno check_if_abs_w
+                ; hash_prefix:
                     check maybe_number eqtype 0
                     jyes skip_immediate_addressing_error
                     err 'immediate_addressing_error' ; TODO: better err message.
                 skip_immediate_addressing_error:
                     compute type, 'imm'
+                    compute imm, maybe_number
                     display 'imm' bappend 10
                     exit
-            ;; Check if absolute addressing ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-            check_if_absolute:
-                    ; display 'no hash prefix' bappend 10
-                    check operand relativeto 0
+            ;; abs.w ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            check_if_abs_w:
+                    match maybe_abs.=w, operand, ()
+                    jno check_if_abs_l
+                    check maybe_abs relativeto 0
+                    jno check_if_abs_l
+                    compute type, 'abs.w'
+                    display 'abs.w' bappend 10
+                    exit
+            ;; abs.l ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            check_if_abs_l:
+                    match maybe_abs.=l, operand, ()
                     jno check_if_dn
-                    compute type, 'abs'
-                    display 'abs' bappend 10
+                    check maybe_abs relativeto 0
+                    jno check_if_dn
+                    compute type, 'abs.l'
+                    display 'abs.l' bappend 10
                     exit
             ;; Check if `dn` (direct data register addressing) ;;;;;;;;;;;;;;;;;
             check_if_dn:
