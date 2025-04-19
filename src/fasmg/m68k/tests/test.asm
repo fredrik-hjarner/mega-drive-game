@@ -5,7 +5,7 @@ include "m68k.inc"
 ;; Test out addressing modes and stuff                                        ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    display "--------------------------------", 10
+    display 10, "- parse_operand -------", 10, 10
 
     parse_operand   #10     ; immediate addressing
     parse_operand   #$10    ; immediate addressing
@@ -29,11 +29,11 @@ include "m68k.inc"
     parse_operand   (a0)+   ; 
     ; parse_operand   -(a0)+   ; TODO: This should generate error.
 
-    display "--------------------------------", 10
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Data declaration stuff                                                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    display 10, "- dc ------------------", 10, 10
 
     ; TODO: Test edge cases.
     dc.b 0
@@ -71,6 +71,8 @@ include "m68k.inc"
 ;; All niladic instructions.                                                  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    display 10, "- niladic -------------", 10, 10
+
     ; word-align
     even
 
@@ -87,6 +89,8 @@ include "m68k.inc"
 ;; All monadic instructions.                                                  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    display 10, "- ext.w ---------------", 10, 10
+
     ext.w d0
     ext.w d1
     ext.w d2
@@ -96,6 +100,8 @@ include "m68k.inc"
     ext.w d6
     ext.w d7
     ; ext.w 8 ; TODO: This should generate error because only d0-d7 are allowed.
+
+    display 10, "- ext.l ---------------", 10, 10
 
     ext.l d0
     ext.l d1
@@ -116,6 +122,21 @@ include "m68k.inc"
     swap d6
     swap d7
     ; swap 8 ; TODO: This should generate error because only d0-d7 are allowed.
+
+    ; jmp ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    display 10, "- jmp -----------------", 10, 10
+
+    ; Dn  An  (An)  (An)+  ‑(An)  (d,An)  (d,An,Xi) 
+	;          ✓                    ✓         ✓ 
+    ; ABS.W  ABS.L  (d,PC)  (d,PC,Xn)  imm
+    ;   ✓     ✓       ✓        ✓
+    jmp 10.w
+    jmp $10.w
+    jmp 10.l
+    jmp $10.l
+
+    display 10, "- trap ----------------", 10, 10
 
     ; trap -1 ; TODO: This should generate error. 0 is lowest allowed.
     ; trap 0 ; Generates error. trap only accepts immediates.

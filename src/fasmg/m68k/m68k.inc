@@ -91,8 +91,30 @@ iterate op, @op1,@op2
         ;     'imm'             (immediate addressing)
         define type
 
+        ; TODO: Comment.
+        ; 3 bits. 000b to 111b.
+        ; type:
+        ;     'unknown'         (default. may indicate error)
+        ;     000b              dn
+        ;     001b              an
+        ;     010b              (an)
+        ;     011b              (an)+
+        ;     100b              -(an)
+        ;     101b              (d,an)
+        ;     110b              (d,an,Xn)
+        ;     111b              (d,pc)
+        ;     111b              (d,pc,Xn)
+        ;     111b              abs.w
+        ;     111b              abs.l
+        ;     111b              imm
+        define ea_mode_bits
+
+        ; The number of the register.
+        ; 3 bits. 000b to 111b.
+        define ea_reg_bits
+
         ; The value of the immediate operand.
-        define imm
+        define imm ; TODO: Think about this.
 
         ; abs_size:
         ;     'unknown'         (default. may indicate error)
@@ -105,6 +127,7 @@ iterate op, @op1,@op2
 
         calminstruction m68k.parse_operand#op operand
                     ; locals
+                    local tmp
                     local opstr
                     local maybe_number
                     local maybe_abs
@@ -115,7 +138,9 @@ iterate op, @op1,@op2
                     display opstr bappend 9
 
                     ; default values
-                    compute type, 'unknown'
+                    compute type, 'unknown'    ; TODO: Better default value?
+                    compute ea_mode_bits, 123d ; TODO: Better default value?
+                    compute ea_reg_bits,  123d ; TODO: Better default value?
 
             ;; (an) ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             ; check_if_indirect_an:
@@ -124,8 +149,9 @@ iterate op, @op1,@op2
                     check an relativeto m68k.address_reg
                     jno check_if_minus_an
                     compute type, '(an)'
-                    display '(an)' bappend 10
-                    exit
+                    compute ea_mode_bits, 010b
+                    compute ea_reg_bits, an - m68k.address_reg
+                    jump done
             ; -(an) ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             check_if_minus_an:
                     match -(an), operand
@@ -133,8 +159,9 @@ iterate op, @op1,@op2
                     check an relativeto m68k.address_reg
                     jno check_if_plus_an
                     compute type, '-(an)'
-                    display '-(an)' bappend 10
-                    exit
+                    compute ea_mode_bits, 100b
+                    compute ea_reg_bits, an - m68k.address_reg
+                    jump done
             ; (an)+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             check_if_plus_an:
                     match (an)+, operand
@@ -142,8 +169,9 @@ iterate op, @op1,@op2
                     check an relativeto m68k.address_reg
                     jno check_if_immediate
                     compute type, '(an)+'
-                    display '(an)+' bappend 10
-                    exit
+                    compute ea_mode_bits, 011b
+                    compute ea_reg_bits, an - m68k.address_reg
+                    jump done
             ;; imm ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             check_if_immediate:
                     match =# maybe_number, operand
@@ -154,9 +182,10 @@ iterate op, @op1,@op2
                     err 'immediate_addressing_error' ; TODO: better err message.
                 skip_immediate_addressing_error:
                     compute type, 'imm'
+                    compute ea_mode_bits, 111b
+                    compute ea_reg_bits, 100b
                     compute imm, maybe_number
-                    display 'imm' bappend 10
-                    exit
+                    jump done
             ;; abs.w ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             check_if_abs_w:
                     match maybe_abs.=w, operand, ()
@@ -164,8 +193,9 @@ iterate op, @op1,@op2
                     check maybe_abs relativeto 0
                     jno check_if_abs_l
                     compute type, 'abs.w'
-                    display 'abs.w' bappend 10
-                    exit
+                    compute ea_mode_bits, 111b
+                    compute ea_reg_bits, 000b
+                    jump done
             ;; abs.l ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             check_if_abs_l:
                     match maybe_abs.=l, operand, ()
@@ -173,26 +203,42 @@ iterate op, @op1,@op2
                     check maybe_abs relativeto 0
                     jno check_if_dn
                     compute type, 'abs.l'
-                    display 'abs.l' bappend 10
-                    exit
+                    compute ea_mode_bits, 111b
+                    compute ea_reg_bits, 001b
+                    jump done
             ;; Check if `dn` (direct data register addressing) ;;;;;;;;;;;;;;;;;
             check_if_dn:
                     check operand relativeto m68k.data_reg
                     jno check_if_an
                     compute type, 'dn'
-                    display 'dn' bappend 10
-                    exit
+                    compute ea_mode_bits, 000b
+                    compute ea_reg_bits, operand - m68k.data_reg
+                    jump done
             ;; Check if `an` (direct address register addressing) ;;;;;;;;;;;;;;
             check_if_an:
                     check operand relativeto m68k.address_reg
                     jno unknown
                     compute type, 'an'
-                    display 'an' bappend 10
-                    exit
+                    compute ea_mode_bits, 001b
+                    compute ea_reg_bits, operand - m68k.address_reg
+                    jump done
             ;; Temporary stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             unknown:
                     compute type, 'unknown'
                     display 'unknown' bappend 10
+                    exit
+            ;; Post-processing kind of ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            done:
+                    ; log type
+                    display type bappend 9
+                    ; log ea_mode_bits
+                    arrange tmp, ea_mode_bits
+                    stringify tmp
+                    display tmp bappend 9
+                    ; log ea_reg_bits
+                    arrange tmp, ea_reg_bits
+                    stringify tmp
+                    display tmp bappend 10
                     exit
         end calminstruction
     end namespace
