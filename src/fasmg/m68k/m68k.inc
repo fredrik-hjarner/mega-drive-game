@@ -80,7 +80,7 @@ iterate op, @op1,@op2
         ;; Define values in the @op1 and @op2 namespaces. ;;;;;;;;;;;;;;;;;;;;;;
 
         ; TODO: use these instead:
-        ;     Dn 	An 	(An) 	(An)+ 	‑(An) 	(d,An) 	(d,An,Xi) 	ABS.W 	ABS.L 	(d,PC) 	(d,PC,Xn) 	imm
+        ;     Dn  An  (An)  (An)+  ‑(An)  (d,An)  (d,An,Xi)  ABS.W  ABS.L  (d,PC)  (d,PC,Xn)  imm
         ; type:
         ;     'unknown'         (default. may indicate error)
         ;     'dn'              (direct data register addressing)
@@ -109,8 +109,35 @@ iterate op, @op1,@op2
                     ; default values
                     compute type, 'unknown'
 
-
-            ;; Check if operand is an immediate value;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            ;; (an) ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            ; check_if_indirect_an:
+                    match (an), operand
+                    jno check_if_minus_an
+                    check an relativeto m68k.address_reg
+                    jno check_if_minus_an
+                    compute type, '(an)'
+                    display '(an)' bappend 10
+                    exit
+            ; -(an) ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            check_if_minus_an:
+                    match -(an), operand
+                    jno check_if_plus_an
+                    check an relativeto m68k.address_reg
+                    jno check_if_plus_an
+                    compute type, '-(an)'
+                    display '-(an)' bappend 10
+                    exit
+            ; (an)+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            check_if_plus_an:
+                    match (an)+, operand
+                    jno check_if_immediate
+                    check an relativeto m68k.address_reg
+                    jno check_if_immediate
+                    compute type, '(an)+'
+                    display '(an)+' bappend 10
+                    exit
+            ;; imm ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            check_if_immediate:
                     match =# maybe_number, operand
                     jno check_if_absolute
             ; hash_prefix:
@@ -144,10 +171,6 @@ iterate op, @op1,@op2
                     compute type, 'an'
                     display 'an' bappend 10
                     exit
-            ;; Check if `(an)` (indirect address register addressing) ;;;;;;;;;;
-            check_if_indirect_an:
-
-
             ;; Temporary stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             unknown:
                     compute type, 'unknown'

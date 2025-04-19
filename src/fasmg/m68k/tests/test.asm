@@ -7,14 +7,17 @@ include "m68k.inc"
 
     display "--------------------------------", 10
 
-    parse_operand   #0      ; immediate addressing
-    parse_operand   0       ; absolute addressing
+    parse_operand   #10     ; immediate addressing
+    parse_operand   #$10    ; immediate addressing
+    parse_operand   10      ; absolute addressing
+    parse_operand   $10     ; absolute addressing
     parse_operand   d0      ; direct data register addressing
     parse_operand   a0      ; direct address register addressing
     parse_operand   sp      ; direct address register addressing
     parse_operand   (a0)    ; indirect address register addressing
-    ; parse_operand   -(a0)   ; 
-    ; parse_operand   (a0)+   ; 
+    parse_operand   -(a0)   ; 
+    parse_operand   (a0)+   ; 
+    ; parse_operand   -(a0)+   ; TODO: This should generate error.
 
     display "--------------------------------", 10
 
