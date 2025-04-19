@@ -64,6 +64,96 @@ end macro
 include "registers.inc"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; PARSE_OPERAND                                                              ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Define variable/namespace where parse_operand will store its results,
+; for example @op1.type
+; Use parse_operand by suffixing it will either @op1 or @op2 like this:
+;     parse_operand@op1 some_operand_to_parse
+; This is just for convenience.
+define @op1 @op1
+define @op2 @op2
+
+iterate op, @op1,@op2
+    namespace op
+        ;; Define values in the @op1 and @op2 namespaces. ;;;;;;;;;;;;;;;;;;;;;;
+
+        ; TODO: use these instead:
+        ;     Dn 	An 	(An) 	(An)+ 	‑(An) 	(d,An) 	(d,An,Xi) 	ABS.W 	ABS.L 	(d,PC) 	(d,PC,Xn) 	imm
+        ; type:
+        ;     'unknown'         (default. may indicate error)
+        ;     'dn'              (direct data register addressing)
+        ;     'an'              (direct address register addressing)
+        ;     'abs'             (absolute addressing)
+        ;     '(an)'            (indirect address register addressing)
+        ;     'imm'             (immediate addressing)
+        define type
+
+        ; abs_size:
+        ;     'unknown'         (default. may indicate error)
+        ;     'w'               (absolute word addressing)
+        ;     'l'               (absolute long addressing)
+        define abs_size
+
+        calminstruction m68k.parse_operand#op operand
+                    ; locals
+                    local opstr
+                    local maybe_number
+
+                    ; stringify operand so I can print it to debug.
+                    arrange opstr, operand
+                    stringify opstr
+                    display opstr bappend 9
+
+                    ; default values
+                    compute type, 'unknown'
+
+
+            ;; Check if operand is an immediate value;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                    match =# maybe_number, operand
+                    jno check_if_absolute
+            ; hash_prefix:
+                    ; display 'hash prefix' bappend 10
+                    check maybe_number eqtype 0
+                    jyes skip_immediate_addressing_error
+                    err 'immediate_addressing_error' ; TODO: better err message.
+                skip_immediate_addressing_error:
+                    compute type, 'imm'
+                    display 'imm' bappend 10
+                    exit
+            ;; Check if absolute addressing ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            check_if_absolute:
+                    ; display 'no hash prefix' bappend 10
+                    check operand relativeto 0
+                    jno check_if_dn
+                    compute type, 'abs'
+                    display 'abs' bappend 10
+                    exit
+            ;; Check if `dn` (direct data register addressing) ;;;;;;;;;;;;;;;;;
+            check_if_dn:
+                    check operand relativeto m68k.data_reg
+                    jno unknown
+                    compute type, 'dn'
+                    display 'dn' bappend 10
+                    exit
+            ;; Check if `an` (direct address register addressing) ;;;;;;;;;;;;;;
+            check_if_an:
+                    check operand relativeto m68k.address_reg
+                    jno unknown
+                    compute type, 'an'
+                    display 'an' bappend 10
+                    exit
+            ;; Temporary stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            unknown:
+                    compute type, 'unknown'
+                    display 'unknown' bappend 10
+                    exit
+        end calminstruction
+    end namespace
+end iterate
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Data declaration stuff                                                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

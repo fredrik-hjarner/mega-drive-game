@@ -88,6 +88,7 @@ include "m68k.inc"
     ; swap 8 ; TODO: This should generate error because only d0-d7 are allowed.
 
     ; trap -1 ; TODO: This should generate error. 0 is lowest allowed.
+    ; trap 0 ; Generates error. trap only accepts immediates.
     trap #0
     trap #1
     trap #14

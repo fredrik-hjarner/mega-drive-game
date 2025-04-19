@@ -29,6 +29,9 @@
 calminstruction moveq? data*, dn*
     local tmp
 
+    call m68k.parse_operand@op1, data
+    call m68k.parse_operand@op2, dn
+
     assert_data_reg dn
 
     ; 0 1 2 3 4  5  6  7

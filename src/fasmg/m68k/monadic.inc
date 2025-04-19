@@ -24,6 +24,8 @@
 calminstruction ext.w? dn*
     local tmp
 
+    call m68k.parse_operand@op1, dn
+
     assert_data_reg dn
 
     emit 1, 01001000b
@@ -35,6 +37,8 @@ define ext.w +ext.w
 
 calminstruction ext.l? dn*
     local tmp
+
+    call m68k.parse_operand@op1, dn
 
     assert_data_reg dn
 
@@ -53,6 +57,8 @@ define ext.l +ext.l
 calminstruction swap? dn*
     local tmp
 
+    call m68k.parse_operand@op1, dn
+
     assert_data_reg dn
 
     emit 1, 01001000b
@@ -65,13 +71,24 @@ define swap +swap
 ; arguments:
 ;     vector: 0000 - 1111
 calminstruction trap? vector*
-    local tmp
+        local tmp
 
-    assert_min vector, 0
-    assert_max vector, 15
+        call m68k.parse_operand@op1, vector
 
-    emit 1, 01001110b
-    compute tmp, 01000000b + vector
-    emit 1, tmp
+        check @op1.type eq 'imm'
+        jyes skip_error
+        ; TODO: I should prolly have a better way to display error messages
+        ; Some more general error handling stuff.
+        display @op1.type bappend 13 bappend 10
+        display @op1.type
+        err 'trap only accepts immediate values'
+    skip_error:
+
+        assert_min vector, 0
+        assert_max vector, 15
+
+        emit 1, 01001110b
+        compute tmp, 01000000b + vector
+        emit 1, tmp
 end calminstruction
 define trap +trap

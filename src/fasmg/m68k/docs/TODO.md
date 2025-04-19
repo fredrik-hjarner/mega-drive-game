@@ -1,0 +1,1 @@
+* Implement `assert_word_aligned` and use it in every instruction.
