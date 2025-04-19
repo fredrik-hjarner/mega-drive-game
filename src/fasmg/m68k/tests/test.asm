@@ -2,6 +2,23 @@ include "format_fasmg.inc"
 include "m68k.inc"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Test out addressing modes and stuff                                        ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    display "--------------------------------", 10
+
+    parse_operand   #0      ; immediate addressing
+    parse_operand   0       ; absolute addressing
+    parse_operand   d0      ; direct data register addressing
+    parse_operand   a0      ; direct address register addressing
+    parse_operand   sp      ; direct address register addressing
+    parse_operand   (a0)    ; indirect address register addressing
+    ; parse_operand   -(a0)   ; 
+    ; parse_operand   (a0)+   ; 
+
+    display "--------------------------------", 10
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Data declaration stuff                                                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

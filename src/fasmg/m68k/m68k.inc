@@ -85,8 +85,8 @@ iterate op, @op1,@op2
         ;     'unknown'         (default. may indicate error)
         ;     'dn'              (direct data register addressing)
         ;     'an'              (direct address register addressing)
-        ;     'abs'             (absolute addressing)
         ;     '(an)'            (indirect address register addressing)
+        ;     'abs'             (absolute addressing)
         ;     'imm'             (immediate addressing)
         define type
 
@@ -133,7 +133,7 @@ iterate op, @op1,@op2
             ;; Check if `dn` (direct data register addressing) ;;;;;;;;;;;;;;;;;
             check_if_dn:
                     check operand relativeto m68k.data_reg
-                    jno unknown
+                    jno check_if_an
                     compute type, 'dn'
                     display 'dn' bappend 10
                     exit
@@ -144,6 +144,10 @@ iterate op, @op1,@op2
                     compute type, 'an'
                     display 'an' bappend 10
                     exit
+            ;; Check if `(an)` (indirect address register addressing) ;;;;;;;;;;
+            check_if_indirect_an:
+
+
             ;; Temporary stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             unknown:
                     compute type, 'unknown'
@@ -233,3 +237,9 @@ include "niladic.inc"
 include "monadic.inc"
 include "dyadic.inc"
 include "variadic.inc"
+
+;; Just an test instruction to test all the addressing modes and stuff ;;;;;;;;;
+
+calminstruction parse_operand? op
+    call m68k.parse_operand@op1, op
+end calminstruction

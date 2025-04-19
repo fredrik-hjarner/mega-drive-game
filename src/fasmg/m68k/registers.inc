@@ -19,6 +19,7 @@ a4? := m68k.address_reg + 100b
 a5? := m68k.address_reg + 101b
 a6? := m68k.address_reg + 110b
 a7? := m68k.address_reg + 111b
+sp? := m68k.address_reg + 111b
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Trying to make it work with preprocess.inc                                  ;;

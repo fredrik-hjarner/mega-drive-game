@@ -5,15 +5,15 @@ all: build hexdump
 clown: clownassembler hexdump
 
 clownassembler:
-	clownassembler -c -o test.bin -i test.asm
+	clownassembler -c -o tests/test.bin -i tests/test.asm
 
 build:
-	fasm2 test.asm test.bin -e20
+	fasmg tests/test.asm tests/test.bin -e20
 
 hexdump:
-	hexdump -C -v test.bin > test.hex
+	hexdump -C -v tests/test.bin > tests/test.hex
 
 clean:
-	rm -f test.bin test.hex
+	rm -f tests/test.bin tests/test.hex
 
 
