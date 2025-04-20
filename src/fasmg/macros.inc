@@ -100,6 +100,87 @@ macro set_write_vsram addr
 end macro
 define set_write_vsram +set_write_vsram
 
+; https://plutiedev.com/controllers
+macro gamepads_get_input
+    ; a0 = IoData1 for player 1
+    ;    = IoData2 for player 2
+
+    emit move.b #$40, gamepad1_ctrl
+
+    emit lea  gamepad1_data, a0
+    
+    ; set bit 6 (TH) to 1 to get first group of buttons
+    emit move.b  #$40, (a0)  ; Do 1st step
+    emit nop                 ; D-pad, B and C
+    emit nop
+    emit move.b  (a0), d0
+    emit not.b d0 ; invert so pressed = 1 instead of 0
+    ; d0 will now contain
+    ; Bit5 	Bit4 	Bit3 	Bit2 	Bit1 	Bit0
+    ; C 	B 	    Right 	Left 	Down 	Up
+
+    ; Up
+    emit move.b d0, d1
+    emit andi.b #1, d1
+    emit move.b d1, gamepad1_up
+
+    ; Down
+    emit lsr.b #1, d0
+    emit move.b d0, d1
+    emit andi.b #1, d1
+    emit move.b d1, gamepad1_down
+
+    ; Left
+    emit lsr.b #1, d0
+    emit move.b d0, d1
+    emit andi.b #1, d1
+    emit move.b d1, gamepad1_left
+
+    ; Right
+    emit lsr.b #1, d0
+    emit move.b d0, d1
+    emit andi.b #1, d1
+    emit move.b d1, gamepad1_right
+
+    ; B
+    emit lsr.b #1, d0
+    emit move.b d0, d1
+    emit andi.b #1, d1
+    emit move.b d1, gamepad1_b
+
+    ; C
+    emit lsr.b #1, d0
+    emit move.b d0, d1
+    emit andi.b #1, d1
+    emit move.b d1, gamepad1_c
+    
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; 2nd set of buttons                                                 ;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    emit move.b  #$00, (a0)
+    emit nop
+    emit nop
+    emit move.b  (a0), d0
+    emit not.b d0 ; invert so pressed = 1 instead of 0
+    ; d0 will now contain
+    ; Bit5   Bit4
+    ; Start  A
+
+    ; A
+    emit lsr.b #4, d0
+    emit move.b d0, d1
+    emit andi.b #1, d1
+    emit move.b d1, gamepad1_a
+
+    ; Start
+    emit lsr.b #1, d0
+    emit move.b d0, d1
+    emit andi.b #1, d1
+    emit move.b d1, gamepad1_start
+end macro
+define gamepads_get_input +gamepads_get_input
+
 ; bappend
 ; Util macro for CALM to concatenate strings with shorter syntax.
 ; Only works when added to preprocess.asm

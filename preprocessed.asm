@@ -9,62 +9,6 @@ gamepad1_ctrl equ $A10009
 gamepad1_data equ $A10003
 gamepad2_ctrl equ $A1000B
 gamepad2_data equ $A10005
-gamepads_get_input macro
-    move.b #$40, gamepad1_ctrl
-    lea gamepad1_data, a0
-    move.b #$40, (a0)
-    dc.b 78
-    dc.b 113
-    dc.b 78
-    dc.b 113
-    move.b (a0), d0
-    not.b d0
-    move.b d0, d1
-    andi.b #1, d1
-    move.b d1, gamepad1_up
-    dc.b 226
-    dc.b 8
-    move.b d0, d1
-    andi.b #1, d1
-    move.b d1, gamepad1_down
-    dc.b 226
-    dc.b 8
-    move.b d0, d1
-    andi.b #1, d1
-    move.b d1, gamepad1_left
-    dc.b 226
-    dc.b 8
-    move.b d0, d1
-    andi.b #1, d1
-    move.b d1, gamepad1_right
-    dc.b 226
-    dc.b 8
-    move.b d0, d1
-    andi.b #1, d1
-    move.b d1, gamepad1_b
-    dc.b 226
-    dc.b 8
-    move.b d0, d1
-    andi.b #1, d1
-    move.b d1, gamepad1_c
-    move.b #$00, (a0)
-    dc.b 78
-    dc.b 113
-    dc.b 78
-    dc.b 113
-    move.b (a0), d0
-    not.b d0
-    dc.b 232
-    dc.b 8
-    move.b d0, d1
-    andi.b #1, d1
-    move.b d1, gamepad1_a
-    dc.b 226
-    dc.b 8
-    move.b d0, d1
-    andi.b #1, d1
-    move.b d1, gamepad1_start
-    endm
     dc.l 0
     dc.l Start
     dc.l int2_bus_error
@@ -122,7 +66,7 @@ gamepads_get_input macro
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 158162 '
+    dc.b 'GM 158175 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -349,7 +293,49 @@ timer_1Hz_counter equ 16711684
     bra.b MainLoop
     vblank:
     movem.l d1-d2,-(sp)
-    gamepads_get_input
+    move.b #$40, gamepad1_ctrl
+    lea gamepad1_data, a0
+    move.b #$40, (a0)
+    nop
+    nop
+    move.b (a0), d0
+    not.b d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_up
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_down
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_left
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_right
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_b
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_c
+    move.b #$00, (a0)
+    nop
+    nop
+    move.b (a0), d0
+    not.b d0
+    lsr.b #4, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_a
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_start
     jsr update_color
     jsr update_hscroll
     movem.l (sp)+,d1-d2

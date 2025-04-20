@@ -41,81 +41,81 @@
     ; endm
 
     ; https://plutiedev.com/controllers
-    gamepads_get_input macro
-        ; a0 = IoData1 for player 1
-        ;    = IoData2 for player 2
+    ; gamepads_get_input macro
+    ;     ; a0 = IoData1 for player 1
+    ;     ;    = IoData2 for player 2
 
-        move.b #$40, gamepad1_ctrl
+    ;     move.b #$40, gamepad1_ctrl
 
-        lea  gamepad1_data, a0
+    ;     lea  gamepad1_data, a0
         
-        ; set bit 6 (TH) to 1 to get first group of buttons
-        move.b  #$40, (a0)  ; Do 1st step
-        nop                 ; D-pad, B and C
-        nop
-        move.b  (a0), d0
-        not.b d0 ; invert so pressed = 1 instead of 0
-        ; d0 will now contain
-        ; Bit5 	Bit4 	Bit3 	Bit2 	Bit1 	Bit0
-        ; C 	B 	    Right 	Left 	Down 	Up
+    ;     ; set bit 6 (TH) to 1 to get first group of buttons
+    ;     move.b  #$40, (a0)  ; Do 1st step
+    ;     nop                 ; D-pad, B and C
+    ;     nop
+    ;     move.b  (a0), d0
+    ;     not.b d0 ; invert so pressed = 1 instead of 0
+    ;     ; d0 will now contain
+    ;     ; Bit5 	Bit4 	Bit3 	Bit2 	Bit1 	Bit0
+    ;     ; C 	B 	    Right 	Left 	Down 	Up
 
-        ; Up
-        move.b d0, d1
-        andi.b #1, d1
-        move.b d1, gamepad1_up
+    ;     ; Up
+    ;     move.b d0, d1
+    ;     andi.b #1, d1
+    ;     move.b d1, gamepad1_up
 
-        ; Down
-        lsr.b #1, d0
-        move.b d0, d1
-        andi.b #1, d1
-        move.b d1, gamepad1_down
+    ;     ; Down
+    ;     lsr.b #1, d0
+    ;     move.b d0, d1
+    ;     andi.b #1, d1
+    ;     move.b d1, gamepad1_down
 
-        ; Left
-        lsr.b #1, d0
-        move.b d0, d1
-        andi.b #1, d1
-        move.b d1, gamepad1_left
+    ;     ; Left
+    ;     lsr.b #1, d0
+    ;     move.b d0, d1
+    ;     andi.b #1, d1
+    ;     move.b d1, gamepad1_left
 
-        ; Right
-        lsr.b #1, d0
-        move.b d0, d1
-        andi.b #1, d1
-        move.b d1, gamepad1_right
+    ;     ; Right
+    ;     lsr.b #1, d0
+    ;     move.b d0, d1
+    ;     andi.b #1, d1
+    ;     move.b d1, gamepad1_right
 
-        ; B
-        lsr.b #1, d0
-        move.b d0, d1
-        andi.b #1, d1
-        move.b d1, gamepad1_b
+    ;     ; B
+    ;     lsr.b #1, d0
+    ;     move.b d0, d1
+    ;     andi.b #1, d1
+    ;     move.b d1, gamepad1_b
 
-        ; C
-        lsr.b #1, d0
-        move.b d0, d1
-        andi.b #1, d1
-        move.b d1, gamepad1_c
+    ;     ; C
+    ;     lsr.b #1, d0
+    ;     move.b d0, d1
+    ;     andi.b #1, d1
+    ;     move.b d1, gamepad1_c
         
-        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-        ;; 2nd set of buttons                                                 ;;
-        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;     ;; 2nd set of buttons                                                 ;;
+    ;     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-        move.b  #$00, (a0)
-        nop
-        nop
-        move.b  (a0), d0
-        not.b d0 ; invert so pressed = 1 instead of 0
-        ; d0 will now contain
-        ; Bit5   Bit4
-        ; Start  A
+    ;     move.b  #$00, (a0)
+    ;     nop
+    ;     nop
+    ;     move.b  (a0), d0
+    ;     not.b d0 ; invert so pressed = 1 instead of 0
+    ;     ; d0 will now contain
+    ;     ; Bit5   Bit4
+    ;     ; Start  A
 
-        ; A
-        lsr.b #4, d0
-        move.b d0, d1
-        andi.b #1, d1
-        move.b d1, gamepad1_a
+    ;     ; A
+    ;     lsr.b #4, d0
+    ;     move.b d0, d1
+    ;     andi.b #1, d1
+    ;     move.b d1, gamepad1_a
 
-        ; Start
-        lsr.b #1, d0
-        move.b d0, d1
-        andi.b #1, d1
-        move.b d1, gamepad1_start
-    endm
+    ;     ; Start
+    ;     lsr.b #1, d0
+    ;     move.b d0, d1
+    ;     andi.b #1, d1
+    ;     move.b d1, gamepad1_start
+    ; endm

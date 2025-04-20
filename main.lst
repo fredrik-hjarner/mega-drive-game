@@ -9,62 +9,6 @@
 00000000                            gamepad1_data equ $A10003
 00000000                            gamepad2_ctrl equ $A1000B
 00000000                            gamepad2_data equ $A10005
-00000000                            gamepads_get_input macro
-00000000                                move.b #$40, gamepad1_ctrl
-00000000                                lea gamepad1_data, a0
-00000000                                move.b #$40, (a0)
-00000000                                dc.b 78
-00000000                                dc.b 113
-00000000                                dc.b 78
-00000000                                dc.b 113
-00000000                                move.b (a0), d0
-00000000                                not.b d0
-00000000                                move.b d0, d1
-00000000                                andi.b #1, d1
-00000000                                move.b d1, gamepad1_up
-00000000                                dc.b 226
-00000000                                dc.b 8
-00000000                                move.b d0, d1
-00000000                                andi.b #1, d1
-00000000                                move.b d1, gamepad1_down
-00000000                                dc.b 226
-00000000                                dc.b 8
-00000000                                move.b d0, d1
-00000000                                andi.b #1, d1
-00000000                                move.b d1, gamepad1_left
-00000000                                dc.b 226
-00000000                                dc.b 8
-00000000                                move.b d0, d1
-00000000                                andi.b #1, d1
-00000000                                move.b d1, gamepad1_right
-00000000                                dc.b 226
-00000000                                dc.b 8
-00000000                                move.b d0, d1
-00000000                                andi.b #1, d1
-00000000                                move.b d1, gamepad1_b
-00000000                                dc.b 226
-00000000                                dc.b 8
-00000000                                move.b d0, d1
-00000000                                andi.b #1, d1
-00000000                                move.b d1, gamepad1_c
-00000000                                move.b #$00, (a0)
-00000000                                dc.b 78
-00000000                                dc.b 113
-00000000                                dc.b 78
-00000000                                dc.b 113
-00000000                                move.b (a0), d0
-00000000                                not.b d0
-00000000                                dc.b 232
-00000000                                dc.b 8
-00000000                                move.b d0, d1
-00000000                                andi.b #1, d1
-00000000                                move.b d1, gamepad1_a
-00000000                                dc.b 226
-00000000                                dc.b 8
-00000000                                move.b d0, d1
-00000000                                andi.b #1, d1
-00000000                                move.b d1, gamepad1_start
-00000000                                endm
 00000000 0000 0000                      dc.l 0
 00000004 0000 0000                      dc.l Start
 00000008 0000 0000                      dc.l int2_bus_error
@@ -122,7 +66,7 @@
 00000110 2020 2020 2020 2020 2020+     dc.b '                '
 00000120 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
 00000150 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
-00000180 474D 2031 3538 3136 3220       dc.b 'GM 158162 '
+00000180 474D 2031 3538 3137 3520       dc.b 'GM 158175 '
 0000018A                                org $18E
 0000018E 0000                           dc.w $0000
 00000190 4A20 2020 2020 2020 2020+     dc.b 'J               '
@@ -349,7 +293,49 @@
 00000680 60FE                           bra.b MainLoop
 00000682                                vblank:
 00000682 48E7 6000                      movem.l d1-d2,-(sp)
-00000686 13FC 0040 00A1 0009 41F9+     gamepads_get_input
+00000686 13FC 0040 00A1 0009            move.b #$40, gamepad1_ctrl
+0000068E 41F9 00A1 0003                 lea gamepad1_data, a0
+00000694 10BC 0040                      move.b #$40, (a0)
+00000698 4E71                           nop
+0000069A 4E71                           nop
+0000069C 1010                           move.b (a0), d0
+0000069E 4600                           not.b d0
+000006A0 1200                           move.b d0, d1
+000006A2 0201 0001                      andi.b #1, d1
+000006A6 13C1 0000 0000                 move.b d1, gamepad1_up
+000006AC E208                           lsr.b #1, d0
+000006AE 1200                           move.b d0, d1
+000006B0 0201 0001                      andi.b #1, d1
+000006B4 13C1 0000 0000                 move.b d1, gamepad1_down
+000006BA E208                           lsr.b #1, d0
+000006BC 1200                           move.b d0, d1
+000006BE 0201 0001                      andi.b #1, d1
+000006C2 13C1 0000 0000                 move.b d1, gamepad1_left
+000006C8 E208                           lsr.b #1, d0
+000006CA 1200                           move.b d0, d1
+000006CC 0201 0001                      andi.b #1, d1
+000006D0 13C1 0000 0000                 move.b d1, gamepad1_right
+000006D6 E208                           lsr.b #1, d0
+000006D8 1200                           move.b d0, d1
+000006DA 0201 0001                      andi.b #1, d1
+000006DE 13C1 0000 0000                 move.b d1, gamepad1_b
+000006E4 E208                           lsr.b #1, d0
+000006E6 1200                           move.b d0, d1
+000006E8 0201 0001                      andi.b #1, d1
+000006EC 13C1 0000 0000                 move.b d1, gamepad1_c
+000006F2 10BC 0000                      move.b #$00, (a0)
+000006F6 4E71                           nop
+000006F8 4E71                           nop
+000006FA 1010                           move.b (a0), d0
+000006FC 4600                           not.b d0
+000006FE E808                           lsr.b #4, d0
+00000700 1200                           move.b d0, d1
+00000702 0201 0001                      andi.b #1, d1
+00000706 13C1 0000 0000                 move.b d1, gamepad1_a
+0000070C E208                           lsr.b #1, d0
+0000070E 1200                           move.b d0, d1
+00000710 0201 0001                      andi.b #1, d1
+00000714 13C1 0000 0000                 move.b d1, gamepad1_start
 0000071A 4EB9 0000 020E                 jsr update_color
 00000720 4EB9 0000 023E                 jsr update_hscroll
 00000726 4CDF 0006                      movem.l (sp)+,d1-d2
