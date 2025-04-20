@@ -89,6 +89,7 @@ iterate op, @op1,@op2
         ;     'abs.w'           (absolute word addressing)
         ;     'abs.l'           (absolute long addressing)
         ;     'imm'             (immediate addressing)
+        ;     'label'           (label. this might be stange, dunno)
         define type
 
         ; TODO: Comment.
@@ -217,10 +218,18 @@ iterate op, @op1,@op2
             ;; Check if `an` (direct address register addressing) ;;;;;;;;;;;;;;
             check_if_an:
                     check operand relativeto m68k.address_reg
-                    jno unknown
+                    jno label
                     compute type, 'an'
                     compute ea_mode_bits, 001b
                     compute ea_reg_bits, operand - m68k.address_reg
+                    jump done
+            ;; label ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            label:
+                    ; I have added an is_label property to each label.
+                    arrange tmp, operand.=is_label
+                    check defined tmp
+                    jno unknown
+                    compute type, 'label'
                     jump done
             ;; Temporary stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             unknown:
@@ -315,6 +324,17 @@ calminstruction dc.l? tail&
         jyes next
 end calminstruction
 ; define dc.l +dc.l
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Decorate or mark labels                                                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Define is_label on the label so I can identify what is and isn't a label.
+; TODO: Can this interceptor be make with CALM?
+struc (label) ? line&
+    define label.is_label
+    . line
+end struc
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 68000 instruction set implemented in fasmg                                 ;;
