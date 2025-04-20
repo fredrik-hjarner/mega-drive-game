@@ -9,15 +9,6 @@
 00000000                            gamepad1_data equ $A10003
 00000000                            gamepad2_ctrl equ $A1000B
 00000000                            gamepad2_data equ $A10005
-00000000                            set_palette_color macro
-00000000                                move.w #((\3)<<9) | ((\2)<<5) | ((\1)<<1), vdp_data
-00000000                                endm
-00000000                            set_write_vram macro
-00000000                                move.l #$40000000+(((\1)&$3FFF)<<16)+(((\1)&$C000)>>14),vdp_ctrl
-00000000                                endm
-00000000                            set_write_vsram macro
-00000000                                move.l #$40000010+((\1)<<16),vdp_ctrl
-00000000                                endm
 00000000                            gamepads_get_input macro
 00000000                                move.b #$40, gamepad1_ctrl
 00000000                                lea gamepad1_data, a0
@@ -131,7 +122,7 @@
 00000110 2020 2020 2020 2020 2020+     dc.b '                '
 00000120 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
 00000150 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
-00000180 474D 2031 3538 3133 3920       dc.b 'GM 158139 '
+00000180 474D 2031 3538 3136 3220       dc.b 'GM 158162 '
 0000018A                                org $18E
 0000018E 0000                           dc.w $0000
 00000190 4A20 2020 2020 2020 2020+     dc.b 'J               '
@@ -182,10 +173,10 @@
 00000260 3239 0000 0000                 move.w hscroll_amount, d1
 00000266 E4                              dc.b 228
 00000267 49                              dc.b 73
-00000268 23FC 4400 0000 00C0 0004       set_write_vram vram_hscroll_addr
+00000268 23FC 4400 0000 00C0 0004       move.l #$40000000+(((vram_hscroll_addr)&$3FFF)<<16)+(((vram_hscroll_addr)&$C000)>>14),vdp_ctrl
 00000272 33C1 00C0 0000                 move.w d1, vdp_data
 00000278 33C1 00C0 0000                 move.w d1, vdp_data
-0000027E 23FC 4000 0010 00C0 0004       set_write_vsram $0
+0000027E 23FC 4000 0010 00C0 0004       move.l #$40000010+(($0)<<16),vdp_ctrl
 00000288 33C1 00C0 0000                 move.w d1, vdp_data
 0000028E 33C1 00C0 0000                 move.w d1, vdp_data
 00000294                                .skip_right:
@@ -273,22 +264,22 @@
 000003EE 30FC 0000                      move.w #$0000, (a0)+
 000003F2 51CF FFFA                      dbra d7,.ClearRAM
 000003F6 23FC C000 0000 00C0 0004       move.l #$C0000000, vdp_ctrl
-00000400 33FC 0000 00C0 0000            set_palette_color 0, 0, 0
-00000408 33FC 0002 00C0 0000            set_palette_color 1, 0, 0
-00000410 33FC 0004 00C0 0000            set_palette_color 2, 0, 0
-00000418 33FC 0006 00C0 0000            set_palette_color 3, 0, 0
-00000420 33FC 0008 00C0 0000            set_palette_color 4, 0, 0
-00000428 33FC 000A 00C0 0000            set_palette_color 5, 0, 0
-00000430 33FC 000C 00C0 0000            set_palette_color 6, 0, 0
-00000438 33FC 000E 00C0 0000            set_palette_color 7, 0, 0
-00000440 33FC 020E 00C0 0000            set_palette_color 7, 0, 1
-00000448 33FC 040E 00C0 0000            set_palette_color 7, 0, 2
-00000450 33FC 060E 00C0 0000            set_palette_color 7, 0, 3
-00000458 33FC 080E 00C0 0000            set_palette_color 7, 0, 4
-00000460 33FC 0A0E 00C0 0000            set_palette_color 7, 0, 5
-00000468 33FC 0C0E 00C0 0000            set_palette_color 7, 0, 6
-00000470 33FC 0E0E 00C0 0000            set_palette_color 7, 0, 7
-00000478 33FC 0E2E 00C0 0000            set_palette_color 7, 1, 7
+00000400 33FC 0000 00C0 0000            move.w #((0)<<9) | ((0)<<5) | ((0)<<1), vdp_data
+00000408 33FC 0002 00C0 0000            move.w #((0)<<9) | ((0)<<5) | ((1)<<1), vdp_data
+00000410 33FC 0004 00C0 0000            move.w #((0)<<9) | ((0)<<5) | ((2)<<1), vdp_data
+00000418 33FC 0006 00C0 0000            move.w #((0)<<9) | ((0)<<5) | ((3)<<1), vdp_data
+00000420 33FC 0008 00C0 0000            move.w #((0)<<9) | ((0)<<5) | ((4)<<1), vdp_data
+00000428 33FC 000A 00C0 0000            move.w #((0)<<9) | ((0)<<5) | ((5)<<1), vdp_data
+00000430 33FC 000C 00C0 0000            move.w #((0)<<9) | ((0)<<5) | ((6)<<1), vdp_data
+00000438 33FC 000E 00C0 0000            move.w #((0)<<9) | ((0)<<5) | ((7)<<1), vdp_data
+00000440 33FC 020E 00C0 0000            move.w #((1)<<9) | ((0)<<5) | ((7)<<1), vdp_data
+00000448 33FC 040E 00C0 0000            move.w #((2)<<9) | ((0)<<5) | ((7)<<1), vdp_data
+00000450 33FC 060E 00C0 0000            move.w #((3)<<9) | ((0)<<5) | ((7)<<1), vdp_data
+00000458 33FC 080E 00C0 0000            move.w #((4)<<9) | ((0)<<5) | ((7)<<1), vdp_data
+00000460 33FC 0A0E 00C0 0000            move.w #((5)<<9) | ((0)<<5) | ((7)<<1), vdp_data
+00000468 33FC 0C0E 00C0 0000            move.w #((6)<<9) | ((0)<<5) | ((7)<<1), vdp_data
+00000470 33FC 0E0E 00C0 0000            move.w #((7)<<9) | ((0)<<5) | ((7)<<1), vdp_data
+00000478 33FC 0E2E 00C0 0000            move.w #((7)<<9) | ((1)<<5) | ((7)<<1), vdp_data
 00000480 23FC 4000 0000 00C0 0004       move.l #$40000000, vdp_ctrl
 0000048A 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data
 00000494 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data
@@ -330,7 +321,7 @@
 000005FC 23FC 1100 0111 00C0 0000       move.l #$11000111, vdp_data
 00000606 23FC 0111 1110 00C0 0000       move.l #$01111110, vdp_data
 00000610 23FC 0011 1100 00C0 0000       move.l #$00111100, vdp_data
-0000061A 23FC 6000 0000 00C0 0004       set_write_vram vram_plane_a_addr
+0000061A 23FC 6000 0000 00C0 0004       move.l #$40000000+(((vram_plane_a_addr)&$3FFF)<<16)+(((vram_plane_a_addr)&$C000)>>14),vdp_ctrl
 00000624 323C 00FF                      move.w #$FF, d1
 00000628                                .loop:
 00000628 303C 0001                      move.w #$1, d0

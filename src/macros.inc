@@ -4,10 +4,10 @@
     ;     \3: b: 0-7
     ; TODO: The name kinda sucks.
     ; TODO: This would be better as an inline fasmg macro.
-    set_palette_color macro
-        ; bbb0 ggg0 rrr0
-        move.w  #((\3)<<9) | ((\2)<<5) | ((\1)<<1), vdp_data
-    endm
+    ; set_palette_color macro
+    ;     ; bbb0 ggg0 rrr0
+    ;     move.w  #((\3)<<9) | ((\2)<<5) | ((\1)<<1), vdp_data
+    ; endm
 
     ; arguments:
     ;     \1: register number: 0-23d
@@ -19,16 +19,16 @@
     ; arguments:
     ;     \1: address: $0000-$FFFF
     ; https://segaretro.org/Sega_Mega_Drive/VDP_general_usage
-    set_write_vram macro
-        move.l #$40000000+(((\1)&$3FFF)<<16)+(((\1)&$C000)>>14),vdp_ctrl
-    endm
+    ; set_write_vram macro
+    ;     move.l #$40000000+(((\1)&$3FFF)<<16)+(((\1)&$C000)>>14),vdp_ctrl
+    ; endm
 
     ; arguments:
     ;     \1: address: $00-$FF
     ; https://segaretro.org/Sega_Mega_Drive/VDP_general_usage
-    set_write_vsram macro
-        move.l #$40000010+((\1)<<16),vdp_ctrl
-    endm
+    ; set_write_vsram macro
+    ;     move.l #$40000010+((\1)<<16),vdp_ctrl
+    ; endm
 
     ; https://plutiedev.com/controllers
     ; #$40 needs to be sent to control and data ports for some reason.

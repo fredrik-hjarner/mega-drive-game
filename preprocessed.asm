@@ -9,15 +9,6 @@ gamepad1_ctrl equ $A10009
 gamepad1_data equ $A10003
 gamepad2_ctrl equ $A1000B
 gamepad2_data equ $A10005
-set_palette_color macro
-    move.w #((\3)<<9) | ((\2)<<5) | ((\1)<<1), vdp_data
-    endm
-set_write_vram macro
-    move.l #$40000000+(((\1)&$3FFF)<<16)+(((\1)&$C000)>>14),vdp_ctrl
-    endm
-set_write_vsram macro
-    move.l #$40000010+((\1)<<16),vdp_ctrl
-    endm
 gamepads_get_input macro
     move.b #$40, gamepad1_ctrl
     lea gamepad1_data, a0
@@ -131,7 +122,7 @@ gamepads_get_input macro
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 158139 '
+    dc.b 'GM 158162 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -182,10 +173,10 @@ gamepads_get_input macro
     move.w hscroll_amount, d1
     dc.b 228
     dc.b 73
-    set_write_vram vram_hscroll_addr
+    move.l #$40000000+(((vram_hscroll_addr)&$3FFF)<<16)+(((vram_hscroll_addr)&$C000)>>14),vdp_ctrl
     move.w d1, vdp_data
     move.w d1, vdp_data
-    set_write_vsram $0
+    move.l #$40000010+(($0)<<16),vdp_ctrl
     move.w d1, vdp_data
     move.w d1, vdp_data
     .skip_right:
@@ -273,22 +264,22 @@ timer_1Hz_counter equ 16711684
     move.w #$0000, (a0)+
     dbra d7,.ClearRAM
     move.l #$C0000000, vdp_ctrl
-    set_palette_color 0, 0, 0
-    set_palette_color 1, 0, 0
-    set_palette_color 2, 0, 0
-    set_palette_color 3, 0, 0
-    set_palette_color 4, 0, 0
-    set_palette_color 5, 0, 0
-    set_palette_color 6, 0, 0
-    set_palette_color 7, 0, 0
-    set_palette_color 7, 0, 1
-    set_palette_color 7, 0, 2
-    set_palette_color 7, 0, 3
-    set_palette_color 7, 0, 4
-    set_palette_color 7, 0, 5
-    set_palette_color 7, 0, 6
-    set_palette_color 7, 0, 7
-    set_palette_color 7, 1, 7
+    move.w #((0)<<9) | ((0)<<5) | ((0)<<1), vdp_data
+    move.w #((0)<<9) | ((0)<<5) | ((1)<<1), vdp_data
+    move.w #((0)<<9) | ((0)<<5) | ((2)<<1), vdp_data
+    move.w #((0)<<9) | ((0)<<5) | ((3)<<1), vdp_data
+    move.w #((0)<<9) | ((0)<<5) | ((4)<<1), vdp_data
+    move.w #((0)<<9) | ((0)<<5) | ((5)<<1), vdp_data
+    move.w #((0)<<9) | ((0)<<5) | ((6)<<1), vdp_data
+    move.w #((0)<<9) | ((0)<<5) | ((7)<<1), vdp_data
+    move.w #((1)<<9) | ((0)<<5) | ((7)<<1), vdp_data
+    move.w #((2)<<9) | ((0)<<5) | ((7)<<1), vdp_data
+    move.w #((3)<<9) | ((0)<<5) | ((7)<<1), vdp_data
+    move.w #((4)<<9) | ((0)<<5) | ((7)<<1), vdp_data
+    move.w #((5)<<9) | ((0)<<5) | ((7)<<1), vdp_data
+    move.w #((6)<<9) | ((0)<<5) | ((7)<<1), vdp_data
+    move.w #((7)<<9) | ((0)<<5) | ((7)<<1), vdp_data
+    move.w #((7)<<9) | ((1)<<5) | ((7)<<1), vdp_data
     move.l #$40000000, vdp_ctrl
     move.l #$00000000, vdp_data
     move.l #$00000000, vdp_data
@@ -330,7 +321,7 @@ timer_1Hz_counter equ 16711684
     move.l #$11000111, vdp_data
     move.l #$01111110, vdp_data
     move.l #$00111100, vdp_data
-    set_write_vram vram_plane_a_addr
+    move.l #$40000000+(((vram_plane_a_addr)&$3FFF)<<16)+(((vram_plane_a_addr)&$C000)>>14),vdp_ctrl
     move.w #$FF, d1
     .loop:
     move.w #$1, d0
