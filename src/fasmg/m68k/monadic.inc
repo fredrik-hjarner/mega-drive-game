@@ -3,9 +3,13 @@
 ;;                                                                            ;;
 ;; | instruction | implemented | tested | notes                             | ;;
 ;; |-------------|-------------|--------|-----------------------------------| ;;
+;; | bra.b       |             |        |                                   | ;;
+;; | bra.w       |             |        |                                   | ;;
+;; | bsr.b       |             |        |                                   | ;;
+;; | bsr.w       |             |        |                                   | ;;
 ;; | ext.l       | yes         | yes    |                                   | ;;
 ;; | ext.w       | yes         | yes    |                                   | ;;
-;; | jmp         | ~           |        |                                   | ;;
+;; | jmp         |             |        |                                   | ;;
 ;; | swap        | yes         | yes    |                                   | ;;
 ;; | trap        | yes         | yes    |                                   | ;;
 ;; |             |             |        |                                   | ;;
@@ -13,6 +17,50 @@
 ;; |             |             |        |                                   | ;;
 ;; |             |             |        |                                   | ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+iterate <instr,  first_byte>, \
+        \ ; Branch
+        bra,     01100000b, \
+        \ ; Branch Subroutine
+        bsr,     01100001b
+
+        ; TODO: Check if fits in a byte. Maybe do that in parse_operand?
+        ; Also, check if displacement is a valid displacement.
+        ; 0 is not allowed for .b I think.
+        ; TODO: How will this be able to work with both label and literals???
+        calminstruction? instr.b? label*
+                local pc
+
+                call m68k.parse_operand@op1, label
+
+                compute pc, $ + 2
+
+                _emit 1, first_byte
+
+                ; Assume label is $10 and address is $20
+                ; $10 - $20 = $10
+                _emit 1, label - pc
+        end calminstruction
+        ; define instr.b +instr.b
+
+        ; TODO: Check if fits in a word. Maybe do that in parse_operand?
+        ;' Warn if fits in a byte.
+        ; TODO: How will this be able to work with both label and literals???
+        calminstruction? instr.w? label*
+            local pc
+
+            call m68k.parse_operand@op1, label
+
+            compute pc, $ + 2
+
+            _emit 1, first_byte
+            _emit 1, 0 ; second byte being zero
+            ; bswap is needed because famg outputs in little-endian :'/
+            _emit 2, (label - pc) bswap 2
+        end calminstruction
+        ; define instr.w +instr.w
+
+end iterate ; <instr, first_byte>
 
 ; Description:
 ;     Sign-extend a data register.

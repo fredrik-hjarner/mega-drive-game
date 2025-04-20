@@ -325,7 +325,7 @@ include "monadic.inc"
 include "dyadic.inc"
 include "variadic.inc"
 
-;; Just an test instruction to test all the addressing modes and stuff ;;;;;;;;;
+;; Just a test instruction to test all the addressing modes and stuff ;;;;;;;;;;
 
 calminstruction parse_operand? op
     call m68k.parse_operand@op1, op
