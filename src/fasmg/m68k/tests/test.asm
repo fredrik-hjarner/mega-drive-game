@@ -106,6 +106,43 @@ include "m68k.inc"
 
 l1:
 
+    dc.b 0,'negx',0
+
+    ; dn
+    negx.b d0
+    negx.b d1
+    negx.w d0
+    negx.w d1
+    negx.l d0
+    negx.l d1
+
+    ; (an)
+    negx.b (a0)
+    negx.b (a1)
+    negx.w (a0)
+    negx.w (a1)
+    negx.l (a0)
+    negx.l (a1)
+
+    dc.b 0,0,'clr',0
+
+    ; dn
+    clr.b d0
+    clr.b d1
+    clr.w d0
+    clr.w d1
+    clr.l d0
+    clr.l d1
+
+    ; (an)
+    clr.b (a0)
+    clr.b (a1)
+    clr.w (a0)
+    clr.w (a1)
+    clr.l (a0)
+    clr.l (a1)
+
+
     ; display 10, "- bra.b ---------------", 10, 10
 
     ; bra.b #$12 ; TODO: This generates error on vasm and clownassembler.
@@ -168,14 +205,26 @@ l1:
     ; ABS.W  ABS.L  (d,PC)  (d,PC,Xn)  imm
     ;   ✓     ✓       ✓        ✓
     ; TODO: Fix the jmp:s, something seems off...
-    jmp (l1).w ; TODO: This one should be easily fixable.
-    jmp l1.w   ; TODO: This one should be easily fixable.
-    jmp (l1).l ; TODO: This one should be easily fixable.
-    jmp l1.l   ; TODO: This one should be easily fixable.
-    ; jmp 10.w
-    ; jmp $10.w
-    ; jmp 10.l
-    ; jmp $10.l
+    jmp (l1).w
+    jmp l1.w
+    jmp (l1).l
+    jmp l1.l
+    jmp 10.w
+    jmp $10.w
+    jmp 10.l
+    jmp $10.l
+
+    dc.b 0,0,'jsr',0
+
+    jsr (l1).w
+    jsr l1.w
+    jsr (l1).l
+    jsr l1.l
+    jsr 10.w
+    jsr $10.w
+    jsr 10.l
+    jsr $10.l
+
 
     ; display 10, "- trap ----------------", 10, 10
 

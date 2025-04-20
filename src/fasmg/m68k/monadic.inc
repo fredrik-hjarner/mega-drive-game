@@ -3,13 +3,19 @@
 ;;                                                                            ;;
 ;; | instruction | implemented | tested | notes                             | ;;
 ;; |-------------|-------------|--------|-----------------------------------| ;;
-;; | bra.b       |             |        |                                   | ;;
-;; | bra.w       |             |        |                                   | ;;
-;; | bsr.b       |             |        |                                   | ;;
-;; | bsr.w       |             |        |                                   | ;;
+;; | negx.[bwl]  | ~           | ~      |                                   | ;;
+;; | clr.[bwl]   | ~           | ~      |                                   | ;;
+;; | neg.[bwl]   | ~           |        |                                   | ;;
+;; | not.[bwl]   | ~           |        |                                   | ;;
+;; |             |             |        |                                   | ;;
+;; | bra.b       | ~           |        |                                   | ;;
+;; | bra.w       | ~           |        |                                   | ;;
+;; | bsr.b       | ~           |        |                                   | ;;
+;; | bsr.w       | ~           |        |                                   | ;;
 ;; | ext.l       | yes         | yes    |                                   | ;;
 ;; | ext.w       | yes         | yes    |                                   | ;;
-;; | jmp         |             |        |                                   | ;;
+;; | jmp         | ~           |        |                                   | ;;
+;; | jsr         | ~           |        |                                   | ;;
 ;; | swap        | yes         | yes    |                                   | ;;
 ;; | trap        | yes         | yes    |                                   | ;;
 ;; |             |             |        |                                   | ;;
@@ -17,6 +23,47 @@
 ;; |             |             |        |                                   | ;;
 ;; |             |             |        |                                   | ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Syntax:
+;     negx <ea>
+;     clr  <ea>
+;     neg  <ea>
+;     not  <ea>
+; Addressing modes:
+;     Dn  An  (An)  (An)+  ‑(An)  (d,An)  (d,An,Xi) 
+;      ✓       ✓     ✓       ✓      ✓         ✓ 
+;     ABS.W  ABS.L  (d,PC)  (d,PC,Xn)  imm
+;       ✓     ✓                 
+; TODO: Double-check addressing modes for all instructions.
+; TODO: Restrict to valid addressing modes for jmp/jsr.
+iterate <instr,  first_byte>, \
+        \ ; 
+        negx,    01000000b, \
+        \ ; Clear
+        clr,     01000010b, \
+        \ ; 
+        neg,     01000100b, \
+        \ ; 
+        not,     01000110b
+    iterate <size,  size_bits>, \
+            b,      00b, \
+            w,      01b, \
+            l,      10b
+    
+            calminstruction instr.size? ea*
+                local tmp
+
+                call m68k.parse_operand@op1, ea
+
+                _emit 1, first_byte
+                _emit 1, size_bits shl 6 + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
+                ; bswap is needed because famg outputs in little-endian :'/
+                _emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+            end calminstruction
+            define instr.size +instr.size
+
+    end iterate ; <size, size_bits>
+end iterate ; <instr, first_byte>
 
 ; Syntax:
 ;   bra.w <label> | <literal>
@@ -109,20 +156,34 @@ calminstruction ext.l? dn*
 end calminstruction
 define ext.l +ext.l
 
-; Syntax: jmp <ea>
-;
-; TODO: Restrict to valid addressing modes for jmp.
-calminstruction jmp? ea*
-    local tmp
+; Syntax:
+;     jmp <ea>
+;     jsr <ea>
+; Addressing modes:
+;     Dn  An  (An)  (An)+  ‑(An)  (d,An)  (d,An,Xi) 
+;              ✓                    ✓         ✓ 
+;     ABS.W  ABS.L  (d,PC)  (d,PC,Xn)  imm
+;       ✓     ✓       ✓        ✓
+; TODO: Restrict to valid addressing modes for jmp/jsr.
+iterate <instr,  second_byte>, \
+        \ ; Jump
+        jmp,     11000000b, \
+        \ ; Jump Subroutine
+        jsr,     10000000b
 
-    call m68k.parse_operand@op1, ea
+        calminstruction instr? ea*
+            local tmp
 
-    _emit 1, 01001110b
-    _emit 1, 11000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
-    ; bswap is needed because famg outputs in little-endian :'/
-    _emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
-end calminstruction
-define jmp +jmp
+            call m68k.parse_operand@op1, ea
+
+            _emit 1, 01001110b
+            _emit 1, second_byte + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
+            ; bswap is needed because famg outputs in little-endian :'/
+            _emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+        end calminstruction
+        define jmp +jmp
+
+end iterate ; <instr, second_byte>
 
 ; Syntax: swap dn
 ;
