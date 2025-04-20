@@ -18,6 +18,13 @@
 ;; |             |             |        |                                   | ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+; Syntax:
+;   bra.w <label> | <literal>
+;   bra.b <label> | <literal>
+;   bsr.w <label> | <literal>
+;   bsr.b <label> | <literal>
+;
+; TODO: What exactly does label and literal mean in this context?
 iterate <instr,  first_byte>, \
         \ ; Branch
         bra,     01100000b, \
@@ -31,7 +38,7 @@ iterate <instr,  first_byte>, \
         calminstruction? instr.b? label*
                 local pc
 
-                call m68k.parse_operand@op1, label
+                ; call m68k.parse_operand@op1, label
 
                 compute pc, $ + 2
 
@@ -49,7 +56,7 @@ iterate <instr,  first_byte>, \
         calminstruction? instr.w? label*
             local pc
 
-            call m68k.parse_operand@op1, label
+            ; call m68k.parse_operand@op1, label
 
             compute pc, $ + 2
 
@@ -62,6 +69,8 @@ iterate <instr,  first_byte>, \
 
 end iterate ; <instr, first_byte>
 
+; Syntax: ext.w dn
+;
 ; Description:
 ;     Sign-extend a data register.
 ;     .w extends from byte to word
@@ -84,6 +93,8 @@ calminstruction ext.w? dn*
 end calminstruction
 define ext.w +ext.w
 
+; Syntax: ext.l dn
+;
 calminstruction ext.l? dn*
     local tmp
 
@@ -91,24 +102,30 @@ calminstruction ext.l? dn*
 
     assert_data_reg dn
 
-    emit 1, 01001000b
+    _emit 1, 01001000b
     ;            1S000000b ; S = 0-> .w, S = 1-> .l
     compute tmp, 11000000b + (dn - m68k.data_reg) ; TODO: Move this into emit!
-    emit 1, tmp
+    _emit 1, tmp
 end calminstruction
 define ext.l +ext.l
 
+; Syntax: jmp <ea>
+;
 ; TODO: Restrict to valid addressing modes for jmp.
 calminstruction jmp? ea*
     local tmp
 
     call m68k.parse_operand@op1, ea
 
-    emit 1, 01001110b
-    emit 1, 11000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
+    _emit 1, 01001110b
+    _emit 1, 11000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
+    ; bswap is needed because famg outputs in little-endian :'/
+    _emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
 end calminstruction
 define jmp +jmp
 
+; Syntax: swap dn
+;
 ; Exchange the upper and lower 16-bit words of a data register.
 ; arguments:
 ;     dn: data register (d0 - d7)
@@ -127,6 +144,8 @@ calminstruction swap? dn*
 end calminstruction
 define swap +swap
 
+; Syntax: trap #<vector>
+;
 ; Trigger any of the 16 "trap" interrupts.
 ; arguments:
 ;     vector: 0000 - 1111

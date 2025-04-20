@@ -1,10 +1,24 @@
+; set fasmg to
+;     1 if assembling with fasmg
+;     0 if assembling with vasm or clownassembler
+; Comment out endif macro if assembling with
+; vasm or clownassembler.
+fasmg equ 1
+; TODO: Maybe I should have this as a compatability macro?
+macro endif!
+    end if
+end macro
+
+    if fasmg
 include "format_fasmg.inc"
 include "m68k.inc"
+    endif
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Test out addressing modes and stuff                                        ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    if fasmg
     ; display 10, "- parse_operand -------", 10, 10
 
     parse_operand   #10     ; immediate addressing
@@ -28,6 +42,7 @@ include "m68k.inc"
     parse_operand   -(a0)   ; 
     parse_operand   (a0)+   ; 
     ; parse_operand   -(a0)+   ; TODO: This should generate error.
+    endif
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Data declaration stuff                                                     ;;
@@ -89,19 +104,25 @@ include "m68k.inc"
 ;; All monadic instructions.                                                  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-label1:
+l1:
 
     ; display 10, "- bra.b ---------------", 10, 10
 
     ; bra.b #$12 ; TODO: This generates error on vasm and clownassembler.
     ; bra.b $12  ; TODO: So uhm is this allowed??
-    bra.b label1
+    bra.b l1
+    ; bra.b (l1).b ; clown and vasm does not allow!
+    ; bra.b (l1).w ; clown and vasm does not allow!
+    ; bra.b (l1).l ; clown does not allow but vasm does!
 
     ; display 10, "- bra.w ---------------", 10, 10
 
     ; bra.w #$1234 ; TODO: This generates error on vasm and clownassembler.
     ; bra.w $0123 ; TODO: So uhm is this allowed??
-    bra.w label1
+    bra.w l1
+    ; bra.w (l1).b ; clown and vasm does not allow!
+    ; bra.w (l1).w ; clown and vasm does not allow!
+    ; bra.w (l1).l ; clown does not allow but vasm does!
 
     ; display 10, "- ext.w ---------------", 10, 10
 
@@ -140,13 +161,17 @@ label1:
     ; jmp ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     ; display 10, "- jmp -----------------", 10, 10
+    dc.b 0,0,'jmp',0
 
     ; Dn  An  (An)  (An)+  ‑(An)  (d,An)  (d,An,Xi) 
 	;          ✓                    ✓         ✓ 
     ; ABS.W  ABS.L  (d,PC)  (d,PC,Xn)  imm
     ;   ✓     ✓       ✓        ✓
     ; TODO: Fix the jmp:s, something seems off...
-    ; jmp label1 ; TODO: This one should be easily fixable.
+    jmp (l1).w ; TODO: This one should be easily fixable.
+    jmp l1.w   ; TODO: This one should be easily fixable.
+    jmp (l1).l ; TODO: This one should be easily fixable.
+    jmp l1.l   ; TODO: This one should be easily fixable.
     ; jmp 10.w
     ; jmp $10.w
     ; jmp 10.l

@@ -114,6 +114,16 @@ iterate op, @op1,@op2
         ; 3 bits. 000b to 111b.
         define ea_reg_bits
 
+        ; The number of extension words,
+        ; but I changed it to bytes because then I don't have to multiply
+        ; by 2 when I output the extension words.
+        define ext_bytes
+
+        ; Either 16 or 32 bits i.e. 1 or 2 extension words,
+        ; but I changed it to bytes because then I don't have to multiply
+        ; by 2 when I output the extension words.
+        define ext_bytes_bits
+
         ; The value of the immediate operand.
         define imm ; TODO: Think about this.
 
@@ -126,6 +136,9 @@ iterate op, @op1,@op2
         ; TODO: Think about this...
         ; define reg_bits
 
+        ; TODO: Probably change name to `parse_effective_address`,
+        ; but I am not sure that's a good idea or not because mayube this
+        ; could be used for dn, an etc too.
         calminstruction m68k.parse_operand#op operand
                     ; locals
                     local tmp
@@ -136,12 +149,13 @@ iterate op, @op1,@op2
                     ; stringify operand so I can print it to debug.
                     arrange opstr, operand
                     stringify opstr
-                    display opstr bappend 9
+                    ; display opstr bappend 9
 
                     ; default values
                     compute type, 'unknown'    ; TODO: Better default value?
                     compute ea_mode_bits, 123d ; TODO: Better default value?
                     compute ea_reg_bits,  123d ; TODO: Better default value?
+                    compute ext_bytes, 0       ; TODO: Better default value?
 
             ;; (an) ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             ; check_if_indirect_an:
@@ -152,6 +166,7 @@ iterate op, @op1,@op2
                     compute type, '(an)'
                     compute ea_mode_bits, 010b
                     compute ea_reg_bits, an - m68k.address_reg
+                    compute ext_bytes, 0
                     jump done
             ; -(an) ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             check_if_minus_an:
@@ -162,6 +177,7 @@ iterate op, @op1,@op2
                     compute type, '-(an)'
                     compute ea_mode_bits, 100b
                     compute ea_reg_bits, an - m68k.address_reg
+                    compute ext_bytes, 0
                     jump done
             ; (an)+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             check_if_plus_an:
@@ -172,8 +188,11 @@ iterate op, @op1,@op2
                     compute type, '(an)+'
                     compute ea_mode_bits, 011b
                     compute ea_reg_bits, an - m68k.address_reg
+                    compute ext_bytes, 0
+                    compute ext_bytes_bits, 0
                     jump done
             ;; imm ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            ; TODO: Immediate can have either 1 or 2 extension words!
             check_if_immediate:
                     match =# maybe_number, operand
                     jno check_if_abs_w
@@ -196,6 +215,8 @@ iterate op, @op1,@op2
                     compute type, 'abs.w'
                     compute ea_mode_bits, 111b
                     compute ea_reg_bits, 000b
+                    compute ext_bytes, 2
+                    compute ext_bytes_bits, maybe_abs
                     jump done
             ;; abs.l ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             check_if_abs_l:
@@ -206,6 +227,8 @@ iterate op, @op1,@op2
                     compute type, 'abs.l'
                     compute ea_mode_bits, 111b
                     compute ea_reg_bits, 001b
+                    compute ext_bytes, 4
+                    compute ext_bytes_bits, maybe_abs
                     jump done
             ;; Check if `dn` (direct data register addressing) ;;;;;;;;;;;;;;;;;
             check_if_dn:
@@ -214,30 +237,47 @@ iterate op, @op1,@op2
                     compute type, 'dn'
                     compute ea_mode_bits, 000b
                     compute ea_reg_bits, operand - m68k.data_reg
+                    compute ext_bytes, 0
                     jump done
             ;; Check if `an` (direct address register addressing) ;;;;;;;;;;;;;;
             check_if_an:
                     check operand relativeto m68k.address_reg
-                    jno label
+                    jno done
                     compute type, 'an'
                     compute ea_mode_bits, 001b
                     compute ea_reg_bits, operand - m68k.address_reg
+                    compute ext_bytes, 0
                     jump done
             ;; label ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-            label:
-                    ; I have added an is_label property to each label.
-                    arrange tmp, operand.=is_label
-                    check defined tmp
-                    jno unknown
-                    compute type, 'label'
-                    jump done
+            ; TODO: Can labels be both .w and and .l?
+            ; TODO: Do I need this or is abs.w and abs.l enough??
+            ; label_w:
+            ;         match (tmp).=w, operand
+            ;         jno done
+            ;         ; I have added an is_label property to each label.
+            ;         arrange tmp, tmp.=is_label
+            ;         check defined tmp
+            ;         jno done
+            ;         compute type, 'label'
+            ;         jump done
             ;; Temporary stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-            unknown:
-                    compute type, 'unknown'
-                    display 'unknown' bappend 10
-                    exit
+            ; unknown:
+            ;         compute type, 'unknown'
+            ;         display 'unknown' bappend 10
+            ;         exit
             ;; Post-processing kind of ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             done:
+                    ;; header ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+                    display 'op' bappend 9
+                    display 'type' bappend 9
+                    display 'mode' bappend 9
+                    display 'reg' bappend 9
+                    display '#ext' bappend 10
+
+                    ;; data ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+                    display opstr bappend 9
                     ; log type
                     display type bappend 9
                     ; log ea_mode_bits
@@ -247,7 +287,12 @@ iterate op, @op1,@op2
                     ; log ea_reg_bits
                     arrange tmp, ea_reg_bits
                     stringify tmp
-                    display tmp bappend 10
+                    display tmp bappend 9
+                    ; log ext_bytes
+                    arrange tmp, ext_bytes
+                    stringify tmp
+                    display tmp bappend 10 bappend 10
+
                     exit
         end calminstruction
     end namespace
