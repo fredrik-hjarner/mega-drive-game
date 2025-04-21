@@ -3,6 +3,13 @@
 ;;                                                                            ;;
 ;; | # | instruction | implemented | tested | notes                         | ;;
 ;; |---|-------------|-------------|--------|-------------------------------| ;;
+;; |   | ori.[bwl]   | ~           | ~      |                               | ;;
+;; |   | andi.[bwl]  | ~           | ~      |                               | ;;
+;; |   | subi.[bwl]  | ~           | ~      |                               | ;;
+;; |   | addi.[bwl]  | ~           | ~      |                               | ;;
+;; |   | eori.[bwl]  | ~           | ~      |                               | ;;
+;; |   | cmpi.[bwl]  | ~           | ~      |                               | ;;
+;; |   |             |             |        |                               | ;;
 ;; |   | addq.[bwl]  | ~           | ~      |                               | ;;
 ;; |   | subq.[bwl]  | ~           | ~      |                               | ;;
 ;; |   |             |             |        |                               | ;;
@@ -10,8 +17,68 @@
 ;; |   |             |             |        |                               | ;;
 ;; |   |             |             |        |                               | ;;
 ;; |   |             |             |        |                               | ;;
-;; |   |             |             |        |                               | ;;
-;; |   |             |             |        |                               | ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Syntax:
+;     ori.[bwl]  #<data>,<ea>
+;     andi.[bwl] #<data>,<ea>
+;     subi.[bwl] #<data>,<ea>
+;     addi.[bwl] #<data>,<ea>
+;     eori.[bwl] #<data>,<ea>
+;     cmpi.[bwl] #<data>,<ea>
+; Addressing modes:
+;     Dn  An  (An)  (An)+  ‑(An)  (d,An)  (d,An,Xi) 
+;      ✓       ✓     ✓       ✓      ✓         ✓ 
+;     ABS.W  ABS.L  (d,PC)  (d,PC,Xn)  imm
+;       ✓     ✓           
+; TODO: Double check addressing modes for each instruction.
+iterate <instr,  first_byte>, \
+        \ ; Or Immediate
+        ori,     00000000b, \
+        \ ; And Immediate
+        andi,    00000010b, \
+        \ ; Subtract Immediate
+        subi,    00000100b, \
+        \ ; Add Immediate
+        addi,    00000110b, \
+        \ ; Exclusive Or Immediate
+        eori,    00001010b, \
+        \ ; Compare Immediate
+        cmpi,    00001100b,
+    iterate <size,  size_bits,  imm_bytes>, \
+            b,      00b,        2, \
+            w,      01b,        2, \
+            l,      10b,        4
+
+            calminstruction instr.size imm*, ea*
+                local tmp
+
+                call m68k.parse_operand@op1, imm
+                call m68k.parse_operand@op2, ea
+
+                ; TODO: Assert that imm is within bounds.
+                ; assert_min imm, 1
+                ; assert_max imm, 8
+
+                ; first byte
+                _emit 1, first_byte
+
+                ; second byte
+                _emit 1, size_bits shl 6 + @op2.ea_mode_bits shl 3 + @op2.ea_reg_bits
+                
+                ; immediate bytes
+                ; bswap is needed because famg outputs in little-endian :'/
+                _emit imm_bytes, imm bswap imm_bytes
+
+                ; extension words
+                ; bswap is needed because famg outputs in little-endian :'/
+                _emit @op2.ext_bytes, @op2.ext_bytes_bits bswap @op2.ext_bytes
+            end calminstruction
+
+    end iterate ; <size, size_bits>
+end iterate ; <instr, first_byte>
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Syntax:
@@ -48,7 +115,7 @@ iterate <instr,  first_byte>, \
                 compute tmp, imm mod 8 ; TODO: Is this compute needed?
                 _emit 1, first_byte + tmp shl 1
 
-                ; second bytte
+                ; second byte
                 _emit 1, size_bits shl 6 + @op2.ea_mode_bits shl 3 + @op2.ea_reg_bits
                 
                 ; extension words
