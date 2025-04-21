@@ -10,3 +10,11 @@
   Remove the different forms of _assemble and _emit too.
 * Hm could I override `emit` to output in big-endian?? That should be possible
   right? That would make the code less messy and I could skip using `bswap`.
+* `<<` creates some problems... since fasmg uses `shl` instead.
+  I wonder if I could fix that with `match`....
+      ```
+          match a? b? b? d? << e? f? g? h?, operand
+          jno skip
+          arrange operand, a#b#c#d shl #e#f#g#h
+      skip:
+      ```

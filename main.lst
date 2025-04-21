@@ -66,7 +66,7 @@
 00000110 2020 2020 2020 2020 2020+     dc.b '                '
 00000120 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
 00000150 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
-00000180 474D 2031 3539 3834 3720       dc.b 'GM 159847 '
+00000180 474D 2031 3539 3838 3120       dc.b 'GM 159881 '
 0000018A                                org $18E
 0000018E 0000                           dc.w $0000
 00000190 4A20 2020 2020 2020 2020+     dc.b 'J               '
@@ -93,7 +93,7 @@
 0000020E 4A39 0000 0000                 tst.b (gamepad1_a).l
 00000214 67FE                           beq.b .skip
 00000216 5279 0000 0000                 addq.w #1, color_index.l
-0000021C 0C79 0040 0000 0000            cmpi.w #(16<<2), color_index
+0000021C 0C79 0040 0000 0000            cmpi.w #(16<<2), color_index.l
 00000224 65FE                           blo.b .increment
 00000226 33FC 0000 0000 0000            move.w #0, color_index
 0000022E                                .increment:
@@ -107,12 +107,12 @@
 0000023E                                update_hscroll:
 0000023E 4A39 0000 0000                 tst.b gamepad1_left.l
 00000244 67FE                           beq.b .skip_left
-00000246 0679 FFFF 0000 0000            addi.w #-1, hscroll_amount
+00000246 0679 FFFF 0000 0000            addi.w #-1, hscroll_amount.l
 0000024E 60FE                           bra.b .increment
 00000250                                .skip_left:
 00000250 4A39 0000 0000                 tst.b gamepad1_right.l
 00000256 67FE                           beq.b .skip_right
-00000258 0679 0001 0000 0000            addi.w #1, hscroll_amount
+00000258 0679 0001 0000 0000            addi.w #1, hscroll_amount.l
 00000260                                .increment:
 00000260 3239 0000 0000                 move.w hscroll_amount, d1
 00000266 E4                              dc.b 228

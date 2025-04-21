@@ -66,7 +66,7 @@ gamepad2_data equ $A10005
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 159847 '
+    dc.b 'GM 159881 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -93,7 +93,7 @@ gamepad2_data equ $A10005
     tst.b (gamepad1_a).l
     beq.b .skip
     addq.w #1, color_index.l
-    cmpi.w #(16<<2), color_index
+    cmpi.w #(16<<2), color_index.l
     blo.b .increment
     move.w #0, color_index
     .increment:
@@ -107,12 +107,12 @@ gamepad2_data equ $A10005
     update_hscroll:
     tst.b gamepad1_left.l
     beq.b .skip_left
-    addi.w #-1, hscroll_amount
+    addi.w #-1, hscroll_amount.l
     bra.b .increment
     .skip_left:
     tst.b gamepad1_right.l
     beq.b .skip_right
-    addi.w #1, hscroll_amount
+    addi.w #1, hscroll_amount.l
     .increment:
     move.w hscroll_amount, d1
     dc.b 228
