@@ -3,14 +3,61 @@
 ;;                                                                            ;;
 ;; | # | instruction | implemented | tested | notes                         | ;;
 ;; |---|-------------|-------------|--------|-------------------------------| ;;
-;; |   | moveq       | yes         | yes    |                               | ;;
+;; |   | addq.[bwl]  | ~           | ~      |                               | ;;
+;; |   | subq.[bwl]  | ~           | ~      |                               | ;;
 ;; |   |             |             |        |                               | ;;
+;; |   | moveq       | ~           | ~      |                               | ;;
 ;; |   |             |             |        |                               | ;;
 ;; |   |             |             |        |                               | ;;
 ;; |   |             |             |        |                               | ;;
 ;; |   |             |             |        |                               | ;;
 ;; |   |             |             |        |                               | ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Syntax:
+;     addq #<data>,<ea>
+;     subq #<data>,<ea>
+; Addressing modes:
+;     Dn  An  (An)  (An)+  ‑(An)  (d,An)  (d,An,Xi) 
+;      ✓   ✓   ✓     ✓       ✓      ✓         ✓ 
+;     ABS.W  ABS.L  (d,PC)  (d,PC,Xn)  imm
+;       ✓     ✓                 
+; TODO: Restrict to valid addressing modes for the instructions.
+; Valid imm range: 1-8 (8 is encoded as 000b i.e. 0).
+iterate <instr,  first_byte>, \
+        \ ; Add Quick
+        addq,    01010000b, \
+        \ ; Subtract Quick
+        subq,    01010001b
+    iterate <size,  size_bits>, \
+            b,      00b, \
+            w,      01b, \
+            l,      10b
+
+            calminstruction instr.size? imm*, ea*
+                local tmp
+
+                call m68k.parse_operand@op1, imm
+                call m68k.parse_operand@op2, ea
+
+                assert_min imm, 1
+                assert_max imm, 8
+
+                ; first byte
+                ; 8 is encoded as 000b
+                compute tmp, imm mod 8 ; TODO: Is this compute needed?
+                _emit 1, first_byte + tmp shl 1
+
+                ; second bytte
+                _emit 1, size_bits shl 6 + @op2.ea_mode_bits shl 3 + @op2.ea_reg_bits
+                
+                ; extension words
+                ; bswap is needed because famg outputs in little-endian :'/
+                _emit @op2.ext_bytes, @op2.ext_bytes_bits bswap @op2.ext_bytes
+            end calminstruction
+
+    end iterate ; <size, size_bits>
+end iterate ; <instr, first_byte>
 
 ; Description:
 ;     Move the literal to a data register. The literal data is an

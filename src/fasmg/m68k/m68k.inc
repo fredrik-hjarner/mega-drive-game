@@ -156,6 +156,7 @@ iterate op, @op1,@op2
                     compute ea_mode_bits, 123d ; TODO: Better default value?
                     compute ea_reg_bits,  123d ; TODO: Better default value?
                     compute ext_bytes, 0       ; TODO: Better default value?
+                    compute ext_bytes_bits, 0  ; TODO: Better default value?
 
             ;; (an) ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             ; check_if_indirect_an:
@@ -279,20 +280,29 @@ iterate op, @op1,@op2
                     ;; data ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
                     display opstr bappend 9
+
                     ; log type
                     display type bappend 9
+
                     ; log ea_mode_bits
                     arrange tmp, ea_mode_bits
                     stringify tmp
                     display tmp bappend 9
+
                     ; log ea_reg_bits
                     arrange tmp, ea_reg_bits
                     stringify tmp
                     display tmp bappend 9
+
                     ; log ext_bytes
                     arrange tmp, ext_bytes
                     stringify tmp
-                    display tmp bappend 10 bappend 10
+                    display tmp bappend 9
+
+                    ; log ext_bytes_bits
+                    arrange tmp, ext_bytes_bits
+                    stringify tmp
+                    display tmp bappend 10
 
                     exit
         end calminstruction

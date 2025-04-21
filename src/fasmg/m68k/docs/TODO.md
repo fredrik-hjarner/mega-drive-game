@@ -8,3 +8,5 @@
 * Remove my exporting of instructions macros to preprocess.asm,
   because I will no longer need it, because I have a much better way to test now
   Remove the different forms of _assemble and _emit too.
+* Hm could I override `emit` to output in big-endian?? That should be possible
+  right? That would make the code less messy and I could skip using `bswap`.

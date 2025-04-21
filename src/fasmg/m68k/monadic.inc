@@ -57,7 +57,7 @@ iterate <instr,  first_byte>, \
             l,      10b
     
             calminstruction instr.size? ea*
-                local tmp
+                ; local tmp
 
                 call m68k.parse_operand@op1, ea
 
