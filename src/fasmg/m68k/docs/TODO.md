@@ -5,3 +5,6 @@
 * Make macro that "marks" all labels (label stuff interceptor thingie).
 * I've seen d0.b/d0.w/d0.l used in some code but how does that work?
   I probaly should add support for that if it makes sense.
+* Remove my exporting of instructions macros to preprocess.asm,
+  because I will no longer need it, because I have a much better way to test now
+  Remove the different forms of _assemble and _emit too.

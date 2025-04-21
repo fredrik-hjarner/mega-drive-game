@@ -376,10 +376,10 @@ end calminstruction
 
 ; Define is_label on the label so I can identify what is and isn't a label.
 ; TODO: Can this interceptor be make with CALM?
-struc (label) ? line&
-    define label.is_label
-    . line
-end struc
+; struc (label) ? line&
+;     define label.is_label
+;     . line
+; end struc
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 68000 instruction set implemented in fasmg                                 ;;

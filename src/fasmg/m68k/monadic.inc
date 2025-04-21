@@ -8,16 +8,17 @@
 ;; | neg.[bwl]   | ~           |        |                                   | ;;
 ;; | not.[bwl]   | ~           |        |                                   | ;;
 ;; |             |             |        |                                   | ;;
+;; | bcc.[bw]    | ~           | ~      |                                   | ;;
 ;; | bra.b       | ~           |        |                                   | ;;
 ;; | bra.w       | ~           |        |                                   | ;;
 ;; | bsr.b       | ~           |        |                                   | ;;
 ;; | bsr.w       | ~           |        |                                   | ;;
-;; | ext.l       | yes         | yes    |                                   | ;;
-;; | ext.w       | yes         | yes    |                                   | ;;
+;; | ext.l       | ~           | ~      |                                   | ;;
+;; | ext.w       | ~           | ~      |                                   | ;;
 ;; | jmp         | ~           |        |                                   | ;;
 ;; | jsr         | ~           |        |                                   | ;;
-;; | swap        | yes         | yes    |                                   | ;;
-;; | trap        | yes         | yes    |                                   | ;;
+;; | swap        | ~           | ~      |                                   | ;;
+;; | trap        | ~           | ~      |                                   | ;;
 ;; |             |             |        |                                   | ;;
 ;; |             |             |        |                                   | ;;
 ;; |             |             |        |                                   | ;;
@@ -64,6 +65,87 @@ iterate <instr,  first_byte>, \
 
     end iterate ; <size, size_bits>
 end iterate ; <instr, first_byte>
+
+; Syntax:
+;   bcc.b <label>
+;   bcc.w <label>
+;
+; TODO: What exactly does label and literal mean in this context?
+; TODO: Add the different aliases for the conditions.
+; Aliases:
+;     hs = cc
+;     lo = cs
+iterate <cc,  cc_bits>, \
+        \ ; 
+        hi,     0010b, \
+        \ ; 
+        ls,     0011b, \
+        \ ; 
+        cc,     0100b, \
+        \ ; Alias for cc
+        hs,     0100b, \
+        \ ; 
+        cs,     0101b, \
+        \ ; Alias for cs
+        lo,     0101b, \
+        \ ; 
+        ne,     0110b, \
+        \ ; 
+        eq,     0111b, \
+        \ ; 
+        vc,     1000b, \
+        \ ; 
+        vs,     1001b, \
+        \ ; 
+        pl,     1010b, \
+        \ ; 
+        mi,     1011b, \
+        \ ; 
+        ge,     1100b, \
+        \ ; 
+        lt,     1101b, \
+        \ ; 
+        gt,     1110b, \
+        \ ; 
+        le,     1111b
+
+        ; TODO: Check if fits in a byte. Maybe do that in parse_operand?
+        ; Also, check if displacement is a valid displacement.
+        ; 0 is not allowed for .b I think.
+        ; TODO: How will this be able to work with both label and literals???
+        calminstruction? b#cc.b? label*
+            local pc
+
+            ; call m68k.parse_operand@op1, label
+
+            compute pc, $ + 2
+
+            _emit 1, 01100000b + cc_bits
+
+            ; Assume label is $10 and address is $20
+            ; $10 - $20 = $10
+            _emit 1, label - pc
+        end calminstruction
+        ; define instr.b +instr.b
+
+        ; TODO: Check if fits in a word. Maybe do that in parse_operand?
+        ;' Warn if fits in a byte.
+        ; TODO: How will this be able to work with both label and literals???
+        calminstruction? b#cc.w? label*
+            local pc
+
+            ; call m68k.parse_operand@op1, label
+
+            compute pc, $ + 2
+
+            _emit 1, 01100000b + cc_bits
+            _emit 1, 0 ; second byte being zero
+            ; bswap is needed because famg outputs in little-endian :'/
+            _emit 2, (label - pc) bswap 2
+        end calminstruction
+        ; define instr.w +instr.w
+
+end iterate ; <cc, cc_bits>
 
 ; Syntax:
 ;   bra.w <label> | <literal>

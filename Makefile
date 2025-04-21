@@ -1,4 +1,4 @@
-.PHONY: all preprocess build-preprocessed build hexdump run clean
+.PHONY: all preprocess build-preprocessed build-preprocessed-fasmg build hexdump run clean
 
 all: preprocess build-preprocessed hexdump
 
@@ -7,6 +7,9 @@ preprocess:
 
 build-preprocessed:
 	clownassembler -c -l main.lst -o main.bin -i preprocessed.asm
+
+build-preprocessed-fasmg:
+	fasmg preprocessed.asm main.bin -e10
 
 # build:
 # 	clownassembler -c -l main.lst -o main.bin -i main.asm

@@ -143,6 +143,40 @@ l1:
     clr.l (a0)
     clr.l (a1)
 
+    dc.b 0,0,'bcc.b',0
+ 
+    bhi.b l1
+    bls.b l1
+    bcc.b l1
+    bcs.b l1
+    bne.b l1
+    beq.b l1
+    bvc.b l1
+    bvs.b l1
+    bpl.b l1
+    bmi.b l1
+    bge.b l1
+    blt.b l1
+    bgt.b l1
+    ble.b l1
+
+    dc.b 0,0,'bcc.w',0
+
+    bhi.w l1
+    bls.w l1
+    bcc.w l1
+    bcs.w l1
+    bne.w l1
+    beq.w l1
+    bvc.w l1
+    bvs.w l1
+    bpl.w l1
+    bmi.w l1
+    bge.w l1
+    blt.w l1
+    bgt.w l1
+    ble.w l1
+
 
     ; display 10, "- bra.b ---------------", 10, 10
 

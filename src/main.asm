@@ -1,3 +1,29 @@
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; ;; Some stuff I have to toggle between assemblers...                        ;;
+; ;; Copy this into preprocessed.asm file.                                    ;;
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; ; set fasmg to
+; ;     1 if assembling with fasmg
+; ;     0 if assembling with vasm or clownassembler
+; ; Comment out endif macro if assembling with
+; ; vasm or clownassembler.
+; fasmg equ 1
+; ; fasmg equ 0
+; ; TODO: Maybe I should have this as a compatability macro?
+; macro endif!
+;     end if
+; end macro
+
+;     if fasmg
+; include "src/fasmg/m68k/format_fasmg.inc"
+; include "src/fasmg/m68k/m68k.inc"
+;     endif
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
     include "consts.inc"
     include "macros.inc"
 
