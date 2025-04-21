@@ -143,6 +143,24 @@ l1:
     clr.l (a0)
     clr.l (a1)
 
+    dc.b 0,0,'tst',0
+
+    ; dn
+    tst.b d0
+    tst.b d1
+    tst.w d0
+    tst.w d1
+    tst.l d0
+    tst.l d1
+
+    ; (an)
+    tst.b (a0)
+    tst.b (a1)
+    tst.w (a0)
+    tst.w (a1)
+    tst.l (a0)
+    tst.l (a1)
+
     dc.b 0,0,'bcc.b',0
  
     bhi.b l1

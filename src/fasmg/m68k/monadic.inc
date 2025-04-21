@@ -7,6 +7,7 @@
 ;; | clr.[bwl]   | ~           | ~      |                                   | ;;
 ;; | neg.[bwl]   | ~           |        |                                   | ;;
 ;; | not.[bwl]   | ~           |        |                                   | ;;
+;; | tst.[bwl]   | ~           | ~      |                                   | ;;
 ;; |             |             |        |                                   | ;;
 ;; | bcc.[bw]    | ~           | ~      |                                   | ;;
 ;; | bra.b       | ~           |        |                                   | ;;
@@ -30,13 +31,15 @@
 ;     clr  <ea>
 ;     neg  <ea>
 ;     not  <ea>
+;     tst  <ea>
 ; Addressing modes:
 ;     Dn  An  (An)  (An)+  ‑(An)  (d,An)  (d,An,Xi) 
 ;      ✓       ✓     ✓       ✓      ✓         ✓ 
 ;     ABS.W  ABS.L  (d,PC)  (d,PC,Xn)  imm
 ;       ✓     ✓                 
 ; TODO: Double-check addressing modes for all instructions.
-; TODO: Restrict to valid addressing modes for jmp/jsr.
+;     tst also supports (d,PC)  (d,PC,Xn) modes
+; TODO: Restrict to valid addressing modes for the instructions.
 iterate <instr,  first_byte>, \
         \ ; 
         negx,    01000000b, \
@@ -45,7 +48,9 @@ iterate <instr,  first_byte>, \
         \ ; 
         neg,     01000100b, \
         \ ; 
-        not,     01000110b
+        not,     01000110b, \
+        \ ; 
+        tst,     01001010b
     iterate <size,  size_bits>, \
             b,      00b, \
             w,      01b, \
@@ -61,7 +66,7 @@ iterate <instr,  first_byte>, \
                 ; bswap is needed because famg outputs in little-endian :'/
                 _emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
             end calminstruction
-            define instr.size +instr.size
+            ; define instr.size +instr.size
 
     end iterate ; <size, size_bits>
 end iterate ; <instr, first_byte>
