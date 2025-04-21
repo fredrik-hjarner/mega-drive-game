@@ -66,7 +66,7 @@ gamepad2_data equ $A10005
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 159327 '
+    dc.b 'GM 159332 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -92,7 +92,7 @@ gamepad2_data equ $A10005
     update_color:
     tst.b (gamepad1_a).l
     beq.b .skip
-    addq.w #1, color_index
+    addq.w #1, color_index.l
     cmpi.w #(16<<2), color_index
     blo.b .increment
     move.w #0, color_index

@@ -14,7 +14,7 @@ update_color:
         ; if not a then skip
         tst.b (gamepad1_a).l
         beq.b .skip
-        addq.w #1, color_index
+        addq.w #1, color_index.l
         cmpi.w #(16<<2), color_index
         blo.b .increment
         move.w #0, color_index
