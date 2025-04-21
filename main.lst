@@ -66,7 +66,7 @@
 00000110 2020 2020 2020 2020 2020+     dc.b '                '
 00000120 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
 00000150 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
-00000180 474D 2031 3539 3138 3420       dc.b 'GM 159184 '
+00000180 474D 2031 3539 3233 3620       dc.b 'GM 159236 '
 0000018A                                org $18E
 0000018E 0000                           dc.w $0000
 00000190 4A20 2020 2020 2020 2020+     dc.b 'J               '
@@ -90,7 +90,7 @@
 0000020C 4E                              dc.b 78
 0000020D 75                              dc.b 117
 0000020E                                update_color:
-0000020E 4A39 0000 0000                 tst.b gamepad1_a
+0000020E 4A39 0000 0000                 tst.b (gamepad1_a).l
 00000214 67FE                           beq.b .skip
 00000216 5279 0000 0000                 addq.w #1, color_index
 0000021C 0C79 0040 0000 0000            cmpi.w #(16<<2), color_index
@@ -100,17 +100,17 @@
 0000022E 3239 0000 0000                 move.w color_index, d1
 00000234 E4                              dc.b 228
 00000235 49                              dc.b 73
-00000236 4EB9 0000 0200                 jsr set_bg_color
+00000236 4EB9 0000 0200                 jsr set_bg_color.l
 0000023C                                .skip:
 0000023C 4E                              dc.b 78
 0000023D 75                              dc.b 117
 0000023E                                update_hscroll:
-0000023E 4A39 0000 0000                 tst.b gamepad1_left
+0000023E 4A39 0000 0000                 tst.b gamepad1_left.l
 00000244 67FE                           beq.b .skip_left
 00000246 0679 FFFF 0000 0000            addi.w #-1, hscroll_amount
 0000024E 60FE                           bra.b .increment
 00000250                                .skip_left:
-00000250 4A39 0000 0000                 tst.b gamepad1_right
+00000250 4A39 0000 0000                 tst.b gamepad1_right.l
 00000256 67FE                           beq.b .skip_right
 00000258 0679 0001 0000 0000            addi.w #1, hscroll_amount
 00000260                                .increment:

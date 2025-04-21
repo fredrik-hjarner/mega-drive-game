@@ -242,7 +242,7 @@ iterate op, @op1,@op2
             ;; Check if `an` (direct address register addressing) ;;;;;;;;;;;;;;
             check_if_an:
                     check operand relativeto m68k.address_reg
-                    jno done
+                    jno unknown
                     compute type, 'an'
                     compute ea_mode_bits, 001b
                     compute ea_reg_bits, operand - m68k.address_reg
@@ -261,10 +261,11 @@ iterate op, @op1,@op2
             ;         compute type, 'label'
             ;         jump done
             ;; Temporary stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-            ; unknown:
-            ;         compute type, 'unknown'
-            ;         display 'unknown' bappend 10
-            ;         exit
+            unknown:
+                    err 'Failed to parse operand'
+                    ; compute type, 'unknown'
+                    ; display 'unknown' bappend 10
+                    exit
             ;; Post-processing kind of ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             done:
                     ;; header ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

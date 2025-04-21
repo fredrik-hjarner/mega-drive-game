@@ -12,7 +12,7 @@ set_bg_color:
 ; TODO: Comment
 update_color:
         ; if not a then skip
-        tst.b gamepad1_a
+        tst.b (gamepad1_a).l
         beq.b .skip
         addq.w #1, color_index
         cmpi.w #(16<<2), color_index
@@ -22,18 +22,21 @@ update_color:
         move.w color_index, d1
         ; right shift d1 to get the color index
         lsr.w #2, d1
-        jsr set_bg_color
+        ; TODO: clownassembler interprets `jsr label` as `jsr label.l`
+        jsr set_bg_color.l ; TODO: Could be set_bg_color.w prolly.
     .skip:
         rts
 
 ; TODO: Comment
 update_hscroll:
-        tst.b gamepad1_left
+        ; TODO: clownassembler interprets `jsr label` as `jsr label.l`
+        tst.b gamepad1_left.l
         beq.b .skip_left
         addi.w #-1, hscroll_amount
         bra.b .increment
     .skip_left:
-        tst.b gamepad1_right
+        ; TODO: clownassembler interprets `jsr label` as `jsr label.l`
+        tst.b gamepad1_right.l
         beq.b .skip_right
         addi.w #1, hscroll_amount
     .increment:
