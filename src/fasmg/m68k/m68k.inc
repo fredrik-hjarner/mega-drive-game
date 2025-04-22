@@ -67,6 +67,18 @@ include "registers.inc"
 ;; PARSE_OPERAND                                                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+; TODO: Comment this. It's not completely a hack but it is not obvious what this
+; is really. I was needed to set the `ext_bytes` to the correct value when the
+; operande is an immediate.
+define m68k.instr_size_to_imm_size
+define m68k.instr_size_to_imm_size.b 2
+define m68k.instr_size_to_imm_size.w 2
+define m68k.instr_size_to_imm_size.l 4
+; TODO: This looks better but I think the eventual error message will be worse.
+; m68k.instr_size_to_imm_size.b := 2
+; m68k.instr_size_to_imm_size.w := 2
+; m68k.instr_size_to_imm_size.l := 4
+
 ; Define variable/namespace where parse_operand will store its results,
 ; for example @op1.type
 ; Use parse_operand by suffixing it will either @op1 or @op2 like this:
@@ -139,7 +151,10 @@ iterate op, @op1,@op2
         ; TODO: Probably change name to `parse_effective_address`,
         ; but I am not sure that's a good idea or not because mayube this
         ; could be used for dn, an etc too.
-        calminstruction m68k.parse_operand#op operand
+        ;
+        ; The `instr_size` argument is needed to set `ext_bytes` to the correct
+        ; value for immediate values (when thne official syntax specifies <ea>).
+        calminstruction m68k.parse_operand#op operand*, instr_size
                     ; locals
                     local tmp
                     local opstr
@@ -224,8 +239,31 @@ iterate op, @op1,@op2
                     compute ea_mode_bits, 111b
                     compute ea_reg_bits, 100b
                     compute imm, maybe_number
-                    compute ext_bytes, 2 ; TODO: Need to also support 4 bytes!!
                     compute ext_bytes_bits, imm
+
+                    ; If instr_size is empty (optional argument) then ext_bytes
+                    ; will have it's default value 0, which is think might be
+                    ; good. The way fasmg works is  that `emit 0, n` throws
+                    ; an error when n is not 0, so in order words trying to
+                    ; output "immediate extension words" will only succeed
+                    ; if instr_size is not empty, I think that will work with
+                    ; how 68000 instructions tend to work...
+                    match , instr_size
+                    jyes empty_instr_size
+                    arrange tmp, =m68k.=instr_size_to_imm_size.instr_size
+                    transform tmp
+                    ; stringify tmp
+                    ; display tmp bappend 10 bappend 10 bappend 10
+                    jyes skip_invalid_size_err
+                    err 'Invalid size'
+                skip_invalid_size_err:
+                    compute tmp, tmp
+                    ; So yea, how ext_bytes is set for immediate values is a bit
+                    ; complicated...
+                    compute ext_bytes, tmp
+
+                empty_instr_size:
+
                     jump done
             ;; abs.w ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             check_if_abs_w:

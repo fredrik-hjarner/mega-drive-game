@@ -54,17 +54,23 @@ iterate <size,  size_bits>, \
         calminstruction movea.size? ea*, an*
             display 10 bappend 'movea:' bappend 10
 
-            call m68k.parse_operand@op1, ea
+            local tmp
+            arrange tmp, =size
+
+            call m68k.parse_operand@op1, ea, tmp
             call m68k.parse_operand@op2, an
 
             ; first byte
             _emit 1, size_bits shl 4 + @op2.ea_reg_bits shl 1
 
             ; second byte
-            _emit 1, 00100000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
+            _emit 1, 01000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
                         
             ; extension words
             ; bswap is needed because famg outputs in little-endian :'/
+            ; TODO: So, seems the number of extension words depend upon .w,.l
+            ;       IN THE SPECIFIC CASE OF IMMEDITE OPERANDS this complicated
+            ;       the implementation of parse_operands a bit.
             _emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
         end calminstruction
 
