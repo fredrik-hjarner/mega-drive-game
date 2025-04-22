@@ -281,10 +281,10 @@ skip_tmss:
     ; VRAM Write Command: $40000000
     ; This seems to clear all VRAM...
     ; -----------------------------------------------------------------
-    move.l  #$40000000, vdp_ctrl    ; Start writing at VRAM $0000
+    move.l  #$40000000, vdp_ctrl.l    ; Start writing at VRAM $0000
     move.w  #$3FFF, d7             ; Loop counter (32,768 words = 64KB VRAM)
 .ClearVRAM:
-    move.l  #$00000000, vdp_data        ; Write zero to VRAM (fill with empty tiles)
+    move.l  #$00000000, vdp_data.l        ; Write zero to VRAM (fill with empty tiles)
     dbra.w    d7,.ClearVRAM         ; Decrement and branch until done
 
     ; =================================================================
@@ -304,7 +304,7 @@ skip_tmss:
     ; Color Format: 0BBB0GGG0RRR0 (3 bits per color component)
     ; VDP supports 4 palettes with 16 colors each.
     ; -----------------------------------------------------------------
-    move.l  #$C0000000, vdp_ctrl    ; Start writing at CRAM $0000
+    move.l  #$C0000000, vdp_ctrl.l    ; Start writing at CRAM $0000
     
     ; Set some colors
     set_palette_color 0, 0, 0        ; Color 0
@@ -329,57 +329,57 @@ skip_tmss:
     ; CREATE TILES
     ; =================================================================
 
-    move.l  #$40000000, vdp_ctrl    ; Start writing at VRAM $0000
+    move.l  #$40000000, vdp_ctrl.l    ; Start writing at VRAM $0000
 
     ; Tile $0
-    move.l #$00000000, vdp_data ; row 1
-    move.l #$00000000, vdp_data ; row 2
-    move.l #$00000000, vdp_data ; row 3
-    move.l #$00000000, vdp_data ; row 4
-    move.l #$00000000, vdp_data ; row 5
-    move.l #$00000000, vdp_data ; row 6
-    move.l #$00000000, vdp_data ; row 7
-    move.l #$00000000, vdp_data ; row 8
+    move.l #$00000000, vdp_data.l ; row 1
+    move.l #$00000000, vdp_data.l ; row 2
+    move.l #$00000000, vdp_data.l ; row 3
+    move.l #$00000000, vdp_data.l ; row 4
+    move.l #$00000000, vdp_data.l ; row 5
+    move.l #$00000000, vdp_data.l ; row 6
+    move.l #$00000000, vdp_data.l ; row 7
+    move.l #$00000000, vdp_data.l ; row 8
 
     ; Tile $1
-    move.l #$10000000, vdp_data ; row 1
-    move.l #$11000000, vdp_data ; row 2
-    move.l #$11100000, vdp_data ; row 3
-    move.l #$11110000, vdp_data ; row 4
-    move.l #$11111000, vdp_data ; row 5
-    move.l #$11111100, vdp_data ; row 6
-    move.l #$11111110, vdp_data ; row 7
-    move.l #$11111111, vdp_data ; row 8
+    move.l #$10000000, vdp_data.l ; row 1
+    move.l #$11000000, vdp_data.l ; row 2
+    move.l #$11100000, vdp_data.l ; row 3
+    move.l #$11110000, vdp_data.l ; row 4
+    move.l #$11111000, vdp_data.l ; row 5
+    move.l #$11111100, vdp_data.l ; row 6
+    move.l #$11111110, vdp_data.l ; row 7
+    move.l #$11111111, vdp_data.l ; row 8
 
     ; Tile $2
-    move.l #$00011000, vdp_data ; row 1
-    move.l #$00011000, vdp_data ; row 2
-    move.l #$00011000, vdp_data ; row 3
-    move.l #$11111111, vdp_data ; row 4
-    move.l #$11111111, vdp_data ; row 5
-    move.l #$00011000, vdp_data ; row 6
-    move.l #$00011000, vdp_data ; row 7
-    move.l #$00011000, vdp_data ; row 8
+    move.l #$00011000, vdp_data.l ; row 1
+    move.l #$00011000, vdp_data.l ; row 2
+    move.l #$00011000, vdp_data.l ; row 3
+    move.l #$11111111, vdp_data.l ; row 4
+    move.l #$11111111, vdp_data.l ; row 5
+    move.l #$00011000, vdp_data.l ; row 6
+    move.l #$00011000, vdp_data.l ; row 7
+    move.l #$00011000, vdp_data.l ; row 8
 
     ; Tile $3
-    move.l #$11111111, vdp_data ; row 1
-    move.l #$11111111, vdp_data ; row 2
-    move.l #$11111111, vdp_data ; row 3
-    move.l #$11111111, vdp_data ; row 4
-    move.l #$11111111, vdp_data ; row 5
-    move.l #$11111111, vdp_data ; row 6
-    move.l #$11111111, vdp_data ; row 7
-    move.l #$11111111, vdp_data ; row 8
+    move.l #$11111111, vdp_data.l ; row 1
+    move.l #$11111111, vdp_data.l ; row 2
+    move.l #$11111111, vdp_data.l ; row 3
+    move.l #$11111111, vdp_data.l ; row 4
+    move.l #$11111111, vdp_data.l ; row 5
+    move.l #$11111111, vdp_data.l ; row 6
+    move.l #$11111111, vdp_data.l ; row 7
+    move.l #$11111111, vdp_data.l ; row 8
 
     ; Tile $4
-    move.l #$00111100, vdp_data ; row 1
-    move.l #$01111110, vdp_data ; row 2
-    move.l #$11010111, vdp_data ; row 3
-    move.l #$11111111, vdp_data ; row 4
-    move.l #$10111011, vdp_data ; row 5
-    move.l #$11000111, vdp_data ; row 6
-    move.l #$01111110, vdp_data ; row 7
-    move.l #$00111100, vdp_data ; row 8
+    move.l #$00111100, vdp_data.l ; row 1
+    move.l #$01111110, vdp_data.l ; row 2
+    move.l #$11010111, vdp_data.l ; row 3
+    move.l #$11111111, vdp_data.l ; row 4
+    move.l #$10111011, vdp_data.l ; row 5
+    move.l #$11000111, vdp_data.l ; row 6
+    move.l #$01111110, vdp_data.l ; row 7
+    move.l #$00111100, vdp_data.l ; row 8
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TRYIN' SOME STUFF                                                          ;;

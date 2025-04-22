@@ -1,4 +1,5 @@
 include "xxcalm.inc"
+include "compat.inc"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
@@ -221,20 +222,9 @@ iterate op, @op1,@op2
                     match =# maybe_number, operand, ()
                     jno check_if_abs_w
                 ; hash_prefix:
-
-                ;; start compat code ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                ; fasmg uses shl instead of <<
-                ; TODO: There may be more of these cases that can be fixed!
-                ; TODO: Can I separate this out into a CALM macro extenstion?
-                ; Something like `compat` or `compat_operators`.
-
-                    match a? =<=< b?, maybe_number
-                    jno skip_compat1
-                ; contained_shl:
-                    arrange maybe_number, a =shl b
-                skip_compat1:
-
-                ;; end compat code ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                    ; fasmg uses shl instead of <<
+                    ; TODO: There may be more of these cases that can be fixed!
+                    replace_legacy_operators maybe_number
 
                     check maybe_number eqtype 0
                     jyes skip_immediate_addressing_error

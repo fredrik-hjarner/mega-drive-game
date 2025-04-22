@@ -55,7 +55,7 @@ calminstruction set_vdp_register reg_nr, value
     compute set_reg, 1 shl 15
     compute reg, reg_nr shl 8
     compute res, set_reg or reg or value
-    arrange cmd,=move.=w #res,=vdp_ctrl
+    arrange cmd,=move.=w #res,=vdp_ctrl.=l
     _assemble cmd
 end calminstruction
 
@@ -80,7 +80,7 @@ end calminstruction
 ; TODO: This would be better as an inline fasmg macro.
 macro set_palette_color r, g, b
     ; bbb0 ggg0 rrr0
-    emit move.w  #((b)<<9) | ((g)<<5) | ((r)<<1), vdp_data
+    emit move.w  #((b)<<9) | ((g)<<5) | ((r)<<1), vdp_data.l
 end macro
 define set_palette_color +set_palette_color
 
@@ -88,7 +88,7 @@ define set_palette_color +set_palette_color
 ;     addr: address: $0000-$FFFF
 ; https://segaretro.org/Sega_Mega_Drive/VDP_general_usage
 macro set_write_vram addr
-    emit move.l #$40000000+(((addr)&$3FFF)<<16)+(((addr)&$C000)>>14),vdp_ctrl
+    emit move.l #$40000000+(((addr)&$3FFF)<<16)+(((addr)&$C000)>>14),vdp_ctrl.l
 end macro
 define set_write_vram +set_write_vram
 
@@ -96,7 +96,7 @@ define set_write_vram +set_write_vram
 ;     addr: address: $00-$FF
 ; https://segaretro.org/Sega_Mega_Drive/VDP_general_usage
 macro set_write_vsram addr
-    emit move.l #$40000010+((addr)<<16),vdp_ctrl
+    emit move.l #$40000010+((addr)<<16),vdp_ctrl.l
 end macro
 define set_write_vsram +set_write_vsram
 

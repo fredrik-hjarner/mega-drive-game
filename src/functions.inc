@@ -6,7 +6,7 @@ set_bg_color:
     ; Set VDP register 7 to the color index in d1
     move.w  #(1<<15 | (7<<8)), d2    ; Create the command word for register 7
     or.w    d1, d2                   ; OR in the color index from d1
-    move.w  d2, vdp_ctrl             ; Write to VDP control register
+    move.w  d2, vdp_ctrl.l             ; Write to VDP control register
     rts
 
 ; TODO: Comment
@@ -45,12 +45,12 @@ update_hscroll:
         lsr.w #2, d1
         ; now also h.scroll plane A and plane B
         set_write_vram vram_hscroll_addr
-        move.w d1, vdp_data
-        move.w d1, vdp_data
+        move.w d1, vdp_data.l
+        move.w d1, vdp_data.l
         ; now also v.scroll plane A and plane B
         set_write_vsram $0
-        move.w d1, vdp_data
-        move.w d1, vdp_data
+        move.w d1, vdp_data.l
+        move.w d1, vdp_data.l
     .skip_right:
         rte
 
@@ -66,5 +66,5 @@ update_hscroll:
 ; https://segaretro.org/Sega_Mega_Drive/Planes
 ; TODO: Also use the other arguments.
 set_plane_tile:
-    move.w d0, vdp_data
+    move.w d0, vdp_data.l
     rts

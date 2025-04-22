@@ -596,6 +596,9 @@ l2:
     addi.w #-1, l1.l
     ; dbra d7,.ClearRAM
     ; movea.l #$FF0000, a0
+    move.l #$40000000+(((l1)&$3FFF)<<16)+(((l1)&$C000)>>14),l1.l
+    move.l #'SEGA',$A14000
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MOVE AND IT'S VARIANTS (It's own category here in the end just because...) ;;
