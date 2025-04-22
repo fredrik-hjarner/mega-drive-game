@@ -107,7 +107,9 @@ macro gamepads_get_input
 
     emit move.b #$40, gamepad1_ctrl
 
-    emit lea  gamepad1_data, a0
+    ; TODO: Wouldn't movea work here as well??
+    ; Why or why not??
+    emit lea.l  gamepad1_data.l, a0
     
     ; set bit 6 (TH) to 1 to get first group of buttons
     emit move.b  #$40, (a0)  ; Do 1st step

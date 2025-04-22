@@ -19,3 +19,6 @@
       skip:
       ```
   Same problem with other operators such as `|` as fasmg uses `or` instead.
+* Make sure all instructions are case-insensitive.
+* Add alias macros for instructions that only have one size
+  such as lea for lea.l

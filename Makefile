@@ -10,6 +10,7 @@ build-preprocessed:
 
 build-preprocessed-fasmg:
 	fasmg preprocessed.asm main.bin -e10
+	hexdump -C -v main.bin > main.hex
 
 # build:
 # 	clownassembler -c -l main.lst -o main.bin -i main.asm

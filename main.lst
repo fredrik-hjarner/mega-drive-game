@@ -66,7 +66,7 @@
 00000110 2020 2020 2020 2020 2020+     dc.b '                '
 00000120 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
 00000150 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
-00000180 474D 2031 3539 3939 3920       dc.b 'GM 159999 '
+00000180 474D 2031 3630 3033 3520       dc.b 'GM 160035 '
 0000018A                                org $18E
 0000018E 0000                           dc.w $0000
 00000190 4A20 2020 2020 2020 2020+     dc.b 'J               '
@@ -288,13 +288,13 @@
 00000668 51C9 FFF4                      dbra d1, .loop4
 0000066C 33FC 8707 00C0 0004            move.w #34567,vdp_ctrl
 00000674 33FC 8164 00C0 0004            move.w #33124,vdp_ctrl
-0000067C 46FC 2300                      move #$2300, sr
+0000067C 46FC 2300                      move.w #$2300, sr
 00000680                                MainLoop:
 00000680 60FE                           bra.b MainLoop
 00000682                                vblank:
 00000682 48E7 6000                      movem.l d1-d2,-(sp)
 00000686 13FC 0040 00A1 0009            move.b #$40, gamepad1_ctrl
-0000068E 41F9 00A1 0003                 lea gamepad1_data, a0
+0000068E 41F9 00A1 0003                 lea.l gamepad1_data.l, a0
 00000694 10BC 0040                      move.b #$40, (a0)
 00000698 4E71                           nop
 0000069A 4E71                           nop

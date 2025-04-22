@@ -3,6 +3,8 @@
 ;;                                                                            ;;
 ;; | # | instruction | implemented | tested | notes                         | ;;
 ;; |---|-------------|-------------|--------|-------------------------------| ;;
+;; |   | lea         | ~           |        |                               | ;;
+;; |   |             |             |        |                               | ;;
 ;; |   | ori.[bwl]   | ~           | ~      |                               | ;;
 ;; |   | andi.[bwl]  | ~           | ~      |                               | ;;
 ;; |   | subi.[bwl]  | ~           | ~      |                               | ;;
@@ -15,14 +17,10 @@
 ;; |   |             |             |        |                               | ;;
 ;; |   | moveq       | ~           | ~      |                               | ;;
 ;; |   |             |             |        |                               | ;;
-;; |   |             |             |        |                               | ;;
-;; |   |             |             |        |                               | ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Some placeholders ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-macro move line&
-end macro
 macro move.b line&
 end macro
 macro move.w line&
@@ -50,8 +48,24 @@ end macro
 macro movem.l line&
 end macro
 
-macro lea line&
-end macro
+; macro lea line&
+; end macro
+
+; TODO: Comment
+calminstruction lea.l? ea*, an*
+    call m68k.parse_operand@op1, ea
+    call m68k.parse_operand@op2, an
+
+    ; first byte
+    _emit 1, 01000001b + @op2.ea_reg_bits
+
+    ; second byte
+    emit 1, 11000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
+                
+    ; extension words
+    ; bswap is needed because famg outputs in little-endian :'/
+    _emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+end calminstruction
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -86,7 +100,7 @@ iterate <instr,  first_byte>, \
             w,      01b,        2, \
             l,      10b,        4
 
-            calminstruction instr.size imm*, ea*
+            calminstruction instr.size? imm*, ea*
                 local tmp
 
                 call m68k.parse_operand@op1, imm

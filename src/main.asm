@@ -447,7 +447,7 @@ skip_tmss:
     ;                                    1 - enable display
 
 
-    move    #$2300, sr		; Enable interrupts.
+    move.w    #$2300, sr		; Enable interrupts.
 
     ; =================================================================
     ; STEP 5: MAIN LOOP (Do nothing forever)

@@ -66,7 +66,7 @@ gamepad2_data equ $A10005
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 159999 '
+    dc.b 'GM 160035 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -288,13 +288,13 @@ timer_1Hz_counter equ 16711684
     dbra d1, .loop4
     move.w #34567,vdp_ctrl
     move.w #33124,vdp_ctrl
-    move #$2300, sr
+    move.w #$2300, sr
     MainLoop:
     bra.b MainLoop
     vblank:
     movem.l d1-d2,-(sp)
     move.b #$40, gamepad1_ctrl
-    lea gamepad1_data, a0
+    lea.l gamepad1_data.l, a0
     move.b #$40, (a0)
     nop
     nop
