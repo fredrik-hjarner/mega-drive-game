@@ -597,7 +597,12 @@ l2:
     ; dbra d7,.ClearRAM
     ; movea.l #$FF0000, a0
     move.l #$40000000+(((l1)&$3FFF)<<16)+(((l1)&$C000)>>14),l1.l
-    move.l #'SEGA',$A14000
+    move.l #'SEGA',$A14000.l
+    move.l #'EGA',$A14000.l
+    ; move.l #'SSEGA',$A1400.l ; clown does not allow
+    ; move.w #'SGA',$A14000; clown does not allow
+    ; move.w #'GA',$A14000.l ; TODO: Hehe, I've not implemented move.w yet...
+    ; So for strings they are allowed as long as they can fit in the size.
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

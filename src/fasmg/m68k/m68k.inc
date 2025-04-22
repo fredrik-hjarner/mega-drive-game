@@ -228,6 +228,18 @@ iterate op, @op1,@op2
 
                     check maybe_number eqtype 0
                     jyes skip_immediate_addressing_error
+                    ; test as string instead as fallback
+                    check maybe_number eqtype ''
+                    jno is_not_string
+                ; is_string:
+                    local str_len
+                    ; reverse the string otherwise it will be emitted in
+                    ; reverse order.
+                    compute str_len, lengthof maybe_number
+                    compute maybe_number, maybe_number bswap str_len
+                    compute maybe_number, +maybe_number
+                    jump skip_immediate_addressing_error
+                is_not_string:
                     err 'immediate_addressing_error' ; TODO: better err message.
                 skip_immediate_addressing_error:
                     compute type, 'imm'

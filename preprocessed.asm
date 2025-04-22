@@ -66,7 +66,7 @@ gamepad2_data equ $A10005
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 161215 '
+    dc.b 'GM 161280 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -177,7 +177,7 @@ timer_1Hz_counter equ 16711684
     move.b $A10001,d0
     andi.b #$F,d0
     beq.b skip_tmss
-    move.l #'SEGA',$A14000
+    move.l #'SEGA',$A14000.l
     skip_tmss:
     move.w #32772,vdp_ctrl.l
     move.w #33028,vdp_ctrl.l

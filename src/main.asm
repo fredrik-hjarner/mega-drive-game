@@ -58,7 +58,7 @@ Start:
     move.b  $A10001,d0		; Get hardware version.
 	andi.b  #$F,d0			    ; Compare.
 	beq.b   skip_tmss		    ; If the console has no TMSS, skip the security stuff.
-	move.l  #'SEGA',$A14000 	; Make the TMSS happy.
+	move.l  #'SEGA',$A14000.l 	; Make the TMSS happy.
 
     ; Initialize gamepads
     ; init_gampads ; TODO: This does not seem to work.
