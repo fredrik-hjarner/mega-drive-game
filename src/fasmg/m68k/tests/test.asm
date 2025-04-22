@@ -201,7 +201,9 @@ l1:
     ; bra.b #$12 ; TODO: This generates error on vasm and clownassembler.
     ; bra.b $12  ; TODO: So uhm is this allowed??
     ; TODO: hm... should it be l1 or l1.[bwl] ?? Think about it and decide!
-    bra.b l1
+l2:
+    bra.b l2; TODO: Error: The destination is too far away: it must be less than $81 bytes before the start of the instruction, but instead it was $C0 bytes away.
+    ; bra.b l1; TODO: Error: The destination is too far away: it must be less than $81 bytes before the start of the instruction, but instead it was $C0 bytes away.
     ; bra.b (l1).b ; clown and vasm does not allow!
     ; bra.b (l1).w ; clown and vasm does not allow!
     ; bra.b (l1).l ; clown does not allow but vasm does!
@@ -550,7 +552,7 @@ l1:
 
 ;; BUGS / REGRESSIONS TESTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    cmpi.w #(16 shl 2), d0
+    ; cmpi.w #(16 shl 2), d0 ; This only works for fasmg
     cmpi.w #(16 << 2), d0
     cmpi.w #(16 << 2), l1.l
     addi.w #-1, d0
