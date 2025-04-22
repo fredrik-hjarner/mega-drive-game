@@ -21,6 +21,15 @@ a6? := m68k.address_reg + 110b
 a7? := m68k.address_reg + 111b
 sp? := m68k.address_reg + 111b
 
+; TODO: Comment
+element pc
+; TODO: Comment
+element sr
+; TODO: Comment
+element ccr
+; TODO: Comment
+element usp
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Trying to make it work with preprocess.inc                                  ;;
 ; TODO: Remove the stuff beneath when it's no longer needed.                  ;;

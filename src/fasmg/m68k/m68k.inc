@@ -5,6 +5,7 @@ include "xxcalm.inc"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; even exists in m68k assemblers it seems so I need it kinda.
+; Move to some kind of "compat.inc" file or something.
 macro even
     align 2
 end macro
@@ -101,6 +102,10 @@ iterate op, @op1,@op2
         ;     'abs.w'           (absolute word addressing)
         ;     'abs.l'           (absolute long addressing)
         ;     'imm'             (immediate addressing)
+        ;     'pc'
+        ;     'sr'
+        ;     'ccr'
+        ;     'usp'
         ;     'label'           (label. this might be stange, dunno)
         define type
 
@@ -302,7 +307,7 @@ iterate op, @op1,@op2
             ;; Check if `an` (direct address register addressing) ;;;;;;;;;;;;;;
             check_if_an:
                     check operand relativeto m68k.address_reg
-                    jno unknown
+                    jno sr
                     compute type, 'an'
                     compute ea_mode_bits, 001b
                     compute ea_reg_bits, operand - m68k.address_reg
@@ -321,6 +326,27 @@ iterate op, @op1,@op2
             ;         jno done
             ;         compute type, 'label'
             ;         jump done
+            ;; sr ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            sr:
+                    ; TODO: Is it dumb to use relativeto here? equal better?
+                    check operand relativeto sr
+                    jno ccr
+                    compute type, 'sr'
+                    jump done
+            ;; ccr ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            ccr:
+                    ; TODO: Is it dumb to use relativeto here? equal better?
+                    check operand relativeto ccr
+                    jno usp
+                    compute type, 'ccr'
+                    jump done
+            ;; usp ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            usp:
+                    ; TODO: Is it dumb to use relativeto here? equal better?
+                    check operand relativeto usp
+                    jno unknown
+                    compute type, 'usp'
+                    jump done
             ;; Temporary stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             unknown:
                     err 'Failed to parse operand'

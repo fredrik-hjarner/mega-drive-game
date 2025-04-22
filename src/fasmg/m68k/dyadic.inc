@@ -3,6 +3,8 @@
 ;;                                                                            ;;
 ;; | # | instruction | implemented | tested | notes                         | ;;
 ;; |---|-------------|-------------|--------|-------------------------------| ;;
+;; |   | move        |             |        | split move into it's variants | ;;
+;; |   |             |             |        |                               | ;;
 ;; |   | dbcc.w      | ~           | ~      |                               | ;;
 ;; |   | movea       | ~           | ~      |                               | ;;
 ;; |   | lea         | ~           | ~      |                               | ;;
@@ -27,8 +29,6 @@ macro move.b line&
 end macro
 macro move.w line&
 end macro
-macro move.l line&
-end macro
 
 macro or.b line&
 end macro
@@ -39,6 +39,99 @@ end macro
 
 macro movem.l line&
 end macro
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; END MOVE INSTRUCTIONS                                                      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; TODO: move.[bwl] prolly should use `macro calminstruction?.` extensions that
+; can be in the .[bwl] variants reused
+; Syntax:
+;     move.w     sr,   <ea>
+;     move.w     <ea>, ccr
+;     move.w     <ea>, sr
+;     move.l     usp,  an
+;     move.l     an,   usp
+;     move.[bwl] <ea1>, <ea2>
+calminstruction move.l? op1*, op2*
+        display 10 bappend 'move.l:' bappend 10
+
+        local size
+
+        ; TODO: I am not sure why I have to do this to get the `call` to work...
+        arrange size, =l
+
+        call m68k.parse_operand@op1, op1, size
+        call m68k.parse_operand@op2, op2, size
+
+        ; TODO: This checks could be more complete.
+        check @op1.type = 'sr'
+        jyes sr_to_ea
+        check @op2.type = 'ccr'
+        jyes ea_to_ccr
+        check @op2.type = 'sr'
+        jyes ea_to_sr
+        check @op1.type = 'usp'
+        jyes usp_to_an
+        check @op2.type = 'usp'
+        jyes an_to_usp
+        jump ea_to_ea
+
+    sr_to_ea:
+        display 'sr_to_ea' bappend 10
+        jump done
+    ea_to_ccr:
+        display 'ea_to_ccr' bappend 10
+        jump done
+    ea_to_sr:
+        display 'ea_to_sr' bappend 10
+        jump done
+    usp_to_an:
+        display 'usp_to_an' bappend 10
+        jump done
+    an_to_usp:
+        display 'an_to_usp' bappend 10
+        jump done
+    ea_to_ea:
+        call move_ea_to_ea, size
+        jump done
+    done:
+end calminstruction
+
+; TODO: Comment
+; For move_ea_to_ea specifically!
+define m68k.move_size_bits
+define m68k.move_size_bits.b 01b
+define m68k.move_size_bits.w 11b
+define m68k.move_size_bits.l 10b
+
+; Supposed to be call:ed.
+; Assume that ea1 and ea2 has already been parsed with `parse_operand` and are
+; available on @op1 and @op2.
+calminstruction move_ea_to_ea size*
+        ; display 'ea_to_ea' bappend 10
+
+        local size_bits
+
+        arrange size_bits, size
+        transform size_bits, m68k.move_size_bits
+        jyes skip_size_error
+        err "size error" ; TODO: Better error message
+    skip_size_error:
+        ; emit 1st and 2nd byte in one go
+        ; bswap is needed because famg outputs in little-endian :'/
+        emit 2, (size_bits shl 12 + @op2.ea_reg_bits shl 9 + @op2.ea_mode_bits shl 6 + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits) bswap 2
+
+        ; op1 extension words
+        _emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+
+        ; op2 extension words
+        _emit @op2.ext_bytes, @op2.ext_bytes_bits bswap @op2.ext_bytes
+end calminstruction
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; END MOVE INSTRUCTIONS                                                      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Syntax:
 ;   dbcc.w Dn,<label>

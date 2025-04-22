@@ -298,7 +298,7 @@ l2:
 
 ;; DBCC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    dc.b 0,0,'dbra',0
+    dc.b 0,'dbra',0
 
     dbra.w d0, l1
     dbra.w d1, l1
@@ -596,3 +596,31 @@ l2:
     addi.w #-1, l1.l
     ; dbra d7,.ClearRAM
     ; movea.l #$FF0000, a0
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MOVE AND IT'S VARIANTS (It's own category here in the end just because...) ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+    ; move.w sr, d0
+    ; move.w d0, ccr
+    ; move.w d0, sr
+    ; move.l usp, a0
+    ; move.l a0, usp
+    dc.b 0,0,'move.l d0, d0',0
+    move.l d0, d0
+
+    dc.b 0,0,'move.l d0, d1',0
+    move.l d0, d1
+
+    dc.b 0,0,'move.l d0, d2',0
+    move.l d0, d2
+
+    dc.b 0,0,'move.l a0, d2',0
+    move.l a0, d2
+
+    dc.b 0,0,'move.l l1.l, d2',0
+    move.l l1.l, d2
+
+    dc.b 0,0,'move.l l1.l, l2.l',0
+    move.l l1.l, l2.l
