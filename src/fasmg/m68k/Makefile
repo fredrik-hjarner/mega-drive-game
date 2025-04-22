@@ -16,7 +16,8 @@ build:
 	fasmg tests/test.asm tests/test.bin -e20
 
 hexdump:
-	hexdump -v -e '/1 "%02x\n"' tests/test.bin > tests/test.hex
+	xxd -b -c1 tests/test.bin | cut -d' ' -f2,4 > tests/test.hex
+#  hexdump -v -e '/1 "%02x\n"' tests/test.bin > tests/test.hex
 
 clean:
 	rm -f tests/test.bin tests/test.hex
