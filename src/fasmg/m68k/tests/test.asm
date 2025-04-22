@@ -601,7 +601,8 @@ l2:
     move.l #'EGA',$A14000.l
     ; move.l #'SSEGA',$A1400.l ; clown does not allow
     ; move.w #'SGA',$A14000; clown does not allow
-    ; move.w #'GA',$A14000.l ; TODO: Hehe, I've not implemented move.w yet...
+    move.w #'GA',$A14000.l
+    move.b #'X',$A14000.l
     ; So for strings they are allowed as long as they can fit in the size.
 
 

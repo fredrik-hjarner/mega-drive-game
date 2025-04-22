@@ -25,11 +25,6 @@
 
 ;; Some placeholders ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-macro move.b line&
-end macro
-macro move.w line&
-end macro
-
 macro or.b line&
 end macro
 macro or.w line&
@@ -41,28 +36,19 @@ macro movem.l line&
 end macro
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; END MOVE INSTRUCTIONS                                                      ;;
+;; START MOVE INSTRUCTIONS                                                    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-; TODO: move.[bwl] prolly should use `macro calminstruction?.` extensions that
-; can be in the .[bwl] variants reused
-; Syntax:
-;     move.w     sr,   <ea>
-;     move.w     <ea>, ccr
-;     move.w     <ea>, sr
-;     move.l     usp,  an
-;     move.l     an,   usp
-;     move.[bwl] <ea1>, <ea2>
-calminstruction move.l? op1*, op2*
+macro calminstruction?.move_macro? op1*, op2*, size*
         display 10 bappend 'move.l:' bappend 10
 
-        local size
+        local _size
 
         ; TODO: I am not sure why I have to do this to get the `call` to work...
-        arrange size, =l
+        arrange _size, =size
 
-        call m68k.parse_operand@op1, op1, size
-        call m68k.parse_operand@op2, op2, size
+        call m68k.parse_operand@op1, op1, _size
+        call m68k.parse_operand@op2, op2, _size
 
         ; TODO: This checks could be more complete.
         check @op1.type = 'sr'
@@ -93,9 +79,28 @@ calminstruction move.l? op1*, op2*
         display 'an_to_usp' bappend 10
         jump done
     ea_to_ea:
-        call move_ea_to_ea, size
+        call move_ea_to_ea, _size
         jump done
     done:
+end macro
+
+; TODO: move.[bwl] prolly should use `macro calminstruction?.` extensions that
+; can be in the .[bwl] variants reused
+; Syntax:
+;     move.w     sr,   <ea>
+;     move.w     <ea>, ccr
+;     move.w     <ea>, sr
+;     move.l     usp,  an
+;     move.l     an,   usp
+;     move.[bwl] <ea1>, <ea2>
+calminstruction move.b? op1*, op2*
+        move_macro op1, op2, b
+end calminstruction
+calminstruction move.w? op1*, op2*
+        move_macro op1, op2, w
+end calminstruction
+calminstruction move.l? op1*, op2*
+        move_macro op1, op2, l
 end calminstruction
 
 ; TODO: Comment
