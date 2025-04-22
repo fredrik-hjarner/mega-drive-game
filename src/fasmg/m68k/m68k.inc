@@ -168,7 +168,8 @@ iterate op, @op1,@op2
                     compute type, '(an)'
                     compute ea_mode_bits, 010b
                     compute ea_reg_bits, an - m68k.address_reg
-                    compute ext_bytes, 0
+                    ; compute ext_bytes, 0
+                    ; compute ext_bytes_bits, 0
                     jump done
             ; -(an) ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             check_if_minus_an:
@@ -179,7 +180,8 @@ iterate op, @op1,@op2
                     compute type, '-(an)'
                     compute ea_mode_bits, 100b
                     compute ea_reg_bits, an - m68k.address_reg
-                    compute ext_bytes, 0
+                    ; compute ext_bytes, 0
+                    ; compute ext_bytes_bits, 0
                     jump done
             ; (an)+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             check_if_plus_an:
@@ -190,13 +192,13 @@ iterate op, @op1,@op2
                     compute type, '(an)+'
                     compute ea_mode_bits, 011b
                     compute ea_reg_bits, an - m68k.address_reg
-                    compute ext_bytes, 0
-                    compute ext_bytes_bits, 0
+                    ; compute ext_bytes, 0
+                    ; compute ext_bytes_bits, 0
                     jump done
             ;; imm ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             ; TODO: Immediate can have either 1 or 2 extension words!
             check_if_immediate:
-                    match =# maybe_number, operand
+                    match =# maybe_number, operand, ()
                     jno check_if_abs_w
                 ; hash_prefix:
 
@@ -222,6 +224,8 @@ iterate op, @op1,@op2
                     compute ea_mode_bits, 111b
                     compute ea_reg_bits, 100b
                     compute imm, maybe_number
+                    compute ext_bytes, 2 ; TODO: Need to also support 4 bytes!!
+                    compute ext_bytes_bits, imm
                     jump done
             ;; abs.w ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             check_if_abs_w:
@@ -254,7 +258,8 @@ iterate op, @op1,@op2
                     compute type, 'dn'
                     compute ea_mode_bits, 000b
                     compute ea_reg_bits, operand - m68k.data_reg
-                    compute ext_bytes, 0
+                    ; compute ext_bytes, 0
+                    ; compute ext_bytes_bits, 0
                     jump done
             ;; Check if `an` (direct address register addressing) ;;;;;;;;;;;;;;
             check_if_an:
@@ -263,7 +268,8 @@ iterate op, @op1,@op2
                     compute type, 'an'
                     compute ea_mode_bits, 001b
                     compute ea_reg_bits, operand - m68k.address_reg
-                    compute ext_bytes, 0
+                    ; compute ext_bytes, 0
+                    ; compute ext_bytes_bits, 0
                     jump done
             ;; label ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             ; TODO: Can labels be both .w and and .l?
@@ -316,9 +322,19 @@ iterate op, @op1,@op2
                     display tmp bappend 9
 
                     ; log ext_bytes_bits
+                    ; arrange can't handle negative numbers!
+                    ; TODO: I should make a helper to support negative numbers.
+                    ; TODO: I could really clean this up.
+                    check ext_bytes_bits < 0
+                    jyes skip_log_ext_bytes_bits
+                ; log_ext_bytes_bits:
                     arrange tmp, ext_bytes_bits
                     stringify tmp
                     display tmp bappend 9
+                    jump done_ext_bytes_bits
+                skip_log_ext_bytes_bits:
+                    display 'neg' bappend 9
+                done_ext_bytes_bits:
 
                     ; log imm
                     ; arrange can't handle negative numbers!

@@ -3,6 +3,7 @@
 ;;                                                                            ;;
 ;; | # | instruction | implemented | tested | notes                         | ;;
 ;; |---|-------------|-------------|--------|-------------------------------| ;;
+;; |   | movea       | ~           |        |                               | ;;
 ;; |   | lea         | ~           |        |                               | ;;
 ;; |   |             |             |        |                               | ;;
 ;; |   | ori.[bwl]   | ~           | ~      |                               | ;;
@@ -40,19 +41,39 @@ end macro
 macro dbra.w line&
 end macro
 
-macro movea.w line&
-end macro
-macro movea.l line&
-end macro
-
 macro movem.l line&
 end macro
 
-; macro lea line&
-; end macro
+; TODO: Comment
+; Syntax:
+;     movea.[wl] <ea>,an
+iterate <size,  size_bits>, \
+        w,      11b, \
+        l,      10b
+
+        calminstruction movea.size? ea*, an*
+            display 10 bappend 'movea:' bappend 10
+
+            call m68k.parse_operand@op1, ea
+            call m68k.parse_operand@op2, an
+
+            ; first byte
+            _emit 1, size_bits shl 4 + @op2.ea_reg_bits shl 1
+
+            ; second byte
+            _emit 1, 00100000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
+                        
+            ; extension words
+            ; bswap is needed because famg outputs in little-endian :'/
+            _emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+        end calminstruction
+
+end iterate ; <size, size_bits>
 
 ; TODO: Comment
 calminstruction lea.l? ea*, an*
+    display 10 bappend 'lea:' bappend 10
+
     call m68k.parse_operand@op1, ea
     call m68k.parse_operand@op2, an
 

@@ -22,3 +22,6 @@
 * Make sure all instructions are case-insensitive.
 * Add alias macros for instructions that only have one size
   such as lea for lea.l
+* Hm, could I do wrappers for all instructions that log the name and the
+  parameters, then executes the instruction, then logs @op1/@op2 values??
+  because that's be neat so I can easily disable/enable logging.
