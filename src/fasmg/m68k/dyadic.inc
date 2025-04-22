@@ -21,6 +21,8 @@
 
 ;; Some placeholders ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+macro move line&
+end macro
 macro move.b line&
 end macro
 macro move.w line&
@@ -33,6 +35,22 @@ end macro
 macro or.w line&
 end macro
 macro or.l line&
+end macro
+
+macro dbra line&
+end macro
+macro dbra.w line&
+end macro
+
+macro movea.w line&
+end macro
+macro movea.l line&
+end macro
+
+macro movem.l line&
+end macro
+
+macro lea line&
 end macro
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

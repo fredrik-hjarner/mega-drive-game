@@ -66,7 +66,7 @@
 00000110 2020 2020 2020 2020 2020+     dc.b '                '
 00000120 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
 00000150 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
-00000180 474D 2031 3539 3930 3520       dc.b 'GM 159905 '
+00000180 474D 2031 3539 3934 3720       dc.b 'GM 159947 '
 0000018A                                org $18E
 0000018E 0000                           dc.w $0000
 00000190 4A20 2020 2020 2020 2020+     dc.b 'J               '
@@ -139,25 +139,25 @@
 0000029E                                hblank:
 0000029E 3F00                           move.w d0, -(sp)
 000002A0 0679 0001 00FF 0000            addi.w #1, timer_100Hz_counter.l
-000002A8 3039 00FF 0000                 move.w timer_100Hz_counter, d0
+000002A8 3039 00FF 0000                 move.w timer_100Hz_counter.l, d0
 000002AE 0C40 009C                      cmpi.w #hblanks_per_100Hz_tick, d0
-000002B2 6D00 FFFE                      blt .skip100HzCallback
+000002B2 6D00 FFFE                      blt.w .skip100HzCallback
 000002B6 33FC 0000 00FF 0000            move.w #0, timer_100Hz_counter
-000002BE 4EB9 0000 0000                 jsr timer_100Hz_callback
+000002BE 4EB9 0000 0000                 jsr timer_100Hz_callback.l
 000002C4                                .skip100HzCallback:
-000002C4 0679 0001 00FF 0002            addi.w #1, timer_50Hz_counter
+000002C4 0679 0001 00FF 0002            addi.w #1, timer_50Hz_counter.l
 000002CC 3039 00FF 0002                 move.w timer_50Hz_counter, d0
 000002D2 0C40 0138                      cmpi.w #hblanks_per_50Hz_tick, d0
-000002D6 6D00 FFFE                      blt .skip50HzCallback
-000002DA 33FC 0000 00FF 0002            move.w #0, timer_50Hz_counter
-000002E2 4EB9 0000 0000                 jsr timer_50Hz_callback
+000002D6 6D00 FFFE                      blt.w .skip50HzCallback
+000002DA 33FC 0000 00FF 0002            move.w #0, timer_50Hz_counter.l
+000002E2 4EB9 0000 0000                 jsr timer_50Hz_callback.l
 000002E8                                .skip50HzCallback:
-000002E8 0679 0001 00FF 0004            addi.w #1, timer_1Hz_counter
-000002F0 3039 00FF 0004                 move.w timer_1Hz_counter, d0
+000002E8 0679 0001 00FF 0004            addi.w #1, timer_1Hz_counter.l
+000002F0 3039 00FF 0004                 move.w timer_1Hz_counter.l, d0
 000002F6 0C40 3CF0                      cmpi.w #hblanks_per_1Hz_tick, d0
-000002FA 6D00 FFFE                      blt .skip1HzCallback
-000002FE 33FC 0000 00FF 0004            move.w #0, timer_1Hz_counter
-00000306 4EB9 0000 0000                 jsr timer_1Hz_callback
+000002FA 6D00 FFFE                      blt.w .skip1HzCallback
+000002FE 33FC 0000 00FF 0004            move.w #0, timer_1Hz_counter.l
+00000306 4EB9 0000 0000                 jsr timer_1Hz_callback.l
 0000030C                                .skip1HzCallback:
 0000030C 301F                           move.w (sp)+, d0
 0000030E 4E                              dc.b 78
@@ -269,22 +269,22 @@
 00000624 323C 00FF                      move.w #$FF, d1
 00000628                                .loop:
 00000628 303C 0001                      move.w #$1, d0
-0000062C 4EB9 0000 0296                 jsr set_plane_tile
+0000062C 4EB9 0000 0296                 jsr set_plane_tile.l
 00000632 51C9 FFF4                      dbra d1, .loop
 00000636 323C 00FF                      move.w #$FF, d1
 0000063A                                .loop2:
 0000063A 303C 0002                      move.w #$2, d0
-0000063E 4EB9 0000 0296                 jsr set_plane_tile
+0000063E 4EB9 0000 0296                 jsr set_plane_tile.l
 00000644 51C9 FFF4                      dbra d1, .loop2
 00000648 323C 00FF                      move.w #$FF, d1
 0000064C                                .loop3:
 0000064C 303C 0003                      move.w #$3, d0
-00000650 4EB9 0000 0296                 jsr set_plane_tile
+00000650 4EB9 0000 0296                 jsr set_plane_tile.l
 00000656 51C9 FFF4                      dbra d1, .loop3
 0000065A 323C 00FF                      move.w #$FF, d1
 0000065E                                .loop4:
 0000065E 303C 0004                      move.w #$4, d0
-00000662 4EB9 0000 0296                 jsr set_plane_tile
+00000662 4EB9 0000 0296                 jsr set_plane_tile.l
 00000668 51C9 FFF4                      dbra d1, .loop4
 0000066C 33FC 8707 00C0 0004            move.w #34567,vdp_ctrl
 00000674 33FC 8164 00C0 0004            move.w #33124,vdp_ctrl
@@ -336,8 +336,8 @@
 0000070E 1200                           move.b d0, d1
 00000710 0201 0001                      andi.b #1, d1
 00000714 13C1 0000 0000                 move.b d1, gamepad1_start
-0000071A 4EB9 0000 020E                 jsr update_color
-00000720 4EB9 0000 023E                 jsr update_hscroll
+0000071A 4EB9 0000 020E                 jsr update_color.l
+00000720 4EB9 0000 023E                 jsr update_hscroll.l
 00000726 4CDF 0006                      movem.l (sp)+,d1-d2
 0000072A 4E                              dc.b 78
 0000072B 73                              dc.b 115

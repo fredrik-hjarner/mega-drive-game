@@ -391,22 +391,22 @@ skip_tmss:
     move.w  #$FF, d1
     .loop:
         move.w  #$1, d0      ; Set parameter
-        jsr     set_plane_tile ; Call subroutine
+        jsr     set_plane_tile.l ; Call subroutine
         dbra    d1, .loop     ; Decrement d1 and loop until -1
     move.w  #$FF, d1
     .loop2:
         move.w  #$2, d0      ; Set parameter
-        jsr     set_plane_tile ; Call subroutine
+        jsr     set_plane_tile.l ; Call subroutine
         dbra    d1, .loop2     ; Decrement d1 and loop until -1
     move.w  #$FF, d1
     .loop3:
         move.w  #$3, d0      ; Set parameter
-        jsr     set_plane_tile ; Call subroutine
+        jsr     set_plane_tile.l ; Call subroutine
         dbra    d1, .loop3     ; Decrement d1 and loop until -1
     move.w  #$FF, d1
     .loop4:
         move.w  #$4, d0      ; Set parameter
-        jsr     set_plane_tile ; Call subroutine
+        jsr     set_plane_tile.l ; Call subroutine
         dbra    d1, .loop4     ; Decrement d1 and loop until -1
 
     ; =================================================================
@@ -462,9 +462,9 @@ vblank:
         ; place inputs into variables gamepad1_up, gamepad1_down, etc.
         gamepads_get_input
 
-        jsr update_color
+        jsr update_color.l
 
-        jsr update_hscroll
+        jsr update_hscroll.l
 
         ; Restore registers
         movem.l (sp)+,d1-d2

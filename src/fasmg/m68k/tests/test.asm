@@ -200,6 +200,7 @@ l1:
 
     ; bra.b #$12 ; TODO: This generates error on vasm and clownassembler.
     ; bra.b $12  ; TODO: So uhm is this allowed??
+    ; TODO: hm... should it be l1 or l1.[bwl] ?? Think about it and decide!
     bra.b l1
     ; bra.b (l1).b ; clown and vasm does not allow!
     ; bra.b (l1).w ; clown and vasm does not allow!
@@ -546,3 +547,10 @@ l1:
     asr.l #5, d0
     asr.l #6, d0
     asr.l #7, d0
+
+;; BUGS / REGRESSIONS TESTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    ; cmpi.w #(16<<2), color_index.l
+    ; addi.w #-1, hscroll_amount.l
+    ; dbra d7,.ClearRAM
+    ; movea.l #$FF0000, a0

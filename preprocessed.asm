@@ -66,7 +66,7 @@ gamepad2_data equ $A10005
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 159905 '
+    dc.b 'GM 159947 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -139,25 +139,25 @@ timer_1Hz_counter equ 16711684
     hblank:
     move.w d0, -(sp)
     addi.w #1, timer_100Hz_counter.l
-    move.w timer_100Hz_counter, d0
+    move.w timer_100Hz_counter.l, d0
     cmpi.w #hblanks_per_100Hz_tick, d0
-    blt .skip100HzCallback
+    blt.w .skip100HzCallback
     move.w #0, timer_100Hz_counter
-    jsr timer_100Hz_callback
+    jsr timer_100Hz_callback.l
     .skip100HzCallback:
-    addi.w #1, timer_50Hz_counter
+    addi.w #1, timer_50Hz_counter.l
     move.w timer_50Hz_counter, d0
     cmpi.w #hblanks_per_50Hz_tick, d0
-    blt .skip50HzCallback
-    move.w #0, timer_50Hz_counter
-    jsr timer_50Hz_callback
+    blt.w .skip50HzCallback
+    move.w #0, timer_50Hz_counter.l
+    jsr timer_50Hz_callback.l
     .skip50HzCallback:
-    addi.w #1, timer_1Hz_counter
-    move.w timer_1Hz_counter, d0
+    addi.w #1, timer_1Hz_counter.l
+    move.w timer_1Hz_counter.l, d0
     cmpi.w #hblanks_per_1Hz_tick, d0
-    blt .skip1HzCallback
-    move.w #0, timer_1Hz_counter
-    jsr timer_1Hz_callback
+    blt.w .skip1HzCallback
+    move.w #0, timer_1Hz_counter.l
+    jsr timer_1Hz_callback.l
     .skip1HzCallback:
     move.w (sp)+, d0
     dc.b 78
@@ -269,22 +269,22 @@ timer_1Hz_counter equ 16711684
     move.w #$FF, d1
     .loop:
     move.w #$1, d0
-    jsr set_plane_tile
+    jsr set_plane_tile.l
     dbra d1, .loop
     move.w #$FF, d1
     .loop2:
     move.w #$2, d0
-    jsr set_plane_tile
+    jsr set_plane_tile.l
     dbra d1, .loop2
     move.w #$FF, d1
     .loop3:
     move.w #$3, d0
-    jsr set_plane_tile
+    jsr set_plane_tile.l
     dbra d1, .loop3
     move.w #$FF, d1
     .loop4:
     move.w #$4, d0
-    jsr set_plane_tile
+    jsr set_plane_tile.l
     dbra d1, .loop4
     move.w #34567,vdp_ctrl
     move.w #33124,vdp_ctrl
@@ -336,8 +336,8 @@ timer_1Hz_counter equ 16711684
     move.b d0, d1
     andi.b #1, d1
     move.b d1, gamepad1_start
-    jsr update_color
-    jsr update_hscroll
+    jsr update_color.l
+    jsr update_hscroll.l
     movem.l (sp)+,d1-d2
     dc.b 78
     dc.b 115

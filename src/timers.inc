@@ -34,30 +34,30 @@ hblank:
         
         ; Increment and check 100Hz timer (occurs the most, so check it first)
         addi.w   #1, timer_100Hz_counter.l
-        move.w  timer_100Hz_counter, d0
+        move.w  timer_100Hz_counter.l, d0
         cmpi.w   #hblanks_per_100Hz_tick, d0
-        blt     .skip100HzCallback
+        blt.w   .skip100HzCallback
     ; Reset counter and call callback
         move.w  #0, timer_100Hz_counter
-        jsr     timer_100Hz_callback
+        jsr     timer_100Hz_callback.l
     .skip100HzCallback:
         ; Increment and check 50Hz timer
-        addi.w   #1, timer_50Hz_counter
+        addi.w   #1, timer_50Hz_counter.l
         move.w  timer_50Hz_counter, d0
         cmpi.w   #hblanks_per_50Hz_tick, d0
-        blt     .skip50HzCallback
+        blt.w   .skip50HzCallback
     ; Reset counter and call callback
-        move.w  #0, timer_50Hz_counter
-        jsr     timer_50Hz_callback
+        move.w  #0, timer_50Hz_counter.l
+        jsr     timer_50Hz_callback.l
     .skip50HzCallback:
         ; Increment and check 1Hz timer
-        addi.w   #1, timer_1Hz_counter
-        move.w  timer_1Hz_counter, d0
+        addi.w   #1, timer_1Hz_counter.l
+        move.w  timer_1Hz_counter.l, d0
         cmpi.w   #hblanks_per_1Hz_tick, d0
-        blt     .skip1HzCallback
+        blt.w   .skip1HzCallback
     ; Reset counter and call callback
-        move.w  #0, timer_1Hz_counter
-        jsr     timer_1Hz_callback
+        move.w  #0, timer_1Hz_counter.l
+        jsr     timer_1Hz_callback.l
     .skip1HzCallback:
 
         ; Restore registers
