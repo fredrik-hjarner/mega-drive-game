@@ -13,9 +13,9 @@
 * `<<` creates some problems... since fasmg uses `shl` instead.
   I wonder if I could fix that with `match`....
       ```
-          match a? b? b? d? << e? f? g? h?, operand
+          match a? =<=< b?, maybe_number
           jno skip
-          arrange operand, a#b#c#d shl #e#f#g#h
+          arrange maybe_number, a =shl b
       skip:
       ```
   Same problem with other operators such as `|` as fasmg uses `or` instead.

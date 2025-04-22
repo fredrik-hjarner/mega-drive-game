@@ -199,6 +199,21 @@ iterate op, @op1,@op2
                     match =# maybe_number, operand
                     jno check_if_abs_w
                 ; hash_prefix:
+
+                ;; start compat code ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                ; fasmg uses shl instead of <<
+                ; TODO: There may be more of these cases that can be fixed!
+                ; TODO: Can I separate this out into a CALM macro extenstion?
+                ; Something like `compat` or `compat_operators`.
+
+                    match a? =<=< b?, maybe_number
+                    jno skip_compat1
+                ; contained_shl:
+                    arrange maybe_number, a =shl b
+                skip_compat1:
+
+                ;; end compat code ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
                     check maybe_number eqtype 0
                     jyes skip_immediate_addressing_error
                     err 'immediate_addressing_error' ; TODO: better err message.
@@ -306,9 +321,17 @@ iterate op, @op1,@op2
                     display tmp bappend 9
 
                     ; log imm
+                    ; arrange can't handle negative numbers!
+                    ; TODO: I should make a helper to support negative numbers.
+                    check imm < 0
+                    jyes skip_log_imm
+                ; log_imm:
                     arrange tmp, imm
                     stringify tmp
                     display tmp bappend 10
+                    exit
+                skip_log_imm:
+                    display 10
 
                     exit
         end calminstruction

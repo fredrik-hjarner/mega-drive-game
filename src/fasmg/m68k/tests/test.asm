@@ -551,7 +551,9 @@ l1:
 ;; BUGS / REGRESSIONS TESTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     cmpi.w #(16 shl 2), d0
-    ; cmpi.w #(16 << 2), l1.l
-    ; addi.w #-1, hscroll_amount.l
+    cmpi.w #(16 << 2), d0
+    cmpi.w #(16 << 2), l1.l
+    addi.w #-1, d0
+    addi.w #-1, l1.l
     ; dbra d7,.ClearRAM
     ; movea.l #$FF0000, a0
