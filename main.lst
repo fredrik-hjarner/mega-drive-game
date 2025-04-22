@@ -66,7 +66,7 @@
 00000110 2020 2020 2020 2020 2020+     dc.b '                '
 00000120 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
 00000150 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
-00000180 474D 2031 3630 3934 3620       dc.b 'GM 160946 '
+00000180 474D 2031 3630 3935 3120       dc.b 'GM 160951 '
 0000018A                                org $18E
 0000018E 0000                           dc.w $0000
 00000190 4A20 2020 2020 2020 2020+     dc.b 'J               '
@@ -201,12 +201,12 @@
 000003D0 3E3C 3FFF                      move.w #$3FFF, d7
 000003D4                                .ClearVRAM:
 000003D4 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data
-000003DE 51CF FFF4                      dbra d7,.ClearVRAM
+000003DE 51CF FFF4                      dbra.w d7,.ClearVRAM
 000003E2 2E3C 0000 7FFF                 move.l #$7FFF, d7
 000003E8 207C 00FF 0000                 movea.l #$FF0000, a0
 000003EE                                .ClearRAM:
 000003EE 30FC 0000                      move.w #$0000, (a0)+
-000003F2 51CF FFFA                      dbra d7,.ClearRAM
+000003F2 51CF FFFA                      dbra.w d7,.ClearRAM
 000003F6 23FC C000 0000 00C0 0004       move.l #$C0000000, vdp_ctrl
 00000400 33FC 0000 00C0 0000            move.w #((0)<<9) | ((0)<<5) | ((0)<<1), vdp_data
 00000408 33FC 0002 00C0 0000            move.w #((0)<<9) | ((0)<<5) | ((1)<<1), vdp_data
@@ -270,22 +270,22 @@
 00000628                                .loop:
 00000628 303C 0001                      move.w #$1, d0
 0000062C 4EB9 0000 0296                 jsr set_plane_tile.l
-00000632 51C9 FFF4                      dbra d1, .loop
+00000632 51C9 FFF4                      dbra.w d1, .loop
 00000636 323C 00FF                      move.w #$FF, d1
 0000063A                                .loop2:
 0000063A 303C 0002                      move.w #$2, d0
 0000063E 4EB9 0000 0296                 jsr set_plane_tile.l
-00000644 51C9 FFF4                      dbra d1, .loop2
+00000644 51C9 FFF4                      dbra.w d1, .loop2
 00000648 323C 00FF                      move.w #$FF, d1
 0000064C                                .loop3:
 0000064C 303C 0003                      move.w #$3, d0
 00000650 4EB9 0000 0296                 jsr set_plane_tile.l
-00000656 51C9 FFF4                      dbra d1, .loop3
+00000656 51C9 FFF4                      dbra.w d1, .loop3
 0000065A 323C 00FF                      move.w #$FF, d1
 0000065E                                .loop4:
 0000065E 303C 0004                      move.w #$4, d0
 00000662 4EB9 0000 0296                 jsr set_plane_tile.l
-00000668 51C9 FFF4                      dbra d1, .loop4
+00000668 51C9 FFF4                      dbra.w d1, .loop4
 0000066C 33FC 8707 00C0 0004            move.w #34567,vdp_ctrl
 00000674 33FC 8164 00C0 0004            move.w #33124,vdp_ctrl
 0000067C 46FC 2300                      move.w #$2300, sr

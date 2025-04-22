@@ -285,7 +285,7 @@ skip_tmss:
     move.w  #$3FFF, d7             ; Loop counter (32,768 words = 64KB VRAM)
 .ClearVRAM:
     move.l  #$00000000, vdp_data        ; Write zero to VRAM (fill with empty tiles)
-    dbra    d7,.ClearVRAM         ; Decrement and branch until done
+    dbra.w    d7,.ClearVRAM         ; Decrement and branch until done
 
     ; =================================================================
     ; CLEAR "NORMAL" RAM
@@ -295,7 +295,7 @@ skip_tmss:
     movea.l  #$FF0000, a0
 .ClearRAM:
     move.w  #$0000, (a0)+          ; Write zero toVRAM 
-    dbra    d7,.ClearRAM         ; Decrement and branch until done
+    dbra.w    d7,.ClearRAM         ; Decrement and branch until done
 
     ; =================================================================
     ; STEP 3: SET UP COLOR PALETTE (CRAM - Color RAM)
@@ -392,22 +392,22 @@ skip_tmss:
     .loop:
         move.w  #$1, d0      ; Set parameter
         jsr     set_plane_tile.l ; Call subroutine
-        dbra    d1, .loop     ; Decrement d1 and loop until -1
+        dbra.w    d1, .loop     ; Decrement d1 and loop until -1
     move.w  #$FF, d1
     .loop2:
         move.w  #$2, d0      ; Set parameter
         jsr     set_plane_tile.l ; Call subroutine
-        dbra    d1, .loop2     ; Decrement d1 and loop until -1
+        dbra.w    d1, .loop2     ; Decrement d1 and loop until -1
     move.w  #$FF, d1
     .loop3:
         move.w  #$3, d0      ; Set parameter
         jsr     set_plane_tile.l ; Call subroutine
-        dbra    d1, .loop3     ; Decrement d1 and loop until -1
+        dbra.w    d1, .loop3     ; Decrement d1 and loop until -1
     move.w  #$FF, d1
     .loop4:
         move.w  #$4, d0      ; Set parameter
         jsr     set_plane_tile.l ; Call subroutine
-        dbra    d1, .loop4     ; Decrement d1 and loop until -1
+        dbra.w    d1, .loop4     ; Decrement d1 and loop until -1
 
     ; =================================================================
     ; STEP 4: ENABLE DISPLAY AND SET BACKGROUND

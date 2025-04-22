@@ -66,7 +66,7 @@ gamepad2_data equ $A10005
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 160946 '
+    dc.b 'GM 160951 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -201,12 +201,12 @@ timer_1Hz_counter equ 16711684
     move.w #$3FFF, d7
     .ClearVRAM:
     move.l #$00000000, vdp_data
-    dbra d7,.ClearVRAM
+    dbra.w d7,.ClearVRAM
     move.l #$7FFF, d7
     movea.l #$FF0000, a0
     .ClearRAM:
     move.w #$0000, (a0)+
-    dbra d7,.ClearRAM
+    dbra.w d7,.ClearRAM
     move.l #$C0000000, vdp_ctrl
     move.w #((0)<<9) | ((0)<<5) | ((0)<<1), vdp_data
     move.w #((0)<<9) | ((0)<<5) | ((1)<<1), vdp_data
@@ -270,22 +270,22 @@ timer_1Hz_counter equ 16711684
     .loop:
     move.w #$1, d0
     jsr set_plane_tile.l
-    dbra d1, .loop
+    dbra.w d1, .loop
     move.w #$FF, d1
     .loop2:
     move.w #$2, d0
     jsr set_plane_tile.l
-    dbra d1, .loop2
+    dbra.w d1, .loop2
     move.w #$FF, d1
     .loop3:
     move.w #$3, d0
     jsr set_plane_tile.l
-    dbra d1, .loop3
+    dbra.w d1, .loop3
     move.w #$FF, d1
     .loop4:
     move.w #$4, d0
     jsr set_plane_tile.l
-    dbra d1, .loop4
+    dbra.w d1, .loop4
     move.w #34567,vdp_ctrl
     move.w #33124,vdp_ctrl
     move.w #$2300, sr
