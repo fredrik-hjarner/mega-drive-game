@@ -45,4 +45,3 @@ macro calminstruction?._emit? number_of_bytes, value
         _assemble tmp
     @ @done:
 end macro
-; _emit equ emit ; Uncomment to generate binary directly.

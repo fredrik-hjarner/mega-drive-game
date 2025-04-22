@@ -61,12 +61,11 @@ iterate <instr,  first_byte>, \
 
                 call m68k.parse_operand@op1, ea
 
-                _emit 1, first_byte
-                _emit 1, size_bits shl 6 + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
+                emit 1, first_byte
+                emit 1, size_bits shl 6 + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
                 ; bswap is needed because famg outputs in little-endian :'/
-                _emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+                emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
             end calminstruction
-            ; define instr.size +instr.size
 
     end iterate ; <size, size_bits>
 end iterate ; <instr, first_byte>
@@ -125,13 +124,12 @@ iterate <cc,  cc_bits>, \
 
             compute pc, $ + 2
 
-            _emit 1, 01100000b + cc_bits
+            emit 1, 01100000b + cc_bits
 
             ; Assume label is $10 and address is $20
             ; $10 - $20 = $10
-            _emit 1, label - pc
+            emit 1, label - pc
         end calminstruction
-        ; define instr.b +instr.b
 
         ; TODO: Check if fits in a word. Maybe do that in parse_operand?
         ;' Warn if fits in a byte.
@@ -143,12 +141,11 @@ iterate <cc,  cc_bits>, \
 
             compute pc, $ + 2
 
-            _emit 1, 01100000b + cc_bits
-            _emit 1, 0 ; second byte being zero
+            emit 1, 01100000b + cc_bits
+            emit 1, 0 ; second byte being zero
             ; bswap is needed because famg outputs in little-endian :'/
-            _emit 2, (label - pc) bswap 2
+            emit 2, (label - pc) bswap 2
         end calminstruction
-        ; define instr.w +instr.w
 
 end iterate ; <cc, cc_bits>
 
@@ -176,13 +173,12 @@ iterate <instr,  first_byte>, \
 
                 compute pc, $ + 2
 
-                _emit 1, first_byte
+                emit 1, first_byte
 
                 ; Assume label is $10 and address is $20
                 ; $10 - $20 = $10
-                _emit 1, label - pc
+                emit 1, label - pc
         end calminstruction
-        ; define instr.b +instr.b
 
         ; TODO: Check if fits in a word. Maybe do that in parse_operand?
         ;' Warn if fits in a byte.
@@ -194,12 +190,11 @@ iterate <instr,  first_byte>, \
 
             compute pc, $ + 2
 
-            _emit 1, first_byte
-            _emit 1, 0 ; second byte being zero
+            emit 1, first_byte
+            emit 1, 0 ; second byte being zero
             ; bswap is needed because famg outputs in little-endian :'/
-            _emit 2, (label - pc) bswap 2
+            emit 2, (label - pc) bswap 2
         end calminstruction
-        ; define instr.w +instr.w
 
 end iterate ; <instr, first_byte>
 
@@ -225,7 +220,6 @@ calminstruction ext.w? dn*
     compute tmp, 10000000b + (dn - m68k.data_reg) ; TODO: Move this into emit!
     emit 1, tmp
 end calminstruction
-define ext.w +ext.w
 
 ; Syntax: ext.l dn
 ;
@@ -236,12 +230,11 @@ calminstruction ext.l? dn*
 
     assert_data_reg dn
 
-    _emit 1, 01001000b
+    emit 1, 01001000b
     ;            1S000000b ; S = 0-> .w, S = 1-> .l
     compute tmp, 11000000b + (dn - m68k.data_reg) ; TODO: Move this into emit!
-    _emit 1, tmp
+    emit 1, tmp
 end calminstruction
-define ext.l +ext.l
 
 ; Syntax:
 ;     jmp <ea>
@@ -263,12 +256,11 @@ iterate <instr,  second_byte>, \
 
             call m68k.parse_operand@op1, ea
 
-            _emit 1, 01001110b
-            _emit 1, second_byte + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
+            emit 1, 01001110b
+            emit 1, second_byte + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
             ; bswap is needed because famg outputs in little-endian :'/
-            _emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+            emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
         end calminstruction
-        define jmp +jmp
 
 end iterate ; <instr, second_byte>
 
@@ -290,7 +282,6 @@ calminstruction swap? dn*
     compute tmp, 01000000b + (dn - m68k.data_reg) ; TODO: Move this into emit!
     emit 1, tmp
 end calminstruction
-define swap +swap
 
 ; Syntax: trap #<vector>
 ;
@@ -318,4 +309,3 @@ calminstruction trap? vector*
         compute tmp, 01000000b + vector ; TODO: Move this into emit!
         emit 1, tmp
 end calminstruction
-define trap +trap

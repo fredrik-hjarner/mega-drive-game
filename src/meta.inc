@@ -24,7 +24,8 @@
     meta_version
     ; 142d = 8Eh
 
-    org $18E                     ; Just to be 100% sure we're at the right place
+    ; org $18E                     ; Just to be 100% sure we're at the right place
+    cnop 0,$18E              ; org works differently on fasmg and clownassembler
 
     dc.w $0000                   ; 2 bytes: Checksum
     ; 144d = 90h

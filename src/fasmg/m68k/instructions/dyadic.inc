@@ -1,8 +1,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Motorola 68000 niladic instructions                                        ;;
+;; Motorola 68000 dyadic instructions                                         ;;
 ;;                                                                            ;;
 ;; | # | instruction | implemented | tested | notes                         | ;;
 ;; |---|-------------|-------------|--------|-------------------------------| ;;
+;; |   | movem.[wl]  |             |        |                               | ;;
+;; |   | or          | ~           | ~      |                               | ;;
 ;; |   | move        |             |        | split move into it's variants | ;;
 ;; |   |             |             |        |                               | ;;
 ;; |   | dbcc.w      | ~           | ~      |                               | ;;
@@ -23,17 +25,149 @@
 ;; |   |             |             |        |                               | ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Some placeholders ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+iterate <size,  size_bits>, \
+        w,      0b, \
+        l,      1b
 
-macro or.b line&
-end macro
-macro or.w line&
-end macro
-macro or.l line&
-end macro
+        ; Syntax:
+        ;     movem.[wl] <ea>,<register list>
+        ;     movem.[wl] <register list>,<ea>
+        calminstruction movem.size? op1*, op2*
+                display 10 bappend 'movem:' bappend 10
 
-macro movem.l line&
-end macro
+                local direction
+                local bit_mask
+                local ea_mode_bits
+                local ea_reg_bits
+
+            ; Init default values
+                ; 0 means <register list> to <ea>
+                ; 1 means <ea>,<register list>
+                ; compute direction, 0
+                ; compute bit_mask, 0
+
+                call m68k.parse_reg_list@reg_list1, op1
+                call m68k.parse_reg_list@reg_list2, op2
+
+                call m68k.parse_operand@op1, op1
+                call m68k.parse_operand@op2, op2
+
+            ; Figure out direction
+                check @reg_list1.is_reg_list = 1
+                jyes reglist_to_ea
+            ; ea_to_reglist:
+                compute direction, 1
+                compute bit_mask, @reg_list2.mask_word
+                compute ea_mode_bits, @op1.ea_mode_bits
+                compute ea_reg_bits, @op1.ea_reg_bits
+                jump emit_bytes
+            reglist_to_ea:
+                compute direction, 0
+                compute bit_mask, @reg_list1.mask_word
+                compute ea_mode_bits, @op2.ea_mode_bits
+                compute ea_reg_bits, @op2.ea_reg_bits
+            emit_bytes:
+
+                ; first byte
+                emit 1, 01001000b + direction shl 2
+
+                ; second byte
+                emit 1, 10000000b + size_bits shl 6 + ea_mode_bits shl 3 + ea_reg_bits
+
+                ; extension words (register list bit mask)
+                ; bswap is needed because famg outputs in little-endian :'/
+                emit 2, bit_mask bswap 2
+
+            ;     local _size
+
+            ;     ; TODO: I am not sure why I have to do this to get the call to work.
+            ;     arrange _size, =size
+
+            ;     call m68k.parse_operand@op1, op1, _size
+            ;     call m68k.parse_operand@op2, op2, _size
+
+            ;     ; TODO: This is a sloppy check, do a more complete check in the
+            ;     ; future.
+            ;     ; TODO: Is there anything such as ternary in fasmg? 
+            ;     ; @op1.type = 'dn' ? 1 : 0
+            ;     check @op2.type = 'dn'
+            ;     jno dn_to_ea
+            ; ; ea_to_dn:
+            ;     ; first byte
+            ;     emit 1, 10000000b + @op2.ea_reg_bits shl 1
+
+            ;     ; second byte
+            ;     emit 1, size_bits shl 6 + @op1.ea_mode_bits shl 3 +  @op1.ea_reg_bits
+
+            ;     ; extension words
+            ;     ; bswap is needed because famg outputs in little-endian :'/
+            ;     emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+
+            ;     exit
+            ; dn_to_ea:
+            ;     ; first byte
+            ;     emit 1, 10000001b + @op1.ea_reg_bits shl 1
+
+            ;     ; second byte
+            ;     emit 1, size_bits shl 6 + @op2.ea_mode_bits shl 3 +  @op2.ea_reg_bits
+
+            ;     ; extension words
+            ;     ; bswap is needed because famg outputs in little-endian :'/
+            ;     emit @op2.ext_bytes, @op2.ext_bytes_bits bswap @op2.ext_bytes
+        end calminstruction
+
+end iterate ; <size, size_bits>
+
+iterate <size,  size_bits>, \
+        b,      00b, \
+        w,      01b, \
+        l,      10b
+
+        ; Syntax:
+        ;     or.[bwl] <ea>,dn
+        ;     or.[bwl] dn,<ea>
+        calminstruction or.size? op1*, op2*
+                display 10 bappend 'or:' bappend 10
+
+                local _size
+
+                ; TODO: I am not sure why I have to do this to get the call to work.
+                arrange _size, =size
+
+                call m68k.parse_operand@op1, op1, _size
+                call m68k.parse_operand@op2, op2, _size
+
+                ; TODO: This is a sloppy check, do a more complete check in the
+                ; future.
+                ; TODO: Is there anything such as ternary in fasmg? 
+                ; @op1.type = 'dn' ? 1 : 0
+                check @op2.type = 'dn'
+                jno dn_to_ea
+            ; ea_to_dn:
+                ; first byte
+                emit 1, 10000000b + @op2.ea_reg_bits shl 1
+
+                ; second byte
+                emit 1, size_bits shl 6 + @op1.ea_mode_bits shl 3 +  @op1.ea_reg_bits
+
+                ; extension words
+                ; bswap is needed because famg outputs in little-endian :'/
+                emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+
+                exit
+            dn_to_ea:
+                ; first byte
+                emit 1, 10000001b + @op1.ea_reg_bits shl 1
+
+                ; second byte
+                emit 1, size_bits shl 6 + @op2.ea_mode_bits shl 3 +  @op2.ea_reg_bits
+
+                ; extension words
+                ; bswap is needed because famg outputs in little-endian :'/
+                emit @op2.ext_bytes, @op2.ext_bytes_bits bswap @op2.ext_bytes
+        end calminstruction
+
+end iterate ; <size, size_bits>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; START MOVE INSTRUCTIONS                                                    ;;
@@ -70,7 +204,7 @@ macro calminstruction?.move_macro? op1*, op2*, size*
         display 'ea_to_ccr' bappend 10
         jump done
     ea_to_sr:
-        display 'ea_to_sr' bappend 10
+        call move_ea_to_sr, _size
         jump done
     usp_to_an:
         display 'usp_to_an' bappend 10
@@ -128,10 +262,31 @@ calminstruction move_ea_to_ea size*
         emit 2, (size_bits shl 12 + @op2.ea_reg_bits shl 9 + @op2.ea_mode_bits shl 6 + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits) bswap 2
 
         ; op1 extension words
-        _emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+        emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
 
         ; op2 extension words
-        _emit @op2.ext_bytes, @op2.ext_bytes_bits bswap @op2.ext_bytes
+        emit @op2.ext_bytes, @op2.ext_bytes_bits bswap @op2.ext_bytes
+end calminstruction
+
+; Supposed to be call:ed.
+; Assume that op1 and op2 has already been parsed with `parse_operand` and are
+; available on @op1 and @op2.
+; TODO: Warn/error when .b and .l, only .w allowed, & restrict addressing modes.
+calminstruction move_ea_to_sr size*
+        ; display 'ea_to_sr' bappend 10
+
+        ; first byte
+        emit 1, 01000110b
+
+        ; second byte
+        emit 1, 11000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits 
+
+        ; op1 extension words
+        ; bswap is needed because famg outputs in little-endian :'/
+        ; TODO: This specific part is duplicated many times so should have macro
+        ;       maybe called `emit_extension_word@op1/op2`
+        ;       though that does not seem to save much space...
+        emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
 end calminstruction
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -200,14 +355,14 @@ iterate <cc,  cc_bits>, \
             compute pc, $ + 2
 
             ; first byte
-            _emit 1, 01010000b + cc_bits
+            emit 1, 01010000b + cc_bits
 
             ; second byte
-            _emit 1, 11001000b + @op1.ea_reg_bits
+            emit 1, 11001000b + @op1.ea_reg_bits
 
             ; immediate word
             ; bswap is needed because famg outputs in little-endian :'/
-            _emit 2, (label - pc) bswap 2
+            emit 2, (label - pc) bswap 2
         end calminstruction
 
 end iterate ; <cc, cc_bits>
@@ -229,17 +384,17 @@ iterate <size,  size_bits>, \
             call m68k.parse_operand@op2, an
 
             ; first byte
-            _emit 1, size_bits shl 4 + @op2.ea_reg_bits shl 1
+            emit 1, size_bits shl 4 + @op2.ea_reg_bits shl 1
 
             ; second byte
-            _emit 1, 01000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
+            emit 1, 01000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
                         
             ; extension words
             ; bswap is needed because famg outputs in little-endian :'/
             ; TODO: So, seems the number of extension words depend upon .w,.l
             ;       IN THE SPECIFIC CASE OF IMMEDITE OPERANDS this complicated
             ;       the implementation of parse_operands a bit.
-            _emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+            emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
         end calminstruction
 
 end iterate ; <size, size_bits>
@@ -252,14 +407,14 @@ calminstruction lea.l? ea*, an*
     call m68k.parse_operand@op2, an
 
     ; first byte
-    _emit 1, 01000001b + @op2.ea_reg_bits shl 1
+    emit 1, 01000001b + @op2.ea_reg_bits shl 1
 
     ; second byte
     emit 1, 11000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
                 
     ; extension words
     ; bswap is needed because famg outputs in little-endian :'/
-    _emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+    emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
 end calminstruction
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -290,6 +445,8 @@ iterate <instr,  first_byte>, \
         eori,    00001010b, \
         \ ; Compare Immediate
         cmpi,    00001100b,
+    ; TODO: Can I remove the imm_bytes now and use the stuff from
+    ; parse_operand instread?
     iterate <size,  size_bits,  imm_bytes>, \
             b,      00b,        2, \
             w,      01b,        2, \
@@ -306,18 +463,18 @@ iterate <instr,  first_byte>, \
                 ; assert_max imm, 8
 
                 ; first byte
-                _emit 1, first_byte
+                emit 1, first_byte
 
                 ; second byte
-                _emit 1, size_bits shl 6 + @op2.ea_mode_bits shl 3 + @op2.ea_reg_bits
+                emit 1, size_bits shl 6 + @op2.ea_mode_bits shl 3 + @op2.ea_reg_bits
                 
                 ; immediate bytes
                 ; bswap is needed because famg outputs in little-endian :'/
-                _emit imm_bytes, @op1.imm bswap imm_bytes
+                emit imm_bytes, @op1.imm bswap imm_bytes
 
                 ; extension words
                 ; bswap is needed because famg outputs in little-endian :'/
-                _emit @op2.ext_bytes, @op2.ext_bytes_bits bswap @op2.ext_bytes
+                emit @op2.ext_bytes, @op2.ext_bytes_bits bswap @op2.ext_bytes
             end calminstruction
 
     end iterate ; <size, size_bits>
@@ -355,14 +512,14 @@ iterate <instr,  first_byte>, \
                 ; first byte
                 ; 8 is encoded as 000b
                 compute tmp, imm mod 8 ; TODO: Is this compute needed?
-                _emit 1, first_byte + tmp shl 1
+                emit 1, first_byte + tmp shl 1
 
                 ; second byte
-                _emit 1, size_bits shl 6 + @op2.ea_mode_bits shl 3 + @op2.ea_reg_bits
+                emit 1, size_bits shl 6 + @op2.ea_mode_bits shl 3 + @op2.ea_reg_bits
                 
                 ; extension words
                 ; bswap is needed because famg outputs in little-endian :'/
-                _emit @op2.ext_bytes, @op2.ext_bytes_bits bswap @op2.ext_bytes
+                emit @op2.ext_bytes, @op2.ext_bytes_bits bswap @op2.ext_bytes
             end calminstruction
 
     end iterate ; <size, size_bits>
@@ -397,4 +554,3 @@ calminstruction moveq? data*, dn*
     compute tmp, data
     emit 1, tmp
 end calminstruction
-define moveq +moveq

@@ -28,3 +28,6 @@
 * Sometimes I require a label to be specified with label1.w/.l and sometimes
   I require it to have no .w/.l part, examine this and how other assemblers
   do/behave and what they allow and don't allow.
+* Experiment with `relativeto` to find out if I can use that more in parsing.
+  for example if I can have an m68k.register element instead of separate
+  data_reg and address_reg elements, or actually if I can have both.

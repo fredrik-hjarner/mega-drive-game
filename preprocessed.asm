@@ -66,8 +66,8 @@ gamepad2_data equ $A10005
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 161316 '
-    org $18E
+    dc.b 'GM 162476 '
+    cnop 0,$18E
     dc.w $0000
     dc.b 'J               '
     dc.l $00000000
@@ -87,8 +87,7 @@ gamepad2_data equ $A10005
     move.w #(1<<15 | (7<<8)), d2
     or.w d1, d2
     move.w d2, vdp_ctrl.l
-    dc.b 78
-    dc.b 117
+    rts
     update_color:
     tst.b (gamepad1_a).l
     beq.b .skip
@@ -98,12 +97,10 @@ gamepad2_data equ $A10005
     move.w #0, color_index.l
     .increment:
     move.w color_index.l, d1
-    dc.b 228
-    dc.b 73
+    lsr.w #2, d1
     jsr set_bg_color.l
     .skip:
-    dc.b 78
-    dc.b 117
+    rts
     update_hscroll:
     tst.b gamepad1_left.l
     beq.b .skip_left
@@ -115,8 +112,7 @@ gamepad2_data equ $A10005
     addi.w #1, hscroll_amount.l
     .increment:
     move.w hscroll_amount.l, d1
-    dc.b 228
-    dc.b 73
+    lsr.w #2, d1
     move.l #$40000000+(((vram_hscroll_addr)&$3FFF)<<16)+(((vram_hscroll_addr)&$C000)>>14),vdp_ctrl.l
     move.w d1, vdp_data.l
     move.w d1, vdp_data.l
@@ -124,12 +120,10 @@ gamepad2_data equ $A10005
     move.w d1, vdp_data.l
     move.w d1, vdp_data.l
     .skip_right:
-    dc.b 78
-    dc.b 115
+    rte
     set_plane_tile:
     move.w d0, vdp_data.l
-    dc.b 78
-    dc.b 117
+    rts
 hblanks_per_100Hz_tick equ 156
 hblanks_per_50Hz_tick equ 312
 hblanks_per_1Hz_tick equ 15600
@@ -160,17 +154,13 @@ timer_1Hz_counter equ 16711684
     jsr timer_1Hz_callback.l
     .skip1HzCallback:
     move.w (sp)+, d0
-    dc.b 78
-    dc.b 115
+    rte
     timer_100Hz_callback:
-    dc.b 78
-    dc.b 117
+    rts
     timer_50Hz_callback:
-    dc.b 78
-    dc.b 117
+    rts
     timer_1Hz_callback:
-    dc.b 78
-    dc.b 117
+    rts
     Start:
     move.w #$2700,sr
     movea.l #$FF0000,sp
@@ -339,35 +329,24 @@ timer_1Hz_counter equ 16711684
     jsr update_color.l
     jsr update_hscroll.l
     movem.l (sp)+,d1-d2
-    dc.b 78
-    dc.b 115
+    rte
     int2_bus_error:
-    dc.b 78
-    dc.b 113
-    dc.b 78
-    dc.b 113
+    nop
+    nop
     bra.b int2_bus_error
     int3_address_error:
-    dc.b 78
-    dc.b 113
-    dc.b 78
-    dc.b 113
-    dc.b 78
-    dc.b 113
+    nop
+    nop
+    nop
     bra.b int3_address_error
     int4_illegal_instruction:
-    dc.b 78
-    dc.b 113
-    dc.b 78
-    dc.b 113
-    dc.b 78
-    dc.b 113
-    dc.b 78
-    dc.b 113
+    nop
+    nop
+    nop
+    nop
     bra.b int4_illegal_instruction
     error:
-    dc.b 78
-    dc.b 113
+    nop
     bra.b error
 color_index equ 16711686
 hscroll_amount equ 16711688

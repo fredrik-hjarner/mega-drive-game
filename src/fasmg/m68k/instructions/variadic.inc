@@ -119,11 +119,11 @@ iterate <instr_prefix,  instr>, \
                 ; S = Size (00 = Byte, 01 = Word, 10 = Long)
                 compute tmp, dn1 ; TODO: Is this compute needed?
                 ;                                                   Direction
-                _emit 1, 11100000b + ((tmp - m68k.data_reg) shl 1) + dir
+                emit 1, 11100000b + ((tmp - m68k.data_reg) shl 1) + dir
 
                 ;            Size           Imm/Dreg    Instruction
                 compute tmp, (size shl 6) + (1 shl 5) + (instr shl 3) + (dn2 - m68k.data_reg)
-                _emit 1, tmp
+                emit 1, tmp
             end macro
 
             ; Description:
@@ -154,11 +154,11 @@ iterate <instr_prefix,  instr>, \
                     ; 8 is encoded as 0, I think mod with 8 takes care of that.
                     compute tmp, imm mod 8 ; TODO: Is this compute needed?
                     ;                                 Direction
-                    _emit 1, 11100000b + (tmp shl 1) + dir
+                    emit 1, 11100000b + (tmp shl 1) + dir
 
                     ;            Size           Imm/Dreg    Instruction
                     compute tmp, (size shl 6) + (0 shl 5) + (instr shl 3) + (dn - m68k.data_reg)
-                    _emit 1, tmp
+                    emit 1, tmp
                 ;     jump ddd
                 ; errz:
                 ;     err "Error: blow up!!"
@@ -179,8 +179,6 @@ iterate <instr_prefix,  instr>, \
                 done:
             end calminstruction
 
-            ; Make visible to the preprocessor
-            define instr_prefix#dir_suffix#.#size_suffix +instr_prefix#dir_suffix#.#size_suffix
         end iterate ; <size_suffix, size>
     end iterate ; <direction_suffix, direction>
 end iterate ; <instr_prefix, instr>

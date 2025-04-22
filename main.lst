@@ -66,8 +66,8 @@
 00000110 2020 2020 2020 2020 2020+     dc.b '                '
 00000120 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
 00000150 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
-00000180 474D 2031 3631 3331 3620       dc.b 'GM 161316 '
-0000018A                                org $18E
+00000180 474D 2031 3632 3437 3620       dc.b 'GM 162476 '
+0000018A 0000 0000                      cnop 0,$18E
 0000018E 0000                           dc.w $0000
 00000190 4A20 2020 2020 2020 2020+     dc.b 'J               '
 000001A0 0000 0000                      dc.l $00000000
@@ -87,8 +87,7 @@
 00000200 343C 8700                      move.w #(1<<15 | (7<<8)), d2
 00000204 8441                           or.w d1, d2
 00000206 33C2 00C0 0004                 move.w d2, vdp_ctrl.l
-0000020C 4E                              dc.b 78
-0000020D 75                              dc.b 117
+0000020C 4E75                           rts
 0000020E                                update_color:
 0000020E 4A39 0000 0000                 tst.b (gamepad1_a).l
 00000214 67FE                           beq.b .skip
@@ -98,12 +97,10 @@
 00000226 33FC 0000 0000 0000            move.w #0, color_index.l
 0000022E                                .increment:
 0000022E 3239 0000 0000                 move.w color_index.l, d1
-00000234 E4                              dc.b 228
-00000235 49                              dc.b 73
+00000234 E449                           lsr.w #2, d1
 00000236 4EB9 0000 0200                 jsr set_bg_color.l
 0000023C                                .skip:
-0000023C 4E                              dc.b 78
-0000023D 75                              dc.b 117
+0000023C 4E75                           rts
 0000023E                                update_hscroll:
 0000023E 4A39 0000 0000                 tst.b gamepad1_left.l
 00000244 67FE                           beq.b .skip_left
@@ -115,8 +112,7 @@
 00000258 0679 0001 0000 0000            addi.w #1, hscroll_amount.l
 00000260                                .increment:
 00000260 3239 0000 0000                 move.w hscroll_amount.l, d1
-00000266 E4                              dc.b 228
-00000267 49                              dc.b 73
+00000266 E449                           lsr.w #2, d1
 00000268 23FC 4400 0000 00C0 0004       move.l #$40000000+(((vram_hscroll_addr)&$3FFF)<<16)+(((vram_hscroll_addr)&$C000)>>14),vdp_ctrl.l
 00000272 33C1 00C0 0000                 move.w d1, vdp_data.l
 00000278 33C1 00C0 0000                 move.w d1, vdp_data.l
@@ -124,12 +120,10 @@
 00000288 33C1 00C0 0000                 move.w d1, vdp_data.l
 0000028E 33C1 00C0 0000                 move.w d1, vdp_data.l
 00000294                                .skip_right:
-00000294 4E                              dc.b 78
-00000295 73                              dc.b 115
+00000294 4E73                           rte
 00000296                                set_plane_tile:
 00000296 33C0 00C0 0000                 move.w d0, vdp_data.l
-0000029C 4E                              dc.b 78
-0000029D 75                              dc.b 117
+0000029C 4E75                           rts
 0000029E                            hblanks_per_100Hz_tick equ 156
 0000029E                            hblanks_per_50Hz_tick equ 312
 0000029E                            hblanks_per_1Hz_tick equ 15600
@@ -160,17 +154,13 @@
 00000306 4EB9 0000 0000                 jsr timer_1Hz_callback.l
 0000030C                                .skip1HzCallback:
 0000030C 301F                           move.w (sp)+, d0
-0000030E 4E                              dc.b 78
-0000030F 73                              dc.b 115
+0000030E 4E73                           rte
 00000310                                timer_100Hz_callback:
-00000310 4E                              dc.b 78
-00000311 75                              dc.b 117
+00000310 4E75                           rts
 00000312                                timer_50Hz_callback:
-00000312 4E                              dc.b 78
-00000313 75                              dc.b 117
+00000312 4E75                           rts
 00000314                                timer_1Hz_callback:
-00000314 4E                              dc.b 78
-00000315 75                              dc.b 117
+00000314 4E75                           rts
 00000316                                Start:
 00000316 46FC 2700                      move.w #$2700,sr
 0000031A 2E7C 00FF 0000                 movea.l #$FF0000,sp
@@ -339,35 +329,24 @@
 0000071A 4EB9 0000 020E                 jsr update_color.l
 00000720 4EB9 0000 023E                 jsr update_hscroll.l
 00000726 4CDF 0006                      movem.l (sp)+,d1-d2
-0000072A 4E                              dc.b 78
-0000072B 73                              dc.b 115
+0000072A 4E73                           rte
 0000072C                                int2_bus_error:
-0000072C 4E                              dc.b 78
-0000072D 71                              dc.b 113
-0000072E 4E                              dc.b 78
-0000072F 71                              dc.b 113
+0000072C 4E71                           nop
+0000072E 4E71                           nop
 00000730 60FA                           bra.b int2_bus_error
 00000732                                int3_address_error:
-00000732 4E                              dc.b 78
-00000733 71                              dc.b 113
-00000734 4E                              dc.b 78
-00000735 71                              dc.b 113
-00000736 4E                              dc.b 78
-00000737 71                              dc.b 113
+00000732 4E71                           nop
+00000734 4E71                           nop
+00000736 4E71                           nop
 00000738 60F8                           bra.b int3_address_error
 0000073A                                int4_illegal_instruction:
-0000073A 4E                              dc.b 78
-0000073B 71                              dc.b 113
-0000073C 4E                              dc.b 78
-0000073D 71                              dc.b 113
-0000073E 4E                              dc.b 78
-0000073F 71                              dc.b 113
-00000740 4E                              dc.b 78
-00000741 71                              dc.b 113
+0000073A 4E71                           nop
+0000073C 4E71                           nop
+0000073E 4E71                           nop
+00000740 4E71                           nop
 00000742 60F6                           bra.b int4_illegal_instruction
 00000744                                error:
-00000744 4E                              dc.b 78
-00000745 71                              dc.b 113
+00000744 4E71                           nop
 00000746 60FC                           bra.b error
 00000748                            color_index equ 16711686
 00000748                            hscroll_amount equ 16711688

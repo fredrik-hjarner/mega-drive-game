@@ -11,7 +11,6 @@ macro endif!
 end macro
 
     if fasmg
-include "format_fasmg.inc"
 include "m68k.inc"
     endif
 
@@ -633,3 +632,107 @@ l2:
 
     dc.b 0,0,'move.l l1.l, l2.l',0
     move.l l1.l, l2.l
+
+    ; move <ea>,sr
+
+    move.w  #$2700,sr
+
+;; OR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    ; or.[bwl] dn,<ea>
+
+    dc.b 0,0,'or.b d0, l1.l',0
+    or.b d0, l1.l
+
+    dc.b 0,0,'or.w d0, l1.l',0
+    or.w d0, l1.l
+
+    dc.b 0,0,'or.l d0, l1.l',0
+    or.l d0, l1.l
+
+    ; or.[bwl] <ea>,dn
+
+    dc.b 0,0,'or.b l1.l, d0',0
+    or.b l1.l, d0
+
+    dc.b 0,0,'or.w l1.l, d0',0
+    or.w l1.l, d0
+
+    dc.b 0,0,'or.l l1.l, d0',0
+    or.l l1.l, d0
+
+    or.l l1.l, d1
+    or.l l1.l, d2
+    or.l l1.l, d3
+    or.l l1.l, d4
+
+    ; edge cases ; TODO: Maybe there are two valid ways to encode `or dn,dn`?
+    or.b d0, d0
+    or.b d0, d1
+    or.b d0, d2
+    
+;; MOVEM ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+    ; <register list> to <ea>
+
+    dc.b 0,'movem.l d0, (a0)',0
+    movem.l d0, (a0)
+
+    dc.b 0,'movem.l d1, (a0)',0
+    movem.l d1, (a0)
+
+    dc.b 0,'movem.l d2, (a0)',0
+    movem.l d2, (a0)
+
+    movem.l d2, (a1)
+    movem.l d2, (a2)
+
+    ; <ea> to <register list>
+
+    dc.b 0,'movem.l (a0), d0',0
+    movem.l (a0), d0
+
+    dc.b 0,'movem.l (a0), d1',0
+    movem.l (a0), d1
+
+    dc.b 0,'movem.l (a0), d2',0
+    movem.l (a0), d2
+
+
+    ; movem.l d0, -(sp)
+
+    ; movem.l d0-d7/a0-a6,$1234
+    ; movem.l (a5),d0-d2/d5-d7/a0-a3/a6
+    ; movem.w (a7)+,d0-d5/d7/a0-a6
+    ; movem.w d0-d5/d7/a0-a6,-(a7)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Testing parse_reg_list                                                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    if fasmg
+    display 10, "- parse_reg_list -------", 10, 10
+
+;; Easy cases ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    parse_reg_list d0
+    parse_reg_list a0
+
+    parse_reg_list d0-d1
+    parse_reg_list a0-a1
+
+    parse_reg_list d0/d0
+    parse_reg_list a0/a0
+    parse_reg_list d0-d7/a0-a7
+
+    parse_reg_list d0/d1/d2
+
+
+;; Edge cases / false positives ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    parse_reg_list 0
+    parse_reg_list d0-a0
+    parse_reg_list a0-d0
+
+    endif

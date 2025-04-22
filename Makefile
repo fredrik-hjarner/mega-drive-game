@@ -10,13 +10,15 @@ build-preprocessed:
 
 build-preprocessed-fasmg:
 	fasmg preprocessed.asm main.bin -e10
-	hexdump -C -v main.bin > main.hex
+	xxd -b -c1 main.bin | cut -d' ' -f2,4 > main.hex
+# hexdump -C -v main.bin > main.hex
 
 # build:
 # 	clownassembler -c -l main.lst -o main.bin -i main.asm
 
 hexdump:
-	hexdump -C -v main.bin > main.hex
+	xxd -b -c1 main.bin | cut -d' ' -f2,4 > main.hex
+# hexdump -C -v main.bin > main.hex
 
 run:
 	cd ~/Downloads/Exodus_2.1 && wine exodus

@@ -16,7 +16,6 @@
 ; end macro
 
 ;     if fasmg
-; include "src/fasmg/m68k/format_fasmg.inc"
 ; include "src/fasmg/m68k/m68k.inc"
 ;     endif
 

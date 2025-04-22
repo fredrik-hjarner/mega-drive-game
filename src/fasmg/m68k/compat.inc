@@ -3,6 +3,13 @@ macro even
     align 2
 end macro
 
+; Insert as much zero bytes as required to reach an address which can be divided
+; by `alignment`. Then add `offset` zero bytes. May fill the padding-bytes with
+; no-operation instructions for certain cpus.
+macro cnop offset,alignment
+    align alignment | offset
+end macro
+
 ; TODO: Dunno what a good name for this is.
 ; Example:
 ;     input:  (((l1)  &  $3FFF) <<  16) + (((l1)  &  $C000) >>  14)
