@@ -66,7 +66,7 @@ gamepad2_data equ $A10005
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 159881 '
+    dc.b 'GM 159905 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -138,7 +138,7 @@ timer_50Hz_counter equ 16711682
 timer_1Hz_counter equ 16711684
     hblank:
     move.w d0, -(sp)
-    addi.w #1, timer_100Hz_counter
+    addi.w #1, timer_100Hz_counter.l
     move.w timer_100Hz_counter, d0
     cmpi.w #hblanks_per_100Hz_tick, d0
     blt .skip100HzCallback

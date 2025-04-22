@@ -19,6 +19,24 @@
 ;; |   |             |             |        |                               | ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Some placeholders ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+macro move.b line&
+end macro
+macro move.w line&
+end macro
+macro move.l line&
+end macro
+
+macro or.b line&
+end macro
+macro or.w line&
+end macro
+macro or.l line&
+end macro
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ; Syntax:
 ;     ori.[bwl]  #<data>,<ea>
 ;     andi.[bwl] #<data>,<ea>
@@ -77,9 +95,6 @@ iterate <instr,  first_byte>, \
 
     end iterate ; <size, size_bits>
 end iterate ; <instr, first_byte>
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Syntax:
 ;     addq #<data>,<ea>

@@ -18,3 +18,4 @@
           arrange operand, a#b#c#d shl #e#f#g#h
       skip:
       ```
+  Same problem with other operators such as `|` as fasmg uses `or` instead.

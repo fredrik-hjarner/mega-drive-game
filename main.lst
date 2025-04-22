@@ -66,7 +66,7 @@
 00000110 2020 2020 2020 2020 2020+     dc.b '                '
 00000120 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
 00000150 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
-00000180 474D 2031 3539 3838 3120       dc.b 'GM 159881 '
+00000180 474D 2031 3539 3930 3520       dc.b 'GM 159905 '
 0000018A                                org $18E
 0000018E 0000                           dc.w $0000
 00000190 4A20 2020 2020 2020 2020+     dc.b 'J               '
@@ -138,7 +138,7 @@
 0000029E                            timer_1Hz_counter equ 16711684
 0000029E                                hblank:
 0000029E 3F00                           move.w d0, -(sp)
-000002A0 0679 0001 00FF 0000            addi.w #1, timer_100Hz_counter
+000002A0 0679 0001 00FF 0000            addi.w #1, timer_100Hz_counter.l
 000002A8 3039 00FF 0000                 move.w timer_100Hz_counter, d0
 000002AE 0C40 009C                      cmpi.w #hblanks_per_100Hz_tick, d0
 000002B2 6D00 FFFE                      blt .skip100HzCallback

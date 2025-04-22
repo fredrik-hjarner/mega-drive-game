@@ -33,7 +33,7 @@ hblank:
         move.w d0, -(sp)         ; Only saving d0 as we'll use it for comparisons
         
         ; Increment and check 100Hz timer (occurs the most, so check it first)
-        addi.w   #1, timer_100Hz_counter
+        addi.w   #1, timer_100Hz_counter.l
         move.w  timer_100Hz_counter, d0
         cmpi.w   #hblanks_per_100Hz_tick, d0
         blt     .skip100HzCallback
