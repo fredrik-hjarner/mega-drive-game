@@ -66,7 +66,7 @@ gamepad2_data equ $A10005
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 161303 '
+    dc.b 'GM 161316 '
     org $18E
     dc.w $0000
     dc.b 'J               '
@@ -95,9 +95,9 @@ gamepad2_data equ $A10005
     addq.w #1, color_index.l
     cmpi.w #(16<<2), color_index.l
     blo.b .increment
-    move.w #0, color_index
+    move.w #0, color_index.l
     .increment:
-    move.w color_index, d1
+    move.w color_index.l, d1
     dc.b 228
     dc.b 73
     jsr set_bg_color.l
@@ -114,7 +114,7 @@ gamepad2_data equ $A10005
     beq.b .skip_right
     addi.w #1, hscroll_amount.l
     .increment:
-    move.w hscroll_amount, d1
+    move.w hscroll_amount.l, d1
     dc.b 228
     dc.b 73
     move.l #$40000000+(((vram_hscroll_addr)&$3FFF)<<16)+(((vram_hscroll_addr)&$C000)>>14),vdp_ctrl.l
@@ -142,11 +142,11 @@ timer_1Hz_counter equ 16711684
     move.w timer_100Hz_counter.l, d0
     cmpi.w #hblanks_per_100Hz_tick, d0
     blt.w .skip100HzCallback
-    move.w #0, timer_100Hz_counter
+    move.w #0, timer_100Hz_counter.l
     jsr timer_100Hz_callback.l
     .skip100HzCallback:
     addi.w #1, timer_50Hz_counter.l
-    move.w timer_50Hz_counter, d0
+    move.w timer_50Hz_counter.l, d0
     cmpi.w #hblanks_per_50Hz_tick, d0
     blt.w .skip50HzCallback
     move.w #0, timer_50Hz_counter.l
@@ -174,7 +174,7 @@ timer_1Hz_counter equ 16711684
     Start:
     move.w #$2700,sr
     movea.l #$FF0000,sp
-    move.b $A10001,d0
+    move.b $A10001.l,d0
     andi.b #$F,d0
     beq.b skip_tmss
     move.l #'SEGA',$A14000.l
@@ -293,7 +293,7 @@ timer_1Hz_counter equ 16711684
     bra.b MainLoop
     vblank:
     movem.l d1-d2,-(sp)
-    move.b #$40, gamepad1_ctrl
+    move.b #$40, gamepad1_ctrl.l
     lea.l gamepad1_data.l, a0
     move.b #$40, (a0)
     nop
@@ -302,27 +302,27 @@ timer_1Hz_counter equ 16711684
     not.b d0
     move.b d0, d1
     andi.b #1, d1
-    move.b d1, gamepad1_up
+    move.b d1, gamepad1_up.l
     lsr.b #1, d0
     move.b d0, d1
     andi.b #1, d1
-    move.b d1, gamepad1_down
+    move.b d1, gamepad1_down.l
     lsr.b #1, d0
     move.b d0, d1
     andi.b #1, d1
-    move.b d1, gamepad1_left
+    move.b d1, gamepad1_left.l
     lsr.b #1, d0
     move.b d0, d1
     andi.b #1, d1
-    move.b d1, gamepad1_right
+    move.b d1, gamepad1_right.l
     lsr.b #1, d0
     move.b d0, d1
     andi.b #1, d1
-    move.b d1, gamepad1_b
+    move.b d1, gamepad1_b.l
     lsr.b #1, d0
     move.b d0, d1
     andi.b #1, d1
-    move.b d1, gamepad1_c
+    move.b d1, gamepad1_c.l
     move.b #$00, (a0)
     nop
     nop
@@ -331,11 +331,11 @@ timer_1Hz_counter equ 16711684
     lsr.b #4, d0
     move.b d0, d1
     andi.b #1, d1
-    move.b d1, gamepad1_a
+    move.b d1, gamepad1_a.l
     lsr.b #1, d0
     move.b d0, d1
     andi.b #1, d1
-    move.b d1, gamepad1_start
+    move.b d1, gamepad1_start.l
     jsr update_color.l
     jsr update_hscroll.l
     movem.l (sp)+,d1-d2

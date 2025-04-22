@@ -105,7 +105,7 @@ macro gamepads_get_input
     ; a0 = IoData1 for player 1
     ;    = IoData2 for player 2
 
-    emit move.b #$40, gamepad1_ctrl
+    emit move.b #$40, gamepad1_ctrl.l
 
     ; TODO: Wouldn't movea work here as well??
     ; Why or why not??
@@ -124,37 +124,37 @@ macro gamepads_get_input
     ; Up
     emit move.b d0, d1
     emit andi.b #1, d1
-    emit move.b d1, gamepad1_up
+    emit move.b d1, gamepad1_up.l
 
     ; Down
     emit lsr.b #1, d0
     emit move.b d0, d1
     emit andi.b #1, d1
-    emit move.b d1, gamepad1_down
+    emit move.b d1, gamepad1_down.l
 
     ; Left
     emit lsr.b #1, d0
     emit move.b d0, d1
     emit andi.b #1, d1
-    emit move.b d1, gamepad1_left
+    emit move.b d1, gamepad1_left.l
 
     ; Right
     emit lsr.b #1, d0
     emit move.b d0, d1
     emit andi.b #1, d1
-    emit move.b d1, gamepad1_right
+    emit move.b d1, gamepad1_right.l
 
     ; B
     emit lsr.b #1, d0
     emit move.b d0, d1
     emit andi.b #1, d1
-    emit move.b d1, gamepad1_b
+    emit move.b d1, gamepad1_b.l
 
     ; C
     emit lsr.b #1, d0
     emit move.b d0, d1
     emit andi.b #1, d1
-    emit move.b d1, gamepad1_c
+    emit move.b d1, gamepad1_c.l
     
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; 2nd set of buttons                                                 ;;
@@ -173,13 +173,13 @@ macro gamepads_get_input
     emit lsr.b #4, d0
     emit move.b d0, d1
     emit andi.b #1, d1
-    emit move.b d1, gamepad1_a
+    emit move.b d1, gamepad1_a.l
 
     ; Start
     emit lsr.b #1, d0
     emit move.b d0, d1
     emit andi.b #1, d1
-    emit move.b d1, gamepad1_start
+    emit move.b d1, gamepad1_start.l
 end macro
 define gamepads_get_input +gamepads_get_input
 

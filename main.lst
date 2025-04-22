@@ -66,7 +66,7 @@
 00000110 2020 2020 2020 2020 2020+     dc.b '                '
 00000120 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
 00000150 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
-00000180 474D 2031 3631 3330 3320       dc.b 'GM 161303 '
+00000180 474D 2031 3631 3331 3620       dc.b 'GM 161316 '
 0000018A                                org $18E
 0000018E 0000                           dc.w $0000
 00000190 4A20 2020 2020 2020 2020+     dc.b 'J               '
@@ -95,9 +95,9 @@
 00000216 5279 0000 0000                 addq.w #1, color_index.l
 0000021C 0C79 0040 0000 0000            cmpi.w #(16<<2), color_index.l
 00000224 65FE                           blo.b .increment
-00000226 33FC 0000 0000 0000            move.w #0, color_index
+00000226 33FC 0000 0000 0000            move.w #0, color_index.l
 0000022E                                .increment:
-0000022E 3239 0000 0000                 move.w color_index, d1
+0000022E 3239 0000 0000                 move.w color_index.l, d1
 00000234 E4                              dc.b 228
 00000235 49                              dc.b 73
 00000236 4EB9 0000 0200                 jsr set_bg_color.l
@@ -114,7 +114,7 @@
 00000256 67FE                           beq.b .skip_right
 00000258 0679 0001 0000 0000            addi.w #1, hscroll_amount.l
 00000260                                .increment:
-00000260 3239 0000 0000                 move.w hscroll_amount, d1
+00000260 3239 0000 0000                 move.w hscroll_amount.l, d1
 00000266 E4                              dc.b 228
 00000267 49                              dc.b 73
 00000268 23FC 4400 0000 00C0 0004       move.l #$40000000+(((vram_hscroll_addr)&$3FFF)<<16)+(((vram_hscroll_addr)&$C000)>>14),vdp_ctrl.l
@@ -142,11 +142,11 @@
 000002A8 3039 00FF 0000                 move.w timer_100Hz_counter.l, d0
 000002AE 0C40 009C                      cmpi.w #hblanks_per_100Hz_tick, d0
 000002B2 6D00 FFFE                      blt.w .skip100HzCallback
-000002B6 33FC 0000 00FF 0000            move.w #0, timer_100Hz_counter
+000002B6 33FC 0000 00FF 0000            move.w #0, timer_100Hz_counter.l
 000002BE 4EB9 0000 0000                 jsr timer_100Hz_callback.l
 000002C4                                .skip100HzCallback:
 000002C4 0679 0001 00FF 0002            addi.w #1, timer_50Hz_counter.l
-000002CC 3039 00FF 0002                 move.w timer_50Hz_counter, d0
+000002CC 3039 00FF 0002                 move.w timer_50Hz_counter.l, d0
 000002D2 0C40 0138                      cmpi.w #hblanks_per_50Hz_tick, d0
 000002D6 6D00 FFFE                      blt.w .skip50HzCallback
 000002DA 33FC 0000 00FF 0002            move.w #0, timer_50Hz_counter.l
@@ -174,7 +174,7 @@
 00000316                                Start:
 00000316 46FC 2700                      move.w #$2700,sr
 0000031A 2E7C 00FF 0000                 movea.l #$FF0000,sp
-00000320 1039 00A1 0001                 move.b $A10001,d0
+00000320 1039 00A1 0001                 move.b $A10001.l,d0
 00000326 0200 000F                      andi.b #$F,d0
 0000032A 67FE                           beq.b skip_tmss
 0000032C 23FC 5345 4741 00A1 4000       move.l #'SEGA',$A14000.l
@@ -293,7 +293,7 @@
 00000680 60FE                           bra.b MainLoop
 00000682                                vblank:
 00000682 48E7 6000                      movem.l d1-d2,-(sp)
-00000686 13FC 0040 00A1 0009            move.b #$40, gamepad1_ctrl
+00000686 13FC 0040 00A1 0009            move.b #$40, gamepad1_ctrl.l
 0000068E 41F9 00A1 0003                 lea.l gamepad1_data.l, a0
 00000694 10BC 0040                      move.b #$40, (a0)
 00000698 4E71                           nop
@@ -302,27 +302,27 @@
 0000069E 4600                           not.b d0
 000006A0 1200                           move.b d0, d1
 000006A2 0201 0001                      andi.b #1, d1
-000006A6 13C1 0000 0000                 move.b d1, gamepad1_up
+000006A6 13C1 0000 0000                 move.b d1, gamepad1_up.l
 000006AC E208                           lsr.b #1, d0
 000006AE 1200                           move.b d0, d1
 000006B0 0201 0001                      andi.b #1, d1
-000006B4 13C1 0000 0000                 move.b d1, gamepad1_down
+000006B4 13C1 0000 0000                 move.b d1, gamepad1_down.l
 000006BA E208                           lsr.b #1, d0
 000006BC 1200                           move.b d0, d1
 000006BE 0201 0001                      andi.b #1, d1
-000006C2 13C1 0000 0000                 move.b d1, gamepad1_left
+000006C2 13C1 0000 0000                 move.b d1, gamepad1_left.l
 000006C8 E208                           lsr.b #1, d0
 000006CA 1200                           move.b d0, d1
 000006CC 0201 0001                      andi.b #1, d1
-000006D0 13C1 0000 0000                 move.b d1, gamepad1_right
+000006D0 13C1 0000 0000                 move.b d1, gamepad1_right.l
 000006D6 E208                           lsr.b #1, d0
 000006D8 1200                           move.b d0, d1
 000006DA 0201 0001                      andi.b #1, d1
-000006DE 13C1 0000 0000                 move.b d1, gamepad1_b
+000006DE 13C1 0000 0000                 move.b d1, gamepad1_b.l
 000006E4 E208                           lsr.b #1, d0
 000006E6 1200                           move.b d0, d1
 000006E8 0201 0001                      andi.b #1, d1
-000006EC 13C1 0000 0000                 move.b d1, gamepad1_c
+000006EC 13C1 0000 0000                 move.b d1, gamepad1_c.l
 000006F2 10BC 0000                      move.b #$00, (a0)
 000006F6 4E71                           nop
 000006F8 4E71                           nop
@@ -331,11 +331,11 @@
 000006FE E808                           lsr.b #4, d0
 00000700 1200                           move.b d0, d1
 00000702 0201 0001                      andi.b #1, d1
-00000706 13C1 0000 0000                 move.b d1, gamepad1_a
+00000706 13C1 0000 0000                 move.b d1, gamepad1_a.l
 0000070C E208                           lsr.b #1, d0
 0000070E 1200                           move.b d0, d1
 00000710 0201 0001                      andi.b #1, d1
-00000714 13C1 0000 0000                 move.b d1, gamepad1_start
+00000714 13C1 0000 0000                 move.b d1, gamepad1_start.l
 0000071A 4EB9 0000 020E                 jsr update_color.l
 00000720 4EB9 0000 023E                 jsr update_hscroll.l
 00000726 4CDF 0006                      movem.l (sp)+,d1-d2

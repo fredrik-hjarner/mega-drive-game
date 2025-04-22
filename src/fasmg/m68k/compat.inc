@@ -32,6 +32,14 @@ macro calminstruction?.replace_legacy_operators? expr*
         jump next_and
     done_and:
 
+    ;; Replace | with or ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    next_or:
+        match a? =| b?, expr
+        jno done_or
+        arrange expr, a =or b
+        jump next_or
+    done_or:
+
     ; Display the results of the transformations
         ; local expr_str
         ; arrange expr_str, expr

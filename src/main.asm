@@ -55,7 +55,7 @@ Start:
                                   ; TODO: sp is confusing
 
     ; TMSS (TraceMark Security System)
-    move.b  $A10001,d0		; Get hardware version.
+    move.b  $A10001.l,d0		; Get hardware version.
 	andi.b  #$F,d0			    ; Compare.
 	beq.b   skip_tmss		    ; If the console has no TMSS, skip the security stuff.
 	move.l  #'SEGA',$A14000.l 	; Make the TMSS happy.

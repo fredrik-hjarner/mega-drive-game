@@ -17,9 +17,9 @@ update_color:
         addq.w #1, color_index.l
         cmpi.w #(16<<2), color_index.l
         blo.b .increment
-        move.w #0, color_index
+        move.w #0, color_index.l
     .increment:
-        move.w color_index, d1
+        move.w color_index.l, d1
         ; right shift d1 to get the color index
         lsr.w #2, d1
         ; TODO: clownassembler interprets `jsr label` as `jsr label.l`
@@ -40,7 +40,7 @@ update_hscroll:
         beq.b .skip_right
         addi.w #1, hscroll_amount.l
     .increment:
-        move.w hscroll_amount, d1
+        move.w hscroll_amount.l, d1
         ; right shift d1 to slower speed or something.
         lsr.w #2, d1
         ; now also h.scroll plane A and plane B
