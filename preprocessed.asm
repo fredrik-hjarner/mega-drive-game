@@ -66,7 +66,7 @@ gamepad2_data equ $A10005
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 160875 '
+    dc.b 'GM 160946 '
     org $18E
     dc.w $0000
     dc.b 'J               '

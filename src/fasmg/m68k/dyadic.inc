@@ -3,8 +3,9 @@
 ;;                                                                            ;;
 ;; | # | instruction | implemented | tested | notes                         | ;;
 ;; |---|-------------|-------------|--------|-------------------------------| ;;
-;; |   | movea       | ~           |        |                               | ;;
-;; |   | lea         | ~           |        |                               | ;;
+;; |   | dbcc.w      | ~           | ~      |                               | ;;
+;; |   | movea       | ~           | ~      |                               | ;;
+;; |   | lea         | ~           | ~      |                               | ;;
 ;; |   |             |             |        |                               | ;;
 ;; |   | ori.[bwl]   | ~           | ~      |                               | ;;
 ;; |   | andi.[bwl]  | ~           | ~      |                               | ;;
@@ -36,13 +37,82 @@ end macro
 macro or.l line&
 end macro
 
-macro dbra line&
-end macro
-macro dbra.w line&
-end macro
-
 macro movem.l line&
 end macro
+
+; Syntax:
+;   dbcc.w Dn,<label>
+;
+; TODO: What exactly does label and literal mean in this context?
+; TODO: Add the different aliases for the conditions.
+; Aliases:
+;     ra = f
+;     hs = cc
+;     lo = cs
+iterate <cc,  cc_bits>, \
+        \ ; True
+        t,      0000b, \
+        \ ; False
+        f,      0001b, \
+        \ ; Alias for f
+        ra,     0001b, \
+        \ ; 
+        hi,     0010b, \
+        \ ; 
+        ls,     0011b, \
+        \ ; 
+        cc,     0100b, \
+        \ ; Alias for cc
+        hs,     0100b, \
+        \ ; 
+        cs,     0101b, \
+        \ ; Alias for cs
+        lo,     0101b, \
+        \ ; 
+        ne,     0110b, \
+        \ ; 
+        eq,     0111b, \
+        \ ; 
+        vc,     1000b, \
+        \ ; 
+        vs,     1001b, \
+        \ ; 
+        pl,     1010b, \
+        \ ; 
+        mi,     1011b, \
+        \ ; 
+        ge,     1100b, \
+        \ ; 
+        lt,     1101b, \
+        \ ; 
+        gt,     1110b, \
+        \ ; 
+        le,     1111b
+
+        ; TODO: Check if displacement fits a in word.
+        ; Maybe do that in parse_operand?
+        ; Also, check if displacement is a valid displacement.
+        ; 0 is not allowed for .b I think.
+        calminstruction? db#cc.w? dn*, label*
+            local pc
+
+            call m68k.parse_operand@op1, dn
+            ; call m68k.parse_operand@op2, label
+
+            compute pc, $ + 2
+
+            ; first byte
+            _emit 1, 01010000b + cc_bits
+
+            ; second byte
+            _emit 1, 11001000b + @op1.ea_reg_bits
+
+            ; immediate word
+            ; bswap is needed because famg outputs in little-endian :'/
+            _emit 2, (label - pc) bswap 2
+        end calminstruction
+
+end iterate ; <cc, cc_bits>
 
 ; TODO: Comment
 ; Syntax:

@@ -25,3 +25,6 @@
 * Hm, could I do wrappers for all instructions that log the name and the
   parameters, then executes the instruction, then logs @op1/@op2 values??
   because that's be neat so I can easily disable/enable logging.
+* Sometimes I require a label to be specified with label1.w/.l and sometimes
+  I require it to have no .w/.l part, examine this and how other assemblers
+  do/behave and what they allow and don't allow.
