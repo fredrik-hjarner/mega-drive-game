@@ -157,6 +157,7 @@ iterate op, @op1,@op2
                     compute ea_reg_bits,  123d ; TODO: Better default value?
                     compute ext_bytes, 0       ; TODO: Better default value?
                     compute ext_bytes_bits, 0  ; TODO: Better default value?
+                    compute imm, 0             ; TODO: Better default value?
 
             ;; (an) ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             ; check_if_indirect_an:
@@ -301,6 +302,11 @@ iterate op, @op1,@op2
 
                     ; log ext_bytes_bits
                     arrange tmp, ext_bytes_bits
+                    stringify tmp
+                    display tmp bappend 9
+
+                    ; log imm
+                    arrange tmp, imm
                     stringify tmp
                     display tmp bappend 10
 

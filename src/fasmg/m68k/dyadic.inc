@@ -104,7 +104,7 @@ iterate <instr,  first_byte>, \
                 
                 ; immediate bytes
                 ; bswap is needed because famg outputs in little-endian :'/
-                _emit imm_bytes, imm bswap imm_bytes
+                _emit imm_bytes, @op1.imm bswap imm_bytes
 
                 ; extension words
                 ; bswap is needed because famg outputs in little-endian :'/
