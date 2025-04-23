@@ -699,6 +699,11 @@ l2:
     dc.b 0,'movem.l (a0), d2',0
     movem.l (a0), d2
 
+    ; register ranges
+
+            ; dc.b 0,0,'movem.l d0-d7, (a0)',0
+            ; movem.l d0-d7, (a0)
+
 
     ; movem.l d0, -(sp)
 
@@ -716,23 +721,26 @@ l2:
 
 ;; Easy cases ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    parse_reg_list d0
-    parse_reg_list a0
+    ; parse_reg_list d0
+    ; parse_reg_list a0
 
     parse_reg_list d0-d1
     parse_reg_list a0-a1
+    parse_reg_list d0-a1 ; should error
+    parse_reg_list d0-1 ; should error
+    parse_reg_list d1-d0 ; should error
 
-    parse_reg_list d0/d0
-    parse_reg_list a0/a0
-    parse_reg_list d0-d7/a0-a7
+    ; parse_reg_list d0/d0
+    ; parse_reg_list a0/a0
+    ; parse_reg_list d0-d7/a0-a7
 
-    parse_reg_list d0/d1/d2
+    ; parse_reg_list d0/d1/d2
 
 
 ;; Edge cases / false positives ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    parse_reg_list 0
-    parse_reg_list d0-a0
-    parse_reg_list a0-d0
+    ; parse_reg_list 0
+    ; parse_reg_list d0-a0
+    ; parse_reg_list a0-d0
 
     endif

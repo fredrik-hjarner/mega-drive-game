@@ -25,6 +25,9 @@ iterate reg_list, @reg_list1,@reg_list2
         define mask_word ; TODO: Comment
         define mask_word_reverse ; TODO: Comment
 
+        ; populated by parse_register_range
+        define reg_range_found ; TODO: Comment
+
         ; Supposed to be call:ed.
         ; TODO: Maybe this should not be called with @reg_list1/@reg_list2 but
         ;       @reg_list1/@reg_list2?
@@ -65,17 +68,24 @@ iterate reg_list, @reg_list1,@reg_list2
                     call m68k.parse_single_register#reg_list, operand
                     check single_reg_found = 1
                     jno register_range
+                ; is_single_register_token:
                     compute is_reg_list, 1
                     ; we should also compute the mask here
                     compute mask_word, single_reg_mask_word
                     compute mask_word_reverse, single_reg_mask_word_reverse
                     jump done
-
-
                 ; Check if operator is a `register range`
                 register_range:
+                    call m68k.parse_register_range#reg_list, operand
+                    check reg_range_found = 1
+                    jno reg_groups
+                    compute is_reg_list, 1
+                    ; we should also compute the mask here
+                    ; compute mask_word, single_reg_mask_word
+                    ; compute mask_word_reverse, single_reg_mask_word_reverse
                     jump done ; temporary. TODO: DO checks for other stuff
-
+                reg_groups:
+                    
 
                 done:
                     ;; Log stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -221,6 +231,7 @@ iterate reg_list, @reg_list1,@reg_list2
             define d0 1 shl (7 + 8)
         end namespace
 
+        ; TODO: Double-check if I am even using `single_reg_types`
         define single_reg_types
         namespace single_reg_types
             iterate i, 0,1,2,3,4,5,6,7
@@ -266,7 +277,7 @@ iterate reg_list, @reg_list1,@reg_list2
             at_least_one_token:
 
             ; Check if only one token.
-                match tmp2 tmp3, operand
+                match tmp1 tmp2, operand
                 jyes done
                 ; display '== was single token ==' bappend 10
                 check operand relativeto m68k.data_reg | operand relativeto m68k.address_reg
@@ -312,6 +323,100 @@ iterate reg_list, @reg_list1,@reg_list2
                 arrange tmp1, single_reg_mask_word_reverse
                 stringify tmp1
                 display 'single_reg_mask_word_reverse: ' bappend tmp1 bappend 10
+
+        end calminstruction
+
+        ; TODO: Comment.
+        ; Side-effects:
+        ;     reg_range_found
+        ;         TODO: comment
+        ;
+        ; Examples of register ranges:
+        ;     d0-d7
+        ;     a2-a4
+        calminstruction m68k.parse_register_range#reg_list operand*
+                local tmp1
+                local tmp2
+
+            ; Init default values
+                compute reg_range_found, 0
+                ; compute single_reg_mask_word, 0
+                ; compute single_reg_mask_word_reverse, 0
+                ; compute single_reg_type, 'unknown'
+
+            ; Validate is not empty
+                match , operand
+                jno at_least_one_token
+                err 'operand is empty'
+            at_least_one_token:
+
+            ; Check if only one token.
+                match tmp1 =- tmp2, operand
+                jno done
+
+                ; TODO: This might be slow.
+                call m68k.parse_single_register@reg_list1, tmp1
+                call m68k.parse_single_register@reg_list2, tmp2
+
+                ; TODO: Too long line.
+                check @reg_list1.single_reg_found = 1 & @reg_list2.single_reg_found = 1 & @reg_list1.single_reg_type = @reg_list2.single_reg_type
+                jno done
+            ; is_reg_range:
+                compute reg_range_found, 1
+                ; So now I need to compute the mask word and reverse mask word.
+
+                jump done ; TODO: Remove this jump?
+
+
+
+
+
+
+
+                ; ; display '== was single token ==' bappend 10
+                ; check operand relativeto m68k.data_reg | operand relativeto m68k.address_reg
+                ; jno done
+                ; ; display '== was a single register ==' bappend 10
+
+                ; ; single_reg_type
+                ; arrange single_reg_type, operand
+                ; transform single_reg_type, single_reg_types
+                ; compute single_reg_type, single_reg_type ; TODO: Is this needed?
+
+                ; ; mask
+                ; arrange single_reg_mask_word, operand
+                ; transform single_reg_mask_word, single_reg_mask_words
+                ; ; TODO: Is compute needed here?
+                ; compute single_reg_mask_word, single_reg_mask_word
+
+                ; ; mask reverse
+                ; arrange single_reg_mask_word_reverse, operand
+                ; transform single_reg_mask_word_reverse, single_reg_mask_words_reverse
+                ; ; TODO: Is compute needed here?
+                ; compute single_reg_mask_word_reverse, single_reg_mask_word_reverse
+
+                ; ; "return true" so to speak
+                ; compute single_reg_found, 1
+            done:
+                ;; Display log ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+                ; single_reg_found
+                arrange tmp1, reg_range_found
+                stringify tmp1
+                display 'reg_range_found:             ' bappend tmp1 bappend 10
+
+                ; ; single_reg_type
+                ; display 'single_reg_type:              ' bappend single_reg_type bappend 10
+
+                ; ; single_reg_mask_word
+                ; arrange tmp1, single_reg_mask_word
+                ; stringify tmp1
+                ; display 'single_reg_mask_word:         ' bappend tmp1 bappend 10
+
+                ; ; single_reg_mask_word_reverse
+                ; arrange tmp1, single_reg_mask_word_reverse
+                ; stringify tmp1
+                ; display 'single_reg_mask_word_reverse: ' bappend tmp1 bappend 10
 
         end calminstruction
 

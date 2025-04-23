@@ -49,19 +49,19 @@ iterate <size,  size_bits>, \
                 call m68k.parse_reg_list@reg_list1, op1
                 call m68k.parse_reg_list@reg_list2, op2
 
-                call m68k.parse_operand@op1, op1
-                call m68k.parse_operand@op2, op2
 
             ; Figure out direction
                 check @reg_list1.is_reg_list = 1
                 jyes reglist_to_ea
             ; ea_to_reglist:
+                call m68k.parse_operand@op1, op1
                 compute direction, 1
                 compute bit_mask, @reg_list2.mask_word
                 compute ea_mode_bits, @op1.ea_mode_bits
                 compute ea_reg_bits, @op1.ea_reg_bits
                 jump emit_bytes
             reglist_to_ea:
+                call m68k.parse_operand@op2, op2
                 compute direction, 0
                 compute bit_mask, @reg_list1.mask_word
                 compute ea_mode_bits, @op2.ea_mode_bits
