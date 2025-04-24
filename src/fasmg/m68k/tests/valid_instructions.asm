@@ -1385,7 +1385,7 @@
 	moveq.l	#0,d5
 	moveq	#0,d5
 
-; 	divu.w	d2,d5
+	divu.w	d2,d5
 ; 	divu.w	(a2),d5
 ; 	divu.w	(a2)+,d5
 ; 	divu.w	-(a2),d5

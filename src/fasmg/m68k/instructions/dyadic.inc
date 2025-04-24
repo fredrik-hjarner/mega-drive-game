@@ -40,8 +40,7 @@ end macro
 
 
 
-;divu
-;divs
+
 ;sbcd
 ;sub
 ;subx
@@ -50,8 +49,6 @@ end macro
 ;cmpm
 ;cmp
 ;cmpa
-;mulu
-;muls
 
 macro abcd.b line&
 end macro
@@ -84,6 +81,36 @@ macro adda.w line&
 end macro
 macro adda.l line&
 end macro
+
+;; DIVU, DIVS, MULU, MULS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Syntax:
+;     divs <ea>,dn
+;     divu <ea>,dn
+;     muls <ea>,dn
+;     mulu <ea>,dn
+iterate <instr,  first_byte>, \
+        divu,    10000000b, \
+        divs,    10000001b, \
+        mulu,    11000000b, \
+        muls,    11000001b
+
+        calminstruction instr.w? ea*, dn*
+            call m68k.parse_operand@op1, ea
+            call m68k.parse_operand@op2, dn
+
+            ; first byte
+            emit 1, first_byte + (0 scaleof dn) shl 1
+
+            ; second byte
+            emit 1, 11000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
+
+            ; <ea> extension words
+            ; bswap is needed because famg outputs in little-endian :'/
+            emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+        end calminstruction
+
+end iterate ; <instr, first_byte>
 
 ;; BTST BCHG BCLR BSET ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
