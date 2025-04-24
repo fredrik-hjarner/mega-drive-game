@@ -22,14 +22,27 @@
 
 ;; TODO: move to sr
 
+macro nbcd line&
+    nbcd.b line
+end macro
 
+macro swap line&
+    swap.w line
+end macro
 
+macro pea line&
+    pea.l line
+end macro
 
+macro tas line&
+    tas.b line
+end macro
 
+macro link line&
+    link.w line
+end macro
 
-
-
-
+;; TODO: move usp
 
 macro lea line&
     lea.l line
@@ -46,3 +59,26 @@ end macro
 macro moveq line&
     moveq.l line
 end macro
+
+macro divu line&
+    divu.w line
+end macro
+
+macro divs line&
+    divs.w line
+end macro
+
+macro sbcd line&
+    sbcd.b line
+end macro
+
+;mulu
+;muls
+;abcd
+;exg
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; SOME INSTRUCTIONS CAN HAVE .S SUFFIX INSTEAD OF .B                         ;;
+;; TODO: Which instructions? All, some?                                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+

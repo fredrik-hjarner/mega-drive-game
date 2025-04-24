@@ -147,6 +147,8 @@ include "instructions/monadic.inc"
 include "instructions/dyadic.inc"
 include "instructions/variadic.inc"
 
+include "instructions/aliases.inc"
+
 ;; Just a test instruction to test all the addressing modes and stuff ;;;;;;;;;;
 
 ; TODO: Remove when not needed or move to test.asm?

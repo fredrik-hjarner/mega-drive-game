@@ -396,19 +396,19 @@ l2:
 
 ;; MOVEQ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    moveq #0, d0
-    moveq #0, d1
-    moveq #0, d2
-    moveq #0, d3
-    moveq #0, d4
-    moveq #0, d5
-    moveq #0, d6
-    moveq #0, d7
+    moveq.l #0, d0
+    moveq.l #0, d1
+    moveq.l #0, d2
+    moveq.l #0, d3
+    moveq.l #0, d4
+    moveq.l #0, d5
+    moveq.l #0, d6
+    moveq.l #0, d7
 
-    moveq #0, d0
-    moveq #1, d0
-    moveq #2, d0
-    moveq #3, d0
+    moveq.l #0, d0
+    moveq.l #1, d0
+    moveq.l #2, d0
+    moveq.l #3, d0
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; All variadic instructions.                                                 ;;

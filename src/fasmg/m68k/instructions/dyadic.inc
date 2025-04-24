@@ -663,7 +663,7 @@ end iterate ; <instr, first_byte>
 ; TODO: Figure out how to work with signed numbers so it works with
 ;       whatever formats you can use in normal m68k assemblers
 ;       I assume 1111_1111b and -1d are should both be allowed?!
-calminstruction moveq? data*, dn*
+calminstruction moveq.l? data*, dn*
     local tmp
 
     call m68k.parse_operand@op1, data
