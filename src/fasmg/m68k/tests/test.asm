@@ -240,15 +240,15 @@ l2:
     ext.l d7
     ; ext.l 8 ; TODO: This should generate error because only d0-d7 are allowed.
 
-    swap d0
-    swap d1
-    swap d2
-    swap d3
-    swap d4
-    swap d5
-    swap d6
-    swap d7
-    ; swap 8 ; TODO: This should generate error because only d0-d7 are allowed.
+    swap.w d0
+    swap.w d1
+    swap.w d2
+    swap.w d3
+    swap.w d4
+    swap.w d5
+    swap.w d6
+    swap.w d7
+    ; swap.w 8 ; TODO: This should generate error because only d0-d7 are allowed.
 
     ; jmp ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -701,11 +701,17 @@ l2:
 
     ; register ranges
 
-            ; dc.b 0,0,'movem.l d0-d7, (a0)',0
-            ; movem.l d0-d7, (a0)
+    dc.b 0,0,'movem.l d0-d7, (a0)',0
+    movem.l d0-d7, (a0)
 
+    movem.l d1-d7, (a0)
+    movem.l d1-d6, (a0)
+    movem.l a5-a6, (a0)
+    ; movem.l a5-d4, (a0) ; TODO: uhm clownassembler and vasm seems to accept this
 
-    ; movem.l d0, -(sp)
+    movem.l d1-d2,-(sp)
+    movem.l d1-d2,l1.l
+    movem.l l1.l,d1-d2
 
     ; movem.l d0-d7/a0-a6,$1234
     ; movem.l (a5),d0-d2/d5-d7/a0-a3/a6
@@ -744,3 +750,5 @@ l2:
     ; parse_reg_list a0-d0
 
     endif
+
+    include "tests/valid_instructions.asm"

@@ -3,6 +3,7 @@
   Then run vasm, clownassembler and famsg on that to be able to diff output.
   Also check what vams and clownassembler accept and does not accept.
 * Make macro that "marks" all labels (label stuff interceptor thingie).
+  I also need to mark labels create with the `label` instruction.
 * I've seen d0.b/d0.w/d0.l used in some code but how does that work?
   I probaly should add support for that if it makes sense.
 * Remove my exporting of instructions macros to preprocess.asm,
@@ -10,15 +11,15 @@
   Remove the different forms of _assemble and _emit too.
 * Hm could I override `emit` to output in big-endian?? That should be possible
   right? That would make the code less messy and I could skip using `bswap`.
-* `<<` creates some problems... since fasmg uses `shl` instead.
-  I wonder if I could fix that with `match`....
-      ```
-          match a? =<=< b?, maybe_number
-          jno skip
-          arrange maybe_number, a =shl b
-      skip:
-      ```
-  Same problem with other operators such as `|` as fasmg uses `or` instead.
+* ~~`<<` creates some problems... since fasmg uses `shl` instead.~~
+  ~~I wonder if I could fix that with `match`....~~
+  ~~    ```~~
+  ~~        match a? =<=< b?, maybe_number~~
+  ~~        jno skip~~
+  ~~        arrange maybe_number, a =shl b~~
+  ~~    skip:~~
+  ~~    ```~~
+  ~~Same problem with other operators such as `|` as fasmg uses `or` instead.~~
 * Make sure all instructions are case-insensitive.
 * Add alias macros for instructions that only have one size
   such as lea for lea.l
@@ -28,6 +29,9 @@
 * Sometimes I require a label to be specified with label1.w/.l and sometimes
   I require it to have no .w/.l part, examine this and how other assemblers
   do/behave and what they allow and don't allow.
+  I think that's because branch instructions are relative jumps,
+  the label's address is never sent instead the assembler calculates the
+  jump length and send that jump length.
 * Experiment with `relativeto` to find out if I can use that more in parsing.
   for example if I can have an m68k.register element instead of separate
   data_reg and address_reg elements, or actually if I can have both.

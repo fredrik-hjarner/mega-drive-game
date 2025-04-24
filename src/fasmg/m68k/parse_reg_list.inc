@@ -27,6 +27,8 @@ iterate reg_list, @reg_list1,@reg_list2
 
         ; populated by parse_register_range
         define reg_range_found ; TODO: Comment
+        define reg_range_mask_word ; TODO: Comment
+        define reg_range_mask_word_reverse ; TODO: Comment
 
         ; Supposed to be call:ed.
         ; TODO: Maybe this should not be called with @reg_list1/@reg_list2 but
@@ -36,14 +38,12 @@ iterate reg_list, @reg_list1,@reg_list2
         ;     is_reg_list
         ;         1 if operand was a register list
         ;         0 otherwise
-        ;
         ;     mask_word
         ;         Stores the `register mask` for the found register
         ;         Example:
         ;           a7 would be:
         ;               1000 0000 0000 0000b or
         ;               1 shl 15
-        ;
         ;     mask_word_reverse
         ;         single_reg_mask_word but reversed
         calminstruction m68k.parse_reg_list#reg_list operand*
@@ -80,9 +80,8 @@ iterate reg_list, @reg_list1,@reg_list2
                     check reg_range_found = 1
                     jno reg_groups
                     compute is_reg_list, 1
-                    ; we should also compute the mask here
-                    ; compute mask_word, single_reg_mask_word
-                    ; compute mask_word_reverse, single_reg_mask_word_reverse
+                    compute mask_word, reg_range_mask_word
+                    compute mask_word_reverse, reg_range_mask_word_reverse
                     jump done ; temporary. TODO: DO checks for other stuff
                 reg_groups:
                     
@@ -306,104 +305,10 @@ iterate reg_list, @reg_list1,@reg_list2
             done:
                 ;; Display log ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-                ; single_reg_found
-                arrange tmp1, single_reg_found
-                stringify tmp1
-                display 'single_reg_found:             ' bappend tmp1 bappend 10
-
-                ; single_reg_type
-                display 'single_reg_type:              ' bappend single_reg_type bappend 10
-
-                ; single_reg_mask_word
-                arrange tmp1, single_reg_mask_word
-                stringify tmp1
-                display 'single_reg_mask_word:         ' bappend tmp1 bappend 10
-
-                ; single_reg_mask_word_reverse
-                arrange tmp1, single_reg_mask_word_reverse
-                stringify tmp1
-                display 'single_reg_mask_word_reverse: ' bappend tmp1 bappend 10
-
-        end calminstruction
-
-        ; TODO: Comment.
-        ; Side-effects:
-        ;     reg_range_found
-        ;         TODO: comment
-        ;
-        ; Examples of register ranges:
-        ;     d0-d7
-        ;     a2-a4
-        calminstruction m68k.parse_register_range#reg_list operand*
-                local tmp1
-                local tmp2
-
-            ; Init default values
-                compute reg_range_found, 0
-                ; compute single_reg_mask_word, 0
-                ; compute single_reg_mask_word_reverse, 0
-                ; compute single_reg_type, 'unknown'
-
-            ; Validate is not empty
-                match , operand
-                jno at_least_one_token
-                err 'operand is empty'
-            at_least_one_token:
-
-            ; Check if only one token.
-                match tmp1 =- tmp2, operand
-                jno done
-
-                ; TODO: This might be slow.
-                call m68k.parse_single_register@reg_list1, tmp1
-                call m68k.parse_single_register@reg_list2, tmp2
-
-                ; TODO: Too long line.
-                check @reg_list1.single_reg_found = 1 & @reg_list2.single_reg_found = 1 & @reg_list1.single_reg_type = @reg_list2.single_reg_type
-                jno done
-            ; is_reg_range:
-                compute reg_range_found, 1
-                ; So now I need to compute the mask word and reverse mask word.
-
-                jump done ; TODO: Remove this jump?
-
-
-
-
-
-
-
-                ; ; display '== was single token ==' bappend 10
-                ; check operand relativeto m68k.data_reg | operand relativeto m68k.address_reg
-                ; jno done
-                ; ; display '== was a single register ==' bappend 10
-
-                ; ; single_reg_type
-                ; arrange single_reg_type, operand
-                ; transform single_reg_type, single_reg_types
-                ; compute single_reg_type, single_reg_type ; TODO: Is this needed?
-
-                ; ; mask
-                ; arrange single_reg_mask_word, operand
-                ; transform single_reg_mask_word, single_reg_mask_words
-                ; ; TODO: Is compute needed here?
-                ; compute single_reg_mask_word, single_reg_mask_word
-
-                ; ; mask reverse
-                ; arrange single_reg_mask_word_reverse, operand
-                ; transform single_reg_mask_word_reverse, single_reg_mask_words_reverse
-                ; ; TODO: Is compute needed here?
-                ; compute single_reg_mask_word_reverse, single_reg_mask_word_reverse
-
-                ; ; "return true" so to speak
-                ; compute single_reg_found, 1
-            done:
-                ;; Display log ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-                ; single_reg_found
-                arrange tmp1, reg_range_found
-                stringify tmp1
-                display 'reg_range_found:             ' bappend tmp1 bappend 10
+                ; ; single_reg_found
+                ; arrange tmp1, single_reg_found
+                ; stringify tmp1
+                ; display 'single_reg_found:             ' bappend tmp1 bappend 10
 
                 ; ; single_reg_type
                 ; display 'single_reg_type:              ' bappend single_reg_type bappend 10
@@ -417,6 +322,89 @@ iterate reg_list, @reg_list1,@reg_list2
                 ; arrange tmp1, single_reg_mask_word_reverse
                 ; stringify tmp1
                 ; display 'single_reg_mask_word_reverse: ' bappend tmp1 bappend 10
+
+        end calminstruction
+
+        ; TODO: Comment.
+        ; Side-effects:
+        ;     reg_range_found
+        ;         TODO: comment
+        ;     reg_range_mask_word
+        ;         TODO: comment
+        ;     reg_range_mask_word_reverse
+        ;         TODO: comment
+        ;
+        ; Examples of register ranges:
+        ;     d0-d7
+        ;     a2-a4
+        calminstruction m68k.parse_register_range#reg_list operand*
+                local tmp1
+                local tmp2
+                local reg1
+                local reg2
+
+            ; Init default values
+                compute reg_range_found, 0
+                compute reg_range_mask_word, 0
+                compute reg_range_mask_word_reverse, 0
+
+            ; Validate is not empty
+                match , operand
+                jno at_least_one_token
+                err 'operand is empty'
+            at_least_one_token:
+
+            ; Check if only one token.
+                match reg1 =- reg2, operand
+                jno done
+
+                ; TODO: This might be slow.
+                call m68k.parse_single_register@reg_list1, reg1
+                call m68k.parse_single_register@reg_list2, reg2
+
+                ; TODO: Too long line.
+                ; Validate both tokens are registers of the same type.
+                check @reg_list1.single_reg_found = 1 & @reg_list2.single_reg_found = 1 & @reg_list1.single_reg_type = @reg_list2.single_reg_type
+                jno done
+            ; both_tokens_are_registers_of_same_type:
+                ; Validate reg1 is less than reg2 by comparing constant terms.
+                check (0 scaleof reg1) < (0 scaleof reg2)
+                jno done ; TODO: Should probably display error or warning.
+            ; is_valid_reg_range:
+                compute reg_range_found, 1
+
+                ; Compute mask
+                arrange tmp1, reg1
+                transform tmp1, single_reg_mask_words
+                arrange tmp2, reg2
+                transform tmp2, single_reg_mask_words
+                ; This formula might seem like voodoo but it works.
+                ; TODO: Explain why it works maybe.
+                compute reg_range_mask_word, ((tmp2 shl 1)-1) xor (tmp1 - 1)
+
+                ; Compute reverse mask
+                arrange tmp1, reg1
+                transform tmp1, single_reg_mask_words_reverse
+                arrange tmp2, reg2
+                transform tmp2, single_reg_mask_words_reverse
+                compute reg_range_mask_word_reverse, ((tmp1 shl 1)-1) xor (tmp2 - 1)
+            done:
+                ;; Display log ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+                ; reg_range_found
+                arrange tmp1, reg_range_found
+                stringify tmp1
+                display 'reg_range_found:              ' bappend tmp1 bappend 10
+
+                ; reg_range_mask_word
+                arrange tmp1, reg_range_mask_word
+                stringify tmp1
+                display 'reg_range_mask_word:          ' bappend tmp1 bappend 10
+
+                 ; reg_range_mask_word_reverse
+                arrange tmp1, reg_range_mask_word_reverse
+                stringify tmp1
+                display 'reg_range_mask_word_reverse:  ' bappend tmp1 bappend 10
 
         end calminstruction
 

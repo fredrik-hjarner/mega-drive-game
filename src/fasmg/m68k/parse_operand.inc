@@ -33,6 +33,8 @@ iterate op, @op1,@op2
         ;     'dn'              (direct data register addressing)
         ;     'an'              (direct address register addressing)
         ;     '(an)'            (indirect address register addressing)
+        ;     '-(an)'
+        ;     '(an)+'
         ;     'abs.w'           (absolute word addressing)
         ;     'abs.l'           (absolute long addressing)
         ;     'imm'             (immediate addressing)

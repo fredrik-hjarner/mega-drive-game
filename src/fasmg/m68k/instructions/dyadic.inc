@@ -25,6 +25,102 @@
 ;; |   |             |             |        |                               | ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Placeholders for not yet implemented instructions ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+macro movep.l line&
+end macro
+macro movep.w line&
+end macro
+
+macro link.w line&
+end macro
+
+macro chk.w line&
+end macro
+
+;; BTST BCHG BCLR BSET ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Syntax:
+;     btst.[bl] dn,<ea>
+;     btst.[bl] #<data>,<ea>
+; Syntax:
+;     bchg.[bl] dn,<ea>
+;     bchg.[bl] #<data>,<ea>
+; Syntax:
+;     bclr.[bl] dn,<ea>
+;     bclr.[bl] #<data>,<ea>
+; Syntax:
+;     bset.[bl] dn,<ea>
+;     bset.[bl] #<data>,<ea>
+; TODO: When looking at: http://goldencrystal.free.fr/M68kOpcodes-v2.3.pdf
+;       I don't see how size .b/.l is encoded...??
+iterate <instr,  instr_bits>, \
+        btst,    00b, \
+        bchg,    01b, \
+        bclr,    10b, \
+        bset,    11b
+    ; TODO: I think the size_in_bytes is strange.
+    ;       What even does .b and .l mean for these specific instructions?
+    ;       I really need to figure this out, is it that the addressing mode
+    ;       bits are changed, that seems reasonable? I require explicit .[bwl]
+    ;       but maybe another assembler when .[bwl] is not input on <ea> it will
+    ;       take the size from the instruction suffix.. yea that must be it.
+    iterate <size, size_in_bytes>, \
+             b,    2, \
+             l,    2
+
+        calminstruction instr.size? op1*, ea*
+                local op1_bits
+                local op1_type_bit
+                local bit_index
+                local bit_index_size
+
+                ; Init default values
+                compute op1_bits, 0 ; This is the value when op1 is imm
+                compute op1_type_bit, 1000b ; This is the value when op1 is imm
+                compute bit_index, 0
+                compute bit_index_size, size_in_bytes ; This is the value when op1 is imm
+
+                call m68k.parse_operand@op1, op1
+                call m68k.parse_operand@op2, ea
+
+                ; TODO: If I do compute and result is a boolean is that 0/1 then?
+                ;       because if that's the case I could use that in places for
+                ;       sure, it would sort of be like a ternary op in fasmg.
+                ;   If type was a token instead of a value, the I suppose I
+                ;   could use transform too, i.e. transform the type to 1 or 0.
+                check @op1.type = 'dn'
+            ; op1_is_dn
+                jno op1_is_imm ; TODO: I mean I have not validated that though...
+                ; compute op1_bits, (op1 - m68k.data_reg) shl 1
+                compute op1_bits, (0 scaleof op1) shl 1 ; TODO: This is nicer?
+                compute op1_type_bit, 1
+                compute bit_index_size, 0
+                jump emit_bytes
+            op1_is_imm:
+                compute bit_index, 0
+            emit_bytes:
+
+                ; first byte
+                emit 1, op1_bits + op1_type_bit
+
+                ; second byte
+                emit 1, instr_bits shl 6 + @op2.ea_mode_bits shl 3 +  @op2.ea_reg_bits
+
+                ; bit index
+                ; bswap is needed because famg outputs in little-endian :'/
+                emit bit_index_size, bit_index bswap bit_index_size
+
+                ; <ea> extension words
+                ; bswap is needed because famg outputs in little-endian :'/
+                emit @op2.ext_bytes, @op2.ext_bytes_bits bswap @op2.ext_bytes
+        end calminstruction
+
+    end iterate ; <size, size_in_bytes>
+end iterate ; <instr, instr_bits>
+
+;; MOVEM ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 iterate <size,  size_bits>, \
         w,      0b, \
         l,      1b
@@ -33,50 +129,78 @@ iterate <size,  size_bits>, \
         ;     movem.[wl] <ea>,<register list>
         ;     movem.[wl] <register list>,<ea>
         calminstruction movem.size? op1*, op2*
-                display 10 bappend 'movem:' bappend 10
+                    display 10 bappend 'movem:' bappend 10
 
-                local direction
-                local bit_mask
-                local ea_mode_bits
-                local ea_reg_bits
+                    local direction
+                    local bit_mask
+                    local ea_mode_bits
+                    local ea_reg_bits
+                    local ext_bytes
+                    local ext_bytes_bits
 
             ; Init default values
-                ; 0 means <register list> to <ea>
-                ; 1 means <ea>,<register list>
-                ; compute direction, 0
-                ; compute bit_mask, 0
+                    ; 0 means <register list> to <ea>
+                    ; 1 means <ea>,<register list>
+                    ; compute direction, 0
+                    ; compute bit_mask, 0
 
-                call m68k.parse_reg_list@reg_list1, op1
-                call m68k.parse_reg_list@reg_list2, op2
+                    call m68k.parse_reg_list@reg_list1, op1
+                    call m68k.parse_reg_list@reg_list2, op2
 
 
             ; Figure out direction
-                check @reg_list1.is_reg_list = 1
-                jyes reglist_to_ea
+                    check @reg_list1.is_reg_list = 1
+                    jyes reglist_to_ea
             ; ea_to_reglist:
-                call m68k.parse_operand@op1, op1
-                compute direction, 1
-                compute bit_mask, @reg_list2.mask_word
-                compute ea_mode_bits, @op1.ea_mode_bits
-                compute ea_reg_bits, @op1.ea_reg_bits
-                jump emit_bytes
+                    call m68k.parse_operand@op1, op1
+                    compute direction, 1
+                    ; TODO: Instead of doing all these twice for the 2 cases
+                    ;       can I not `arrange ea, @op1 or something??
+                    compute ea_mode_bits, @op1.ea_mode_bits
+                    compute ea_reg_bits, @op1.ea_reg_bits
+                    compute ext_bytes, @op1.ext_bytes
+                    compute ext_bytes_bits, @op1.ext_bytes_bits
+                    compute bit_mask, @reg_list2.mask_word
+                    ; check if reverse mask should be used
+                    check @op1.type = '-(an)'
+                    jno skip_reverse1
+                ; reverse:
+                    compute bit_mask, @reg_list2.mask_word_reverse
+                skip_reverse1: ; TODO: just jump to emit_bytes instead?
+                    jump emit_bytes
             reglist_to_ea:
-                call m68k.parse_operand@op2, op2
-                compute direction, 0
-                compute bit_mask, @reg_list1.mask_word
-                compute ea_mode_bits, @op2.ea_mode_bits
-                compute ea_reg_bits, @op2.ea_reg_bits
+                    call m68k.parse_operand@op2, op2
+                    compute direction, 0
+                    compute ea_mode_bits, @op2.ea_mode_bits
+                    compute ea_reg_bits, @op2.ea_reg_bits
+                    compute ext_bytes, @op2.ext_bytes
+                    compute ext_bytes_bits, @op2.ext_bytes_bits
+                    compute bit_mask, @reg_list1.mask_word
+                    ; check if reverse mask should be used
+                    check @op2.type = '-(an)'
+                    jno skip_reverse2
+                ; reverse:
+                    compute bit_mask, @reg_list1.mask_word_reverse
+                skip_reverse2: ; TODO: just jump to emit_bytes instead?
             emit_bytes:
 
-                ; first byte
-                emit 1, 01001000b + direction shl 2
+                    ; first byte
+                    emit 1, 01001000b + direction shl 2
 
-                ; second byte
-                emit 1, 10000000b + size_bits shl 6 + ea_mode_bits shl 3 + ea_reg_bits
+                    ; second byte
+                    emit 1, 10000000b + size_bits shl 6 + ea_mode_bits shl 3 + ea_reg_bits
 
-                ; extension words (register list bit mask)
-                ; bswap is needed because famg outputs in little-endian :'/
-                emit 2, bit_mask bswap 2
+                    ; register list bit mask
+                    ; bswap is needed because famg outputs in little-endian :'/
+                    emit 2, bit_mask bswap 2
+
+                    ; <ea> extension words
+                    ; bswap is needed because famg outputs in little-endian :'/
+                    ; emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+                    emit ext_bytes, ext_bytes_bits bswap ext_bytes
+
+
+
 
             ;     local _size
 

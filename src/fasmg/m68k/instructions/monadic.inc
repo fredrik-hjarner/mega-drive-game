@@ -26,6 +26,25 @@
 ;; |             |             |        |                                   | ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Placeholders for not yet implemented instructions ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+macro nbcd.b line&
+end macro
+
+macro pea.l line&
+end macro
+
+macro tas.b line&
+end macro
+
+macro unlk line&
+end macro
+
+macro stop line&
+end macro
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ; Syntax:
 ;     negx <ea>
 ;     clr  <ea>
@@ -271,7 +290,7 @@ end iterate ; <instr, second_byte>
 ;     dn: data register (d0 - d7)
 ; TODO: Assert that dn is a data register
 ;       with `relativeto` or whatever one is supposed to use.
-calminstruction swap? dn*
+calminstruction swap.w? dn*
     local tmp
 
     call m68k.parse_operand@op1, dn
