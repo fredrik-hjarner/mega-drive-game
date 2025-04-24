@@ -331,10 +331,10 @@ iterate op, @op1,@op2
                 ; log_ext_bytes_bits:
                     arrange tmp, ext_bytes_bits
                     stringify tmp
-                    display tmp bappend 9
+                    display 'ext_bytes_bits: ' bappend tmp bappend 9
                     jump done_ext_bytes_bits
                 skip_log_ext_bytes_bits:
-                    display 'neg' bappend 9
+                    display 'ext_bytes_bits: ' bappend 'neg' bappend 9
                 done_ext_bytes_bits:
 
                     ; log imm
@@ -345,7 +345,7 @@ iterate op, @op1,@op2
                 ; log_imm:
                     arrange tmp, imm
                     stringify tmp
-                    display tmp bappend 10
+                    display 'imm: ' bappend tmp bappend 10
                     exit
                 skip_log_imm:
                     display 10

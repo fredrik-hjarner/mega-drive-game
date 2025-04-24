@@ -1344,10 +1344,10 @@
 ; 	dblo	d5,*
 
 ; 	bra.s	*
-; 	bra.w	*
+	bra.w	@
 
 ; 	bsr.s	*
-; 	bsr.w	*
+	bsr.w	@
 
 ; 	bhi.s	*
 ; 	bls.s	*
@@ -1365,22 +1365,22 @@
 ; 	ble.s	*
 ; 	bhs.s	*
 ; 	blo.s	*
-; 	bhi.w	*
-; 	bls.w	*
-; 	bcc.w	*
-; 	bcs.w	*
-; 	bne.w	*
-; 	beq.w	*
-; 	bvc.w	*
-; 	bvs.w	*
-; 	bpl.w	*
-; 	bmi.w	*
-; 	bge.w	*
-; 	blt.w	*
-; 	bgt.w	*
-; 	ble.w	*
-; 	bhs.w	*
-; 	blo.w	*
+	bhi.w	@
+	bls.w	@
+	bcc.w	@
+	bcs.w	@
+	bne.w	@
+	beq.w	@
+	bvc.w	@
+	bvs.w	@
+	bpl.w	@
+	bmi.w	@
+	bge.w	@
+	blt.w	@
+	bgt.w	@
+	ble.w	@
+	bhs.w	@
+	blo.w	@
 
 ; 	moveq.l	#0,d5
 ; 	moveq	#0,d5

@@ -59,3 +59,9 @@ macro calminstruction?.replace_legacy_operators? expr*
         ; display expr_str bappend 10
         ; display expr_str bappend 10
 end macro
+
+; Replace @ with $ since famsg uses $ for location counter and some m68k
+; assemblers uses @ instead.
+; I am not sure this will work well, otherwise I need to come up with another
+; solution.
+define @ $

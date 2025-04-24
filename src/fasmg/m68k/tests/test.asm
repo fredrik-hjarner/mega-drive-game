@@ -752,3 +752,8 @@ l2:
     endif
 
     include "tests/valid_instructions.asm"
+
+;; More problematic cases ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    bra.w @
+

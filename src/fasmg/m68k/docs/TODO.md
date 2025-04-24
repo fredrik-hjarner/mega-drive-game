@@ -35,3 +35,6 @@
 * Experiment with `relativeto` to find out if I can use that more in parsing.
   for example if I can have an m68k.register element instead of separate
   data_reg and address_reg elements, or actually if I can have both.
+* If `$` is part on an expression then that expression MUST be `compute`:ed
+      before any `emit` is done since otherwise it will change the value of `$`!
+      This particular problem probably needs a well-thought out solution.

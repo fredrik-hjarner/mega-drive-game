@@ -43,6 +43,8 @@ end macro
 macro stop line&
 end macro
 
+; TODO: all scc instructions
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Syntax:
@@ -138,16 +140,18 @@ iterate <cc,  cc_bits>, \
         ; TODO: How will this be able to work with both label and literals???
         calminstruction? b#cc.b? label*
             local pc
+            local label_val
 
             ; call m68k.parse_operand@op1, label
 
             compute pc, $ + 2
+            compute label_val, label
 
             emit 1, 01100000b + cc_bits
 
             ; Assume label is $10 and address is $20
             ; $10 - $20 = $10
-            emit 1, label - pc
+            emit 1, label_val - pc
         end calminstruction
 
         ; TODO: Check if fits in a word. Maybe do that in parse_operand?
@@ -155,15 +159,17 @@ iterate <cc,  cc_bits>, \
         ; TODO: How will this be able to work with both label and literals???
         calminstruction? b#cc.w? label*
             local pc
+            local label_val
 
             ; call m68k.parse_operand@op1, label
 
             compute pc, $ + 2
+            compute label_val, label
 
             emit 1, 01100000b + cc_bits
             emit 1, 0 ; second byte being zero
             ; bswap is needed because famg outputs in little-endian :'/
-            emit 2, (label - pc) bswap 2
+            emit 2, (label_val - pc) bswap 2
         end calminstruction
 
 end iterate ; <cc, cc_bits>
@@ -187,16 +193,18 @@ iterate <instr,  first_byte>, \
         ; TODO: How will this be able to work with both label and literals???
         calminstruction? instr.b? label*
                 local pc
+                local label_val
 
                 ; call m68k.parse_operand@op1, label
 
                 compute pc, $ + 2
+                compute label_val, label
 
                 emit 1, first_byte
 
                 ; Assume label is $10 and address is $20
                 ; $10 - $20 = $10
-                emit 1, label - pc
+                emit 1, label_val - pc
         end calminstruction
 
         ; TODO: Check if fits in a word. Maybe do that in parse_operand?
@@ -204,15 +212,17 @@ iterate <instr,  first_byte>, \
         ; TODO: How will this be able to work with both label and literals???
         calminstruction? instr.w? label*
             local pc
+            local label_val
 
             ; call m68k.parse_operand@op1, label
 
             compute pc, $ + 2
+            compute label_val, label
 
             emit 1, first_byte
             emit 1, 0 ; second byte being zero
             ; bswap is needed because famg outputs in little-endian :'/
-            emit 2, (label - pc) bswap 2
+            emit 2, (label_val - pc) bswap 2
         end calminstruction
 
 end iterate ; <instr, first_byte>
