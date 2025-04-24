@@ -776,7 +776,7 @@
 ; 	nbcd	($FFFFFFFF).l
 
 	swap.w	d5
-; 	swap	d5
+	swap	d5
 
 	; pea.l	(a2)
 ; 	pea.l	$7FFF(a2)
@@ -915,7 +915,7 @@
 	lea.l	($FFFFFFFF).l,a2
 ; 	lea.l	*(pc),a2
 ; 	lea.l	*(pc,d5.w),a2
-; 	lea	(a2),a2
+	lea	(a2),a2
 ; 	lea	$7FFF(a2),a2
 ; 	lea	$7F(a2,d5.w),a2
 ; 	lea	($FFFFFFFF).w,a2
@@ -1382,8 +1382,8 @@
 	bhs.w	@
 	blo.w	@
 
-; 	moveq.l	#0,d5
-; 	moveq	#0,d5
+	moveq.l	#0,d5
+	moveq	#0,d5
 
 ; 	divu.w	d2,d5
 ; 	divu.w	(a2),d5
