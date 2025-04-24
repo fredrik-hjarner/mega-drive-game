@@ -172,6 +172,12 @@ iterate <cc,  cc_bits>, \
             emit 2, (label_val - pc) bswap 2
         end calminstruction
 
+        ; alias for .b
+        ; TODO: Not sure if this should be here or in alias .inc file.
+        macro b#cc.s? line&
+            b#cc.b line
+        end macro
+
 end iterate ; <cc, cc_bits>
 
 ; Syntax:

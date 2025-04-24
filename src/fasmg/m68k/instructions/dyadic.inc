@@ -40,9 +40,9 @@ end macro
 
 
 
-
-
-
+;divu
+;divs
+;sbcd
 ;sub
 ;subx
 ;suba

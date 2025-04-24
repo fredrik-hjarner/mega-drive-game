@@ -1349,22 +1349,22 @@
 	bsr.s	@
 	bsr.w	@
 
-; 	bhi.s	*
-; 	bls.s	*
-; 	bcc.s	*
-; 	bcs.s	*
-; 	bne.s	*
-; 	beq.s	*
-; 	bvc.s	*
-; 	bvs.s	*
-; 	bpl.s	*
-; 	bmi.s	*
-; 	bge.s	*
-; 	blt.s	*
-; 	bgt.s	*
-; 	ble.s	*
-; 	bhs.s	*
-; 	blo.s	*
+	bhi.s	@
+	bls.s	@
+	bcc.s	@
+	bcs.s	@
+	bne.s	@
+	beq.s	@
+	bvc.s	@
+	bvs.s	@
+	bpl.s	@
+	bmi.s	@
+	bge.s	@
+	blt.s	@
+	bgt.s	@
+	ble.s	@
+	bhs.s	@
+	blo.s	@
 	bhi.w	@
 	bls.w	@
 	bcc.w	@
