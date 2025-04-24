@@ -1000,14 +1000,14 @@
 ; 	subq.l	#1,($FFFFFFFF).w
 	subq.l	#1,($FFFFFFFF).l
 
-; 	st.b	d5
-; 	st.b	(a2)
-; 	st.b	(a2)+
-; 	st.b	-(a2)
+	st.b	d5
+	st.b	(a2)
+	st.b	(a2)+
+	st.b	-(a2)
 ; 	st.b	$7FFF(a2)
 ; 	st.b	$7F(a2,d5.w)
 ; 	st.b	($FFFFFFFF).w
-; 	st.b	($FFFFFFFF).l
+	st.b	($FFFFFFFF).l
 ; 	st	d5
 ; 	st	(a2)
 ; 	st	(a2)+
@@ -1017,14 +1017,14 @@
 ; 	st	($FFFFFFFF).w
 ; 	st	($FFFFFFFF).l
 
-; 	sf.b	d5
-; 	sf.b	(a2)
-; 	sf.b	(a2)+
-; 	sf.b	-(a2)
+	sf.b	d5
+	sf.b	(a2)
+	sf.b	(a2)+
+	sf.b	-(a2)
 ; 	sf.b	$7FFF(a2)
 ; 	sf.b	$7F(a2,d5.w)
 ; 	sf.b	($FFFFFFFF).w
-; 	sf.b	($FFFFFFFF).l
+	sf.b	($FFFFFFFF).l
 ; 	sf	d5
 ; 	sf	(a2)
 ; 	sf	(a2)+

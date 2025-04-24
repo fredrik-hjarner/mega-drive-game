@@ -45,6 +45,51 @@ end macro
 
 ; TODO: all scc instructions
 
+;; SCC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Syntax:
+;     scc.b <ea>
+; Aliases:
+;     hs = cc
+;     lo = cs
+iterate <cc,  cc_bits>, \
+        t,      0000b, \
+        f,      0001b, \
+        hi,     0010b, \
+        ls,     0011b, \
+        cc,     0100b, \
+        \ ; Alias for cc
+        hs,     0100b, \
+        cs,     0101b, \
+        \ ; Alias for cs
+        lo,     0101b, \
+        ne,     0110b, \
+        eq,     0111b, \
+        vc,     1000b, \
+        vs,     1001b, \
+        pl,     1010b, \
+        mi,     1011b, \
+        ge,     1100b, \
+        lt,     1101b, \
+        gt,     1110b, \
+        le,     1111b
+
+        calminstruction s#cc.b? ea*
+                call m68k.parse_operand@op1, ea
+
+                ; first byte
+                emit 1, 01010000b + cc_bits
+
+                ; second byte
+                emit 1, 11000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
+
+                ; <ea> extension words
+                ; bswap is needed because famg outputs in little-endian :'/
+                emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+        end calminstruction
+
+end iterate ; <cc, cc_bits>
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Syntax:
