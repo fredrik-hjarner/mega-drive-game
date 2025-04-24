@@ -38,6 +38,53 @@ end macro
 macro chk.w line&
 end macro
 
+
+
+
+
+
+;sub
+;subx
+;suba
+;eor
+;cmpm
+;cmp
+;cmpa
+;mulu
+;muls
+
+macro abcd.b line&
+end macro
+
+macro exg.l line&
+end macro
+
+macro and.b line&
+end macro
+macro and.w line&
+end macro
+macro and.l line&
+end macro
+
+macro add.b line&
+end macro
+macro add.w line&
+end macro
+macro add.l line&
+end macro
+
+macro addx.b line&
+end macro
+macro addx.w line&
+end macro
+macro addx.l line&
+end macro
+
+macro adda.w line&
+end macro
+macro adda.l line&
+end macro
+
 ;; BTST BCHG BCLR BSET ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Syntax:
