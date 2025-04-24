@@ -77,8 +77,14 @@ macro sbcd line&
     sbcd.b line
 end macro
 
-;mulu
-;muls
+macro mulu line&
+    mulu.w line
+end macro
+
+macro muls line&
+    muls.w line
+end macro
+
 ;abcd
 ;exg
 
@@ -94,3 +100,5 @@ end macro
 macro bsr.s line&
     bsr.b line
 end macro
+
+; TODO: I have alias baked in somewhere in some instruction. Move it here!
