@@ -752,6 +752,7 @@ l2:
     endif
 
     include "tests/valid_instructions.asm"
+    ; include "tests/valid_instructions_uppercase.asm" ; TODO:
 
 ;; More problematic cases ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

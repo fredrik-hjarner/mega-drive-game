@@ -52,7 +52,12 @@ macro chk line&
     chk.w line
 end macro
 
-;; TODO: Add Scc here.
+; scc
+iterate cc, t,f,hi,ls,cc,hs,cs,lo,ne,eq,vc,vs,pl,mi,ge,lt,gt,le
+    macro s#cc? line&
+        s#cc.b line
+    end macro
+end iterate
 
 ;; TODO: Add DBcc here.
 

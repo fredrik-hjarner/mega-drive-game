@@ -43,7 +43,6 @@ end macro
 macro stop line&
 end macro
 
-; TODO: all scc instructions
 
 ;; SCC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
