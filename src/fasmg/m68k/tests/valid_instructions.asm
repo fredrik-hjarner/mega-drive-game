@@ -1916,12 +1916,12 @@
 ; 	lsl	($FFFFFFFF).w
 ; 	lsl	($FFFFFFFF).l
 
-; 	lsr.b	d2,d5
-; 	lsr.b	#1,d5
-; 	lsr.w	d2,d5
-; 	lsr.w	#1,d5
-; 	lsr.l	d2,d5
-; 	lsr.l	#1,d5
+	lsr.b	d2,d5
+	lsr.b	#1,d5
+	lsr.w	d2,d5
+	lsr.w	#1,d5
+	lsr.l	d2,d5
+	lsr.l	#1,d5
 ; 	lsr.w	(a2)
 ; 	lsr.w	(a2)+
 ; 	lsr.w	-(a2)
@@ -1937,12 +1937,12 @@
 ; 	lsr	($FFFFFFFF).w
 ; 	lsr	($FFFFFFFF).l
 
-; 	roxl.b	d2,d5
-; 	roxl.b	#1,d5
-; 	roxl.w	d2,d5
-; 	roxl.w	#1,d5
-; 	roxl.l	d2,d5
-; 	roxl.l	#1,d5
+	roxl.b	d2,d5
+	roxl.b	#1,d5
+	roxl.w	d2,d5
+	roxl.w	#1,d5
+	roxl.l	d2,d5
+	roxl.l	#1,d5
 ; 	roxl.w	(a2)
 ; 	roxl.w	(a2)+
 ; 	roxl.w	-(a2)
@@ -1958,12 +1958,12 @@
 ; 	roxl	($FFFFFFFF).w
 ; 	roxl	($FFFFFFFF).l
 
-; 	roxr.b	d2,d5
-; 	roxr.b	#1,d5
-; 	roxr.w	d2,d5
-; 	roxr.w	#1,d5
-; 	roxr.l	d2,d5
-; 	roxr.l	#1,d5
+	roxr.b	d2,d5
+	roxr.b	#1,d5
+	roxr.w	d2,d5
+	roxr.w	#1,d5
+	roxr.l	d2,d5
+	roxr.l	#1,d5
 ; 	roxr.w	(a2)
 ; 	roxr.w	(a2)+
 ; 	roxr.w	-(a2)
