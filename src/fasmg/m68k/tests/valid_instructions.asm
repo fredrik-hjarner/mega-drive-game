@@ -1853,12 +1853,12 @@
 ; 	adda.l	*(pc),a2
 ; 	adda.l	*(pc,d5.w),a2
 
-; 	asl.b	d2,d5
-; 	asl.b	#1,d5
-; 	asl.w	d2,d5
-; 	asl.w	#1,d5
-; 	asl.l	d2,d5
-; 	asl.l	#1,d5
+	asl.b	d2,d5
+	asl.b	#1,d5
+	asl.w	d2,d5
+	asl.w	#1,d5
+	asl.l	d2,d5
+	asl.l	#1,d5
 ; 	asl.w	(a2)
 ; 	asl.w	(a2)+
 ; 	asl.w	-(a2)
@@ -1874,12 +1874,12 @@
 ; 	asl	($FFFFFFFF).w
 ; 	asl	($FFFFFFFF).l
 
-; 	asr.b	d2,d5
-; 	asr.b	#1,d5
-; 	asr.w	d2,d5
-; 	asr.w	#1,d5
-; 	asr.l	d2,d5
-; 	asr.l	#1,d5
+	asr.b	d2,d5
+	asr.b	#1,d5
+	asr.w	d2,d5
+	asr.w	#1,d5
+	asr.l	d2,d5
+	asr.l	#1,d5
 ; 	asr.w	(a2)
 ; 	asr.w	(a2)+
 ; 	asr.w	-(a2)
@@ -1895,12 +1895,12 @@
 ; 	asr	($FFFFFFFF).w
 ; 	asr	($FFFFFFFF).l
 
-; 	lsl.b	d2,d5
-; 	lsl.b	#1,d5
-; 	lsl.w	d2,d5
-; 	lsl.w	#1,d5
-; 	lsl.l	d2,d5
-; 	lsl.l	#1,d5
+	lsl.b	d2,d5
+	lsl.b	#1,d5
+	lsl.w	d2,d5
+	lsl.w	#1,d5
+	lsl.l	d2,d5
+	lsl.l	#1,d5
 ; 	lsl.w	(a2)
 ; 	lsl.w	(a2)+
 ; 	lsl.w	-(a2)
