@@ -1979,12 +1979,12 @@
 ; 	roxr	($FFFFFFFF).w
 ; 	roxr	($FFFFFFFF).l
 
-; 	rol.b	d2,d5
-; 	rol.b	#1,d5
-; 	rol.w	d2,d5
-; 	rol.w	#1,d5
-; 	rol.l	d2,d5
-; 	rol.l	#1,d5
+	rol.b	d2,d5
+	rol.b	#1,d5
+	rol.w	d2,d5
+	rol.w	#1,d5
+	rol.l	d2,d5
+	rol.l	#1,d5
 ; 	rol.w	(a2)
 ; 	rol.w	(a2)+
 ; 	rol.w	-(a2)
@@ -2000,12 +2000,12 @@
 ; 	rol	($FFFFFFFF).w
 ; 	rol	($FFFFFFFF).l
 
-; 	ror.b	d2,d5
-; 	ror.b	#1,d5
-; 	ror.w	d2,d5
-; 	ror.w	#1,d5
-; 	ror.l	d2,d5
-; 	ror.l	#1,d5
+	ror.b	d2,d5
+	ror.b	#1,d5
+	ror.w	d2,d5
+	ror.w	#1,d5
+	ror.l	d2,d5
+	ror.l	#1,d5
 ; 	ror.w	(a2)
 ; 	ror.w	(a2)+
 ; 	ror.w	-(a2)
