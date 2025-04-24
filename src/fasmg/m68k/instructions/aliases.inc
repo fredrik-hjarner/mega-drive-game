@@ -82,3 +82,10 @@ end macro
 ;; TODO: Which instructions? All, some?                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+macro bra.s line&
+    bra.b line
+end macro
+
+macro bsr.s line&
+    bsr.b line
+end macro

@@ -1343,10 +1343,10 @@
 ; 	dbhs	d5,*
 ; 	dblo	d5,*
 
-; 	bra.s	*
+	bra.s	@
 	bra.w	@
 
-; 	bsr.s	*
+	bsr.s	@
 	bsr.w	@
 
 ; 	bhi.s	*
