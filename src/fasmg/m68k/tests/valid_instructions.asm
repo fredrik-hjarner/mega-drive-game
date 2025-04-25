@@ -1835,7 +1835,7 @@
 	adda.w	-(a2),a2
 ; 	adda.w	$7FFF(a2),a2
 ; 	adda.w	$7F(a2,d5.w),a2
-; 	adda.w	($FFFFFFFF).w,a2
+	adda.w	($FFFFFFFF).w,a2
 	adda.w	($FFFFFFFF).l,a2
 ; 	adda.w	#$7FFF,a2
 ; 	adda.w	*(pc),a2
@@ -1847,7 +1847,7 @@
 	adda.l	-(a2),a2
 ; 	adda.l	$7FFF(a2),a2
 ; 	adda.l	$7F(a2,d5.w),a2
-; 	adda.l	($FFFFFFFF).w,a2
+	adda.l	($FFFFFFFF).w,a2
 	adda.l	($FFFFFFFF).l,a2
 ; 	adda.l	#$7FFF,a2
 ; 	adda.l	*(pc),a2
@@ -1885,7 +1885,7 @@
 	asr.w	-(a2)
 ; 	asr.w	$7FFF(a2)
 ; 	asr.w	$7F(a2,d5.w)
-; 	asr.w	($FFFFFFFF).w
+	asr.w	($FFFFFFFF).w
 	asr.w	($FFFFFFFF).l
 ; 	asr	(a2)
 ; 	asr	(a2)+
@@ -1906,7 +1906,7 @@
 	lsl.w	-(a2)
 ; 	lsl.w	$7FFF(a2)
 ; 	lsl.w	$7F(a2,d5.w)
-; 	lsl.w	($FFFFFFFF).w
+	lsl.w	($FFFFFFFF).w
 	lsl.w	($FFFFFFFF).l
 ; 	lsl	(a2)
 ; 	lsl	(a2)+
@@ -1927,7 +1927,7 @@
 	lsr.w	-(a2)
 ; 	lsr.w	$7FFF(a2)
 ; 	lsr.w	$7F(a2,d5.w)
-; 	lsr.w	($FFFFFFFF).w
+	lsr.w	($FFFFFFFF).w
 	lsr.w	($FFFFFFFF).l
 ; 	lsr	(a2)
 ; 	lsr	(a2)+
@@ -1948,7 +1948,7 @@
 	roxl.w	-(a2)
 ; 	roxl.w	$7FFF(a2)
 ; 	roxl.w	$7F(a2,d5.w)
-; 	roxl.w	($FFFFFFFF).w
+	roxl.w	($FFFFFFFF).w
 	roxl.w	($FFFFFFFF).l
 ; 	roxl	(a2)
 ; 	roxl	(a2)+
@@ -1969,7 +1969,7 @@
 	roxr.w	-(a2)
 ; 	roxr.w	$7FFF(a2)
 ; 	roxr.w	$7F(a2,d5.w)
-; 	roxr.w	($FFFFFFFF).w
+	roxr.w	($FFFFFFFF).w
 	roxr.w	($FFFFFFFF).l
 ; 	roxr	(a2)
 ; 	roxr	(a2)+
@@ -1990,7 +1990,7 @@
 	rol.w	-(a2)
 ; 	rol.w	$7FFF(a2)
 ; 	rol.w	$7F(a2,d5.w)
-; 	rol.w	($FFFFFFFF).w
+	rol.w	($FFFFFFFF).w
 	rol.w	($FFFFFFFF).l
 ; 	rol	(a2)
 ; 	rol	(a2)+
@@ -2011,7 +2011,7 @@
 	ror.w	-(a2)
 ; 	ror.w	$7FFF(a2)
 ; 	ror.w	$7F(a2,d5.w)
-; 	ror.w	($FFFFFFFF).w
+	ror.w	($FFFFFFFF).w
 	ror.w	($FFFFFFFF).l
 ; 	ror	(a2)
 ; 	ror	(a2)+
