@@ -217,6 +217,14 @@ iterate op, @op1,@op2
                     compute ea_mode_bits, 111b
                     compute ea_reg_bits, 000b
                     compute ext_bytes, 2
+                    ; Warn if maybe_abs is too large then truncate.
+                    ; TODO: actually, maybe I need to check if too negative too?
+                    check maybe_abs > (1 shl 16 - 1)
+                    jno skip_constrain_abs_w
+                ; too_large:
+                    display 'Warning: abs.w too large to fit in word.' bappend 10
+                    compute maybe_abs, 1 shl 16 - 1
+                skip_constrain_abs_w:
                     compute ext_bytes_bits, maybe_abs
                     jump done
             ;; abs.l ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -229,6 +237,14 @@ iterate op, @op1,@op2
                     compute ea_mode_bits, 111b
                     compute ea_reg_bits, 001b
                     compute ext_bytes, 4
+                    ; Warn if maybe_abs is too large then truncate.
+                    ; TODO: actually, maybe I need to check if too negative too?
+                    check maybe_abs > (1 shl 32 - 1)
+                    jno skip_constrain_abs_l
+                ; too_large:
+                    display 'Warning: abs.l too large to fit in longword.' bappend 10
+                    compute maybe_abs, 1 shl 32 - 1
+                skip_constrain_abs_l:
                     compute ext_bytes_bits, maybe_abs
                     jump done
             ;; Check if `dn` (direct data register addressing) ;;;;;;;;;;;;;;;;;

@@ -51,3 +51,7 @@
 * Maybe I should have branching instruction have .s as default and .b as the
       alias instead, dunno. Also I should move the alias into compat directory
       maybe?
+* How should too large numbers behave? asl.w	($FFFFFFFF).w
+      should it just be assigned max or should it wrap around??
+      I currently have some code in parse_operand that sets too big numbers to
+      the max allowed value.

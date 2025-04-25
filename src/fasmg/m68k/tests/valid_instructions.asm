@@ -10,7 +10,7 @@
 	ori.b	#$FF,-(a2)
 ; 	ori.b	#$FF,$7FFF(a2)
 ; 	ori.b	#$FF,$7F(a2,d5.w)
-	; ori.b	#$FF,($FFFFFFFF).w
+	ori.b	#$FF,($FFFFFFFF).w
 	ori.b	#$FF,($FFFFFFFF).l
 	ori.w	#$FFFF,d5
 	ori.w	#$FFFF,(a2)
@@ -18,7 +18,7 @@
 	ori.w	#$FFFF,-(a2)
 ; 	ori.w	#$FFFF,$7FFF(a2)
 ; 	ori.w	#$FFFF,$7F(a2,d5.w)
-	; ori.w	#$FFFF,($FFFFFFFF).w
+	ori.w	#$FFFF,($FFFFFFFF).w
 	ori.w	#$FFFF,($FFFFFFFF).l
 	ori.l	#$FFFFFFFF,d5
 	ori.l	#$FFFFFFFF,(a2)
@@ -26,7 +26,7 @@
 	ori.l	#$FFFFFFFF,-(a2)
 ; 	ori.l	#$FFFFFFFF,$7FFF(a2)
 ; 	ori.l	#$FFFFFFFF,$7F(a2,d5.w)
-; 	ori.l	#$FFFFFFFF,($FFFFFFFF).w
+	ori.l	#$FFFFFFFF,($FFFFFFFF).w
 	ori.l	#$FFFFFFFF,($FFFFFFFF).l
 
 ; 	andi.b	#$FF,ccr
@@ -39,7 +39,7 @@
 	andi.b	#$FF,-(a2)
 ; 	andi.b	#$FF,$7FFF(a2)
 ; 	andi.b	#$FF,$7F(a2,d5.w)
-; 	andi.b	#$FF,($FFFFFFFF).w
+	andi.b	#$FF,($FFFFFFFF).w
 	andi.b	#$FF,($FFFFFFFF).l
 	andi.w	#$FFFF,d5
 	andi.w	#$FFFF,(a2)
@@ -47,7 +47,7 @@
 	andi.w	#$FFFF,-(a2)
 ; 	andi.w	#$FFFF,$7FFF(a2)
 ; 	andi.w	#$FFFF,$7F(a2,d5.w)
-; 	andi.w	#$FFFF,($FFFFFFFF).w
+	andi.w	#$FFFF,($FFFFFFFF).w
 	andi.w	#$FFFF,($FFFFFFFF).l
 	andi.l	#$FFFFFFFF,d5
 	andi.l	#$FFFFFFFF,(a2)
@@ -55,7 +55,7 @@
 	andi.l	#$FFFFFFFF,-(a2)
 ; 	andi.l	#$FFFFFFFF,$7FFF(a2)
 ; 	andi.l	#$FFFFFFFF,$7F(a2,d5.w)
-; 	andi.l	#$FFFFFFFF,($FFFFFFFF).w
+	andi.l	#$FFFFFFFF,($FFFFFFFF).w
 	andi.l	#$FFFFFFFF,($FFFFFFFF).l
 
 	subi.b	#$FF,d5
@@ -64,7 +64,7 @@
 	subi.b	#$FF,-(a2)
 ; 	subi.b	#$FF,$7FFF(a2)
 ; 	subi.b	#$FF,$7F(a2,d5.w)
-; 	subi.b	#$FF,($FFFFFFFF).w
+	subi.b	#$FF,($FFFFFFFF).w
 	subi.b	#$FF,($FFFFFFFF).l
 	subi.w	#$FFFF,d5
 	subi.w	#$FFFF,(a2)
@@ -72,7 +72,7 @@
 	subi.w	#$FFFF,-(a2)
 ; 	subi.w	#$FFFF,$7FFF(a2)
 ; 	subi.w	#$FFFF,$7F(a2,d5.w)
-; 	subi.w	#$FFFF,($FFFFFFFF).w
+	subi.w	#$FFFF,($FFFFFFFF).w
 	subi.w	#$FFFF,($FFFFFFFF).l
 	subi.l	#$FFFFFFFF,d5
 	subi.l	#$FFFFFFFF,(a2)
@@ -80,7 +80,7 @@
 	subi.l	#$FFFFFFFF,-(a2)
 ; 	subi.l	#$FFFFFFFF,$7FFF(a2)
 ; 	subi.l	#$FFFFFFFF,$7F(a2,d5.w)
-; 	subi.l	#$FFFFFFFF,($FFFFFFFF).w
+	subi.l	#$FFFFFFFF,($FFFFFFFF).w
 	subi.l	#$FFFFFFFF,($FFFFFFFF).l
 
 	addi.b	#$FF,d5
@@ -89,7 +89,7 @@
 	addi.b	#$FF,-(a2)
 ; 	addi.b	#$FF,$7FFF(a2)
 ; 	addi.b	#$FF,$7F(a2,d5.w)
-; 	addi.b	#$FF,($FFFFFFFF).w
+	addi.b	#$FF,($FFFFFFFF).w
 	addi.b	#$FF,($FFFFFFFF).l
 	addi.w	#$FFFF,d5
 	addi.w	#$FFFF,(a2)
@@ -97,7 +97,7 @@
 	addi.w	#$FFFF,-(a2)
 ; 	addi.w	#$FFFF,$7FFF(a2)
 ; 	addi.w	#$FFFF,$7F(a2,d5.w)
-; 	addi.w	#$FFFF,($FFFFFFFF).w
+	addi.w	#$FFFF,($FFFFFFFF).w
 	addi.w	#$FFFF,($FFFFFFFF).l
 	addi.l	#$FFFFFFFF,d5
 	addi.l	#$FFFFFFFF,(a2)
@@ -105,7 +105,7 @@
 	addi.l	#$FFFFFFFF,-(a2)
 ; 	addi.l	#$FFFFFFFF,$7FFF(a2)
 ; 	addi.l	#$FFFFFFFF,$7F(a2,d5.w)
-; 	addi.l	#$FFFFFFFF,($FFFFFFFF).w
+	addi.l	#$FFFFFFFF,($FFFFFFFF).w
 	addi.l	#$FFFFFFFF,($FFFFFFFF).l
 
 ; 	eori.b	#$FF,ccr
@@ -118,23 +118,23 @@
 	eori.b	#$FF,-(a2)
 ; 	eori.b	#$FF,$7FFF(a2)
 ; 	eori.b	#$FF,$7F(a2,d5.w)
-; 	eori.b	#$FF,($FFFFFFFF).w
-; 	eori.b	#$FF,($FFFFFFFF).l
+	eori.b	#$FF,($FFFFFFFF).w
+	eori.b	#$FF,($FFFFFFFF).l
 	eori.w	#$FFFF,d5
 	eori.w	#$FFFF,(a2)
 	eori.w	#$FFFF,(a2)+
 	eori.w	#$FFFF,-(a2)
 ; 	eori.w	#$FFFF,$7FFF(a2)
 ; 	eori.w	#$FFFF,$7F(a2,d5.w)
-; 	eori.w	#$FFFF,($FFFFFFFF).w
-; 	eori.w	#$FFFF,($FFFFFFFF).l
+	eori.w	#$FFFF,($FFFFFFFF).w
+	eori.w	#$FFFF,($FFFFFFFF).l
 	eori.l	#$FFFFFFFF,d5
 	eori.l	#$FFFFFFFF,(a2)
 	eori.l	#$FFFFFFFF,(a2)+
 	eori.l	#$FFFFFFFF,-(a2)
 ; 	eori.l	#$FFFFFFFF,$7FFF(a2)
 ; 	eori.l	#$FFFFFFFF,$7F(a2,d5.w)
-; 	eori.l	#$FFFFFFFF,($FFFFFFFF).w
+	eori.l	#$FFFFFFFF,($FFFFFFFF).w
 	eori.l	#$FFFFFFFF,($FFFFFFFF).l
 
 	cmpi.b	#$FF,d5
@@ -1864,7 +1864,7 @@
 	asl.w	-(a2)
 ; 	asl.w	$7FFF(a2)
 ; 	asl.w	$7F(a2,d5.w)
-; 	asl.w	($FFFFFFFF).w
+	asl.w	($FFFFFFFF).w
 	asl.w	($FFFFFFFF).l
 ; 	asl	(a2)
 ; 	asl	(a2)+
