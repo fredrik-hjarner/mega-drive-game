@@ -143,7 +143,7 @@
 	cmpi.b	#$FF,-(a2)
 ; 	cmpi.b	#$FF,$7FFF(a2)
 ; 	cmpi.b	#$FF,$7F(a2,d5.w)
-; 	cmpi.b	#$FF,($FFFFFFFF).w
+	cmpi.b	#$FF,($FFFFFFFF).w
 	cmpi.b	#$FF,($FFFFFFFF).l
 	cmpi.w	#$FFFF,d5
 	cmpi.w	#$FFFF,(a2)
@@ -151,7 +151,7 @@
 	cmpi.w	#$FFFF,-(a2)
 ; 	cmpi.w	#$FFFF,$7FFF(a2)
 ; 	cmpi.w	#$FFFF,$7F(a2,d5.w)
-; 	cmpi.w	#$FFFF,($FFFFFFFF).w
+	cmpi.w	#$FFFF,($FFFFFFFF).w
 	cmpi.w	#$FFFF,($FFFFFFFF).l
 	cmpi.l	#$FFFFFFFF,d5
 	cmpi.l	#$FFFFFFFF,(a2)
@@ -159,7 +159,7 @@
 	cmpi.l	#$FFFFFFFF,-(a2)
 ; 	cmpi.l	#$FFFFFFFF,$7FFF(a2)
 ; 	cmpi.l	#$FFFFFFFF,$7F(a2,d5.w)
-; 	cmpi.l	#$FFFFFFFF,($FFFFFFFF).w
+	cmpi.l	#$FFFFFFFF,($FFFFFFFF).w
 	cmpi.l	#$FFFFFFFF,($FFFFFFFF).l
 
 	btst.l	d2,d5
@@ -168,7 +168,7 @@
 	btst.b	d5,-(a2)
 ; 	btst.b	d5,$7FFF(a2)
 ; 	btst.b	d5,$7F(a2,d5.w)
-; 	btst.b	d5,($FFFFFFFF).w
+	btst.b	d5,($FFFFFFFF).w
 	btst.b	d5,($FFFFFFFF).l
 	; btst.b	d5,#$55 ; TODO: destination can never be an immediate?!
 ; 	btst.b	d5,*(pc)
@@ -192,7 +192,7 @@
 	btst.b	#0,-(a2)
 ; 	btst.b	#0,$7FFF(a2)
 ; 	btst.b	#0,$7F(a2,d5.w)
-; 	btst.b	#0,($FFFFFFFF).w
+	btst.b	#0,($FFFFFFFF).w
 	btst.b	#0,($FFFFFFFF).l
 ; 	btst.b	#0,*(pc)
 ; 	btst.b	#0,*(pc,d5.w)
@@ -214,7 +214,7 @@
 	bchg.b	d5,-(a2)
 ; 	bchg.b	d5,$7FFF(a2)
 ; 	bchg.b	d5,$7F(a2,d5.w)
-; 	bchg.b	d5,($FFFFFFFF).w
+	bchg.b	d5,($FFFFFFFF).w
 	bchg.b	d5,($FFFFFFFF).l
 
 ; 	bchg	d2,d5
@@ -232,7 +232,7 @@
 	bchg.b	#0,-(a2)
 ; 	bchg.b	#0,$7FFF(a2)
 ; 	bchg.b	#0,$7F(a2,d5.w)
-; 	bchg.b	#0,($FFFFFFFF).w
+	bchg.b	#0,($FFFFFFFF).w
 	bchg.b	#0,($FFFFFFFF).l
 
 ; 	bchg	#0,d5
@@ -250,7 +250,7 @@
 	bclr.b	d5,-(a2)
 ; 	bclr.b	d5,$7FFF(a2)
 ; 	bclr.b	d5,$7F(a2,d5.w)
-; 	bclr.b	d5,($FFFFFFFF).w
+	bclr.b	d5,($FFFFFFFF).w
 	bclr.b	d5,($FFFFFFFF).l
 
 ; 	bclr	d2,d5
@@ -268,7 +268,7 @@
 	bclr.b	#0,-(a2)
 ; 	bclr.b	#0,$7FFF(a2)
 ; 	bclr.b	#0,$7F(a2,d5.w)
-; 	bclr.b	#0,($FFFFFFFF).w
+	bclr.b	#0,($FFFFFFFF).w
 	bclr.b	#0,($FFFFFFFF).l
 
 ; 	bclr	#0,d5
@@ -286,7 +286,7 @@
 	bset.b	d5,-(a2)
 ; 	bset.b	d5,$7FFF(a2)
 ; 	bset.b	d5,$7F(a2,d5.w)
-; 	bset.b	d5,($FFFFFFFF).w
+	bset.b	d5,($FFFFFFFF).w
 	bset.b	d5,($FFFFFFFF).l
 
 ; 	bset	d2,d5
@@ -304,7 +304,7 @@
 	bset.b	#0,-(a2)
 ; 	bset.b	#0,$7FFF(a2)
 ; 	bset.b	#0,$7F(a2,d5.w)
-; 	bset.b	#0,($FFFFFFFF).w
+	bset.b	#0,($FFFFFFFF).w
 	bset.b	#0,($FFFFFFFF).l
 
 ; 	bset	#0,d5
@@ -328,7 +328,7 @@
 	movea.w	-(a2),a2
 ; 	movea.w	$7FFF(a2),a2
 ; 	movea.w	$7F(a2,d5.w),a2
-; 	movea.w	($FFFFFFFF).w,a2
+	movea.w	($FFFFFFFF).w,a2
 	movea.w	($FFFFFFFF).l,a2
 ; 	movea.w	*(pc),a2
 ; 	movea.w	*(pc,d5.w),a2
@@ -339,7 +339,7 @@
 	movea.l	-(a2),a2
 ; 	movea.l	$7FFF(a2),a2
 ; 	movea.l	$7F(a2,d5.w),a2
-; 	movea.l	($FFFFFFFF).w,a2
+	movea.l	($FFFFFFFF).w,a2
 	movea.l	($FFFFFFFF).l,a2
 ; 	movea.l	*(pc),a2
 ; 	movea.l	*(pc,d5.w),a2
@@ -350,7 +350,7 @@
 	move.b	d5,-(a2)
 ; 	move.b	d5,$7FFF(a2)
 ; 	move.b	d5,$7F(a2,d5.w)
-; 	move.b	d5,($FFFFFFFF).w
+	move.b	d5,($FFFFFFFF).w
 	move.b	d5,($FFFFFFFF).l
 	move.b	(a2),d5
 	move.b	(a2),(a2)
@@ -358,7 +358,7 @@
 	move.b	(a2),-(a2)
 ; 	move.b	(a2),$7FFF(a2)
 ; 	move.b	(a2),$7F(a2,d5.w)
-; 	move.b	(a2),($FFFFFFFF).w
+	move.b	(a2),($FFFFFFFF).w
 	move.b	(a2),($FFFFFFFF).l
 	move.b	(a2)+,d5
 	move.b	(a2)+,(a2)
@@ -366,7 +366,7 @@
 	move.b	(a2)+,-(a2)
 ; 	move.b	(a2)+,$7FFF(a2)
 ; 	move.b	(a2)+,$7F(a2,d5.w)
-; 	move.b	(a2)+,($FFFFFFFF).w
+	move.b	(a2)+,($FFFFFFFF).w
 	move.b	(a2)+,($FFFFFFFF).l
 	move.b	-(a2),d5
 	move.b	-(a2),(a2)
@@ -374,7 +374,7 @@
 	move.b	-(a2),-(a2)
 ; 	move.b	-(a2),$7FFF(a2)
 ; 	move.b	-(a2),$7F(a2,d5.w)
-; 	move.b	-(a2),($FFFFFFFF).w
+	move.b	-(a2),($FFFFFFFF).w
 	move.b	-(a2),($FFFFFFFF).l
 ; 	move.b	$7FFF(a2),d5
 ; 	move.b	$7FFF(a2),(a2)
@@ -392,14 +392,14 @@
 ; 	move.b	$7F(a2,d5.w),$7F(a2,d5.w)
 ; 	move.b	$7F(a2,d5.w),($FFFFFFFF).w
 ; 	move.b	$7F(a2,d5.w),($FFFFFFFF).l
-; 	move.b	($FFFFFFFF).w,d5
-; 	move.b	($FFFFFFFF).w,(a2)
-; 	move.b	($FFFFFFFF).w,(a2)+
-; 	move.b	($FFFFFFFF).w,-(a2)
+	move.b	($FFFFFFFF).w,d5
+	move.b	($FFFFFFFF).w,(a2)
+	move.b	($FFFFFFFF).w,(a2)+
+	move.b	($FFFFFFFF).w,-(a2)
 ; 	move.b	($FFFFFFFF).w,$7FFF(a2)
 ; 	move.b	($FFFFFFFF).w,$7F(a2,d5.w)
-; 	move.b	($FFFFFFFF).w,($FFFFFFFF).w
-; 	move.b	($FFFFFFFF).w,($FFFFFFFF).l
+	move.b	($FFFFFFFF).w,($FFFFFFFF).w
+	move.b	($FFFFFFFF).w,($FFFFFFFF).l
 	move.b	($FFFFFFFF).l,d5
 	move.b	($FFFFFFFF).l,(a2)
 	move.b	($FFFFFFFF).l,(a2)+
