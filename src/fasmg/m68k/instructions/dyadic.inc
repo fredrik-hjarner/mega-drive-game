@@ -41,14 +41,10 @@ end macro
 
 
 
-;sbcd
 ;subx
 ;suba
 ;cmpm
 ;cmpa
-
-macro abcd.b line&
-end macro
 
 macro exg.l line&
 end macro
@@ -64,6 +60,45 @@ macro adda.w line&
 end macro
 macro adda.l line&
 end macro
+
+;; SBCD, ABCD ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Syntax:
+;     sbcd.b dy,dx
+;     sbcd.b -(ay),-(ax)
+;     abcd.b dy,dx
+;     abcd.b -(ay),-(ax)
+iterate <instr,  first_byte>, \
+        sbcd,    10000001b, \
+        abcd,    11000001b
+
+        calminstruction instr.b op1*, op2*
+            local m_bit
+
+            ; Init default values
+            compute m_bit, 0 ; dn to dn
+
+            call m68k.parse_operand@op1, op1
+            call m68k.parse_operand@op2, op2
+
+            ; TODO: This check is just to make it work. I need
+            ; to make a more serious check for valid addressing modes.
+            check @op1.type = '-(an)'
+            jno emit_bytes
+        ; Is -(an) to -(an)
+        ; TODO: There is a bug here. 0 scaleof will get the value as negative
+        ;       since it's `-(a1)` so I must do this better (in parse_operand).
+            compute m_bit, 1
+        emit_bytes:
+
+            ; first byte
+            emit 1, first_byte + (0 scaleof op2) shl 1
+
+            ; second byte 
+            emit 1, m_bit shl 3 + (0 scaleof op1)
+        end calminstruction
+
+end iterate ; <instr, first_byte>
 
 ;; SUBA, CMPA, ADDA ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

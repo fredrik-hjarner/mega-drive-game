@@ -90,7 +90,9 @@ macro muls line&
     muls.w line
 end macro
 
-;abcd
+macro abcd line&
+    abcd.b line
+end macro
 
 macro exg line&
     exg.l line

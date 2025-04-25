@@ -1431,9 +1431,9 @@
 ; 	divs	*(pc),d5
 ; 	divs	*(pc,d5.w),d5
 
-; 	sbcd.b	d2,d5
-; 	sbcd.b	-(a2),-(a2)
-; 	sbcd	d2,d5
+	sbcd.b	d2,d5
+	; sbcd.b	-(a2),-(a2) ; TODO: A bug here! It becomes negative
+	sbcd	d2,d5
 ; 	sbcd	-(a2),-(a2)
 
 	or.b	d2,d5
@@ -1703,9 +1703,9 @@
 ; 	muls	*(pc),d5
 ; 	muls	*(pc,d5.w),d5
 
-; 	abcd.b	d2,d5
-; 	abcd.b	-(a2),-(a2)
-; 	abcd	d2,d5
+	abcd.b	d2,d5
+; 	abcd.b	-(a2),-(a2) ; TODO: Bug here! It becomes negative.
+	abcd	d2,d5
 ; 	abcd	-(a2),-(a2)
 
 ; 	exg.l	d2,d5
