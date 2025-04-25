@@ -28,21 +28,41 @@
 
 ;; Placeholders for not yet implemented instructions ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-macro nbcd.b line&
-end macro
-
-macro pea.l line&
-end macro
-
-macro tas.b line&
-end macro
-
 macro unlk line&
 end macro
 
 macro stop line&
 end macro
 
+;; NCBD, PEA, TAS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Syntax:
+;     nbcd.b <ea>
+;     pea.l  <ea>
+;     tas.b  <ea>
+; TODO:
+;     !!!
+;     THESE INSTRUCTIONS WERE PRETTY NICELY IMPLEMENTED
+;     CHECK TO SEE IF ANY OTHER INSTRUCTIONS COULD BE BAKED INTO THIS PATTER
+;     AND ADDED INTO THE BODY OF THIS ITERATE CONSTRUCTION.
+iterate <instr, instr_word>, \
+        nbcd.b, 0100100000000000b, \
+        pea.l,  0100100001000000b, \
+        tas.b,  0100101011000000b
+
+        calminstruction instr? ea*
+            call m68k.parse_operand@op1, ea
+
+            ; first word
+            ; bswap is needed because famg outputs in little-endian
+            emit 2, (instr_word + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits) bswap 2
+
+            ; <ea> extension words
+            ; bswap is needed because famg outputs in little-endian
+            emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+        end calminstruction
+
+end iterate ; <instr, instr_word>
 
 ;; SCC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -217,7 +237,7 @@ iterate <cc,  cc_bits>, \
         end calminstruction
 
         ; alias for .b
-        ; TODO: Not sure if this should be here or in alias .inc file.
+        ; TODO: Move to aliases.inc file!!!
         macro b#cc.s? line&
             b#cc.b line
         end macro

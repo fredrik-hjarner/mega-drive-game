@@ -38,3 +38,16 @@
 * If `$` is part on an expression then that expression MUST be `compute`:ed
       before any `emit` is done since otherwise it will change the value of `$`!
       This particular problem probably needs a well-thought out solution.
+      You can see some of my primitive fixes by searching for `label_val`.
+      It would be better if it came "pre-computed" from parse_operand though.
+* I could probably have a `iterate <size, size_bytes>` and have bcc, bra and bsr
+      in it to save a bit of space/code duplication (also .s alias has to be
+      move into aliases.inc file for that to work smoothly).
+* An idea I could have `parse_operand[@ea1|@ea2|dn1|dn2|an1|an2]`
+      then I could have `reset@ea1` etc to reset vals to defaults
+      then I could just emit <ea1> and <ea2> extension bits with one small macro
+      or something
+      ... though I don't know that may just be cumbersome...
+* Maybe I should have branching instruction have .s as default and .b as the
+      alias instead, dunno. Also I should move the alias into compat directory
+      maybe?

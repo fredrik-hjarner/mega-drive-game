@@ -53,13 +53,18 @@ macro chk line&
 end macro
 
 ; scc
-iterate cc, t,f,hi,ls,cc,hs,cs,lo,ne,eq,vc,vs,pl,mi,ge,lt,gt,le
+iterate cc, t,f,    hi,ls,cc,hs,cs,lo,ne,eq,vc,vs,pl,mi,ge,lt,gt,le
     macro s#cc? line&
         s#cc.b line
     end macro
 end iterate
 
-;; TODO: Add DBcc here.
+; dbcc
+iterate cc,  t,f,ra,hi,ls,cc,hs,cs,lo,ne,eq,vc,vs,pl,mi,ge,lt,gt,le
+    macro db#cc? line&
+        db#cc.w line
+    end macro
+end iterate
 
 macro moveq line&
     moveq.l line
@@ -86,7 +91,10 @@ macro muls line&
 end macro
 
 ;abcd
-;exg
+
+macro exg line&
+    exg.l line
+end macro
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; SOME INSTRUCTIONS CAN HAVE .S SUFFIX INSTEAD OF .B                         ;;

@@ -758,3 +758,6 @@ l2:
 
     bra.w @
 
+    dc.b 0,0,'sub.b d5,(a2)',0
+    sub.b d5,(a2)
+

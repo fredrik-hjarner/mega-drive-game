@@ -44,6 +44,7 @@
 
 ; Seems all of these only allow the immediate operande to be 1-8
 ; though it seems that 8 will be encoded as zero.
+; TODO: Inconsistent, I have instr and instr_bits on other places.
 iterate <instr_prefix,  instr>, \
         \ ; Arithmetic Shift
         as,             00b, \
@@ -62,9 +63,22 @@ iterate <instr_prefix,  instr>, \
                 l,             10b
 
             ; TODO: Comment
+            ; TODO: I think this one can only be .w
+            ;       Seems manual says if monadic then it shift a word.
+            ;       Double-check this. As it is I generate instructions for
+            ;       all sizes right now.
             macro calminstruction?.instr_prefix#dir_suffix#_#size_suffix#_monadic? ea*
-                ; TODO: Update/improve error message
-                err "monadic version of asl.b is not implemented!"
+                call m68k.parse_operand@op1, ea
+
+                ; first byte
+                emit 1, 11100000b + instr shl 1 + dir
+
+                ; second byte
+                emit 1, 11000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
+
+                ; <ea> extension words
+                ; bswap is needed because famg outputs in little-endian
+                emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
             end macro
 
             ; Description:
