@@ -55,3 +55,5 @@
       should it just be assigned max or should it wrap around??
       I currently have some code in parse_operand that sets too big numbers to
       the max allowed value.
+* Make sure to test very very large and very very negative number for immediate
+      values, and other relevant types, to see if bahaviour is good.
