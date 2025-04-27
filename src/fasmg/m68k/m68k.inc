@@ -55,8 +55,8 @@ end macro
 
 include "registers.inc"
 
-include "parse_operand.inc"
-include "parse_reg_list.inc"
+include "parsing/parse_operand.inc"
+include "parsing/parse_reg_list.inc"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Data declaration stuff                                                     ;;
