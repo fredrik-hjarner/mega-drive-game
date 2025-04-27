@@ -1540,12 +1540,12 @@
 	sub.l	d5,($FFFFFFFF).w
 	sub.l	d5,($FFFFFFFF).l
 
-; 	subx.b	d2,d5
-; 	subx.b	-(a2),-(a2)
-; 	subx.w	d2,d5
-; 	subx.w	-(a2),-(a2)
-; 	subx.l	d2,d5
-; 	subx.l	-(a2),-(a2)
+	subx.b	d2,d5
+	; subx.b	-(a2),-(a2) ; TODO: bug here. -(an) interpreted as negative
+	subx.w	d2,d5
+	; subx.w	-(a2),-(a2) ; TODO: bug here. -(an) interpreted as negative
+	subx.l	d2,d5
+	; subx.l	-(a2),-(a2) ; TODO: bug here. -(an) interpreted as negative
 
 	suba.w	d5,a2
 	suba.w	a5,a2
@@ -1821,12 +1821,12 @@
 	add.l	d5,($FFFFFFFF).w
 	add.l	d5,($FFFFFFFF).l
 
-; 	addx.b	d2,d5
-; 	addx.b	-(a2),-(a2)
-; 	addx.w	d2,d5
-; 	addx.w	-(a2),-(a2)
-; 	addx.l	d2,d5
-; 	addx.l	-(a2),-(a2)
+	addx.b	d2,d5
+	; addx.b	-(a2),-(a2) ; TODO: bug here. -(an) interpreted as negative
+	addx.w	d2,d5
+	; addx.w	-(a2),-(a2) ; TODO: bug here. -(an) interpreted as negative
+	addx.l	d2,d5
+	; addx.l	-(a2),-(a2) ; TODO: bug here. -(an) interpreted as negative
 
 	adda.w	d5,a2
 	adda.w	a5,a2
