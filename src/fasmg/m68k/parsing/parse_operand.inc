@@ -313,12 +313,24 @@ iterate op, @op1,@op2
             ;; (d,an) a.k.a. d(an) - indirect address with displacement ;;;;;;;;
             check_indirect_displacement:
                     call m68k.parse_indirect_displacement, operand
-                    jnope unknown
+                    jnope check_pc_displacement
                     compute type, '(d,an)'
                     compute ea_mode_bits, 101b
                     compute ea_reg_bits, 0 scaleof m68k.ret_reg
                     compute ext_bytes, 2
                     compute ext_bytes_bits, m68k.ret_imm
+                    jump done
+            ;; (d,pc) a.k.a. d(pc) - program counter with displacement ;;;;;;;;;
+            check_pc_displacement:
+                    call m68k.parse_pc_displacement, operand
+                    jnope unknown
+                    compute type, '(d,pc)'
+                    compute ea_mode_bits, 111b
+                    compute ea_reg_bits, 010b
+                    compute ext_bytes, 2
+                    ; TODO: Should the $ - 2 - be here or in
+                    ;       parse_pc_displacement?
+                    compute ext_bytes_bits, $ - 2 - m68k.ret_imm
                     jump done
             ;; Temporary stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             unknown:

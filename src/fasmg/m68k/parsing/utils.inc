@@ -66,3 +66,40 @@ calminstruction m68k.parse_indirect_displacement operand*
     nope:
         compute xxcalm.ret, 0
 end calminstruction
+
+; Supposed to be callable.
+; Side-effects:
+;     m68k.ret_imm
+;     xxcalm.ret - 0 if false
+;                  1 if true
+; TODO: This is super-similar to parse_indirect_displacement. Examine if can
+;       reduce code duplication or optimize performance.
+calminstruction m68k.parse_pc_displacement operand*
+        local tmp1
+        local tmp2
+
+        match tmp1(tmp2), operand
+        jyes next
+        ; display 'matched tmp1(tmp2)' bappend 10
+        jump nope
+    next:
+        call m68k.is_one_token, tmp1
+        jyup next2
+        ; display 'tmp1 is one token' bappend 10
+        jump nope
+    next2:
+        call m68k.is_one_token, tmp2
+        jyup next3
+        ; display 'tmp2 is one token' bappend 10
+        jump nope
+    next3:
+        check tmp1 eqtype 0 & tmp2 eq pc
+        jno nope
+        compute xxcalm.ret, 1
+        ; display 10 bappend PC DISPLACEMENT" bappend 10 bappend 10
+        ; TODO: What would the different be if I used `publish` here?
+        arrange m68k.ret_imm, tmp1
+        exit
+    nope:
+        compute xxcalm.ret, 0
+end calminstruction
