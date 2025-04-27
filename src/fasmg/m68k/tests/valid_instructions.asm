@@ -1967,7 +1967,7 @@
 	roxr.w	(a2)
 	roxr.w	(a2)+
 	roxr.w	-(a2)
-; 	roxr.w	$7FFF(a2)
+	roxr.w	$7FFF(a2)
 ; 	roxr.w	$7F(a2,d5.w)
 	roxr.w	($FFFFFFFF).w
 	roxr.w	($FFFFFFFF).l
@@ -1988,7 +1988,7 @@
 	rol.w	(a2)
 	rol.w	(a2)+
 	rol.w	-(a2)
-; 	rol.w	$7FFF(a2)
+	rol.w	$7FFF(a2)
 ; 	rol.w	$7F(a2,d5.w)
 	rol.w	($FFFFFFFF).w
 	rol.w	($FFFFFFFF).l
@@ -2009,7 +2009,7 @@
 	ror.w	(a2) ; TODO: What happens if you do ror.b (a2) or ror.l (a2) ?
 	ror.w	(a2)+
 	ror.w	-(a2)
-; 	ror.w	$7FFF(a2)
+	ror.w	$7FFF(a2)
 ; 	ror.w	$7F(a2,d5.w)
 	ror.w	($FFFFFFFF).w
 	ror.w	($FFFFFFFF).l
