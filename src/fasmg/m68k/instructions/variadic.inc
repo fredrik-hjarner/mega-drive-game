@@ -92,8 +92,6 @@ iterate <instr_prefix,  instr>, \
             ; TODO:
             ;     Remember there is also a monadic version of this instruction!!!
             macro calminstruction?.instr_prefix#dir_suffix#_#size_suffix#_dyadic? op1*, dn*
-                    ; transform dn, m68k ; TODO: Only for preprocess.inc!!
-            
                     new @data_reg
                     new @done_dyadic
 
@@ -118,9 +116,6 @@ iterate <instr_prefix,  instr>, \
             ; TODO:
             ;     Remember there is also a monadic version of this instruction!!!
             macro calminstruction?.instr_prefix#dir_suffix#_#size_suffix#_dyadic_data_reg? dn1*, dn2*
-                ; transform dn1, m68k ; TODO: Only for preprocess.inc!!
-                ; transform dn2, m68k ; TODO: Only for preprocess.inc!!
-
                 local tmp
 
                 assert_data_reg dn1
@@ -151,7 +146,6 @@ iterate <instr_prefix,  instr>, \
             ; TODO:
             ;     Remember there is also a monadic version of this instruction!!!
             macro calminstruction?.instr_prefix#dir_suffix#_#size_suffix#_dyadic_imm? imm*, dn*
-                    transform dn, m68k ; TODO: Only for preprocess.inc!!
                     ; jno errz
 
                     local tmp

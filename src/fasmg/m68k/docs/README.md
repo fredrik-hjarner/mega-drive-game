@@ -15,30 +15,6 @@ clownassembler assembles.
 
 ## Current hacks
 
-### Transforming registers
-
-I have had to do some hacks in order for both "modes" to work.
-I place registers (d0-d7, a0-a7) in a namespace called m68k and then do a
-transform in every calminstruction using data or address registers.
-
-It looks something like this:
-
-```
-m68k.d0 equ d0
-m68k.d1 equ d1
-m68k.d2 equ d2
-; etc
-```
-
-```
-macro calminstruction?.asl? imm*, dn*
-    transform dn, m68k ; TODO: Only for preprocess.inc!!
-```
-
-Somehow that makes `d0`, `d1`, `d2` etc. work in preprocess.inc.
-That transform could probably be removed once the instructions set in completed
-and the clownassembler mode is no longer needed.
-
 ### Overriding `emit` and `assemble`
 
 Obviuosly the `emit` and `assemble` will have been needed top be changed to
