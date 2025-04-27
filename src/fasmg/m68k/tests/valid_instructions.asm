@@ -659,7 +659,7 @@
 	negx.b	(a2)
 	negx.b	(a2)+
 	negx.b	-(a2)
-; 	negx.b	$7FFF(a2)
+	negx.b	$7FFF(a2)
 ; 	negx.b	$7F(a2,d5.w)
 	negx.b	($FFFFFFFF).w
 	negx.b	($FFFFFFFF).l
@@ -667,7 +667,7 @@
 	negx.w	(a2)
 	negx.w	(a2)+
 	negx.w	-(a2)
-; 	negx.w	$7FFF(a2)
+	negx.w	$7FFF(a2)
 ; 	negx.w	$7F(a2,d5.w)
 	negx.w	($FFFFFFFF).w
 	negx.w	($FFFFFFFF).l
@@ -675,7 +675,7 @@
 	negx.l	(a2)
 	negx.l	(a2)+
 	negx.l	-(a2)
-; 	negx.l	$7FFF(a2)
+	negx.l	$7FFF(a2)
 ; 	negx.l	$7F(a2,d5.w)
 	negx.l	($FFFFFFFF).w
 	negx.l	($FFFFFFFF).l
@@ -684,7 +684,7 @@
 	clr.b	(a2)
 	clr.b	(a2)+
 	clr.b	-(a2)
-; 	clr.b	$7FFF(a2)
+	clr.b	$7FFF(a2)
 ; 	clr.b	$7F(a2,d5.w)
 	clr.b	($FFFFFFFF).w
 	clr.b	($FFFFFFFF).l
@@ -692,7 +692,7 @@
 	clr.w	(a2)
 	clr.w	(a2)+
 	clr.w	-(a2)
-; 	clr.w	$7FFF(a2)
+	clr.w	$7FFF(a2)
 ; 	clr.w	$7F(a2,d5.w)
 	clr.w	($FFFFFFFF).w
 	clr.w	($FFFFFFFF).l
@@ -700,7 +700,7 @@
 	clr.l	(a2)
 	clr.l	(a2)+
 	clr.l	-(a2)
-; 	clr.l	$7FFF(a2)
+	clr.l	$7FFF(a2)
 ; 	clr.l	$7F(a2,d5.w)
 	clr.l	($FFFFFFFF).w
 	clr.l	($FFFFFFFF).l
@@ -709,7 +709,7 @@
 	neg.b	(a2)
 	neg.b	(a2)+
 	neg.b	-(a2)
-; 	neg.b	$7FFF(a2)
+	neg.b	$7FFF(a2)
 ; 	neg.b	$7F(a2,d5.w)
 	neg.b	($FFFFFFFF).w
 	neg.b	($FFFFFFFF).l
@@ -717,7 +717,7 @@
 	neg.w	(a2)
 	neg.w	(a2)+
 	neg.w	-(a2)
-; 	neg.w	$7FFF(a2)
+	neg.w	$7FFF(a2)
 ; 	neg.w	$7F(a2,d5.w)
 	neg.w	($FFFFFFFF).w
 	neg.w	($FFFFFFFF).l
@@ -725,7 +725,7 @@
 	neg.l	(a2)
 	neg.l	(a2)+
 	neg.l	-(a2)
-; 	neg.l	$7FFF(a2)
+	neg.l	$7FFF(a2)
 ; 	neg.l	$7F(a2,d5.w)
 	neg.l	($FFFFFFFF).w
 	neg.l	($FFFFFFFF).l
@@ -734,7 +734,7 @@
 	not.b	(a2)
 	not.b	(a2)+
 	not.b	-(a2)
-; 	not.b	$7FFF(a2)
+	not.b	$7FFF(a2)
 ; 	not.b	$7F(a2,d5.w)
 	not.b	($FFFFFFFF).w
 ; 	not.b	($FFFFFFFF).l
@@ -742,7 +742,7 @@
 	not.w	(a2)
 	not.w	(a2)+
 	not.w	-(a2)
-; 	not.w	$7FFF(a2)
+	not.w	$7FFF(a2)
 ; 	not.w	$7F(a2,d5.w)
 	not.w	($FFFFFFFF).w
 	not.w	($FFFFFFFF).l
@@ -750,7 +750,7 @@
 	not.l	(a2)
 	not.l	(a2)+
 	not.l	-(a2)
-; 	not.l	$7FFF(a2)
+	not.l	$7FFF(a2)
 ; 	not.l	$7F(a2,d5.w)
 	not.l	($FFFFFFFF).w
 	not.l	($FFFFFFFF).l
@@ -762,7 +762,7 @@
 	nbcd.b	(a2)
 	nbcd.b	(a2)+
 	nbcd.b	-(a2)
-; 	nbcd.b	$7FFF(a2)
+	nbcd.b	$7FFF(a2)
 ; 	nbcd.b	$7F(a2,d5.w)
 	nbcd.b	($FFFFFFFF).w
 	nbcd.b	($FFFFFFFF).l
@@ -770,7 +770,7 @@
 	nbcd	(a2)
 	nbcd	(a2)+
 	nbcd	-(a2)
-; 	nbcd	$7FFF(a2)
+	nbcd	$7FFF(a2)
 ; 	nbcd	$7F(a2,d5.w)
 	nbcd	($FFFFFFFF).w
 	nbcd	($FFFFFFFF).l
@@ -779,14 +779,14 @@
 	swap	d5
 
 	pea.l	(a2)
-; 	pea.l	$7FFF(a2)
+	pea.l	$7FFF(a2)
 ; 	pea.l	$7F(a2,d5.w)
 	pea.l	($FFFFFFFF).w
 	pea.l	($FFFFFFFF).l
 ; 	pea.l	*(pc)
 ; 	pea.l	*(pc,d5.w)
 	pea	(a2)
-; 	pea	$7FFF(a2)
+	pea	$7FFF(a2)
 ; 	pea	$7F(a2,d5.w)
 	pea	($FFFFFFFF).w
 	pea	($FFFFFFFF).l
@@ -799,7 +799,7 @@
 	tas.b	(a2)
 	tas.b	(a2)+
 	tas.b	-(a2)
-; 	tas.b	$7FFF(a2)
+	tas.b	$7FFF(a2)
 ; 	tas.b	$7F(a2,d5.w)
 	tas.b	($FFFFFFFF).w
 	tas.b	($FFFFFFFF).l
@@ -807,7 +807,7 @@
 	tas	(a2)
 	tas	(a2)+
 	tas	-(a2)
-; 	tas	$7FFF(a2)
+	tas	$7FFF(a2)
 ; 	tas	$7F(a2,d5.w)
 	tas	($FFFFFFFF).w
 	tas	($FFFFFFFF).l
@@ -816,7 +816,7 @@
 	tst.b	(a2)
 	tst.b	(a2)+
 	tst.b	-(a2)
-; 	tst.b	$7FFF(a2)
+	tst.b	$7FFF(a2)
 ; 	tst.b	$7F(a2,d5.w)
 	tst.b	($FFFFFFFF).w
 	tst.b	($FFFFFFFF).l
@@ -824,7 +824,7 @@
 	tst.w	(a2)
 	tst.w	(a2)+
 	tst.w	-(a2)
-; 	tst.w	$7FFF(a2)
+	tst.w	$7FFF(a2)
 ; 	tst.w	$7F(a2,d5.w)
 	tst.w	($FFFFFFFF).w
 	tst.w	($FFFFFFFF).l
@@ -832,7 +832,7 @@
 	tst.l	(a2)
 	tst.l	(a2)+
 	tst.l	-(a2)
-; 	tst.l	$7FFF(a2)
+	tst.l	$7FFF(a2)
 ; 	tst.l	$7F(a2,d5.w)
 	tst.l	($FFFFFFFF).w
 	tst.l	($FFFFFFFF).l
@@ -864,7 +864,7 @@
 	rtr
 
 	jsr	(a2)
-; 	jsr	$7FFF(a2)
+	jsr	$7FFF(a2)
 ; 	jsr	$7F(a2,d5.w)
 	jsr	($FFFFFFFF).w
 	jsr	($FFFFFFFF).l
@@ -872,7 +872,7 @@
 ; 	jsr	*(pc,d5.w)
 
 	jmp	(a2)
-; 	jmp	$7FFF(a2)
+	jmp	$7FFF(a2)
 ; 	jmp	$7F(a2,d5.w)
 	jmp	($FFFFFFFF).w
 	jmp	($FFFFFFFF).l
@@ -909,14 +909,14 @@
 ; 	movem.l	*(pc,d5.w),d5-a7
 
 	lea.l	(a2),a2
-; 	lea.l	$7FFF(a2),a2
+	lea.l	$7FFF(a2),a2
 ; 	lea.l	$7F(a2,d5.w),a2
 	lea.l	($FFFFFFFF).w,a2
 	lea.l	($FFFFFFFF).l,a2
 ; 	lea.l	*(pc),a2
 ; 	lea.l	*(pc,d5.w),a2
 	lea	(a2),a2
-; 	lea	$7FFF(a2),a2
+	lea	$7FFF(a2),a2
 ; 	lea	$7F(a2,d5.w),a2
 	lea	($FFFFFFFF).w,a2
 	lea	($FFFFFFFF).l,a2
@@ -950,7 +950,7 @@
 	addq.b	#1,(a2)
 	addq.b	#1,(a2)+
 	addq.b	#1,-(a2)
-; 	addq.b	#1,$7FFF(a2)
+	addq.b	#1,$7FFF(a2)
 ; 	addq.b	#1,$7F(a2,d5.w)
 	addq.b	#1,($FFFFFFFF).w
 	addq.b	#1,($FFFFFFFF).l
@@ -959,7 +959,7 @@
 	addq.w	#1,(a2)
 	addq.w	#1,(a2)+
 	addq.w	#1,-(a2)
-; 	addq.w	#1,$7FFF(a2)
+	addq.w	#1,$7FFF(a2)
 ; 	addq.w	#1,$7F(a2,d5.w)
 	addq.w	#1,($FFFFFFFF).w
 	addq.w	#1,($FFFFFFFF).l
@@ -968,7 +968,7 @@
 	addq.l	#1,(a2)
 	addq.l	#1,(a2)+
 	addq.l	#1,-(a2)
-; 	addq.l	#1,$7FFF(a2)
+	addq.l	#1,$7FFF(a2)
 ; 	addq.l	#1,$7F(a2,d5.w)
 	addq.l	#1,($FFFFFFFF).w
 	addq.l	#1,($FFFFFFFF).l
