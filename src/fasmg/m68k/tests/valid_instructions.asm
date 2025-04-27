@@ -8,7 +8,7 @@
 	ori.b	#$FF,(a2)
 	ori.b	#$FF,(a2)+
 	ori.b	#$FF,-(a2)
-; 	ori.b	#$FF,$7FFF(a2)
+	ori.b	#$FF,$7FFF(a2)
 ; 	ori.b	#$FF,$7F(a2,d5.w)
 	ori.b	#$FF,($FFFFFFFF).w
 	ori.b	#$FF,($FFFFFFFF).l
@@ -16,7 +16,7 @@
 	ori.w	#$FFFF,(a2)
 	ori.w	#$FFFF,(a2)+
 	ori.w	#$FFFF,-(a2)
-; 	ori.w	#$FFFF,$7FFF(a2)
+	ori.w	#$FFFF,$7FFF(a2)
 ; 	ori.w	#$FFFF,$7F(a2,d5.w)
 	ori.w	#$FFFF,($FFFFFFFF).w
 	ori.w	#$FFFF,($FFFFFFFF).l

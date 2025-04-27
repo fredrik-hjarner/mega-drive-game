@@ -55,6 +55,7 @@ end macro
 
 include "registers.inc"
 
+include "parsing/utils.inc"
 include "parsing/parse_operand.inc"
 include "parsing/parse_reg_list.inc"
 
@@ -159,4 +160,17 @@ end calminstruction
 ; TODO: Remove when not needed or move to test.asm?
 calminstruction parse_reg_list? op
     call m68k.parse_reg_list@reg_list1, op
+end calminstruction
+
+; TODO: Remove when not needed or move to test.asm?
+calminstruction parse_indirect_displacement? op
+    local tmp1
+    local tmp2
+
+    call m68k.parse_indirect_displacement, op
+    
+    arrange tmp1, =m68k.=ret_reg
+    transform tmp1
+    stringify tmp1
+    display "dawdawd: " bappend tmp1 bappend 10
 end calminstruction

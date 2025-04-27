@@ -57,3 +57,8 @@
       the max allowed value.
 * Make sure to test very very large and very very negative number for immediate
       values, and other relevant types, to see if bahaviour is good.
+* Find out all the cases for when CALMINSTRUCTIONS can explode in an
+      unrecoverable error, then make "safe" wrapper or overrides which
+      error in a controlled fashion which you then can follow by `jok`/`jerr`
+      checks.
+* Make a count_tokens util.

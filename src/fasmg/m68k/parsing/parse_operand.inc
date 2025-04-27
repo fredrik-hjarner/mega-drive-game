@@ -249,6 +249,8 @@ iterate op, @op1,@op2
                     jump done
             ;; Check if `dn` (direct data register addressing) ;;;;;;;;;;;;;;;;;
             check_if_dn:
+                    call m68k.is_one_token, operand
+                    jnope check_if_an
                     check operand relativeto m68k.data_reg
                     jno check_if_an
                     compute type, 'dn'
@@ -259,6 +261,8 @@ iterate op, @op1,@op2
                     jump done
             ;; Check if `an` (direct address register addressing) ;;;;;;;;;;;;;;
             check_if_an:
+                    call m68k.is_one_token, operand
+                    jnope sr
                     check operand relativeto m68k.address_reg
                     jno sr
                     compute type, 'an'
@@ -281,6 +285,8 @@ iterate op, @op1,@op2
             ;         jump done
             ;; sr ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             sr:
+                    call m68k.is_one_token, operand
+                    jnope ccr
                     ; TODO: Is it dumb to use relativeto here? equal better?
                     check operand relativeto sr
                     jno ccr
@@ -288,6 +294,8 @@ iterate op, @op1,@op2
                     jump done
             ;; ccr ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             ccr:
+                    call m68k.is_one_token, operand
+                    jnope usp
                     ; TODO: Is it dumb to use relativeto here? equal better?
                     check operand relativeto ccr
                     jno usp
@@ -295,10 +303,22 @@ iterate op, @op1,@op2
                     jump done
             ;; usp ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             usp:
+                    call m68k.is_one_token, operand
+                    jnope check_indirect_displacement
                     ; TODO: Is it dumb to use relativeto here? equal better?
                     check operand relativeto usp
-                    jno unknown
+                    jno check_indirect_displacement
                     compute type, 'usp'
+                    jump done
+            ;; (d,an) a.k.a. d(an) - indirect address with displacement ;;;;;;;;
+            check_indirect_displacement:
+                    call m68k.parse_indirect_displacement, operand
+                    jnope unknown
+                    compute type, '(d,an)'
+                    compute ea_mode_bits, 101b
+                    compute ea_reg_bits, 0 scaleof m68k.ret_reg
+                    compute ext_bytes, 2
+                    compute ext_bytes_bits, m68k.ret_imm
                     jump done
             ;; Temporary stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             unknown:
