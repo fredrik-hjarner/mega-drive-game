@@ -736,26 +736,32 @@ end calminstruction
 ;      ✓       ✓     ✓       ✓      ✓         ✓ 
 ;     ABS.W  ABS.L  (d,PC)  (d,PC,Xn)  imm
 ;       ✓     ✓           
+; Syntax (some of them have crr/sr variants):
+;     ori.b  #<data>,ccr
+;     ori.w  #<data>,sr
+;     andi.b #<data>,ccr
+;     andi.w #<data>,sr
+;     eori.b #<data>,ccr
+;     eori.w #<data>,sr
 ; TODO: Double check addressing modes for each instruction.
-iterate <instr,  first_byte>, \
-        \ ; Or Immediate
-        ori,     00000000b, \
-        \ ; And Immediate
-        andi,    00000010b, \
-        \ ; Subtract Immediate
-        subi,    00000100b, \
-        \ ; Add Immediate
-        addi,    00000110b, \
-        \ ; Exclusive Or Immediate
-        eori,    00001010b, \
-        \ ; Compare Immediate
-        cmpi,    00001100b,
+; TODO: ori, andi and eori have "to sr/ccr" variants.
+;       Dunno, I could check if they are defined and then call the
+;       `ori_to_ccr.b` et cetera.
+; TODO: Should validate that imm.l, imm.w and imm.b are within bounds.
+; TODO: Explain ccr_variant and sr_variant and that 0 mean instr has no such.
+iterate <instr,  instr_word,         ccr_variant,        sr_variant>, \
+        ori,     0000000000000000b,  0000000000111100b,  0000000001111100b, \
+        andi,    0000001000000000b,  0000001000111100b,  0000001001111100b, \
+        subi,    0000010000000000b,  0,                  0, \
+        addi,    0000011000000000b,  0,                  0, \
+        eori,    0000101000000000b,  0000101000111100b,  0000101001111100b, \
+        cmpi,    0000110000000000b,  0,                  0
     ; TODO: Can I remove the imm_bytes now and use the stuff from
     ; parse_operand instread?
-    iterate <size,  size_bits,  imm_bytes>, \
-            b,      00b,        2, \
-            w,      01b,        2, \
-            l,      10b,        4
+    iterate <size,  size_str, size_bits,  imm_bytes>, \
+            b,      'b',      00b,        2, \
+            w,      'w',      01b,        2, \
+            l,      'l',      10b,        4
 
             calminstruction instr.size? imm*, ea*
                 local tmp
@@ -763,15 +769,41 @@ iterate <instr,  first_byte>, \
                 call m68k.parse_operand@op1, imm
                 call m68k.parse_operand@op2, ea
 
+            ;; CCR CASE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                ; TODO: Add .type_token for convenience? Prolly not...
+                check ccr_variant <> 0 & @op2.type = 'ccr' & size_str = 'b'
+                jno check_sr
+
+                ; first word
+                ; bswap is needed because fasmg outputs in little-endian
+                emit 2, ccr_variant bswap 2
+
+                ; imm
+                ; bswap is needed because fasmg outputs in little-endian
+                emit 2, @op1.imm bswap 2
+                exit
+            ;; SR CASE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            check_sr:
+                check sr_variant <> 0 & @op2.type = 'sr' & size_str = 'w'
+                jno normal_case
+
+                ; first word
+                ; bswap is needed because fasmg outputs in little-endian
+                emit 2, sr_variant bswap 2
+
+                ; imm
+                ; bswap is needed because fasmg outputs in little-endian
+                emit 2, @op1.imm bswap 2
+                exit
+            normal_case:
+
                 ; TODO: Assert that imm is within bounds.
                 ; assert_min imm, 1
                 ; assert_max imm, 8
 
-                ; first byte
-                emit 1, first_byte
-
-                ; second byte
-                emit 1, size_bits shl 6 + @op2.ea_mode_bits shl 3 + @op2.ea_reg_bits
+                ; first word
+                ; bswap is needed because famg outputs in little-endian
+                emit 2, (instr_word + size_bits shl 6 + @op2.ea_mode_bits shl 3 + @op2.ea_reg_bits) bswap 2
                 
                 ; immediate bytes
                 ; bswap is needed because famg outputs in little-endian :'/
@@ -783,7 +815,7 @@ iterate <instr,  first_byte>, \
             end calminstruction
 
     end iterate ; <size, size_bits>
-end iterate ; <instr, first_byte>
+end iterate ; <instr, instr_word>
 
 ; Syntax:
 ;     addq #<data>,<ea>
