@@ -1389,7 +1389,7 @@
 	divu.w	(a2),d5
 	divu.w	(a2)+,d5
 	divu.w	-(a2),d5
-; 	divu.w	$7FFF(a2),d5
+	divu.w	$7FFF(a2),d5
 ; 	divu.w	$7F(a2,d5.w),d5
 	divu.w	($FFFFFFFF).w,d5
 	divu.w	($FFFFFFFF).l,d5
@@ -1400,7 +1400,7 @@
 	divu	(a2),d5
 	divu	(a2)+,d5
 	divu	-(a2),d5
-; 	divu	$7FFF(a2),d5
+	divu	$7FFF(a2),d5
 ; 	divu	$7F(a2,d5.w),d5
 	divu	($FFFFFFFF).w,d5
 	divu	($FFFFFFFF).l,d5
@@ -1412,7 +1412,7 @@
 	divs.w	(a2),d5
 	divs.w	(a2)+,d5
 	divs.w	-(a2),d5
-; 	divs.w	$7FFF(a2),d5
+	divs.w	$7FFF(a2),d5
 ; 	divs.w	$7F(a2,d5.w),d5
 	divs.w	($FFFFFFFF).w,d5
 	divs.w	($FFFFFFFF).l,d5
@@ -1423,7 +1423,7 @@
 	divs	(a2),d5
 	divs	(a2)+,d5
 	divs	-(a2),d5
-; 	divs	$7FFF(a2),d5
+	divs	$7FFF(a2),d5
 ; 	divs	$7F(a2,d5.w),d5
 	divs	($FFFFFFFF).w,d5
 	divs	($FFFFFFFF).l,d5
@@ -1440,7 +1440,7 @@
 	or.b	(a2),d5
 	or.b	(a2)+,d5
 	or.b	-(a2),d5
-; 	or.b	$7FFF(a2),d5
+	or.b	$7FFF(a2),d5
 ; 	or.b	$7F(a2,d5.w),d5
 	or.b	($FFFFFFFF).w,d5
 	or.b	($FFFFFFFF).l,d5
@@ -1449,7 +1449,7 @@
 	or.b	d5,(a2)
 	or.b	d5,(a2)+
 	or.b	d5,-(a2)
-; 	or.b	d5,$7FFF(a2)
+	or.b	d5,$7FFF(a2)
 ; 	or.b	d5,$7F(a2,d5.w)
 	or.b	d5,($FFFFFFFF).w
 	or.b	d5,($FFFFFFFF).l
@@ -1457,7 +1457,7 @@
 	or.w	(a2),d5
 	or.w	(a2)+,d5
 	or.w	-(a2),d5
-; 	or.w	$7FFF(a2),d5
+	or.w	$7FFF(a2),d5
 ; 	or.w	$7F(a2,d5.w),d5
 	or.w	($FFFFFFFF).w,d5
 	or.w	($FFFFFFFF).l,d5
@@ -1466,7 +1466,7 @@
 	or.w	d5,(a2)
 	or.w	d5,(a2)+
 	or.w	d5,-(a2)
-; 	or.w	d5,$7FFF(a2)
+	or.w	d5,$7FFF(a2)
 ; 	or.w	d5,$7F(a2,d5.w)
 	or.w	d5,($FFFFFFFF).w
 	or.w	d5,($FFFFFFFF).l
@@ -1474,7 +1474,7 @@
 	or.l	(a2),d5
 	or.l	(a2)+,d5
 	or.l	-(a2),d5
-; 	or.l	$7FFF(a2),d5
+	or.l	$7FFF(a2),d5
 ; 	or.l	$7F(a2,d5.w),d5
 	or.l	($FFFFFFFF).w,d5
 	or.l	($FFFFFFFF).l,d5
@@ -1483,7 +1483,7 @@
 	or.l	d5,(a2)
 	or.l	d5,(a2)+
 	or.l	d5,-(a2)
-; 	or.l	d5,$7FFF(a2)
+	or.l	d5,$7FFF(a2)
 ; 	or.l	d5,$7F(a2,d5.w)
 	or.l	d5,($FFFFFFFF).w
 	or.l	d5,($FFFFFFFF).l
@@ -1492,7 +1492,7 @@
 	sub.b	(a2),d5
 	sub.b	(a2)+,d5
 	sub.b	-(a2),d5
-; 	sub.b	$7FFF(a2),d5
+	sub.b	$7FFF(a2),d5
 ; 	sub.b	$7F(a2,d5.w),d5
 	sub.b	($FFFFFFFF).w,d5
 	sub.b	($FFFFFFFF).l,d5
@@ -1501,7 +1501,7 @@
 	sub.b	d5,(a2)
 	sub.b	d5,(a2)+
 	sub.b	d5,-(a2)
-; 	sub.b	d5,$7FFF(a2)
+	sub.b	d5,$7FFF(a2)
 ; 	sub.b	d5,$7F(a2,d5.w)
 	sub.b	d5,($FFFFFFFF).w
 	sub.b	d5,($FFFFFFFF).l
@@ -1509,7 +1509,7 @@
 	sub.w	(a2),d5
 	sub.w	(a2)+,d5
 	sub.w	-(a2),d5
-; 	sub.w	$7FFF(a2),d5
+	sub.w	$7FFF(a2),d5
 ; 	sub.w	$7F(a2,d5.w),d5
 	sub.w	($FFFFFFFF).w,d5
 	sub.w	($FFFFFFFF).l,d5
@@ -1518,7 +1518,7 @@
 	sub.w	d5,(a2)
 	sub.w	d5,(a2)+
 	sub.w	d5,-(a2)
-; 	sub.w	d5,$7FFF(a2)
+	sub.w	d5,$7FFF(a2)
 ; 	sub.w	d5,$7F(a2,d5.w)
 	sub.w	d5,($FFFFFFFF).w
 	sub.w	d5,($FFFFFFFF).l
@@ -1526,7 +1526,7 @@
 	sub.l	(a2),d5
 	sub.l	(a2)+,d5
 	sub.l	-(a2),d5
-; 	sub.l	$7FFF(a2),d5
+	sub.l	$7FFF(a2),d5
 ; 	sub.l	$7F(a2,d5.w),d5
 	sub.l	($FFFFFFFF).w,d5
 	sub.l	($FFFFFFFF).l,d5
@@ -1535,7 +1535,7 @@
 	sub.l	d5,(a2)
 	sub.l	d5,(a2)+
 	sub.l	d5,-(a2)
-; 	sub.l	d5,$7FFF(a2)
+	sub.l	d5,$7FFF(a2)
 ; 	sub.l	d5,$7F(a2,d5.w)
 	sub.l	d5,($FFFFFFFF).w
 	sub.l	d5,($FFFFFFFF).l
@@ -1552,7 +1552,7 @@
 	suba.w	(a2),a2
 	suba.w	(a2)+,a2
 	suba.w	-(a2),a2
-; 	suba.w	$7FFF(a2),a2
+	suba.w	$7FFF(a2),a2
 ; 	suba.w	$7F(a2,d5.w),a2
 	suba.w	($FFFFFFFF).w,a2
 	suba.w	($FFFFFFFF).l,a2
@@ -1564,7 +1564,7 @@
 	suba.l	(a2),a2
 	suba.l	(a2)+,a2
 	suba.l	-(a2),a2
-; 	suba.l	$7FFF(a2),a2
+	suba.l	$7FFF(a2),a2
 ; 	suba.l	$7F(a2,d5.w),a2
 	suba.l	($FFFFFFFF).w,a2
 	suba.l	($FFFFFFFF).l,a2
@@ -1576,7 +1576,7 @@
 	eor.b	d5,(a2)
 	eor.b	d5,(a2)+
 	eor.b	d5,-(a2)
-; 	eor.b	d5,$7FFF(a2)
+	eor.b	d5,$7FFF(a2)
 ; 	eor.b	d5,$7F(a2,d5.w)
 	eor.b	d5,($FFFFFFFF).w
 	eor.b	d5,($FFFFFFFF).l
@@ -1584,7 +1584,7 @@
 	eor.w	d5,(a2)
 	eor.w	d5,(a2)+
 	eor.w	d5,-(a2)
-; 	eor.w	d5,$7FFF(a2)
+	eor.w	d5,$7FFF(a2)
 ; 	eor.w	d5,$7F(a2,d5.w)
 	eor.w	d5,($FFFFFFFF).w
 	eor.w	d5,($FFFFFFFF).l
@@ -1592,7 +1592,7 @@
 	eor.l	d5,(a2)
 	eor.l	d5,(a2)+
 	eor.l	d5,-(a2)
-; 	eor.l	d5,$7FFF(a2)
+	eor.l	d5,$7FFF(a2)
 ; 	eor.l	d5,$7F(a2,d5.w)
 	eor.l	d5,($FFFFFFFF).w
 	eor.l	d5,($FFFFFFFF).l
@@ -1605,7 +1605,7 @@
 	cmp.b	(a2),d5
 	cmp.b	(a2)+,d5
 	cmp.b	-(a2),d5
-; 	cmp.b	$7FFF(a2),d5
+	cmp.b	$7FFF(a2),d5
 ; 	cmp.b	$7F(a2,d5.w),d5
 	cmp.b	($FFFFFFFF).w,d5
 	cmp.b	($FFFFFFFF).l,d5
@@ -1615,7 +1615,7 @@
 	cmp.w	(a2),d5
 	cmp.w	(a2)+,d5
 	cmp.w	-(a2),d5
-; 	cmp.w	$7FFF(a2),d5
+	cmp.w	$7FFF(a2),d5
 ; 	cmp.w	$7F(a2,d5.w),d5
 	cmp.w	($FFFFFFFF).w,d5
 	cmp.w	($FFFFFFFF).l,d5
@@ -1625,7 +1625,7 @@
 	cmp.l	(a2),d5
 	cmp.l	(a2)+,d5
 	cmp.l	-(a2),d5
-; 	cmp.l	$7FFF(a2),d5
+	cmp.l	$7FFF(a2),d5
 ; 	cmp.l	$7F(a2,d5.w),d5
 	cmp.l	($FFFFFFFF).w,d5
 	cmp.l	($FFFFFFFF).l,d5
@@ -1637,7 +1637,7 @@
 	cmpa.w	(a2),a2
 	cmpa.w	(a2)+,a2
 	cmpa.w	-(a2),a2
-; 	cmpa.w	$7FFF(a2),a2
+	cmpa.w	$7FFF(a2),a2
 ; 	cmpa.w	$7F(a2,d5.w),a2
 	cmpa.w	($FFFFFFFF).w,a2
 	cmpa.w	($FFFFFFFF).l,a2
@@ -1649,7 +1649,7 @@
 	cmpa.l	(a2),a2
 	cmpa.l	(a2)+,a2
 	cmpa.l	-(a2),a2
-; 	cmpa.l	$7FFF(a2),a2
+	cmpa.l	$7FFF(a2),a2
 ; 	cmpa.l	$7F(a2,d5.w),a2
 	cmpa.l	($FFFFFFFF).w,a2
 	cmpa.l	($FFFFFFFF).l,a2
@@ -1661,7 +1661,7 @@
 	mulu.w	(a2),d5
 	mulu.w	(a2)+,d5
 	mulu.w	-(a2),d5
-; 	mulu.w	$7FFF(a2),d5
+	mulu.w	$7FFF(a2),d5
 ; 	mulu.w	$7F(a2,d5.w),d5
 	mulu.w	($FFFFFFFF).w,d5
 	mulu.w	($FFFFFFFF).l,d5
@@ -1672,7 +1672,7 @@
 	mulu	(a2),d5
 	mulu	(a2)+,d5
 	mulu	-(a2),d5
-; 	mulu	$7FFF(a2),d5
+	mulu	$7FFF(a2),d5
 ; 	mulu	$7F(a2,d5.w),d5
 	mulu	($FFFFFFFF).w,d5
 	mulu	($FFFFFFFF).l,d5
@@ -1684,7 +1684,7 @@
 	muls.w	(a2),d5
 	muls.w	(a2)+,d5
 	muls.w	-(a2),d5
-; 	muls.w	$7FFF(a2),d5
+	muls.w	$7FFF(a2),d5
 ; 	muls.w	$7F(a2,d5.w),d5
 	muls.w	($FFFFFFFF).w,d5
 	muls.w	($FFFFFFFF).l,d5
@@ -1695,7 +1695,7 @@
 	muls	(a2),d5
 	muls	(a2)+,d5
 	muls	-(a2),d5
-; 	muls	$7FFF(a2),d5
+	muls	$7FFF(a2),d5
 ; 	muls	$7F(a2,d5.w),d5
 	muls	($FFFFFFFF).w,d5
 	muls	($FFFFFFFF).l,d5
@@ -1721,7 +1721,7 @@
 	and.b	(a2),d5
 	and.b	(a2)+,d5
 	and.b	-(a2),d5
-; 	and.b	$7FFF(a2),d5
+	and.b	$7FFF(a2),d5
 ; 	and.b	$7F(a2,d5.w),d5
 	and.b	($FFFFFFFF).w,d5
 	and.b	($FFFFFFFF).l,d5
@@ -1730,7 +1730,7 @@
 	and.b	d5,(a2)
 	and.b	d5,(a2)+
 	and.b	d5,-(a2)
-; 	and.b	d5,$7FFF(a2)
+	and.b	d5,$7FFF(a2)
 ; 	and.b	d5,$7F(a2,d5.w)
 	and.b	d5,($FFFFFFFF).w
 	and.b	d5,($FFFFFFFF).l
@@ -1738,7 +1738,7 @@
 	and.w	(a2),d5
 	and.w	(a2)+,d5
 	and.w	-(a2),d5
-; 	and.w	$7FFF(a2),d5
+	and.w	$7FFF(a2),d5
 ; 	and.w	$7F(a2,d5.w),d5
 	and.w	($FFFFFFFF).w,d5
 	and.w	($FFFFFFFF).l,d5
@@ -1747,7 +1747,7 @@
 	and.w	d5,(a2)
 	and.w	d5,(a2)+
 	and.w	d5,-(a2)
-; 	and.w	d5,$7FFF(a2)
+	and.w	d5,$7FFF(a2)
 ; 	and.w	d5,$7F(a2,d5.w)
 	and.w	d5,($FFFFFFFF).w
 	and.w	d5,($FFFFFFFF).l
@@ -1755,7 +1755,7 @@
 	and.l	(a2),d5
 	and.l	(a2)+,d5
 	and.l	-(a2),d5
-; 	and.l	$7FFF(a2),d5
+	and.l	$7FFF(a2),d5
 ; 	and.l	$7F(a2,d5.w),d5
 	and.l	($FFFFFFFF).w,d5
 	and.l	($FFFFFFFF).l,d5
@@ -1764,7 +1764,7 @@
 	and.l	d5,(a2)
 	and.l	d5,(a2)+
 	and.l	d5,-(a2)
-; 	and.l	d5,$7FFF(a2)
+	and.l	d5,$7FFF(a2)
 ; 	and.l	d5,$7F(a2,d5.w)
 	and.l	d5,($FFFFFFFF).w
 	and.l	d5,($FFFFFFFF).l
@@ -1773,7 +1773,7 @@
 	add.b	(a2),d5
 	add.b	(a2)+,d5
 	add.b	-(a2),d5
-; 	add.b	$7FFF(a2),d5
+	add.b	$7FFF(a2),d5
 ; 	add.b	$7F(a2,d5.w),d5
 	add.b	($FFFFFFFF).w,d5
 	add.b	($FFFFFFFF).l,d5
@@ -1782,7 +1782,7 @@
 	add.b	d5,(a2)
 	add.b	d5,(a2)+
 	add.b	d5,-(a2)
-; 	add.b	d5,$7FFF(a2)
+	add.b	d5,$7FFF(a2)
 ; 	add.b	d5,$7F(a2,d5.w)
 	add.b	d5,($FFFFFFFF).w
 	add.b	d5,($FFFFFFFF).l
@@ -1790,7 +1790,7 @@
 	add.w	(a2),d5
 	add.w	(a2)+,d5
 	add.w	-(a2),d5
-; 	add.w	$7FFF(a2),d5
+	add.w	$7FFF(a2),d5
 ; 	add.w	$7F(a2,d5.w),d5
 	add.w	($FFFFFFFF).w,d5
 	add.w	($FFFFFFFF).l,d5
@@ -1799,7 +1799,7 @@
 	add.w	d5,(a2)
 	add.w	d5,(a2)+
 	add.w	d5,-(a2)
-; 	add.w	d5,$7FFF(a2)
+	add.w	d5,$7FFF(a2)
 ; 	add.w	d5,$7F(a2,d5.w)
 	add.w	d5,($FFFFFFFF).w
 	add.w	d5,($FFFFFFFF).l
@@ -1807,7 +1807,7 @@
 	add.l	(a2),d5
 	add.l	(a2)+,d5
 	add.l	-(a2),d5
-; 	add.l	$7FFF(a2),d5
+	add.l	$7FFF(a2),d5
 ; 	add.l	$7F(a2,d5.w),d5
 	add.l	($FFFFFFFF).w,d5
 	add.l	($FFFFFFFF).l,d5
@@ -1816,7 +1816,7 @@
 	add.l	d5,(a2)
 	add.l	d5,(a2)+
 	add.l	d5,-(a2)
-; 	add.l	d5,$7FFF(a2)
+	add.l	d5,$7FFF(a2)
 ; 	add.l	d5,$7F(a2,d5.w)
 	add.l	d5,($FFFFFFFF).w
 	add.l	d5,($FFFFFFFF).l
@@ -1833,7 +1833,7 @@
 	adda.w	(a2),a2
 	adda.w	(a2)+,a2
 	adda.w	-(a2),a2
-; 	adda.w	$7FFF(a2),a2
+	adda.w	$7FFF(a2),a2
 ; 	adda.w	$7F(a2,d5.w),a2
 	adda.w	($FFFFFFFF).w,a2
 	adda.w	($FFFFFFFF).l,a2
@@ -1845,7 +1845,7 @@
 	adda.l	(a2),a2
 	adda.l	(a2)+,a2
 	adda.l	-(a2),a2
-; 	adda.l	$7FFF(a2),a2
+	adda.l	$7FFF(a2),a2
 ; 	adda.l	$7F(a2,d5.w),a2
 	adda.l	($FFFFFFFF).w,a2
 	adda.l	($FFFFFFFF).l,a2
@@ -1862,7 +1862,7 @@
 	asl.w	(a2)
 	asl.w	(a2)+
 	asl.w	-(a2)
-; 	asl.w	$7FFF(a2)
+	asl.w	$7FFF(a2)
 ; 	asl.w	$7F(a2,d5.w)
 	asl.w	($FFFFFFFF).w
 	asl.w	($FFFFFFFF).l
@@ -1883,7 +1883,7 @@
 	asr.w	(a2)
 	asr.w	(a2)+
 	asr.w	-(a2)
-; 	asr.w	$7FFF(a2)
+	asr.w	$7FFF(a2)
 ; 	asr.w	$7F(a2,d5.w)
 	asr.w	($FFFFFFFF).w
 	asr.w	($FFFFFFFF).l
@@ -1904,7 +1904,7 @@
 	lsl.w	(a2)
 	lsl.w	(a2)+
 	lsl.w	-(a2)
-; 	lsl.w	$7FFF(a2)
+	lsl.w	$7FFF(a2)
 ; 	lsl.w	$7F(a2,d5.w)
 	lsl.w	($FFFFFFFF).w
 	lsl.w	($FFFFFFFF).l
@@ -1925,7 +1925,7 @@
 	lsr.w	(a2)
 	lsr.w	(a2)+
 	lsr.w	-(a2)
-; 	lsr.w	$7FFF(a2)
+	lsr.w	$7FFF(a2)
 ; 	lsr.w	$7F(a2,d5.w)
 	lsr.w	($FFFFFFFF).w
 	lsr.w	($FFFFFFFF).l
@@ -1946,7 +1946,7 @@
 	roxl.w	(a2)
 	roxl.w	(a2)+
 	roxl.w	-(a2)
-; 	roxl.w	$7FFF(a2)
+	roxl.w	$7FFF(a2)
 ; 	roxl.w	$7F(a2,d5.w)
 	roxl.w	($FFFFFFFF).w
 	roxl.w	($FFFFFFFF).l
