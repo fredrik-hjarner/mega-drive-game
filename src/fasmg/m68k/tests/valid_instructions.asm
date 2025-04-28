@@ -923,27 +923,27 @@
 	lea	@(pc),a2
 ; 	lea	@(pc,d5.w),a2
 
-; 	chk.w	d2,d5
-; 	chk.w	(a2),d5
-; 	chk.w	(a2)+,d5
-; 	chk.w	-(a2),d5
-; 	chk.w	$7FFF(a2),d5
+	chk.w	d2,d5
+	chk.w	(a2),d5
+	chk.w	(a2)+,d5
+	chk.w	-(a2),d5
+	chk.w	$7FFF(a2),d5
 ; 	chk.w	$7F(a2,d5.w),d5
-; 	chk.w	($FFFFFFFF).w,d5
-; 	chk.w	($FFFFFFFF).l,d5
-; 	chk.w	#$FFFF,d5
-; 	chk.w	@(pc),d5
+	chk.w	($FFFFFFFF).w,d5
+	chk.w	($FFFFFFFF).l,d5
+	chk.w	#$FFFF,d5
+	chk.w	@(pc),d5
 ; 	chk.w	@(pc,d5.w),d5
-; 	chk	d2,d5
-; 	chk	(a2),d5
-; 	chk	(a2)+,d5
-; 	chk	-(a2),d5
-; 	chk	$7FFF(a2),d5
+	chk	d2,d5
+	chk	(a2),d5
+	chk	(a2)+,d5
+	chk	-(a2),d5
+	chk	$7FFF(a2),d5
 ; 	chk	$7F(a2,d5.w),d5
-; 	chk	($FFFFFFFF).w,d5
-; 	chk	($FFFFFFFF).l,d5
-; 	chk	#$FFFF,d5
-; 	chk	@(pc),d5
+	chk	($FFFFFFFF).w,d5
+	chk	($FFFFFFFF).l,d5
+	chk	#$FFFF,d5
+	chk	@(pc),d5
 ; 	chk	@(pc,d5.w),d5
 
 	addq.b	#1,d5
