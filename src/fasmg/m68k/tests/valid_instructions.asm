@@ -172,7 +172,7 @@
 	btst.b	d5,($FFFFFFFF).l
 	; btst.b	d5,#$55 ; TODO: destination can never be an immediate?!
 	btst.b	d5,@(pc)
-; 	btst.b	d5,*(pc,d5.w)
+; 	btst.b	d5,@(pc,d5.w)
 
 ; 	btst	d2,d5
 ; 	btst	d5,(a2)
@@ -184,7 +184,7 @@
 ; 	btst	d5,($FFFFFFFF).l
 ; 	btst	d5,#$55
 ; 	btst	d5,@(pc)
-; 	btst	d5,*(pc,d5.w)
+; 	btst	d5,@(pc,d5.w)
 
 	btst.l	#0,d5 ; TODO: Need to try to shift with more values than #0.
 	btst.b	#0,(a2)
@@ -194,8 +194,8 @@
 ; 	btst.b	#0,$7F(a2,d5.w)
 	btst.b	#0,($FFFFFFFF).w
 	btst.b	#0,($FFFFFFFF).l
-; 	btst.b	#0,@(pc)
-; 	btst.b	#0,*(pc,d5.w)
+	btst.b	#0,@(pc)
+; 	btst.b	#0,@(pc,d5.w)
 
 ; 	btst	#0,d5
 ; 	btst	#0,(a2)
@@ -206,7 +206,7 @@
 ; 	btst	#0,($FFFFFFFF).w
 ; 	btst	#0,($FFFFFFFF).l
 ; 	btst	#0,@(pc)
-; 	btst	#0,*(pc,d5.w)
+; 	btst	#0,@(pc,d5.w)
 
 	bchg.l	d2,d5
 	bchg.b	d5,(a2)
@@ -330,8 +330,8 @@
 ; 	movea.w	$7F(a2,d5.w),a2
 	movea.w	($FFFFFFFF).w,a2
 	movea.w	($FFFFFFFF).l,a2
-; 	movea.w	@(pc),a2
-; 	movea.w	*(pc,d5.w),a2
+	movea.w	@(pc),a2
+; 	movea.w	@(pc,d5.w),a2
 	movea.l	d5,a2
 	movea.l	a5,a2
 	movea.l	(a2),a2
@@ -341,8 +341,8 @@
 ; 	movea.l	$7F(a2,d5.w),a2
 	movea.l	($FFFFFFFF).w,a2
 	movea.l	($FFFFFFFF).l,a2
-; 	movea.l	@(pc),a2
-; 	movea.l	*(pc,d5.w),a2
+	movea.l	@(pc),a2
+; 	movea.l	@(pc,d5.w),a2
 
 	move.b	d2,d5
 	move.b	d5,(a2)
@@ -416,22 +416,22 @@
 ; 	move.b	#$FF,$7F(a2,d5.w)
 	move.b	#$FF,($FFFFFFFF).w
 	move.b	#$FF,($FFFFFFFF).l
-; 	move.b	@(pc),d5
-; 	move.b	@(pc),(a2)
-; 	move.b	@(pc),(a2)+
-; 	move.b	@(pc),-(a2)
-; 	move.b	@(pc),$7FFF(a2)
+	move.b	@(pc),d5
+	move.b	@(pc),(a2)
+	move.b	@(pc),(a2)+
+	move.b	@(pc),-(a2)
+	move.b	@(pc),$7FFF(a2)
 ; 	move.b	@(pc),$7F(a2,d5.w)
-; 	move.b	@(pc),($FFFFFFFF).w
-; 	move.b	@(pc),($FFFFFFFF).l
-; 	move.b	*(pc,d5.w),d5
-; 	move.b	*(pc,d5.w),(a2)
-; 	move.b	*(pc,d5.w),(a2)+
-; 	move.b	*(pc,d5.w),-(a2)
-; 	move.b	*(pc,d5.w),$7FFF(a2)
-; 	move.b	*(pc,d5.w),$7F(a2,d5.w)
-; 	move.b	*(pc,d5.w),($FFFFFFFF).w
-; 	move.b	*(pc,d5.w),($FFFFFFFF).l
+	move.b	@(pc),($FFFFFFFF).w
+	move.b	@(pc),($FFFFFFFF).l
+; 	move.b	@(pc,d5.w),d5
+; 	move.b	@(pc,d5.w),(a2)
+; 	move.b	@(pc,d5.w),(a2)+
+; 	move.b	@(pc,d5.w),-(a2)
+; 	move.b	@(pc,d5.w),$7FFF(a2)
+; 	move.b	@(pc,d5.w),$7F(a2,d5.w)
+; 	move.b	@(pc,d5.w),($FFFFFFFF).w
+; 	move.b	@(pc,d5.w),($FFFFFFFF).l
 	move.w	d2,d5
 	move.w	d5,(a2)
 	move.w	d5,(a2)+
@@ -512,22 +512,22 @@
 ; 	move.w	#$FFFF,$7F(a2,d5.w)
 	move.w	#$FFFF,($FFFFFFFF).w
 	move.w	#$FF,($FFFFFFFF).l
-; 	move.w	@(pc),d5
-; 	move.w	@(pc),(a2)
-; 	move.w	@(pc),(a2)+
-; 	move.w	@(pc),-(a2)
-; 	move.w	@(pc),$7FFF(a2)
+	move.w	@(pc),d5
+	move.w	@(pc),(a2)
+	move.w	@(pc),(a2)+
+	move.w	@(pc),-(a2)
+	move.w	@(pc),$7FFF(a2)
 ; 	move.w	@(pc),$7F(a2,d5.w)
-; 	move.w	@(pc),($FFFFFFFF).w
-; 	move.w	@(pc),($FFFFFFFF).l
-; 	move.w	*(pc,d5.w),d5
-; 	move.w	*(pc,d5.w),(a2)
-; 	move.w	*(pc,d5.w),(a2)+
-; 	move.w	*(pc,d5.w),-(a2)
-; 	move.w	*(pc,d5.w),$7FFF(a2)
-; 	move.w	*(pc,d5.w),$7F(a2,d5.w)
-; 	move.w	*(pc,d5.w),($FFFFFFFF).w
-; 	move.w	*(pc,d5.w),($FFFFFFFF).l
+	move.w	@(pc),($FFFFFFFF).w
+	move.w	@(pc),($FFFFFFFF).l
+; 	move.w	@(pc,d5.w),d5
+; 	move.w	@(pc,d5.w),(a2)
+; 	move.w	@(pc,d5.w),(a2)+
+; 	move.w	@(pc,d5.w),-(a2)
+; 	move.w	@(pc,d5.w),$7FFF(a2)
+; 	move.w	@(pc,d5.w),$7F(a2,d5.w)
+; 	move.w	@(pc,d5.w),($FFFFFFFF).w
+; 	move.w	@(pc,d5.w),($FFFFFFFF).l
 	move.l	d2,d5
 	move.l	d5,(a2)
 	move.l	d5,(a2)+
@@ -608,22 +608,22 @@
 ; 	move.l	#$FFFFFFFF,$7F(a2,d5.w)
 	move.l	#$FFFFFFFF,($FFFFFFFF).w
 	move.l	#$FFFFFFFF,($FFFFFFFF).l
-; 	move.l	@(pc),d5
-; 	move.l	@(pc),(a2)
-; 	move.l	@(pc),(a2)+
-; 	move.l	@(pc),-(a2)
-; 	move.l	@(pc),$7FFF(a2)
+	move.l	@(pc),d5
+	move.l	@(pc),(a2)
+	move.l	@(pc),(a2)+
+	move.l	@(pc),-(a2)
+	move.l	@(pc),$7FFF(a2)
 ; 	move.l	@(pc),$7F(a2,d5.w)
-; 	move.l	@(pc),($FFFFFFFF).w
-; 	move.l	@(pc),($FFFFFFFF).l
-; 	move.l	*(pc,d5.w),d5
-; 	move.l	*(pc,d5.w),(a2)
-; 	move.l	*(pc,d5.w),(a2)+
-; 	move.l	*(pc,d5.w),-(a2)
-; 	move.l	*(pc,d5.w),$7FFF(a2)
-; 	move.l	*(pc,d5.w),$7F(a2,d5.w)
-; 	move.l	*(pc,d5.w),($FFFFFFFF).w
-; 	move.l	*(pc,d5.w),($FFFFFFFF).l
+	move.l	@(pc),($FFFFFFFF).w
+	move.l	@(pc),($FFFFFFFF).l
+; 	move.l	@(pc,d5.w),d5
+; 	move.l	@(pc,d5.w),(a2)
+; 	move.l	@(pc,d5.w),(a2)+
+; 	move.l	@(pc,d5.w),-(a2)
+; 	move.l	@(pc,d5.w),$7FFF(a2)
+; 	move.l	@(pc,d5.w),$7F(a2,d5.w)
+; 	move.l	@(pc,d5.w),($FFFFFFFF).w
+; 	move.l	@(pc,d5.w),($FFFFFFFF).l
 ; 	move.w	sr,d5
 ; 	move.w	sr,(a2)
 ; 	move.w	sr,(a2)+
@@ -642,7 +642,7 @@
 ; 	move.w	($FFFFFFFF).l,ccr
 ; 	move.w	#$FFFF,ccr
 ; 	move.w	@(pc),ccr
-; 	move.w	*(pc,d5.w),ccr
+; 	move.w	@(pc,d5.w),ccr
 	move.w	d5,sr
 	move.w	(a2),sr
 	move.w	(a2)+,sr
@@ -653,7 +653,7 @@
 	move.w	($FFFFFFFF).l,sr
 ; 	move.w	#$FFFF,sr
 ; 	move.w	@(pc),sr
-; 	move.w	*(pc,d5.w),sr
+; 	move.w	@(pc,d5.w),sr
 
 	negx.b	d5
 	negx.b	(a2)
@@ -783,15 +783,15 @@
 ; 	pea.l	$7F(a2,d5.w)
 	pea.l	($FFFFFFFF).w
 	pea.l	($FFFFFFFF).l
-; 	pea.l	@(pc)
-; 	pea.l	*(pc,d5.w)
+	pea.l	@(pc)
+; 	pea.l	@(pc,d5.w)
 	pea	(a2)
 	pea	$7FFF(a2)
 ; 	pea	$7F(a2,d5.w)
 	pea	($FFFFFFFF).w
 	pea	($FFFFFFFF).l
-; 	pea	@(pc)
-; 	pea	*(pc,d5.w)
+	pea	@(pc)
+; 	pea	@(pc,d5.w)
 
 	illegal
 
@@ -839,10 +839,10 @@
 
 	trap	#2
 
-	; link.w	a2,#4
-; 	link	a2,#4
+	link.w	a2,#4
+	link	a2,#4
 
-	; unlk	a2
+	unlk	a2
 
 ; 	move.l	usp,a2
 ; 	move.l	a2,usp
@@ -853,7 +853,7 @@
 
 	nop
 
-; 	stop	#$2700
+	stop	#$2700
 
 	rte
 
@@ -868,16 +868,16 @@
 ; 	jsr	$7F(a2,d5.w)
 	jsr	($FFFFFFFF).w
 	jsr	($FFFFFFFF).l
-; 	jsr	@(pc)
-; 	jsr	*(pc,d5.w)
+	jsr	@(pc)
+; 	jsr	@(pc,d5.w)
 
 	jmp	(a2)
 	jmp	$7FFF(a2)
 ; 	jmp	$7F(a2,d5.w)
 	jmp	($FFFFFFFF).w
 	jmp	($FFFFFFFF).l
-; 	jmp	@(pc)
-; 	jmp	*(pc,d5.w)
+	jmp	@(pc)
+; 	jmp	@(pc,d5.w)
 
 ; 	movem.w	d5-a7,(a2)
 ; 	movem.w	d5-a7,-(a2)
@@ -892,7 +892,7 @@
 ; 	movem.w	($FFFFFFFF).w,d5-a7
 ; 	movem.w	($FFFFFFFF).l,d5-a7
 ; 	movem.w	@(pc),d5-a7
-; 	movem.w	*(pc,d5.w),d5-a7
+; 	movem.w	@(pc,d5.w),d5-a7
 ; 	movem.l	d5-a7,(a2)
 ; 	movem.l	d5-a7,-(a2)
 ; 	movem.l	d5-a7,$7FFF(a2)
@@ -906,22 +906,22 @@
 ; 	movem.l	($FFFFFFFF).w,d5-a7
 ; 	movem.l	($FFFFFFFF).l,d5-a7
 ; 	movem.l	@(pc),d5-a7
-; 	movem.l	*(pc,d5.w),d5-a7
+; 	movem.l	@(pc,d5.w),d5-a7
 
 	lea.l	(a2),a2
 	lea.l	$7FFF(a2),a2
 ; 	lea.l	$7F(a2,d5.w),a2
 	lea.l	($FFFFFFFF).w,a2
 	lea.l	($FFFFFFFF).l,a2
-; 	lea.l	@(pc),a2
-; 	lea.l	*(pc,d5.w),a2
+	lea.l	@(pc),a2
+; 	lea.l	@(pc,d5.w),a2
 	lea	(a2),a2
 	lea	$7FFF(a2),a2
 ; 	lea	$7F(a2,d5.w),a2
 	lea	($FFFFFFFF).w,a2
 	lea	($FFFFFFFF).l,a2
-; 	lea	@(pc),a2
-; 	lea	*(pc,d5.w),a2
+	lea	@(pc),a2
+; 	lea	@(pc,d5.w),a2
 
 ; 	chk.w	d2,d5
 ; 	chk.w	(a2),d5
@@ -933,7 +933,7 @@
 ; 	chk.w	($FFFFFFFF).l,d5
 ; 	chk.w	#$FFFF,d5
 ; 	chk.w	@(pc),d5
-; 	chk.w	*(pc,d5.w),d5
+; 	chk.w	@(pc,d5.w),d5
 ; 	chk	d2,d5
 ; 	chk	(a2),d5
 ; 	chk	(a2)+,d5
@@ -944,7 +944,7 @@
 ; 	chk	($FFFFFFFF).l,d5
 ; 	chk	#$FFFF,d5
 ; 	chk	@(pc),d5
-; 	chk	*(pc,d5.w),d5
+; 	chk	@(pc,d5.w),d5
 
 	addq.b	#1,d5
 	addq.b	#1,(a2)
@@ -1394,8 +1394,8 @@
 	divu.w	($FFFFFFFF).w,d5
 	divu.w	($FFFFFFFF).l,d5
 ; 	divu.w	#$FFFF,d5
-; 	divu.w	@(pc),d5
-; 	divu.w	*(pc,d5.w),d5
+	divu.w	@(pc),d5
+; 	divu.w	@(pc,d5.w),d5
 	divu	d2,d5
 	divu	(a2),d5
 	divu	(a2)+,d5
@@ -1405,8 +1405,8 @@
 	divu	($FFFFFFFF).w,d5
 	divu	($FFFFFFFF).l,d5
 ; 	divu	#$FFFF,d5
-; 	divu	@(pc),d5
-; 	divu	*(pc,d5.w),d5
+	divu	@(pc),d5
+; 	divu	@(pc,d5.w),d5
 
 	divs.w	d2,d5
 	divs.w	(a2),d5
@@ -1417,8 +1417,8 @@
 	divs.w	($FFFFFFFF).w,d5
 	divs.w	($FFFFFFFF).l,d5
 ; 	divs.w	#$FFFF,d5
-; 	divs.w	@(pc),d5
-; 	divs.w	*(pc,d5.w),d5
+	divs.w	@(pc),d5
+; 	divs.w	@(pc,d5.w),d5
 	divs	d2,d5
 	divs	(a2),d5
 	divs	(a2)+,d5
@@ -1428,8 +1428,8 @@
 	divs	($FFFFFFFF).w,d5
 	divs	($FFFFFFFF).l,d5
 ; 	divs	#$FFFF,d5
-; 	divs	@(pc),d5
-; 	divs	*(pc,d5.w),d5
+	divs	@(pc),d5
+; 	divs	@(pc,d5.w),d5
 
 	sbcd.b	d2,d5
 	; sbcd.b	-(a2),-(a2) ; TODO: A bug here! It becomes negative
@@ -1444,8 +1444,8 @@
 ; 	or.b	$7F(a2,d5.w),d5
 	or.b	($FFFFFFFF).w,d5
 	or.b	($FFFFFFFF).l,d5
-; 	or.b	@(pc),d5
-; 	or.b	*(pc,d5.w),d5
+	or.b	@(pc),d5
+; 	or.b	@(pc,d5.w),d5
 	or.b	d5,(a2)
 	or.b	d5,(a2)+
 	or.b	d5,-(a2)
@@ -1461,8 +1461,8 @@
 ; 	or.w	$7F(a2,d5.w),d5
 	or.w	($FFFFFFFF).w,d5
 	or.w	($FFFFFFFF).l,d5
-; 	or.w	@(pc),d5
-; 	or.w	*(pc,d5.w),d5
+	or.w	@(pc),d5
+; 	or.w	@(pc,d5.w),d5
 	or.w	d5,(a2)
 	or.w	d5,(a2)+
 	or.w	d5,-(a2)
@@ -1478,8 +1478,8 @@
 ; 	or.l	$7F(a2,d5.w),d5
 	or.l	($FFFFFFFF).w,d5
 	or.l	($FFFFFFFF).l,d5
-; 	or.l	@(pc),d5
-; 	or.l	*(pc,d5.w),d5
+	or.l	@(pc),d5
+; 	or.l	@(pc,d5.w),d5
 	or.l	d5,(a2)
 	or.l	d5,(a2)+
 	or.l	d5,-(a2)
@@ -1496,8 +1496,8 @@
 ; 	sub.b	$7F(a2,d5.w),d5
 	sub.b	($FFFFFFFF).w,d5
 	sub.b	($FFFFFFFF).l,d5
-; 	sub.b	@(pc),d5
-; 	sub.b	*(pc,d5.w),d5
+	sub.b	@(pc),d5
+; 	sub.b	@(pc,d5.w),d5
 	sub.b	d5,(a2)
 	sub.b	d5,(a2)+
 	sub.b	d5,-(a2)
@@ -1513,8 +1513,8 @@
 ; 	sub.w	$7F(a2,d5.w),d5
 	sub.w	($FFFFFFFF).w,d5
 	sub.w	($FFFFFFFF).l,d5
-; 	sub.w	@(pc),d5
-; 	sub.w	*(pc,d5.w),d5
+	sub.w	@(pc),d5
+; 	sub.w	@(pc,d5.w),d5
 	sub.w	d5,(a2)
 	sub.w	d5,(a2)+
 	sub.w	d5,-(a2)
@@ -1530,8 +1530,8 @@
 ; 	sub.l	$7F(a2,d5.w),d5
 	sub.l	($FFFFFFFF).w,d5
 	sub.l	($FFFFFFFF).l,d5
-; 	sub.l	@(pc),d5
-; 	sub.l	*(pc,d5.w),d5
+	sub.l	@(pc),d5
+; 	sub.l	@(pc,d5.w),d5
 	sub.l	d5,(a2)
 	sub.l	d5,(a2)+
 	sub.l	d5,-(a2)
@@ -1557,8 +1557,8 @@
 	suba.w	($FFFFFFFF).w,a2
 	suba.w	($FFFFFFFF).l,a2
 ; 	suba.w	#$7FFF,a2
-; 	suba.w	@(pc),a2
-; 	suba.w	*(pc,d5.w),a2
+	suba.w	@(pc),a2
+; 	suba.w	@(pc,d5.w),a2
 	suba.l	d5,a2
 	suba.l	a5,a2
 	suba.l	(a2),a2
@@ -1569,8 +1569,8 @@
 	suba.l	($FFFFFFFF).w,a2
 	suba.l	($FFFFFFFF).l,a2
 ; 	suba.l	#$7FFF,a2
-; 	suba.l	@(pc),a2
-; 	suba.l	*(pc,d5.w),a2
+	suba.l	@(pc),a2
+; 	suba.l	@(pc,d5.w),a2
 
 	eor.b	d2,d5
 	eor.b	d5,(a2)
@@ -1609,8 +1609,8 @@
 ; 	cmp.b	$7F(a2,d5.w),d5
 	cmp.b	($FFFFFFFF).w,d5
 	cmp.b	($FFFFFFFF).l,d5
-; 	cmp.b	@(pc),d5
-; 	cmp.b	*(pc,d5.w),d5
+	cmp.b	@(pc),d5
+; 	cmp.b	@(pc,d5.w),d5
 	cmp.w	d2,d5
 	cmp.w	(a2),d5
 	cmp.w	(a2)+,d5
@@ -1619,8 +1619,8 @@
 ; 	cmp.w	$7F(a2,d5.w),d5
 	cmp.w	($FFFFFFFF).w,d5
 	cmp.w	($FFFFFFFF).l,d5
-; 	cmp.w	@(pc),d5
-; 	cmp.w	*(pc,d5.w),d5
+	cmp.w	@(pc),d5
+; 	cmp.w	@(pc,d5.w),d5
 	cmp.l	d2,d5
 	cmp.l	(a2),d5
 	cmp.l	(a2)+,d5
@@ -1629,8 +1629,8 @@
 ; 	cmp.l	$7F(a2,d5.w),d5
 	cmp.l	($FFFFFFFF).w,d5
 	cmp.l	($FFFFFFFF).l,d5
-; 	cmp.l	@(pc),d5
-; 	cmp.l	*(pc,d5.w),d5
+	cmp.l	@(pc),d5
+; 	cmp.l	@(pc,d5.w),d5
 
 	cmpa.w	d5,a2
 	cmpa.w	a5,a2
@@ -1642,8 +1642,8 @@
 	cmpa.w	($FFFFFFFF).w,a2
 	cmpa.w	($FFFFFFFF).l,a2
 ; 	cmpa.w	#$FFFF,a2
-; 	cmpa.w	@(pc),a2
-; 	cmpa.w	*(pc,d5.w),a2
+	cmpa.w	@(pc),a2
+; 	cmpa.w	@(pc,d5.w),a2
 	cmpa.l	d5,a2
 	cmpa.l	a5,a2
 	cmpa.l	(a2),a2
@@ -1654,8 +1654,8 @@
 	cmpa.l	($FFFFFFFF).w,a2
 	cmpa.l	($FFFFFFFF).l,a2
 ; 	cmpa.l	#$FFFF,a2
-; 	cmpa.l	@(pc),a2
-; 	cmpa.l	*(pc,d5.w),a2
+	cmpa.l	@(pc),a2
+; 	cmpa.l	@(pc,d5.w),a2
 
 	mulu.w	d2,d5
 	mulu.w	(a2),d5
@@ -1666,8 +1666,8 @@
 	mulu.w	($FFFFFFFF).w,d5
 	mulu.w	($FFFFFFFF).l,d5
 ; 	mulu.w	#$FFFF,d5
-; 	mulu.w	@(pc),d5
-; 	mulu.w	*(pc,d5.w),d5
+	mulu.w	@(pc),d5
+; 	mulu.w	@(pc,d5.w),d5
 	mulu	d2,d5
 	mulu	(a2),d5
 	mulu	(a2)+,d5
@@ -1677,8 +1677,8 @@
 	mulu	($FFFFFFFF).w,d5
 	mulu	($FFFFFFFF).l,d5
 ; 	mulu	#$FFFF,d5
-; 	mulu	@(pc),d5
-; 	mulu	*(pc,d5.w),d5
+	mulu	@(pc),d5
+; 	mulu	@(pc,d5.w),d5
 
 	muls.w	d2,d5
 	muls.w	(a2),d5
@@ -1689,8 +1689,8 @@
 	muls.w	($FFFFFFFF).w,d5
 	muls.w	($FFFFFFFF).l,d5
 ; 	muls.w	#$FFFF,d5
-; 	muls.w	@(pc),d5
-; 	muls.w	*(pc,d5.w),d5
+	muls.w	@(pc),d5
+; 	muls.w	@(pc,d5.w),d5
 	muls	d2,d5
 	muls	(a2),d5
 	muls	(a2)+,d5
@@ -1700,8 +1700,8 @@
 	muls	($FFFFFFFF).w,d5
 	muls	($FFFFFFFF).l,d5
 ; 	muls	#$FFFF,d5
-; 	muls	@(pc),d5
-; 	muls	*(pc,d5.w),d5
+	muls	@(pc),d5
+; 	muls	@(pc,d5.w),d5
 
 	abcd.b	d2,d5
 ; 	abcd.b	-(a2),-(a2) ; TODO: Bug here! It becomes negative.
@@ -1725,8 +1725,8 @@
 ; 	and.b	$7F(a2,d5.w),d5
 	and.b	($FFFFFFFF).w,d5
 	and.b	($FFFFFFFF).l,d5
-; 	and.b	@(pc),d5
-; 	and.b	*(pc,d5.w),d5
+	and.b	@(pc),d5
+; 	and.b	@(pc,d5.w),d5
 	and.b	d5,(a2)
 	and.b	d5,(a2)+
 	and.b	d5,-(a2)
@@ -1742,8 +1742,8 @@
 ; 	and.w	$7F(a2,d5.w),d5
 	and.w	($FFFFFFFF).w,d5
 	and.w	($FFFFFFFF).l,d5
-; 	and.w	@(pc),d5
-; 	and.w	*(pc,d5.w),d5
+	and.w	@(pc),d5
+; 	and.w	@(pc,d5.w),d5
 	and.w	d5,(a2)
 	and.w	d5,(a2)+
 	and.w	d5,-(a2)
@@ -1759,8 +1759,8 @@
 ; 	and.l	$7F(a2,d5.w),d5
 	and.l	($FFFFFFFF).w,d5
 	and.l	($FFFFFFFF).l,d5
-; 	and.l	@(pc),d5
-; 	and.l	*(pc,d5.w),d5
+	and.l	@(pc),d5
+; 	and.l	@(pc,d5.w),d5
 	and.l	d5,(a2)
 	and.l	d5,(a2)+
 	and.l	d5,-(a2)
@@ -1777,8 +1777,8 @@
 ; 	add.b	$7F(a2,d5.w),d5
 	add.b	($FFFFFFFF).w,d5
 	add.b	($FFFFFFFF).l,d5
-; 	add.b	@(pc),d5
-; 	add.b	*(pc,d5.w),d5
+	add.b	@(pc),d5
+; 	add.b	@(pc,d5.w),d5
 	add.b	d5,(a2)
 	add.b	d5,(a2)+
 	add.b	d5,-(a2)
@@ -1794,8 +1794,8 @@
 ; 	add.w	$7F(a2,d5.w),d5
 	add.w	($FFFFFFFF).w,d5
 	add.w	($FFFFFFFF).l,d5
-; 	add.w	@(pc),d5
-; 	add.w	*(pc,d5.w),d5
+	add.w	@(pc),d5
+; 	add.w	@(pc,d5.w),d5
 	add.w	d5,(a2)
 	add.w	d5,(a2)+
 	add.w	d5,-(a2)
@@ -1811,8 +1811,8 @@
 ; 	add.l	$7F(a2,d5.w),d5
 	add.l	($FFFFFFFF).w,d5
 	add.l	($FFFFFFFF).l,d5
-; 	add.l	@(pc),d5
-; 	add.l	*(pc,d5.w),d5
+	add.l	@(pc),d5
+; 	add.l	@(pc,d5.w),d5
 	add.l	d5,(a2)
 	add.l	d5,(a2)+
 	add.l	d5,-(a2)
@@ -1838,8 +1838,8 @@
 	adda.w	($FFFFFFFF).w,a2
 	adda.w	($FFFFFFFF).l,a2
 ; 	adda.w	#$7FFF,a2
-; 	adda.w	@(pc),a2
-; 	adda.w	*(pc,d5.w),a2
+	adda.w	@(pc),a2
+; 	adda.w	@(pc,d5.w),a2
 	adda.l	d5,a2
 	adda.l	a5,a2
 	adda.l	(a2),a2
@@ -1850,8 +1850,8 @@
 	adda.l	($FFFFFFFF).w,a2
 	adda.l	($FFFFFFFF).l,a2
 ; 	adda.l	#$7FFF,a2
-; 	adda.l	@(pc),a2
-; 	adda.l	*(pc,d5.w),a2
+	adda.l	@(pc),a2
+; 	adda.l	@(pc,d5.w),a2
 
 	asl.b	d2,d5
 	asl.b	#1,d5

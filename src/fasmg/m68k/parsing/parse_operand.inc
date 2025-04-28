@@ -181,6 +181,7 @@ iterate op, @op1,@op2
                     compute ea_mode_bits, 111b
                     compute ea_reg_bits, 100b
                     compute imm, maybe_number
+                    compute ext_bytes, 2 ; TODO: Assumes 2 but could also be 4!!
                     compute ext_bytes_bits, imm
 
                     ; If instr_size is empty (optional argument) then ext_bytes
@@ -330,7 +331,18 @@ iterate op, @op1,@op2
                     compute ext_bytes, 2
                     ; TODO: Should the $ - 2 - be here or in
                     ;       parse_pc_displacement?
-                    compute ext_bytes_bits, $ - 2 - m68k.ret_imm
+                    match =@op2, op
+                    jno skipzor
+                    ; TODO: This is a bit retarded an assumes parse_operand@op1
+                    ; has run before parse_operand@op2
+                    ; This stuff is because the d(pc) is relative to the
+                    ; operands own extension words is, and the previous operand
+                    ; could have added extension words so that why that has to
+                    ; be subtracted.
+                    compute ext_bytes_bits, ($ - 2 - @op1.ext_bytes) - m68k.ret_imm
+                    jump done
+                skipzor:
+                    compute ext_bytes_bits, ($ - 2) - m68k.ret_imm
                     jump done
             ;; Temporary stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             unknown:

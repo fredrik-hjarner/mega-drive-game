@@ -32,9 +32,6 @@ end macro
 macro movep.w line&
 end macro
 
-macro link.w line&
-end macro
-
 macro chk.w line&
 end macro
 
@@ -47,6 +44,25 @@ end macro
 
 macro exg.l line&
 end macro
+
+;; LINK ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Syntax:
+;     link.w an,#<displacement>
+; Sample syntax:
+;     link a6,#-12
+calminstruction link.w? an*, imm*
+    call m68k.parse_operand@op1, an
+    call m68k.parse_operand@op2, imm
+
+    ; first word
+    ; bswap is needed because fasmg outputs in little-endian
+    emit 2, (0100111001010000b + @op1.ea_reg_bits) bswap 2
+
+    ; extension words
+    ; bswap is needed because fasmg outputs in little-endian
+    emit @op2.ext_bytes, @op2.ext_bytes_bits bswap @op2.ext_bytes
+end calminstruction
 
 ;; SUBX, ADDX ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

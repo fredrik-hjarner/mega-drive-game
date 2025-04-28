@@ -62,3 +62,5 @@
       error in a controlled fashion which you then can follow by `jok`/`jerr`
       checks.
 * Make a count_tokens util.
+* I now support `$7FFF(a2)` but I should also support `($7FFF,a2)` and add a lot
+      of test cases to test that.

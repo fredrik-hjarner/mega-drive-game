@@ -26,13 +26,37 @@
 ;; |             |             |        |                                   | ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Placeholders for not yet implemented instructions ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; UNLK ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-macro unlk line&
-end macro
+; Syntax:
+;     unlk an
+; Attributes:
+;     Unsized
+calminstruction unlk? an*
+    call m68k.parse_operand@op1, an
+    emit 2, (0100111001011000b + @op1.ea_reg_bits) bswap 2
+end calminstruction
 
-macro stop line&
-end macro
+;; STOP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Syntax:
+;     stop #<data>
+; Sample syntax:
+;     stop #$2700
+;     stop #setup ; TODO: Observe this example. I must make that work!!!
+; Attributes:
+;     Unsized
+calminstruction stop? imm*
+    call m68k.parse_operand@op1, imm
+
+    ; first word
+    ; bswap is needed because famg outputs in little-endian
+    emit 2, 0100111001110010b bswap 2
+
+    ; imm
+    ; bswap is needed because famg outputs in little-endian
+    emit 2, @op1.imm bswap 2
+end calminstruction
 
 ;; NCBD, PEA, TAS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

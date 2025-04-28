@@ -64,4 +64,8 @@ end macro
 ; assemblers uses @ instead.
 ; I am not sure this will work well, otherwise I need to come up with another
 ; solution.
+; Oops, I was wrong!!! It is * that is exactly like $
+;     and there is no equivalent for @ (points to the address of the operands
+;     extension word).
+; TODO: Remove or comment this out.
 define @ $

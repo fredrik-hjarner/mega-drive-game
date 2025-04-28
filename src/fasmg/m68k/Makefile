@@ -6,8 +6,14 @@ clown: clownassembler hexdump
 
 vasm: build_vasm hexdump
 
+# clownassembler runs `valid_instructions.asm` directly while fasmg runs a wrapper
+# file that includes the m68k instruction set.
+# The reason is that * is not supported in fasmg and I don't know if I can
+# make it supported, in fasmg $ is used instead. I use @ as a kind of
+# "middle-ground" since it is almost the same as * in clownassembler and I can
+# easily have `@ equ $` in fasmg.
 clownassembler:
-	clownassembler -c -o tests/test.bin -i tests/test.asm
+	clownassembler -c -o tests/test.bin -i tests/valid_instructions.asm
 
 build_vasm:
 	vasm -Fbin -spaces -wfail -o tests/test.bin tests/test.asm
