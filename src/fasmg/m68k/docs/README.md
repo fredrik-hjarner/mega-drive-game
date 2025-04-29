@@ -2,6 +2,9 @@
 
 I am trying to make a m68k instruction set for fasmg.
 
+`parse_operand` must be run on all operands before any byte is emitted! The
+reason for this has to do with pc-relative addressing modes.
+
 ## Strangeness
 
 I run it in a weird way. Since it will take a long time to make the whole

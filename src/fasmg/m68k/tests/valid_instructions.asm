@@ -891,7 +891,7 @@
 ; 	movem.w	$7F(a2,d5.w),d5-a7
 	movem.w	($FFFFFFFF).w,d5-a7
 	movem.w	($FFFFFFFF).l,d5-a7
-; 	movem.w	@(pc),d5-a7 ; TODO: Omg. It's even harder than I thought to fix @(pc)
+	movem.w	@(pc),d5-a7
 ; 	movem.w	@(pc,d5.w),d5-a7
 	movem.l	d5-a7,(a2)
 	movem.l	d5-a7,-(a2)

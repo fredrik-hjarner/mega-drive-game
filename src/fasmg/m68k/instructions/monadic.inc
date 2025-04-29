@@ -58,8 +58,7 @@ iterate <instr, instr_word>, \
             emit 2, (instr_word + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits) bswap 2
 
             ; <ea> extension words
-            ; bswap is needed because famg outputs in little-endian
-            emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+            call emit_ext_words, @op1.ext_bytes, @op1.ext_bytes_bits
         end calminstruction
 
 end iterate ; <instr, instr_word>
@@ -103,8 +102,7 @@ iterate <cc,  cc_bits>, \
                 emit 1, 11000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
 
                 ; <ea> extension words
-                ; bswap is needed because famg outputs in little-endian :'/
-                emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+                call emit_ext_words, @op1.ext_bytes, @op1.ext_bytes_bits
         end calminstruction
 
 end iterate ; <cc, cc_bits>
@@ -148,8 +146,9 @@ iterate <instr,  first_byte>, \
 
                 emit 1, first_byte
                 emit 1, size_bits shl 6 + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
-                ; bswap is needed because famg outputs in little-endian :'/
-                emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+
+                ; <ea> extension words
+                call emit_ext_words, @op1.ext_bytes, @op1.ext_bytes_bits
             end calminstruction
 
     end iterate ; <size, size_bits>
@@ -357,8 +356,9 @@ iterate <instr,  second_byte>, \
 
             emit 1, 01001110b
             emit 1, second_byte + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
-            ; bswap is needed because famg outputs in little-endian :'/
-            emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
+            
+            ; <ea> extension words
+            call emit_ext_words, @op1.ext_bytes, @op1.ext_bytes_bits
         end calminstruction
 
 end iterate ; <instr, second_byte>

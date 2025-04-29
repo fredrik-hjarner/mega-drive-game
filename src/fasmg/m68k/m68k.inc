@@ -143,6 +143,8 @@ end calminstruction
 ;; 68000 instruction set implemented in fasmg                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+include "instructions/utils.inc"
+
 include "instructions/niladic.inc"
 include "instructions/monadic.inc"
 include "instructions/dyadic.inc"

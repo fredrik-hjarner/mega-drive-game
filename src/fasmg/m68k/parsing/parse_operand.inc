@@ -329,20 +329,19 @@ iterate op, @op1,@op2
                     compute ea_mode_bits, 111b
                     compute ea_reg_bits, 010b
                     compute ext_bytes, 2
-                    ; TODO: Should the $ - 2 - be here or in
-                    ;       parse_pc_displacement?
-                    match =@op2, op
-                    jno skipzor
-                    ; TODO: This is a bit retarded an assumes parse_operand@op1
-                    ; has run before parse_operand@op2
                     ; This stuff is because the d(pc) is relative to the
                     ; operands own extension words is, and the previous operand
                     ; could have added extension words so that why that has to
                     ; be subtracted.
-                    compute ext_bytes_bits, ($ - 2 - @op1.ext_bytes) - m68k.ret_imm
-                    jump done
-                skipzor:
-                    compute ext_bytes_bits, ($ - 2) - m68k.ret_imm
+                    ; some instructions swap the order of the
+                    ; arguments so it's complicated.
+                    ; How I solved it is by storing both the current $
+                    ; and also add a `pc` element to `ext_bytes_bits`.
+                    ; `$*pc` is a "decoration" that is evaulated later
+                    ; see `emit_ext_words` function.
+                    ; TODO: I could prolly do this in a better/nice way
+                    ; such as store old $ in a variable somewhere maybe.
+                    compute ext_bytes_bits, $*pc + m68k.ret_imm
                     jump done
             ;; Temporary stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             unknown:
@@ -386,15 +385,18 @@ iterate op, @op1,@op2
                     ; arrange can't handle negative numbers!
                     ; TODO: I should make a helper to support negative numbers.
                     ; TODO: I could really clean this up.
-                    check ext_bytes_bits < 0
-                    jyes skip_log_ext_bytes_bits
-                ; log_ext_bytes_bits:
-                    arrange tmp, ext_bytes_bits
-                    stringify tmp
-                    display 'ext_bytes_bits: ' bappend tmp bappend 9
-                    jump done_ext_bytes_bits
-                skip_log_ext_bytes_bits:
-                    display 'ext_bytes_bits: ' bappend 'neg' bappend 9
+                    ; TODO: I commented out logging ext_bytes_bits since my
+                    ;       pc relative fix with pc element has broken the
+                    ;       logging.
+                ;     check ext_bytes_bits < 0
+                ;     jyes skip_log_ext_bytes_bits
+                ; ; log_ext_bytes_bits:
+                ;     arrange tmp, ext_bytes_bits
+                ;     stringify tmp
+                ;     display 'ext_bytes_bits: ' bappend tmp bappend 9
+                ;     jump done_ext_bytes_bits
+                ; skip_log_ext_bytes_bits:
+                    ; display 'ext_bytes_bits: ' bappend 'neg' bappend 9
                 done_ext_bytes_bits:
 
                     ; log imm
