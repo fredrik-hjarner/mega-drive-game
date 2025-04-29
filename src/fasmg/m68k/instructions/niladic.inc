@@ -1,15 +1,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Motorola 68000 niladic instructions                                        ;;
-;;                                                                            ;;
-;; | # | instruction | implemented | tested | notes                         | ;;
-;; |---|-------------|-------------|--------|-------------------------------| ;;
-;; | 1 | illegal     | yes         | yes    |                               | ;;
-;; | 2 | nop         | yes         | yes    |                               | ;;
-;; | 3 | reset       | yes         | yes    |                               | ;;
-;; | 4 | rte         | yes         | yes    |                               | ;;
-;; | 5 | rtr         | yes         | yes    |                               | ;;
-;; | 6 | rts         | yes         | yes    |                               | ;;
-;; | 7 | trapv       | yes         | yes    |                               | ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Illegal instruction (forces illegal instruction exception)
