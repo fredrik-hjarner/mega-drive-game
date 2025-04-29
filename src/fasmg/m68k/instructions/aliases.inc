@@ -112,3 +112,32 @@ macro bsr.s line&
 end macro
 
 ; TODO: I have alias baked in somewhere in some instruction. Move it here!
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; DEFAULT SIZES FOR SOME INSTRUCTIONS                                        ;;
+;; TODO: Move this into a separate file.                                      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+macro btst line&
+    ; TODO: I have no idea which is the correct one or even what the difference
+    ;       between btst.b and btst.l is. The tests does not seem to have cases
+    ;       where the difference comes to light!
+    ; btst.b line
+    btst.l line
+end macro
+
+macro bchg line&
+    ; TODO: I have no idea which is the correct one or even what the difference
+    ;       between bchg.b and bchg.l is. The tests does not seem to have cases
+    ;       where the difference comes to light!
+    ; bchg.b line
+    bchg.l line
+end macro
+
+macro bclr line&
+    ; TODO: I have no idea which is the correct one or even what the difference
+    ;       between bclr.b and bclr.l is. The tests does not seem to have cases
+    ;       where the difference comes to light!
+    ; bclr.b line
+    bclr.l line
+end macro

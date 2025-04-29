@@ -174,16 +174,16 @@
 	btst.b	d5,@(pc)
 ; 	btst.b	d5,@(pc,d5.w)
 
-; 	btst	d2,d5
-; 	btst	d5,(a2)
-; 	btst	d5,(a2)+
-; 	btst	d5,-(a2)
-; 	btst	d5,$7FFF(a2)
+	btst	d2,d5
+	btst	d5,(a2)
+	btst	d5,(a2)+
+	btst	d5,-(a2)
+	btst	d5,$7FFF(a2)
 ; 	btst	d5,$7F(a2,d5.w)
-; 	btst	d5,($FFFFFFFF).w
-; 	btst	d5,($FFFFFFFF).l
-; 	btst	d5,#$55
-; 	btst	d5,@(pc)
+	btst	d5,($FFFFFFFF).w
+	btst	d5,($FFFFFFFF).l
+	btst	d5,#$55
+	btst	d5,@(pc)
 ; 	btst	d5,@(pc,d5.w)
 
 	btst.l	#0,d5 ; TODO: Need to try to shift with more values than #0.
@@ -197,15 +197,15 @@
 	btst.b	#0,@(pc)
 ; 	btst.b	#0,@(pc,d5.w)
 
-; 	btst	#0,d5
-; 	btst	#0,(a2)
-; 	btst	#0,(a2)+
-; 	btst	#0,-(a2)
-; 	btst	#0,$7FFF(a2)
+	btst	#0,d5
+	btst	#0,(a2)
+	btst	#0,(a2)+
+	btst	#0,-(a2)
+	btst	#0,$7FFF(a2)
 ; 	btst	#0,$7F(a2,d5.w)
-; 	btst	#0,($FFFFFFFF).w
-; 	btst	#0,($FFFFFFFF).l
-; 	btst	#0,@(pc)
+	btst	#0,($FFFFFFFF).w
+	btst	#0,($FFFFFFFF).l
+	btst	#0,@(pc)
 ; 	btst	#0,@(pc,d5.w)
 
 	bchg.l	d2,d5
@@ -217,14 +217,14 @@
 	bchg.b	d5,($FFFFFFFF).w
 	bchg.b	d5,($FFFFFFFF).l
 
-; 	bchg	d2,d5
-; 	bchg	d5,(a2)
-; 	bchg	d5,(a2)+
-; 	bchg	d5,-(a2)
-; 	bchg	d5,$7FFF(a2)
+	bchg	d2,d5
+	bchg	d5,(a2)
+	bchg	d5,(a2)+
+	bchg	d5,-(a2)
+	bchg	d5,$7FFF(a2)
 ; 	bchg	d5,$7F(a2,d5.w)
-; 	bchg	d5,($FFFFFFFF).w
-; 	bchg	d5,($FFFFFFFF).l
+	bchg	d5,($FFFFFFFF).w
+	bchg	d5,($FFFFFFFF).l
 
 	bchg.l	#0,d5
 	bchg.b	#0,(a2)
@@ -235,14 +235,14 @@
 	bchg.b	#0,($FFFFFFFF).w
 	bchg.b	#0,($FFFFFFFF).l
 
-; 	bchg	#0,d5
-; 	bchg	#0,(a2)
-; 	bchg	#0,(a2)+
-; 	bchg	#0,-(a2)
-; 	bchg	#0,$7FFF(a2)
+	bchg	#0,d5
+	bchg	#0,(a2)
+	bchg	#0,(a2)+
+	bchg	#0,-(a2)
+	bchg	#0,$7FFF(a2)
 ; 	bchg	#0,$7F(a2,d5.w)
-; 	bchg	#0,($FFFFFFFF).w
-; 	bchg	#0,($FFFFFFFF).l
+	bchg	#0,($FFFFFFFF).w
+	bchg	#0,($FFFFFFFF).l
 
 	bclr.l	d2,d5
 	bclr.b	d5,(a2)
@@ -253,14 +253,14 @@
 	bclr.b	d5,($FFFFFFFF).w
 	bclr.b	d5,($FFFFFFFF).l
 
-; 	bclr	d2,d5
-; 	bclr	d5,(a2)
-; 	bclr	d5,(a2)+
-; 	bclr	d5,-(a2)
-; 	bclr	d5,$7FFF(a2)
+	bclr	d2,d5
+	bclr	d5,(a2)
+	bclr	d5,(a2)+
+	bclr	d5,-(a2)
+	bclr	d5,$7FFF(a2)
 ; 	bclr	d5,$7F(a2,d5.w)
-; 	bclr	d5,($FFFFFFFF).w
-; 	bclr	d5,($FFFFFFFF).l
+	bclr	d5,($FFFFFFFF).w
+	bclr	d5,($FFFFFFFF).l
 
 	bclr.l	#0,d5
 	bclr.b	#0,(a2)
@@ -271,14 +271,14 @@
 	bclr.b	#0,($FFFFFFFF).w
 	bclr.b	#0,($FFFFFFFF).l
 
-; 	bclr	#0,d5
-; 	bclr	#0,(a2)
-; 	bclr	#0,(a2)+
-; 	bclr	#0,-(a2)
-; 	bclr	#0,$7FFF(a2)
+	bclr	#0,d5
+	bclr	#0,(a2)
+	bclr	#0,(a2)+
+	bclr	#0,-(a2)
+	bclr	#0,$7FFF(a2)
 ; 	bclr	#0,$7F(a2,d5.w)
-; 	bclr	#0,($FFFFFFFF).w
-; 	bclr	#0,($FFFFFFFF).l
+	bclr	#0,($FFFFFFFF).w
+	bclr	#0,($FFFFFFFF).l
 
 	bset.l	d2,d5
 	bset.b	d5,(a2)
