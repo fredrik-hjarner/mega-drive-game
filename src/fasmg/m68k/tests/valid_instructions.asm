@@ -1393,7 +1393,7 @@
 ; 	divu.w	$7F(a2,d5.w),d5
 	divu.w	($FFFFFFFF).w,d5
 	divu.w	($FFFFFFFF).l,d5
-; 	divu.w	#$FFFF,d5
+	divu.w	#$FFFF,d5
 	divu.w	@(pc),d5
 ; 	divu.w	@(pc,d5.w),d5
 	divu	d2,d5
@@ -1404,7 +1404,7 @@
 ; 	divu	$7F(a2,d5.w),d5
 	divu	($FFFFFFFF).w,d5
 	divu	($FFFFFFFF).l,d5
-; 	divu	#$FFFF,d5
+	divu	#$FFFF,d5
 	divu	@(pc),d5
 ; 	divu	@(pc,d5.w),d5
 
@@ -1416,7 +1416,7 @@
 ; 	divs.w	$7F(a2,d5.w),d5
 	divs.w	($FFFFFFFF).w,d5
 	divs.w	($FFFFFFFF).l,d5
-; 	divs.w	#$FFFF,d5
+	divs.w	#$FFFF,d5
 	divs.w	@(pc),d5
 ; 	divs.w	@(pc,d5.w),d5
 	divs	d2,d5
@@ -1427,7 +1427,7 @@
 ; 	divs	$7F(a2,d5.w),d5
 	divs	($FFFFFFFF).w,d5
 	divs	($FFFFFFFF).l,d5
-; 	divs	#$FFFF,d5
+	divs	#$FFFF,d5
 	divs	@(pc),d5
 ; 	divs	@(pc,d5.w),d5
 
@@ -1665,7 +1665,7 @@
 ; 	mulu.w	$7F(a2,d5.w),d5
 	mulu.w	($FFFFFFFF).w,d5
 	mulu.w	($FFFFFFFF).l,d5
-; 	mulu.w	#$FFFF,d5
+	mulu.w	#$FFFF,d5
 	mulu.w	@(pc),d5
 ; 	mulu.w	@(pc,d5.w),d5
 	mulu	d2,d5
@@ -1676,7 +1676,7 @@
 ; 	mulu	$7F(a2,d5.w),d5
 	mulu	($FFFFFFFF).w,d5
 	mulu	($FFFFFFFF).l,d5
-; 	mulu	#$FFFF,d5
+	mulu	#$FFFF,d5
 	mulu	@(pc),d5
 ; 	mulu	@(pc,d5.w),d5
 
@@ -1688,7 +1688,7 @@
 ; 	muls.w	$7F(a2,d5.w),d5
 	muls.w	($FFFFFFFF).w,d5
 	muls.w	($FFFFFFFF).l,d5
-; 	muls.w	#$FFFF,d5
+	muls.w	#$FFFF,d5
 	muls.w	@(pc),d5
 ; 	muls.w	@(pc,d5.w),d5
 	muls	d2,d5
@@ -1699,7 +1699,7 @@
 ; 	muls	$7F(a2,d5.w),d5
 	muls	($FFFFFFFF).w,d5
 	muls	($FFFFFFFF).l,d5
-; 	muls	#$FFFF,d5
+	muls	#$FFFF,d5
 	muls	@(pc),d5
 ; 	muls	@(pc,d5.w),d5
 
