@@ -25,22 +25,137 @@
 ;; |   |             |             |        |                               | ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Placeholders for not yet implemented instructions ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MOVEP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-macro movep.l line&
-end macro
-macro movep.w line&
-end macro
+; Syntax:
+;     movep dx,(d,ay)
+;     movep (d,ay),dx
+; Sample syntax:
+;     movep d3,(control,a0)
+;     movep (input,a6),d5
+iterate <size,  size_bit>, \
+        w,      0b, \
+        l,      1b
 
+    calminstruction movep.size? an1*, an2*
+            local direction
+            local reg_bits1
+            local reg_bits2
+            local ext_bytes
+            local ext_bytes_bits
 
+            call m68k.parse_operand@op1, an1
+            call m68k.parse_operand@op2, an2
 
+            ; Initial default values
+            compute direction, 1 ; Default is dn to (d,an)
+            compute reg_bits1, @op1.ea_reg_bits ; Default is dn to (d,an)
+            compute reg_bits2, @op2.ea_reg_bits ; Default is dn to (d,an)
+            compute ext_bytes, @op2.ext_bytes   ; Default is dn to (d,an)
+            compute ext_bytes_bits, @op2.ext_bytes_bits ;Default is dn to (d,an)
 
-;suba
-;cmpm
-;cmpa
+        ; check_direction:
+            check @op2.type = 'dn'
+            jno emit_bytes
+            compute direction, 0
+            compute reg_bits1, @op2.ea_reg_bits
+            compute reg_bits2, @op1.ea_reg_bits
+            compute ext_bytes, @op1.ext_bytes
+            compute ext_bytes_bits, @op1.ext_bytes_bits
+        emit_bytes:
 
-macro exg.l line&
-end macro
+            ; first byte
+            emit 1, 00000001b + reg_bits1 shl 1
+
+            ; second byte
+            emit 1, direction shl 7 + size_bit shl 6 + 001b shl 3 + reg_bits2
+
+            ; extension words
+            ; bswap is needed because fasmg outputs in little-endian
+            emit ext_bytes, ext_bytes_bits bswap ext_bytes
+    end calminstruction
+
+end iterate ; <size, size_bit>
+
+;; CMPM ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Syntax:
+;     cmpm.[bwl] (ay)+,(ax)+
+; Sample syntax:
+;     cmpm.b (a3)+,(a4)+
+iterate <size,  size_bits>, \
+        b,      00b, \
+        w,      01b, \
+        l,      10b
+
+    calminstruction cmpm.size? an1*, an2*
+        call m68k.parse_operand@op1, an1
+        call m68k.parse_operand@op2, an2
+
+        ; first byte
+        emit 1, 10110001b + @op2.ea_reg_bits shl 1
+
+        ; second byte
+        emit 1, size_bits shl 6 + 001b shl 3 + @op1.ea_reg_bits
+    end calminstruction
+
+end iterate ; <size, size_bits>
+
+;; EXG ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Syntax:
+;     exg.l reg,reg
+; Sample syntax:
+;     exg d3,d4
+;     exg d2,a0
+;     exg a7,d5
+; Note that there are typos in, or at least 3 bits are
+;     not explained there:
+;     http://goldencrystal.free.fr/M68kOpcodes-v2.3.pdf
+calminstruction exg.l? reg1*, reg2*
+            local type_bits1
+            local type_bits2
+            local reg1_bits
+            local reg2_bits
+
+            call m68k.parse_operand@op1, reg1
+            call m68k.parse_operand@op2, reg2
+
+            ; Init default values
+            compute type_bits1, 01b ; default to dn,dn
+            compute type_bits2, 0b  ; default to dn,dn
+            compute reg1_bits,  @op1.ea_reg_bits ; default to dn,dn
+            compute reg2_bits,  @op2.ea_reg_bits ; default to dn,dn
+
+    ; check_dn_an:
+            check @op1.type = 'dn' & @op2.type = 'an'
+            jno check_an_an
+            compute type_bits1, 10b
+            compute type_bits2, 1b
+            jump emit_bytes
+    check_an_an:
+            check @op1.type = 'an' & @op2.type = 'an'
+            jno check_an_dn
+            ; compute type_bits1, 01b
+            compute type_bits2, 1b
+            jump emit_bytes
+    check_an_dn:
+            ; seems `exg.l a7,d5` is encoded as `exg.l d5,a7`
+            check @op1.type = 'an' & @op2.type = 'dn'
+            jno emit_bytes
+            compute type_bits1, 10b
+            compute type_bits2, 1b
+        ; exchange reg1 and reg2
+            compute reg1_bits,  @op2.ea_reg_bits
+            compute reg2_bits,  @op1.ea_reg_bits
+    emit_bytes:
+
+            ; first byte
+            emit 1, 11000001b + reg1_bits shl 1
+
+            ; second byte
+            emit 1, type_bits1 shl 6 + type_bits2 shl 3 + reg2_bits
+end calminstruction
 
 ;; CHK ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

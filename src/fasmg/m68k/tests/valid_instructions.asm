@@ -316,10 +316,10 @@
 ; 	bset	#0,($FFFFFFFF).w
 ; 	bset	#0,($FFFFFFFF).l
 
-	; movep.w	$7FFF(a2),d5
-; 	movep.w	d5,$7FFF(a2)
-	; movep.l	$7FFF(a2),d5
-; 	movep.l	d5,$7FFF(a2)
+	movep.w	$7FFF(a2),d5
+	movep.w	d5,$7FFF(a2)
+	movep.l	$7FFF(a2),d5
+	movep.l	d5,$7FFF(a2)
 		
 	movea.w	d5,a2
 	movea.w	a5,a2
@@ -1597,9 +1597,9 @@
 	eor.l	d5,($FFFFFFFF).w
 	eor.l	d5,($FFFFFFFF).l
 
-; 	cmpm.b	(a2)+,(a1)+
-; 	cmpm.w	(a2)+,(a1)+
-; 	cmpm.l	(a2)+,(a1)+
+	cmpm.b	(a2)+,(a1)+ ; TODO: More test of cmpm
+	cmpm.w	(a2)+,(a1)+
+	cmpm.l	(a2)+,(a1)+
 
 	cmp.b	d2,d5
 	cmp.b	(a2),d5
@@ -1708,14 +1708,14 @@
 	abcd	d2,d5
 ; 	abcd	-(a2),-(a2)
 
-; 	exg.l	d2,d5
-; 	exg.l	a5,a2
-; 	exg.l	d5,a7
-; 	exg.l	a7,d5
-; 	exg	d2,d5
-; 	exg	a5,a2
-; 	exg	d5,a7
-; 	exg	a7,d5
+	exg.l	d2,d5
+	exg.l	a5,a2
+	exg.l	d5,a7
+	exg.l	a7,d5
+	exg	d2,d5
+	exg	a5,a2
+	exg	d5,a7
+	exg	a7,d5
 
 	and.b	d2,d5
 	and.b	(a2),d5

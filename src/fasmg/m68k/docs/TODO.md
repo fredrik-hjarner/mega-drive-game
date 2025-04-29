@@ -64,3 +64,4 @@
 * Make a count_tokens util.
 * I now support `$7FFF(a2)` but I should also support `($7FFF,a2)` and add a lot
       of test cases to test that.
+* vasm m68k manual has info about some of it's optimizations.

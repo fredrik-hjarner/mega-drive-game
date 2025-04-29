@@ -15,8 +15,10 @@ vasm: build_vasm hexdump
 clownassembler:
 	clownassembler -c -o tests/test.bin -i tests/valid_instructions.asm
 
+# vasm does not support @ but only * it seems?
 build_vasm:
-	vasm -Fbin -spaces -wfail -o tests/test.bin tests/test.asm
+	sed 's/@/\*/g' tests/valid_instructions.asm | vasm -no-opt -Fbin -spaces -wfail -o tests/test.bin
+#	vasm -Fbin -spaces -wfail -o tests/test.bin tests/valid_instructions.asm
 
 build:
 	fasmg tests/test.asm tests/test.bin -e20
