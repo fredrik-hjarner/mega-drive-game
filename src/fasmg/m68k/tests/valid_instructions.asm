@@ -1950,13 +1950,13 @@
 ; 	roxl.w	$7F(a2,d5.w)
 	roxl.w	($FFFFFFFF).w
 	roxl.w	($FFFFFFFF).l
-; 	roxl	(a2)
-; 	roxl	(a2)+
-; 	roxl	-(a2)
-; 	roxl	$7FFF(a2)
+	roxl	(a2)
+	roxl	(a2)+
+	roxl	-(a2)
+	roxl	$7FFF(a2)
 ; 	roxl	$7F(a2,d5.w)
-; 	roxl	($FFFFFFFF).w
-; 	roxl	($FFFFFFFF).l
+	roxl	($FFFFFFFF).w
+	roxl	($FFFFFFFF).l
 
 	roxr.b	d2,d5
 	roxr.b	#1,d5
@@ -1971,13 +1971,13 @@
 ; 	roxr.w	$7F(a2,d5.w)
 	roxr.w	($FFFFFFFF).w
 	roxr.w	($FFFFFFFF).l
-; 	roxr	(a2)
-; 	roxr	(a2)+
-; 	roxr	-(a2)
-; 	roxr	$7FFF(a2)
+	roxr	(a2)
+	roxr	(a2)+
+	roxr	-(a2)
+	roxr	$7FFF(a2)
 ; 	roxr	$7F(a2,d5.w)
-; 	roxr	($FFFFFFFF).w
-; 	roxr	($FFFFFFFF).l
+	roxr	($FFFFFFFF).w
+	roxr	($FFFFFFFF).l
 
 	rol.b	d2,d5
 	rol.b	#1,d5
@@ -1992,13 +1992,13 @@
 ; 	rol.w	$7F(a2,d5.w)
 	rol.w	($FFFFFFFF).w
 	rol.w	($FFFFFFFF).l
-; 	rol	(a2)
-; 	rol	(a2)+
-; 	rol	-(a2)
-; 	rol	$7FFF(a2)
+	rol	(a2)
+	rol	(a2)+
+	rol	-(a2)
+	rol	$7FFF(a2)
 ; 	rol	$7F(a2,d5.w)
-; 	rol	($FFFFFFFF).w
-; 	rol	($FFFFFFFF).l
+	rol	($FFFFFFFF).w
+	rol	($FFFFFFFF).l
 
 	ror.b	d2,d5
 	ror.b	#1,d5
@@ -2013,10 +2013,10 @@
 ; 	ror.w	$7F(a2,d5.w)
 	ror.w	($FFFFFFFF).w
 	ror.w	($FFFFFFFF).l
-; 	ror	(a2)
-; 	ror	(a2)+
-; 	ror	-(a2)
-; 	ror	$7FFF(a2)
+	ror	(a2)
+	ror	(a2)+
+	ror	-(a2)
+	ror	$7FFF(a2)
 ; 	ror	$7F(a2,d5.w)
-; 	ror	($FFFFFFFF).w
-; 	ror	($FFFFFFFF).l
+	ror	($FFFFFFFF).w
+	ror	($FFFFFFFF).l

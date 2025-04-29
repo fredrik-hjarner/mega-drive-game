@@ -151,6 +151,7 @@ macro bset line&
 end macro
 
 iterate d, l,r
+
     macro as#d line&
         ; TODO: I have no idea which is the correct one or even what the difference
         ;       between asl.b, asl.w, asl.l is. The tests does not have cases
@@ -159,9 +160,7 @@ iterate d, l,r
         as#d.w line
         ; as#d.l line
     end macro
-end iterate
 
-iterate d, l,r
     macro ls#d line&
         ; TODO: I have no idea which is the correct one or even what the difference
         ;       between lsl.b, lsl.w, lsl.l is. The tests does not have cases
@@ -170,4 +169,23 @@ iterate d, l,r
         ls#d.w line
         ; ls#d.l line
     end macro
+
+    macro rox#d line&
+        ; TODO: I have no idea which is the correct one or even what the difference
+        ;       between roxl.b, roxl.w, roxl.l is. The tests does not have cases
+        ;       where the difference comes to light!
+        ; rox#d.b line
+        rox#d.w line
+        ; rox#d.l line
+    end macro
+
+    macro ro#d line&
+        ; TODO: I have no idea which is the correct one or even what the difference
+        ;       between rol.b, rol.w, rol.l is. The tests does not have cases
+        ;       where the difference comes to light!
+        ; ro#d.b line
+        ro#d.w line
+        ; ro#d.l line
+    end macro
+
 end iterate
