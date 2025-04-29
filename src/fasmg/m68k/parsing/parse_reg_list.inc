@@ -363,8 +363,7 @@ iterate reg_list, @reg_list1,@reg_list2
                 call m68k.parse_single_register@reg_list2, reg2
 
                 ; TODO: Too long line.
-                ; Validate both tokens are registers of the same type.
-                check @reg_list1.single_reg_found = 1 & @reg_list2.single_reg_found = 1 & @reg_list1.single_reg_type = @reg_list2.single_reg_type
+                check @reg_list1.single_reg_found = 1 & @reg_list2.single_reg_found = 1
                 jno done
             ; both_tokens_are_registers_of_same_type:
                 ; Validate reg1 is less than reg2 by comparing constant terms.

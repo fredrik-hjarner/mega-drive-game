@@ -879,33 +879,33 @@
 	jmp	@(pc)
 ; 	jmp	@(pc,d5.w)
 
-; 	movem.w	d5-a7,(a2)
-; 	movem.w	d5-a7,-(a2)
-; 	movem.w	d5-a7,$7FFF(a2)
+	movem.w	d5-a7,(a2) ; TODO: Really need to test slashes too!!
+	movem.w	d5-a7,-(a2)
+	movem.w	d5-a7,$7FFF(a2)
 ; 	movem.w	d5-a7,$7F(a2,d5.w)
-; 	movem.w	d5-a7,($FFFFFFFF).w
-; 	movem.w	d5-a7,($FFFFFFFF).l
-; 	movem.w	(a2),d5-a7
-; 	movem.w	(a2)+,d5-a7
-; 	movem.w	$7FFF(a2),d5-a7
+	movem.w	d5-a7,($FFFFFFFF).w
+	movem.w	d5-a7,($FFFFFFFF).l
+	movem.w	(a2),d5-a7
+	movem.w	(a2)+,d5-a7
+	movem.w	$7FFF(a2),d5-a7
 ; 	movem.w	$7F(a2,d5.w),d5-a7
-; 	movem.w	($FFFFFFFF).w,d5-a7
-; 	movem.w	($FFFFFFFF).l,d5-a7
-; 	movem.w	@(pc),d5-a7
+	movem.w	($FFFFFFFF).w,d5-a7
+	movem.w	($FFFFFFFF).l,d5-a7
+; 	movem.w	@(pc),d5-a7 ; TODO: Omg. It's even harder than I thought to fix @(pc)
 ; 	movem.w	@(pc,d5.w),d5-a7
-; 	movem.l	d5-a7,(a2)
-; 	movem.l	d5-a7,-(a2)
-; 	movem.l	d5-a7,$7FFF(a2)
+	movem.l	d5-a7,(a2)
+	movem.l	d5-a7,-(a2)
+	movem.l	d5-a7,$7FFF(a2)
 ; 	movem.l	d5-a7,$7F(a2,d5.w)
-; 	movem.l	d5-a7,($FFFFFFFF).w
-; 	movem.l	d5-a7,($FFFFFFFF).l
-; 	movem.l	(a2),d5-a7
-; 	movem.l	(a2)+,d5-a7
-; 	movem.l	$7FFF(a2),d5-a7
+	movem.l	d5-a7,($FFFFFFFF).w
+	movem.l	d5-a7,($FFFFFFFF).l
+	movem.l	(a2),d5-a7
+	movem.l	(a2)+,d5-a7
+	movem.l	$7FFF(a2),d5-a7
 ; 	movem.l	$7F(a2,d5.w),d5-a7
-; 	movem.l	($FFFFFFFF).w,d5-a7
-; 	movem.l	($FFFFFFFF).l,d5-a7
-; 	movem.l	@(pc),d5-a7
+	movem.l	($FFFFFFFF).w,d5-a7
+	movem.l	($FFFFFFFF).l,d5-a7
+	; movem.l	@(pc),d5-a7
 ; 	movem.l	@(pc,d5.w),d5-a7
 
 	lea.l	(a2),a2

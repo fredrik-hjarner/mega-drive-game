@@ -474,7 +474,7 @@ iterate <size,  size_bits>, \
         ;     movem.[wl] <ea>,<register list>
         ;     movem.[wl] <register list>,<ea>
         calminstruction movem.size? op1*, op2*
-                    display 10 bappend 'movem:' bappend 10
+                    ; display 10 bappend 'movem:' bappend 10
 
                     local direction
                     local bit_mask
