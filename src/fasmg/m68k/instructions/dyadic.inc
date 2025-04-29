@@ -293,8 +293,11 @@ iterate <instr,  first_byte>, \
             l,      1b
 
             calminstruction instr.size ea*, an*
-                call m68k.parse_operand@op1, ea
-                call m68k.parse_operand@op2, an
+                ; TODO: I am not sure why I have to do this to get the call to work.
+                arrange _size, =size
+
+                call m68k.parse_operand@op1, ea, _size
+                call m68k.parse_operand@op2, an, _size
 
                 ; first byte
                 emit 1, first_byte + (0 scaleof an) shl 1 + size_bit
