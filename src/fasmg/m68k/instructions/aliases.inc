@@ -141,3 +141,33 @@ macro bclr line&
     ; bclr.b line
     bclr.l line
 end macro
+
+macro bset line&
+    ; TODO: I have no idea which is the correct one or even what the difference
+    ;       between bset.b and bset.l is. The tests does not seem to have cases
+    ;       where the difference comes to light!
+    ; bset.b line
+    bset.l line
+end macro
+
+iterate d, l,r
+    macro as#d line&
+        ; TODO: I have no idea which is the correct one or even what the difference
+        ;       between asl.b, asl.w, asl.l is. The tests does not have cases
+        ;       where the difference comes to light!
+        ; as#d.b line
+        as#d.w line
+        ; as#d.l line
+    end macro
+end iterate
+
+iterate d, l,r
+    macro ls#d line&
+        ; TODO: I have no idea which is the correct one or even what the difference
+        ;       between lsl.b, lsl.w, lsl.l is. The tests does not have cases
+        ;       where the difference comes to light!
+        ; ls#d.b line
+        ls#d.w line
+        ; ls#d.l line
+    end macro
+end iterate

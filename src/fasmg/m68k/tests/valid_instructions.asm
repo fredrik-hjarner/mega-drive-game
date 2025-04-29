@@ -289,14 +289,14 @@
 	bset.b	d5,($FFFFFFFF).w
 	bset.b	d5,($FFFFFFFF).l
 
-; 	bset	d2,d5
-; 	bset	d5,(a2)
-; 	bset	d5,(a2)+
-; 	bset	d5,-(a2)
-; 	bset	d5,$7FFF(a2)
+	bset	d2,d5
+	bset	d5,(a2)
+	bset	d5,(a2)+
+	bset	d5,-(a2)
+	bset	d5,$7FFF(a2)
 ; 	bset	d5,$7F(a2,d5.w)
-; 	bset	d5,($FFFFFFFF).w
-; 	bset	d5,($FFFFFFFF).l
+	bset	d5,($FFFFFFFF).w
+	bset	d5,($FFFFFFFF).l
 
 	bset.l	#0,d5
 	bset.b	#0,(a2)
@@ -307,14 +307,14 @@
 	bset.b	#0,($FFFFFFFF).w
 	bset.b	#0,($FFFFFFFF).l
 
-; 	bset	#0,d5
-; 	bset	#0,(a2)
-; 	bset	#0,(a2)+
-; 	bset	#0,-(a2)
-; 	bset	#0,$7FFF(a2)
+	bset	#0,d5
+	bset	#0,(a2)
+	bset	#0,(a2)+
+	bset	#0,-(a2)
+	bset	#0,$7FFF(a2)
 ; 	bset	#0,$7F(a2,d5.w)
-; 	bset	#0,($FFFFFFFF).w
-; 	bset	#0,($FFFFFFFF).l
+	bset	#0,($FFFFFFFF).w
+	bset	#0,($FFFFFFFF).l
 
 	movep.w	$7FFF(a2),d5
 	movep.w	d5,$7FFF(a2)
@@ -1866,13 +1866,13 @@
 ; 	asl.w	$7F(a2,d5.w)
 	asl.w	($FFFFFFFF).w
 	asl.w	($FFFFFFFF).l
-; 	asl	(a2)
-; 	asl	(a2)+
-; 	asl	-(a2)
-; 	asl	$7FFF(a2)
+	asl	(a2)
+	asl	(a2)+
+	asl	-(a2)
+	asl	$7FFF(a2)
 ; 	asl	$7F(a2,d5.w)
-; 	asl	($FFFFFFFF).w
-; 	asl	($FFFFFFFF).l
+	asl	($FFFFFFFF).w
+	asl	($FFFFFFFF).l
 
 	asr.b	d2,d5
 	asr.b	#1,d5
@@ -1887,13 +1887,13 @@
 ; 	asr.w	$7F(a2,d5.w)
 	asr.w	($FFFFFFFF).w
 	asr.w	($FFFFFFFF).l
-; 	asr	(a2)
-; 	asr	(a2)+
-; 	asr	-(a2)
-; 	asr	$7FFF(a2)
+	asr	(a2)
+	asr	(a2)+
+	asr	-(a2)
+	asr	$7FFF(a2)
 ; 	asr	$7F(a2,d5.w)
-; 	asr	($FFFFFFFF).w
-; 	asr	($FFFFFFFF).l
+	asr	($FFFFFFFF).w
+	asr	($FFFFFFFF).l
 
 	lsl.b	d2,d5
 	lsl.b	#1,d5
@@ -1908,13 +1908,13 @@
 ; 	lsl.w	$7F(a2,d5.w)
 	lsl.w	($FFFFFFFF).w
 	lsl.w	($FFFFFFFF).l
-; 	lsl	(a2)
-; 	lsl	(a2)+
-; 	lsl	-(a2)
-; 	lsl	$7FFF(a2)
+	lsl	(a2)
+	lsl	(a2)+
+	lsl	-(a2)
+	lsl	$7FFF(a2)
 ; 	lsl	$7F(a2,d5.w)
-; 	lsl	($FFFFFFFF).w
-; 	lsl	($FFFFFFFF).l
+	lsl	($FFFFFFFF).w
+	lsl	($FFFFFFFF).l
 
 	lsr.b	d2,d5
 	lsr.b	#1,d5
@@ -1929,13 +1929,13 @@
 ; 	lsr.w	$7F(a2,d5.w)
 	lsr.w	($FFFFFFFF).w
 	lsr.w	($FFFFFFFF).l
-; 	lsr	(a2)
-; 	lsr	(a2)+
-; 	lsr	-(a2)
-; 	lsr	$7FFF(a2)
+	lsr	(a2)
+	lsr	(a2)+
+	lsr	-(a2)
+	lsr	$7FFF(a2)
 ; 	lsr	$7F(a2,d5.w)
-; 	lsr	($FFFFFFFF).w
-; 	lsr	($FFFFFFFF).l
+	lsr	($FFFFFFFF).w
+	lsr	($FFFFFFFF).l
 
 	roxl.b	d2,d5
 	roxl.b	#1,d5
