@@ -1443,7 +1443,7 @@
 ; 	divs	@(pc,d5.w),d5
 
 	sbcd.b	d2,d5
-	; sbcd.b	-(a2),-(a2) ; TODO: A bug here! It becomes negative
+	sbcd.b	-(a2),-(a2)
 	sbcd	d2,d5
 ; 	sbcd	-(a2),-(a2)
 
@@ -1552,11 +1552,11 @@
 	sub.l	d5,($FFFFFFFF).l
 
 	subx.b	d2,d5
-	; subx.b	-(a2),-(a2) ; TODO: bug here. -(an) interpreted as negative
+	subx.b	-(a2),-(a2)
 	subx.w	d2,d5
-	; subx.w	-(a2),-(a2) ; TODO: bug here. -(an) interpreted as negative
+	subx.w	-(a2),-(a2)
 	subx.l	d2,d5
-	; subx.l	-(a2),-(a2) ; TODO: bug here. -(an) interpreted as negative
+	subx.l	-(a2),-(a2)
 
 	suba.w	d5,a2
 	suba.w	a5,a2
@@ -1715,9 +1715,9 @@
 ; 	muls	@(pc,d5.w),d5
 
 	abcd.b	d2,d5
-; 	abcd.b	-(a2),-(a2) ; TODO: Bug here! It becomes negative.
+	abcd.b	-(a2),-(a2)
 	abcd	d2,d5
-; 	abcd	-(a2),-(a2)
+	abcd	-(a2),-(a2)
 
 	exg.l	d2,d5
 	exg.l	a5,a2
@@ -1833,11 +1833,11 @@
 	add.l	d5,($FFFFFFFF).l
 
 	addx.b	d2,d5
-	; addx.b	-(a2),-(a2) ; TODO: bug here. -(an) interpreted as negative
+	addx.b	-(a2),-(a2)
 	addx.w	d2,d5
-	; addx.w	-(a2),-(a2) ; TODO: bug here. -(an) interpreted as negative
+	addx.w	-(a2),-(a2)
 	addx.l	d2,d5
-	; addx.l	-(a2),-(a2) ; TODO: bug here. -(an) interpreted as negative
+	addx.l	-(a2),-(a2)
 
 	adda.w	d5,a2
 	adda.w	a5,a2

@@ -198,16 +198,14 @@ iterate <instr,  first_byte>, \
             check @op1.type = '-(an)'
             jno emit_bytes
         ; Is -(an) to -(an)
-        ; TODO: There is a bug here. 0 scaleof will get the value as negative
-        ;       since it's `-(a1)` so I must do this better (in parse_operand).
             compute m_bit, 1
         emit_bytes:
 
             ; first byte
-            emit 1, first_byte + (0 scaleof op2) shl 1
+            emit 1, first_byte + @op2.ea_reg_bits shl 1
 
             ; second byte 
-            emit 1, size_bits shl 6 + m_bit shl 3 + (0 scaleof op1)
+            emit 1, size_bits shl 6 + m_bit shl 3 + @op1.ea_reg_bits
         end calminstruction
     end iterate ; <size, size_bits>
 
@@ -238,16 +236,14 @@ iterate <instr,  first_byte>, \
             check @op1.type = '-(an)'
             jno emit_bytes
         ; Is -(an) to -(an)
-        ; TODO: There is a bug here. 0 scaleof will get the value as negative
-        ;       since it's `-(a1)` so I must do this better (in parse_operand).
             compute m_bit, 1
         emit_bytes:
 
             ; first byte
-            emit 1, first_byte + (0 scaleof op2) shl 1
+            emit 1, first_byte + @op2.ea_reg_bits shl 1
 
             ; second byte 
-            emit 1, m_bit shl 3 + (0 scaleof op1)
+            emit 1, m_bit shl 3 + @op1.ea_reg_bits
         end calminstruction
 
 end iterate ; <instr, first_byte>
