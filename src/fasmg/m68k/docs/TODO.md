@@ -65,3 +65,17 @@
 * I now support `$7FFF(a2)` but I should also support `($7FFF,a2)` and add a lot
       of test cases to test that.
 * vasm m68k manual has info about some of it's optimizations.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; things that cause unrecoverable errors in fasmg                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+`check reg_groups_found = 1` when reg_groups_found is not a value.
+`Error: invalid expression.`
+
+---
+
+dividing an expression that contains an element, right?
+
+---
+

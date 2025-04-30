@@ -513,46 +513,6 @@ iterate <size,  size_bits>, \
 
                     ; <ea> extension words
                     call emit_ext_words, ext_bytes, ext_bytes_bits
-
-
-
-
-            ;     local _size
-
-            ;     ; TODO: I am not sure why I have to do this to get the call to work.
-            ;     arrange _size, =size
-
-            ;     call m68k.parse_operand@op1, op1, _size
-            ;     call m68k.parse_operand@op2, op2, _size
-
-            ;     ; TODO: This is a sloppy check, do a more complete check in the
-            ;     ; future.
-            ;     ; TODO: Is there anything such as ternary in fasmg? 
-            ;     ; @op1.type = 'dn' ? 1 : 0
-            ;     check @op2.type = 'dn'
-            ;     jno dn_to_ea
-            ; ; ea_to_dn:
-            ;     ; first byte
-            ;     emit 1, 10000000b + @op2.ea_reg_bits shl 1
-
-            ;     ; second byte
-            ;     emit 1, size_bits shl 6 + @op1.ea_mode_bits shl 3 +  @op1.ea_reg_bits
-
-            ;     ; extension words
-            ;     ; bswap is needed because famg outputs in little-endian :'/
-            ;     emit @op1.ext_bytes, @op1.ext_bytes_bits bswap @op1.ext_bytes
-
-            ;     exit
-            ; dn_to_ea:
-            ;     ; first byte
-            ;     emit 1, 10000001b + @op1.ea_reg_bits shl 1
-
-            ;     ; second byte
-            ;     emit 1, size_bits shl 6 + @op2.ea_mode_bits shl 3 +  @op2.ea_reg_bits
-
-            ;     ; extension words
-            ;     ; bswap is needed because famg outputs in little-endian :'/
-            ;     emit @op2.ext_bytes, @op2.ext_bytes_bits bswap @op2.ext_bytes
         end calminstruction
 
 end iterate ; <size, size_bits>
@@ -623,7 +583,7 @@ end iterate ; <instr, first_byte>
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 macro calminstruction?.move_macro? op1*, op2*, size*
-        display 10 bappend 'move.l:' bappend 10
+        ; display 10 bappend 'move.l:' bappend 10
 
         local _size
 
@@ -825,7 +785,7 @@ iterate <size,  size_bits>, \
         l,      10b
 
         calminstruction movea.size? ea*, an*
-            display 10 bappend 'movea:' bappend 10
+            ; display 10 bappend 'movea:' bappend 10
 
             local tmp
             arrange tmp, =size
@@ -850,7 +810,7 @@ end iterate ; <size, size_bits>
 
 ; TODO: Comment
 calminstruction lea.l? ea*, an*
-    display 10 bappend 'lea:' bappend 10
+    ; display 10 bappend 'lea:' bappend 10
 
     call m68k.parse_operand@op1, ea
     call m68k.parse_operand@op2, an

@@ -43,6 +43,14 @@ include "m68k.inc"
     ; parse_operand   (a0)+   ; 
     ; parse_operand   -(a0)+   ; TODO: This should generate error.
 
-    parse_operand   $7FFF(a2)  ; 
+    ; parse_operand   $7FFF(a2)  ; 
     ; parse_indirect_displacement   $7FFF(a2)  ; 
+
+    ; parse_reg_list d0
+    ; parse_reg_list d0-d1
+    parse_reg_list d0/d1
+
+    ; movem.w (a2),d5-a7
+
     endif
+

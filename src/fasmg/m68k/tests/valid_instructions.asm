@@ -879,7 +879,7 @@
 	jmp	@(pc)
 ; 	jmp	@(pc,d5.w)
 
-	movem.w	d5-a7,(a2) ; TODO: Really need to test slashes too!!
+	movem.w	d5-a7,(a2)
 	movem.w	d5-a7,-(a2)
 	movem.w	d5-a7,$7FFF(a2)
 ; 	movem.w	d5-a7,$7F(a2,d5.w)
@@ -905,8 +905,19 @@
 ; 	movem.l	$7F(a2,d5.w),d5-a7
 	movem.l	($FFFFFFFF).w,d5-a7
 	movem.l	($FFFFFFFF).l,d5-a7
-	; movem.l	@(pc),d5-a7
+	movem.l	@(pc),d5-a7
 ; 	movem.l	@(pc,d5.w),d5-a7
+
+; I added few move movem tests!
+
+	movem.w	d0-d7/a0-a7,(a2)
+	; movem.w	d0-d7/d0-a7,(a2) ; vasm does not accept. clown does accept
+	movem.w	d0-d1/a0-a1,(a2)
+	movem.w	(a2),d0-d7/a0-a7
+	movem.w	(a2),d0-d1/a0-a1
+	movem.w	d0/d1/d2/d3-d4,(a2)
+
+; end of new movem tests!
 
 	lea.l	(a2),a2
 	lea.l	$7FFF(a2),a2

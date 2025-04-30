@@ -350,7 +350,7 @@ iterate op, @op1,@op2
                     ; display 'unknown' bappend 10
                     exit
             ;; Post-processing kind of ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-            done:
+            ; done: ; commented out to skip logging
                     ;; header ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
                     display 'op' bappend 9
@@ -413,6 +413,7 @@ iterate op, @op1,@op2
                     display 10
 
                     exit
+            done:
         end calminstruction
 
     end namespace

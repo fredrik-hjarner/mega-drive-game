@@ -1,5 +1,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PARSE_REG_LIST                                                             ;;
+;; TODO: Currently, I first check if signle register, then check if reg range ;;
+;; then I check reg group... but in reg range I also check single reg, so     ;;
+;; I could probably check in reg group if reg range and in reg range if       ;;
+;; single reg, then I could rename the reg group function be the top-level    ;;
+;; function, if that makes any sense, i.e. instead of checking bottom-up      ;;
+;; perform checks top-down, I think the code would look nicer.                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Define variable/namespace where parse_reg_list will store its results,
@@ -29,6 +35,11 @@ iterate reg_list, @reg_list1,@reg_list2
         define reg_range_found ; TODO: Comment
         define reg_range_mask_word ; TODO: Comment
         define reg_range_mask_word_reverse ; TODO: Comment
+
+        ; populated by parse_reg_groups
+        define reg_groups_found ; TODO: Comment
+        define reg_groups_mask_word ; TODO: Comment
+        define reg_groups_mask_word_reverse ; TODO: Comment
 
         ; Supposed to be call:ed.
         ; TODO: Maybe this should not be called with @reg_list1/@reg_list2 but
@@ -84,8 +95,13 @@ iterate reg_list, @reg_list1,@reg_list2
                     compute mask_word_reverse, reg_range_mask_word_reverse
                     jump done ; temporary. TODO: DO checks for other stuff
                 reg_groups:
-                    
-
+                    call m68k.parse_reg_groups#reg_list, operand
+                    check reg_groups_found = 1
+                    jno done
+                    compute is_reg_list, 1
+                    compute mask_word, reg_groups_mask_word
+                    compute mask_word_reverse, reg_groups_mask_word_reverse
+                    jump done
                 done:
                     ;; Log stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -103,14 +119,6 @@ iterate reg_list, @reg_list1,@reg_list2
                     arrange tmp1, mask_word_reverse
                     stringify tmp1
                     display 'mask_word_reverse:            ' bappend tmp1 bappend 10
-
-                
-                ;; start new code ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-                    ; call m68k.count_reg_groups#@reg_list1, operand
-                    ; call m68k.parse_reg_groups#@reg_list1, operand
-                
-                ;; end new code ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
                     arrange tail, operand
 
@@ -145,40 +153,62 @@ iterate reg_list, @reg_list1,@reg_list2
                 
         end calminstruction
 
-         ; TODO: Comment
-        ; What I mean with `reg_group` is `reg_group1/reg_group2/reg_group3`
-        ; i.e. split with `/`
-        calminstruction m68k.count_reg_groups#reg_list operand*
-
-            compute reg_groups, 0
-
-            ;; Replace << with shl ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-            next_slash:
-                match a? =<=< b?, expr
-                jno done_slash
-                arrange expr, a =slash b
-                jump next_slash
-            done_slash:
-
-                
-                jno not_single_register
-
-            not_single_register:
-                display 'not_single_register' bappend 10
-
-        end calminstruction
+;; parse_reg_groups ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
         ; TODO: Comment
         ; What I mean with `reg_group` is `reg_group1/reg_group2/reg_group3`
         ; i.e. split with `/`
-        calminstruction m68k.parse_reg_groups#reg_list operand*
+        calminstruction m68k.parse_reg_groups#reg_list? operand*
+                local head
+                local tail
+                local dups
 
+                ; Init default values
+                compute reg_groups_found, 0
+                compute reg_groups_mask_word, 0
+                compute reg_groups_mask_word_reverse, 0
+
+                arrange tail, operand
+    
+            next_group:
+                ; display '---- next_group' bappend 10
+                match head / tail, tail
+                jno last_group
+                ; display '---- next_group -> matched' bappend 10
+                call m68k.parse_register_range#reg_list, head
+                check reg_range_found = 1
+                jno not_reg_range
+                ; display '---- next_group -> was_reg_range' bappend 10
+                ; TODO: Too long lines
+                ; Check if ranges overlap
+                compute dups, reg_groups_mask_word and reg_range_mask_word
+                check dups <> 0
+                jyes dup_error
+                compute reg_groups_mask_word, reg_groups_mask_word or reg_range_mask_word
+                compute reg_groups_mask_word_reverse, reg_groups_mask_word_reverse or reg_range_mask_word_reverse
+                jump next_group
+            last_group:
+                ; display '---- last_group' bappend 10
+                call m68k.parse_register_range#reg_list, tail
+                check reg_range_found = 1
+                jno not_reg_range
+                ; display '---- last_group -> was_reg_range' bappend 10
+                ; TODO: Too long lines
+                ; Check if ranges overlap
+                compute dups, reg_groups_mask_word and reg_range_mask_word
+                check dups <> 0
+                jyes dup_error
+                compute reg_groups_mask_word, reg_groups_mask_word or reg_range_mask_word
+                compute reg_groups_mask_word_reverse, reg_groups_mask_word_reverse or reg_range_mask_word_reverse
                 
-                jno not_single_register
+                compute reg_groups_found, 1
 
-            not_single_register:
-                display 'not_single_register' bappend 10
-
+                exit
+            not_reg_range:
+                ; display '---- not_reg_range' bappend 10
+                exit
+            dup_error:
+                err "duplicated registers in register list"
         end calminstruction
 
         ; TODO: Comment
@@ -238,6 +268,8 @@ iterate reg_list, @reg_list1,@reg_list2
                 define a#i 'areg'
             end iterate
         end namespace
+
+;; parse_single_register ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
         ; TODO: Comment
         ;
@@ -325,6 +357,8 @@ iterate reg_list, @reg_list1,@reg_list2
 
         end calminstruction
 
+;; parse_register_range ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
         ; TODO: Comment.
         ; Side-effects:
         ;     reg_range_found
@@ -349,12 +383,26 @@ iterate reg_list, @reg_list1,@reg_list2
                 compute reg_range_mask_word_reverse, 0
 
             ; Validate is not empty
+            ; TODO: I could use my util function instead here.
+            ;       Or actually I should have a count_tokens util function!
                 match , operand
                 jno at_least_one_token
                 err 'operand is empty'
             at_least_one_token:
 
             ; Check if only one token.
+            ; TODO: I think the code does a lot of stuff twice, so see if can be
+            ;       performance optimized a bit.
+            ;       Addmittedly this code is a bit messy.
+                ; call m68k.is_one_token, operand
+                call m68k.parse_single_register#reg_list, operand
+                check single_reg_found = 1
+                jno check_reg_range
+                compute reg_range_found, 1
+                compute reg_range_mask_word, single_reg_mask_word
+                compute reg_range_mask_word_reverse, single_reg_mask_word_reverse
+                jump done
+            check_reg_range:
                 match reg1 =- reg2, operand
                 jno done
 
