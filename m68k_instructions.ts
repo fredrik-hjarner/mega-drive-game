@@ -1,624 +1,651 @@
 export const data = {
   "instructions": {
-        "ori": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["imm"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "andi": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["imm"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "subi": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["imm"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "addi": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["imm"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "eori": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["imm"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "cmpi": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["imm"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "btst": {
-            "sizes": ["b", "l"],
-            "sourceOperands": ["dn", "imm"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "bchg": {
-            "sizes": ["b", "l"],
-            "sourceOperands": ["dn", "imm"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "bclr": {
-            "sizes": ["b", "l"],
-            "sourceOperands": ["dn", "imm"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "bset": {
-            "sizes": ["b", "l"],
-            "sourceOperands": ["dn", "imm"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "movep": {
-            "sizes": ["w", "l"],
-            "sourceOperands": ["dn", "d(an)"],
-            "destOperands": ["dn", "d(an)"]
-        },
-        "movea": {
-            "sizes": ["w", "l"],
-            "sourceOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-            "destOperands": ["an"]
-        },
-        "move": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-            "destOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "negx": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "clr": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "neg": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "not": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "ext": {
-            "sizes": ["w", "l"],
-            "sourceOperands": [],
-            "destOperands": ["dn"]
-        },
-        "nbcd": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "swap": {
-            "sizes": ["w"],
-            "sourceOperands": [],
-            "destOperands": ["dn"]
-        },
-        "pea": {
-            "sizes": ["l"],
-            "sourceOperands": ["(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
-            "destOperands": []
-        },
-        "illegal": {
-            "sizes": [""],
-            "sourceOperands": [],
-            "destOperands": []
-        },
-        "tas": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "tst": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"]
-        },
-        "trap": {
-            "sizes": [""],
-            "sourceOperands": ["imm4"],
-            "destOperands": []
-        },
-        "link": {
-            "sizes": ["w"],
-            "sourceOperands": ["imm"],
-            "destOperands": ["an"]
-        },
-        "unlk": {
-            "sizes": [""],
-            "sourceOperands": [],
-            "destOperands": ["an"]
-        },
-        "move usp": {
-            "sizes": ["l"],
-            "sourceOperands": ["an"],
-            "destOperands": ["an"]
-        },
-        "reset": {
-            "sizes": [""],
-            "sourceOperands": [],
-            "destOperands": []
-        },
-        "nop": {
-            "sizes": [""],
-            "sourceOperands": [],
-            "destOperands": []
-        },
-        "stop": {
-            "sizes": [""],
-            "sourceOperands": ["imm"],
-            "destOperands": []
-        },
-        "rte": {
-            "sizes": [""],
-            "sourceOperands": [],
-            "destOperands": []
-        },
-        "rts": {
-            "sizes": [""],
-            "sourceOperands": [],
-            "destOperands": []
-        },
-        "trapv": {
-            "sizes": [""],
-            "sourceOperands": [],
-            "destOperands": []
-        },
-        "rtr": {
-            "sizes": [""],
-            "sourceOperands": [],
-            "destOperands": []
-        },
-        "jsr": {
-            "sizes": [""],
-            "sourceOperands": ["(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
-            "destOperands": []
-        },
-        "jmp": {
-            "sizes": [""],
-            "sourceOperands": ["(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
-            "destOperands": []
-        },
-        "movem": {
-            "sizes": ["w", "l"],
-            "sourceOperands": ["register_list", "(an)", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
-            "destOperands": ["register_list", "(an)", "(an)+", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "lea": {
-            "sizes": ["l"],
-            "sourceOperands": ["(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
-            "destOperands": ["an"]
-        },
-        "chk": {
-            "sizes": ["w"],
-            "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-            "destOperands": ["dn"]
-        },
-        "addq": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["imm3"],
-            "destOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "subq": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["imm3"],
-            "destOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "st": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "sf": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "shi": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "sls": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "scc": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "scs": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "sne": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "seq": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "svc": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "svs": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "spl": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "smi": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "sge": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "slt": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "sgt": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "sle": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "shs": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "slo": {
-            "sizes": ["b"],
-            "sourceOperands": [],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "dbt": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "dbf": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "dbhi": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "dbls": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "dbcc": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "dbcs": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "dbne": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "dbeq": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "dbvc": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "dbvs": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "dbpl": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "dbmi": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "dbge": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "dblt": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "dbgt": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "dble": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "dbhs": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "dblo": {
-            "sizes": ["w"],
-            "sourceOperands": ["label"],
-            "destOperands": ["dn"]
-        },
-        "bra": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "bsr": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "bhi": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "bls": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "bcc": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "bcs": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "bne": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "beq": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "bvc": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "bvs": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "bpl": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "bmi": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "bge": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "blt": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "bgt": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "ble": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "bhs": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "blo": {
-            "sizes": ["b", "w"],
-            "sourceOperands": ["label"],
-            "destOperands": []
-        },
-        "moveq": {
-            "sizes": ["l"],
-            "sourceOperands": ["imm8"],
-            "destOperands": ["dn"]
-        },
-        "divu": {
-            "sizes": ["w"],
-            "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-            "destOperands": ["dn"]
-        },
-        "divs": {
-            "sizes": ["w"],
-            "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-            "destOperands": ["dn"]
-        },
-        "sbcd": {
-            "sizes": ["b"],
-            "sourceOperands": ["dn", "-(an)"],
-            "destOperands": ["dn", "-(an)"]
-        },
-        "or": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "sub": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "subx": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["dn", "-(an)"],
-            "destOperands": ["dn", "-(an)"]
-        },
-        "suba": {
-            "sizes": ["w", "l"],
-            "sourceOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-            "destOperands": ["an"]
-        },
-        "eor": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["dn"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "cmpm": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["(an)+"],
-            "destOperands": ["(an)+"]
-        },
-        "cmp": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-            "destOperands": ["dn"]
-        },
-        "cmpa": {
-            "sizes": ["w", "l"],
-            "sourceOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-            "destOperands": ["an"]
-        },
-        "mulu": {
-            "sizes": ["w"],
-            "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-            "destOperands": ["dn"]
-        },
-        "muls": {
-            "sizes": ["w"],
-            "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-            "destOperands": ["dn"]
-        },
-        "abcd": {
-            "sizes": ["b"],
-            "sourceOperands": ["dn", "-(an)"],
-            "destOperands": ["dn", "-(an)"]
-        },
-        "exg": {
-            "sizes": ["l"],
-            "sourceOperands": ["dn", "an"],
-            "destOperands": ["dn", "an"]
-        },
-        "and": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "add": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "addx": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["dn", "-(an)"],
-            "destOperands": ["dn", "-(an)"]
-        },
-        "adda": {
-            "sizes": ["w", "l"],
-            "sourceOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-            "destOperands": ["an"]
-        },
-        "asl": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["dn", "imm3"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "asr": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["dn", "imm3"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "lsl": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["dn", "imm3"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "lsr": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["dn", "imm3"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "roxl": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["dn", "imm3"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "roxr": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["dn", "imm3"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "rol": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["dn", "imm3"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        },
-        "ror": {
-            "sizes": ["b", "w", "l"],
-            "sourceOperands": ["dn", "imm3"],
-            "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-        }
+        "ori": [
+            {
+                // CCR variant
+                "variant": "to_ccr",
+                "sizes": ["b"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["ccr"]
+            },
+            {
+                // SR variant
+                "variant": "to_sr",
+                "sizes": ["w"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["sr"]
+            },
+            {
+                // Standard variant
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "andi": [
+            {
+                // CCR variant
+                "variant": "to_ccr",
+                "sizes": ["b"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["ccr"]
+            },
+            {
+                // SR variant  
+                "variant": "to_sr",
+                "sizes": ["w"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["sr"]
+            },
+            {
+                // Standard variant
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "subi": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "addi": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "eori": [
+            {
+                // CCR variant
+                "variant": "to_ccr",
+                "sizes": ["b"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["ccr"]
+            },
+            {
+                // SR variant
+                "variant": "to_sr",
+                "sizes": ["w"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["sr"]
+            },
+            {
+                // Standard variant
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "cmpi": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "btst": [
+            {
+                "variant": "register",
+                "sizes": ["b", "l"],
+                "sourceOperands": ["dn"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"]
+            },
+            {
+                "variant": "immediate",
+                "sizes": ["b", "l"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"]
+            }
+        ],
+        "bchg": [
+            {
+                "variant": "register",
+                "sizes": ["b", "l"],
+                "sourceOperands": ["dn"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            },
+            {
+                "variant": "immediate",
+                "sizes": ["b", "l"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "bclr": [
+            {
+                "variant": "register",
+                "sizes": ["b", "l"],
+                "sourceOperands": ["dn"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            },
+            {
+                "variant": "immediate",
+                "sizes": ["b", "l"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "bset": [
+            {
+                "variant": "register",
+                "sizes": ["b", "l"],
+                "sourceOperands": ["dn"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            },
+            {
+                "variant": "immediate",
+                "sizes": ["b", "l"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "movep": [
+            {
+                "variant": "standard",
+                "sizes": ["w", "l"],
+                "sourceOperands": ["dn", "d(an)"],
+                "destOperands": ["dn", "d(an)"]
+            }
+        ],
+        "movea": [
+            {
+                "variant": "standard",
+                "sizes": ["w", "l"],
+                "sourceOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+                "destOperands": ["an"]
+            }
+        ],
+        "move": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+                "destOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            },
+            {
+                "variant": "from_sr",
+                "sizes": ["w"],
+                "sourceOperands": ["sr"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            },
+            {
+                "variant": "to_ccr",
+                "sizes": ["w"],
+                "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+                "destOperands": ["ccr"]
+            },
+            {
+                "variant": "to_sr",
+                "sizes": ["w"],
+                "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+                "destOperands": ["sr"]
+            }
+        ],
+        "negx": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": [],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "clr": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": [],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "neg": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": [],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "not": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": [],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "ext": [
+            {
+                "variant": "standard",
+                "sizes": ["w", "l"],
+                "sourceOperands": [],
+                "destOperands": ["dn"]
+            }
+        ],
+        "nbcd": [
+            {
+                "variant": "standard",
+                "sizes": ["b"],
+                "sourceOperands": [],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "swap": [
+            {
+                "variant": "standard",
+                "sizes": ["w"],
+                "sourceOperands": [],
+                "destOperands": ["dn"]
+            }
+        ],
+        "pea": [
+            {
+                "variant": "standard",
+                "sizes": ["l"],
+                "sourceOperands": ["(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
+                "destOperands": []
+            }
+        ],
+        "illegal": [
+            {
+                "variant": "standard",
+                "sizes": [""],
+                "sourceOperands": [],
+                "destOperands": []
+            }
+        ],
+        "tas": [
+            {
+                "variant": "standard",
+                "sizes": ["b"],
+                "sourceOperands": [],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "tst": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": [],
+                "destOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"]
+            }
+        ],
+        "trap": [
+            {
+                "variant": "standard",
+                "sizes": [""],
+                "sourceOperands": ["imm4"],
+                "destOperands": []
+            }
+        ],
+        "link": [
+            {
+                "variant": "standard",
+                "sizes": ["w"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["an"]
+            }
+        ],
+        "unlk": [
+            {
+                "variant": "standard",
+                "sizes": [""],
+                "sourceOperands": [],
+                "destOperands": ["an"]
+            }
+        ],
+        "move usp": [
+            {
+                "variant": "standard",
+                "sizes": ["l"],
+                "sourceOperands": ["an"],
+                "destOperands": ["an"]
+            }
+        ],
+        "reset": [
+            {
+                "variant": "standard",
+                "sizes": [""],
+                "sourceOperands": [],
+                "destOperands": []
+            }
+        ],
+        "nop": [
+            {
+                "variant": "standard",
+                "sizes": [""],
+                "sourceOperands": [],
+                "destOperands": []
+            }
+        ],
+        "stop": [
+            {
+                "variant": "standard",
+                "sizes": [""],
+                "sourceOperands": ["imm"],
+                "destOperands": []
+            }
+        ],
+        "rte": [
+            {
+                "variant": "standard",
+                "sizes": [""],
+                "sourceOperands": [],
+                "destOperands": []
+            }
+        ],
+        "rts": [
+            {
+                "variant": "standard",
+                "sizes": [""],
+                "sourceOperands": [],
+                "destOperands": []
+            }
+        ],
+        "trapv": [
+            {
+                "variant": "standard",
+                "sizes": [""],
+                "sourceOperands": [],
+                "destOperands": []
+            }
+        ],
+        "rtr": [
+            {
+                "variant": "standard",
+                "sizes": [""],
+                "sourceOperands": [],
+                "destOperands": []
+            }
+        ],
+        "jsr": [
+            {
+                "variant": "standard",
+                "sizes": [""],
+                "sourceOperands": ["(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
+                "destOperands": []
+            }
+        ],
+        "jmp": [
+            {
+                "variant": "standard",
+                "sizes": [""],
+                "sourceOperands": ["(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
+                "destOperands": []
+            }
+        ],
+        "movem": [
+            {
+                "variant": "standard",
+                "sizes": ["w", "l"],
+                "sourceOperands": ["register_list", "(an)", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
+                "destOperands": ["register_list", "(an)", "(an)+", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "lea": [
+            {
+                "variant": "standard",
+                "sizes": ["l"],
+                "sourceOperands": ["(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
+                "destOperands": ["an"]
+            }
+        ],
+        "chk": [
+            {
+                "variant": "standard",
+                "sizes": ["w"],
+                "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+                "destOperands": ["dn"]
+            }
+        ],
+        "addq": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["imm3"],
+                "destOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "subq": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["imm3"],
+                "destOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "moveq": [
+            {
+                "variant": "standard",
+                "sizes": ["l"],
+                "sourceOperands": ["imm8"],
+                "destOperands": ["dn"]
+            }
+        ],
+        "divu": [
+            {
+                "variant": "standard",
+                "sizes": ["w"],
+                "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+                "destOperands": ["dn"]
+            }
+        ],
+        "divs": [
+            {
+                "variant": "standard",
+                "sizes": ["w"],
+                "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+                "destOperands": ["dn"]
+            }
+        ],
+        "sbcd": [
+            {
+                "variant": "standard",
+                "sizes": ["b"],
+                "sourceOperands": ["dn", "-(an)"],
+                "destOperands": ["dn", "-(an)"]
+            }
+        ],
+        "or": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "sub": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "subx": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["dn", "-(an)"],
+                "destOperands": ["dn", "-(an)"]
+            }
+        ],
+        "suba": [
+            {
+                "variant": "standard",
+                "sizes": ["w", "l"],
+                "sourceOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+                "destOperands": ["an"]
+            }
+        ],
+        "eor": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["dn"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "cmpm": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["(an)+"],
+                "destOperands": ["(an)+"]
+            }
+        ],
+        "cmp": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+                "destOperands": ["dn"]
+            }
+        ],
+        "cmpa": [
+            {
+                "variant": "standard",
+                "sizes": ["w", "l"],
+                "sourceOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+                "destOperands": ["an"]
+            }
+        ],
+        "mulu": [
+            {
+                "variant": "standard",
+                "sizes": ["w"],
+                "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+                "destOperands": ["dn"]
+            }
+        ],
+        "muls": [
+            {
+                "variant": "standard",
+                "sizes": ["w"],
+                "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+                "destOperands": ["dn"]
+            }
+        ],
+        "abcd": [
+            {
+                "variant": "standard",
+                "sizes": ["b"],
+                "sourceOperands": ["dn", "-(an)"],
+                "destOperands": ["dn", "-(an)"]
+            }
+        ],
+        "exg": [
+            {
+                "variant": "standard",
+                "sizes": ["l"],
+                "sourceOperands": ["dn", "an"],
+                "destOperands": ["dn", "an"]
+            }
+        ],
+        "and": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "add": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "addx": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["dn", "-(an)"],
+                "destOperands": ["dn", "-(an)"]
+            }
+        ],
+        "adda": [
+            {
+                "variant": "standard",
+                "sizes": ["w", "l"],
+                "sourceOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+                "destOperands": ["an"]
+            }
+        ],
+        "asl": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["dn", "imm3"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "asr": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["dn", "imm3"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "lsl": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["dn", "imm3"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "lsr": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["dn", "imm3"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "roxl": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["dn", "imm3"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "roxr": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["dn", "imm3"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "rol": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["dn", "imm3"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ],
+        "ror": [
+            {
+                "variant": "standard",
+                "sizes": ["b", "w", "l"],
+                "sourceOperands": ["dn", "imm3"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            }
+        ]
     }
 };

@@ -1,424 +1,194 @@
+	ori.b	#$FF,ccr
+	ori	#$FF,ccr
+	ori.w	#$FFFF,sr
+	ori	#$FFFF,sr
 	ori.b	#$FF,d5
 	ori.b	#$FF,(a2)
 	ori.b	#$FF,(a2)+
-	ori.b	#$FF,-(a2)
-	ori.b	#$FF,$7FFF(a2)
-	ori.b	#$FF,$7F(a2,d5.w)
-	ori.b	#$FF,($FFFFFFFF).w
-	ori.b	#$FF,($FFFFFFFF).l
-	ori.b	#$FF,ccr
-	ori	#$FF,ccr
-	ori.w	#$FFFF,d5
-	ori.w	#$FFFF,(a2)
-	ori.w	#$FFFF,(a2)+
-	ori.w	#$FFFF,-(a2)
-	ori.w	#$FFFF,$7FFF(a2)
-	ori.w	#$FFFF,$7F(a2,d5.w)
-	ori.w	#$FFFF,($FFFFFFFF).w
-	ori.w	#$FFFF,($FFFFFFFF).l
-	ori.w	#$FFFF,sr
-	ori	#$FFFF,sr
-	ori.l	#$FFFFFFFF,d5
-	ori.l	#$FFFFFFFF,(a2)
-	ori.l	#$FFFFFFFF,(a2)+
-	ori.l	#$FFFFFFFF,-(a2)
-	ori.l	#$FFFFFFFF,$7FFF(a2)
-	ori.l	#$FFFFFFFF,$7F(a2,d5.w)
-	ori.l	#$FFFFFFFF,($FFFFFFFF).w
-	ori.l	#$FFFFFFFF,($FFFFFFFF).l
+	ori.w	#$FF,d5
+	ori.w	#$FF,(a2)
+	ori.w	#$FF,(a2)+
+	ori.l	#$FF,d5
+	ori.l	#$FF,(a2)
+	ori.l	#$FF,(a2)+
 
+	andi.b	#$FF,ccr
+	andi	#$FF,ccr
+	andi.w	#$FFFF,sr
+	andi	#$FFFF,sr
 	andi.b	#$FF,d5
 	andi.b	#$FF,(a2)
 	andi.b	#$FF,(a2)+
-	andi.b	#$FF,-(a2)
-	andi.b	#$FF,$7FFF(a2)
-	andi.b	#$FF,$7F(a2,d5.w)
-	andi.b	#$FF,($FFFFFFFF).w
-	andi.b	#$FF,($FFFFFFFF).l
-	andi.b	#$FF,ccr
-	andi	#$FF,ccr
-	andi.w	#$FFFF,d5
-	andi.w	#$FFFF,(a2)
-	andi.w	#$FFFF,(a2)+
-	andi.w	#$FFFF,-(a2)
-	andi.w	#$FFFF,$7FFF(a2)
-	andi.w	#$FFFF,$7F(a2,d5.w)
-	andi.w	#$FFFF,($FFFFFFFF).w
-	andi.w	#$FFFF,($FFFFFFFF).l
-	andi.w	#$FFFF,sr
-	andi	#$FFFF,sr
-	andi.l	#$FFFFFFFF,d5
-	andi.l	#$FFFFFFFF,(a2)
-	andi.l	#$FFFFFFFF,(a2)+
-	andi.l	#$FFFFFFFF,-(a2)
-	andi.l	#$FFFFFFFF,$7FFF(a2)
-	andi.l	#$FFFFFFFF,$7F(a2,d5.w)
-	andi.l	#$FFFFFFFF,($FFFFFFFF).w
-	andi.l	#$FFFFFFFF,($FFFFFFFF).l
+	andi.w	#$FF,d5
+	andi.w	#$FF,(a2)
+	andi.w	#$FF,(a2)+
+	andi.l	#$FF,d5
+	andi.l	#$FF,(a2)
+	andi.l	#$FF,(a2)+
 
 	subi.b	#$FF,d5
 	subi.b	#$FF,(a2)
 	subi.b	#$FF,(a2)+
-	subi.b	#$FF,-(a2)
-	subi.b	#$FF,$7FFF(a2)
-	subi.b	#$FF,$7F(a2,d5.w)
-	subi.b	#$FF,($FFFFFFFF).w
-	subi.b	#$FF,($FFFFFFFF).l
-	subi.w	#$FFFF,d5
-	subi.w	#$FFFF,(a2)
-	subi.w	#$FFFF,(a2)+
-	subi.w	#$FFFF,-(a2)
-	subi.w	#$FFFF,$7FFF(a2)
-	subi.w	#$FFFF,$7F(a2,d5.w)
-	subi.w	#$FFFF,($FFFFFFFF).w
-	subi.w	#$FFFF,($FFFFFFFF).l
-	subi.l	#$FFFFFFFF,d5
-	subi.l	#$FFFFFFFF,(a2)
-	subi.l	#$FFFFFFFF,(a2)+
-	subi.l	#$FFFFFFFF,-(a2)
-	subi.l	#$FFFFFFFF,$7FFF(a2)
-	subi.l	#$FFFFFFFF,$7F(a2,d5.w)
-	subi.l	#$FFFFFFFF,($FFFFFFFF).w
-	subi.l	#$FFFFFFFF,($FFFFFFFF).l
+	subi.w	#$FF,d5
+	subi.w	#$FF,(a2)
+	subi.w	#$FF,(a2)+
+	subi.l	#$FF,d5
+	subi.l	#$FF,(a2)
+	subi.l	#$FF,(a2)+
 
 	addi.b	#$FF,d5
 	addi.b	#$FF,(a2)
 	addi.b	#$FF,(a2)+
-	addi.b	#$FF,-(a2)
-	addi.b	#$FF,$7FFF(a2)
-	addi.b	#$FF,$7F(a2,d5.w)
-	addi.b	#$FF,($FFFFFFFF).w
-	addi.b	#$FF,($FFFFFFFF).l
-	addi.w	#$FFFF,d5
-	addi.w	#$FFFF,(a2)
-	addi.w	#$FFFF,(a2)+
-	addi.w	#$FFFF,-(a2)
-	addi.w	#$FFFF,$7FFF(a2)
-	addi.w	#$FFFF,$7F(a2,d5.w)
-	addi.w	#$FFFF,($FFFFFFFF).w
-	addi.w	#$FFFF,($FFFFFFFF).l
-	addi.l	#$FFFFFFFF,d5
-	addi.l	#$FFFFFFFF,(a2)
-	addi.l	#$FFFFFFFF,(a2)+
-	addi.l	#$FFFFFFFF,-(a2)
-	addi.l	#$FFFFFFFF,$7FFF(a2)
-	addi.l	#$FFFFFFFF,$7F(a2,d5.w)
-	addi.l	#$FFFFFFFF,($FFFFFFFF).w
-	addi.l	#$FFFFFFFF,($FFFFFFFF).l
+	addi.w	#$FF,d5
+	addi.w	#$FF,(a2)
+	addi.w	#$FF,(a2)+
+	addi.l	#$FF,d5
+	addi.l	#$FF,(a2)
+	addi.l	#$FF,(a2)+
 
+	eori.b	#$FF,ccr
+	eori	#$FF,ccr
+	eori.w	#$FFFF,sr
+	eori	#$FFFF,sr
 	eori.b	#$FF,d5
 	eori.b	#$FF,(a2)
 	eori.b	#$FF,(a2)+
-	eori.b	#$FF,-(a2)
-	eori.b	#$FF,$7FFF(a2)
-	eori.b	#$FF,$7F(a2,d5.w)
-	eori.b	#$FF,($FFFFFFFF).w
-	eori.b	#$FF,($FFFFFFFF).l
-	eori.b	#$FF,ccr
-	eori	#$FF,ccr
-	eori.w	#$FFFF,d5
-	eori.w	#$FFFF,(a2)
-	eori.w	#$FFFF,(a2)+
-	eori.w	#$FFFF,-(a2)
-	eori.w	#$FFFF,$7FFF(a2)
-	eori.w	#$FFFF,$7F(a2,d5.w)
-	eori.w	#$FFFF,($FFFFFFFF).w
-	eori.w	#$FFFF,($FFFFFFFF).l
-	eori.w	#$FFFF,sr
-	eori	#$FFFF,sr
-	eori.l	#$FFFFFFFF,d5
-	eori.l	#$FFFFFFFF,(a2)
-	eori.l	#$FFFFFFFF,(a2)+
-	eori.l	#$FFFFFFFF,-(a2)
-	eori.l	#$FFFFFFFF,$7FFF(a2)
-	eori.l	#$FFFFFFFF,$7F(a2,d5.w)
-	eori.l	#$FFFFFFFF,($FFFFFFFF).w
-	eori.l	#$FFFFFFFF,($FFFFFFFF).l
+	eori.w	#$FF,d5
+	eori.w	#$FF,(a2)
+	eori.w	#$FF,(a2)+
+	eori.l	#$FF,d5
+	eori.l	#$FF,(a2)
+	eori.l	#$FF,(a2)+
 
 	cmpi.b	#$FF,d5
 	cmpi.b	#$FF,(a2)
 	cmpi.b	#$FF,(a2)+
-	cmpi.b	#$FF,-(a2)
-	cmpi.b	#$FF,$7FFF(a2)
-	cmpi.b	#$FF,$7F(a2,d5.w)
-	cmpi.b	#$FF,($FFFFFFFF).w
-	cmpi.b	#$FF,($FFFFFFFF).l
-	cmpi.w	#$FFFF,d5
-	cmpi.w	#$FFFF,(a2)
-	cmpi.w	#$FFFF,(a2)+
-	cmpi.w	#$FFFF,-(a2)
-	cmpi.w	#$FFFF,$7FFF(a2)
-	cmpi.w	#$FFFF,$7F(a2,d5.w)
-	cmpi.w	#$FFFF,($FFFFFFFF).w
-	cmpi.w	#$FFFF,($FFFFFFFF).l
-	cmpi.l	#$FFFFFFFF,d5
-	cmpi.l	#$FFFFFFFF,(a2)
-	cmpi.l	#$FFFFFFFF,(a2)+
-	cmpi.l	#$FFFFFFFF,-(a2)
-	cmpi.l	#$FFFFFFFF,$7FFF(a2)
-	cmpi.l	#$FFFFFFFF,$7F(a2,d5.w)
-	cmpi.l	#$FFFFFFFF,($FFFFFFFF).w
-	cmpi.l	#$FFFFFFFF,($FFFFFFFF).l
+	cmpi.w	#$FF,d5
+	cmpi.w	#$FF,(a2)
+	cmpi.w	#$FF,(a2)+
+	cmpi.l	#$FF,d5
+	cmpi.l	#$FF,(a2)
+	cmpi.l	#$FF,(a2)+
 
 	btst.b	d5,d5
 	btst.b	d5,(a2)
 	btst.b	d5,(a2)+
-	btst.b	d5,-(a2)
-	btst.b	d5,$7FFF(a2)
-	btst.b	d5,$7F(a2,d5.w)
-	btst.b	d5,($FFFFFFFF).w
-	btst.b	d5,($FFFFFFFF).l
-	btst.b	#0,d5
-	btst.b	#0,(a2)
-	btst.b	#0,(a2)+
-	btst.b	#0,-(a2)
-	btst.b	#0,$7FFF(a2)
-	btst.b	#0,$7F(a2,d5.w)
-	btst.b	#0,($FFFFFFFF).w
-	btst.b	#0,($FFFFFFFF).l
-	btst	d5,d5
-	btst	#0,d5
-	btst	d5,(a2)
-	btst	#0,(a2)
-	btst	d5,(a2)+
-	btst	#0,(a2)+
-	btst	d5,-(a2)
-	btst	#0,-(a2)
-	btst	d5,$7FFF(a2)
-	btst	#0,$7FFF(a2)
-	btst	d5,$7F(a2,d5.w)
-	btst	#0,$7F(a2,d5.w)
-	btst	d5,($FFFFFFFF).w
-	btst	#0,($FFFFFFFF).w
-	btst	d5,($FFFFFFFF).l
-	btst	#0,($FFFFFFFF).l
 	btst.l	d5,d5
 	btst.l	d5,(a2)
 	btst.l	d5,(a2)+
-	btst.l	d5,-(a2)
-	btst.l	d5,$7FFF(a2)
-	btst.l	d5,$7F(a2,d5.w)
-	btst.l	d5,($FFFFFFFF).w
-	btst.l	d5,($FFFFFFFF).l
-	btst.l	#0,d5
-	btst.l	#0,(a2)
-	btst.l	#0,(a2)+
-	btst.l	#0,-(a2)
-	btst.l	#0,$7FFF(a2)
-	btst.l	#0,$7F(a2,d5.w)
-	btst.l	#0,($FFFFFFFF).w
-	btst.l	#0,($FFFFFFFF).l
 	btst	d5,d5
-	btst	#0,d5
 	btst	d5,(a2)
-	btst	#0,(a2)
 	btst	d5,(a2)+
-	btst	#0,(a2)+
 	btst	d5,-(a2)
-	btst	#0,-(a2)
 	btst	d5,$7FFF(a2)
-	btst	#0,$7FFF(a2)
 	btst	d5,$7F(a2,d5.w)
-	btst	#0,$7F(a2,d5.w)
 	btst	d5,($FFFFFFFF).w
-	btst	#0,($FFFFFFFF).w
 	btst	d5,($FFFFFFFF).l
-	btst	#0,($FFFFFFFF).l
+	btst	d5,@(pc)
+	btst	d5,@(pc,d5.w)
+	btst.b	#$FF,d5
+	btst.b	#$FF,(a2)
+	btst.b	#$FF,(a2)+
+	btst.l	#$FF,d5
+	btst.l	#$FF,(a2)
+	btst.l	#$FF,(a2)+
+	btst	#$FF,d5
+	btst	#$FF,(a2)
+	btst	#$FF,(a2)+
+	btst	#$FF,-(a2)
+	btst	#$FF,$7FFF(a2)
+	btst	#$FF,$7F(a2,d5.w)
+	btst	#$FF,($FFFFFFFF).w
+	btst	#$FF,($FFFFFFFF).l
+	btst	#$FF,@(pc)
+	btst	#$FF,@(pc,d5.w)
 
 	bchg.b	d5,d5
 	bchg.b	d5,(a2)
 	bchg.b	d5,(a2)+
-	bchg.b	d5,-(a2)
-	bchg.b	d5,$7FFF(a2)
-	bchg.b	d5,$7F(a2,d5.w)
-	bchg.b	d5,($FFFFFFFF).w
-	bchg.b	d5,($FFFFFFFF).l
-	bchg.b	#0,d5
-	bchg.b	#0,(a2)
-	bchg.b	#0,(a2)+
-	bchg.b	#0,-(a2)
-	bchg.b	#0,$7FFF(a2)
-	bchg.b	#0,$7F(a2,d5.w)
-	bchg.b	#0,($FFFFFFFF).w
-	bchg.b	#0,($FFFFFFFF).l
-	bchg	d5,d5
-	bchg	#0,d5
-	bchg	d5,(a2)
-	bchg	#0,(a2)
-	bchg	d5,(a2)+
-	bchg	#0,(a2)+
-	bchg	d5,-(a2)
-	bchg	#0,-(a2)
-	bchg	d5,$7FFF(a2)
-	bchg	#0,$7FFF(a2)
-	bchg	d5,$7F(a2,d5.w)
-	bchg	#0,$7F(a2,d5.w)
-	bchg	d5,($FFFFFFFF).w
-	bchg	#0,($FFFFFFFF).w
-	bchg	d5,($FFFFFFFF).l
-	bchg	#0,($FFFFFFFF).l
 	bchg.l	d5,d5
 	bchg.l	d5,(a2)
 	bchg.l	d5,(a2)+
-	bchg.l	d5,-(a2)
-	bchg.l	d5,$7FFF(a2)
-	bchg.l	d5,$7F(a2,d5.w)
-	bchg.l	d5,($FFFFFFFF).w
-	bchg.l	d5,($FFFFFFFF).l
-	bchg.l	#0,d5
-	bchg.l	#0,(a2)
-	bchg.l	#0,(a2)+
-	bchg.l	#0,-(a2)
-	bchg.l	#0,$7FFF(a2)
-	bchg.l	#0,$7F(a2,d5.w)
-	bchg.l	#0,($FFFFFFFF).w
-	bchg.l	#0,($FFFFFFFF).l
 	bchg	d5,d5
-	bchg	#0,d5
 	bchg	d5,(a2)
-	bchg	#0,(a2)
 	bchg	d5,(a2)+
-	bchg	#0,(a2)+
 	bchg	d5,-(a2)
-	bchg	#0,-(a2)
 	bchg	d5,$7FFF(a2)
-	bchg	#0,$7FFF(a2)
 	bchg	d5,$7F(a2,d5.w)
-	bchg	#0,$7F(a2,d5.w)
 	bchg	d5,($FFFFFFFF).w
-	bchg	#0,($FFFFFFFF).w
 	bchg	d5,($FFFFFFFF).l
-	bchg	#0,($FFFFFFFF).l
+	bchg.b	#$FF,d5
+	bchg.b	#$FF,(a2)
+	bchg.b	#$FF,(a2)+
+	bchg.l	#$FF,d5
+	bchg.l	#$FF,(a2)
+	bchg.l	#$FF,(a2)+
+	bchg	#$FF,d5
+	bchg	#$FF,(a2)
+	bchg	#$FF,(a2)+
+	bchg	#$FF,-(a2)
+	bchg	#$FF,$7FFF(a2)
+	bchg	#$FF,$7F(a2,d5.w)
+	bchg	#$FF,($FFFFFFFF).w
+	bchg	#$FF,($FFFFFFFF).l
 
 	bclr.b	d5,d5
 	bclr.b	d5,(a2)
 	bclr.b	d5,(a2)+
-	bclr.b	d5,-(a2)
-	bclr.b	d5,$7FFF(a2)
-	bclr.b	d5,$7F(a2,d5.w)
-	bclr.b	d5,($FFFFFFFF).w
-	bclr.b	d5,($FFFFFFFF).l
-	bclr.b	#0,d5
-	bclr.b	#0,(a2)
-	bclr.b	#0,(a2)+
-	bclr.b	#0,-(a2)
-	bclr.b	#0,$7FFF(a2)
-	bclr.b	#0,$7F(a2,d5.w)
-	bclr.b	#0,($FFFFFFFF).w
-	bclr.b	#0,($FFFFFFFF).l
-	bclr	d5,d5
-	bclr	#0,d5
-	bclr	d5,(a2)
-	bclr	#0,(a2)
-	bclr	d5,(a2)+
-	bclr	#0,(a2)+
-	bclr	d5,-(a2)
-	bclr	#0,-(a2)
-	bclr	d5,$7FFF(a2)
-	bclr	#0,$7FFF(a2)
-	bclr	d5,$7F(a2,d5.w)
-	bclr	#0,$7F(a2,d5.w)
-	bclr	d5,($FFFFFFFF).w
-	bclr	#0,($FFFFFFFF).w
-	bclr	d5,($FFFFFFFF).l
-	bclr	#0,($FFFFFFFF).l
 	bclr.l	d5,d5
 	bclr.l	d5,(a2)
 	bclr.l	d5,(a2)+
-	bclr.l	d5,-(a2)
-	bclr.l	d5,$7FFF(a2)
-	bclr.l	d5,$7F(a2,d5.w)
-	bclr.l	d5,($FFFFFFFF).w
-	bclr.l	d5,($FFFFFFFF).l
-	bclr.l	#0,d5
-	bclr.l	#0,(a2)
-	bclr.l	#0,(a2)+
-	bclr.l	#0,-(a2)
-	bclr.l	#0,$7FFF(a2)
-	bclr.l	#0,$7F(a2,d5.w)
-	bclr.l	#0,($FFFFFFFF).w
-	bclr.l	#0,($FFFFFFFF).l
 	bclr	d5,d5
-	bclr	#0,d5
 	bclr	d5,(a2)
-	bclr	#0,(a2)
 	bclr	d5,(a2)+
-	bclr	#0,(a2)+
 	bclr	d5,-(a2)
-	bclr	#0,-(a2)
 	bclr	d5,$7FFF(a2)
-	bclr	#0,$7FFF(a2)
 	bclr	d5,$7F(a2,d5.w)
-	bclr	#0,$7F(a2,d5.w)
 	bclr	d5,($FFFFFFFF).w
-	bclr	#0,($FFFFFFFF).w
 	bclr	d5,($FFFFFFFF).l
-	bclr	#0,($FFFFFFFF).l
+	bclr.b	#$FF,d5
+	bclr.b	#$FF,(a2)
+	bclr.b	#$FF,(a2)+
+	bclr.l	#$FF,d5
+	bclr.l	#$FF,(a2)
+	bclr.l	#$FF,(a2)+
+	bclr	#$FF,d5
+	bclr	#$FF,(a2)
+	bclr	#$FF,(a2)+
+	bclr	#$FF,-(a2)
+	bclr	#$FF,$7FFF(a2)
+	bclr	#$FF,$7F(a2,d5.w)
+	bclr	#$FF,($FFFFFFFF).w
+	bclr	#$FF,($FFFFFFFF).l
 
 	bset.b	d5,d5
 	bset.b	d5,(a2)
 	bset.b	d5,(a2)+
-	bset.b	d5,-(a2)
-	bset.b	d5,$7FFF(a2)
-	bset.b	d5,$7F(a2,d5.w)
-	bset.b	d5,($FFFFFFFF).w
-	bset.b	d5,($FFFFFFFF).l
-	bset.b	#0,d5
-	bset.b	#0,(a2)
-	bset.b	#0,(a2)+
-	bset.b	#0,-(a2)
-	bset.b	#0,$7FFF(a2)
-	bset.b	#0,$7F(a2,d5.w)
-	bset.b	#0,($FFFFFFFF).w
-	bset.b	#0,($FFFFFFFF).l
-	bset	d5,d5
-	bset	#0,d5
-	bset	d5,(a2)
-	bset	#0,(a2)
-	bset	d5,(a2)+
-	bset	#0,(a2)+
-	bset	d5,-(a2)
-	bset	#0,-(a2)
-	bset	d5,$7FFF(a2)
-	bset	#0,$7FFF(a2)
-	bset	d5,$7F(a2,d5.w)
-	bset	#0,$7F(a2,d5.w)
-	bset	d5,($FFFFFFFF).w
-	bset	#0,($FFFFFFFF).w
-	bset	d5,($FFFFFFFF).l
-	bset	#0,($FFFFFFFF).l
 	bset.l	d5,d5
 	bset.l	d5,(a2)
 	bset.l	d5,(a2)+
-	bset.l	d5,-(a2)
-	bset.l	d5,$7FFF(a2)
-	bset.l	d5,$7F(a2,d5.w)
-	bset.l	d5,($FFFFFFFF).w
-	bset.l	d5,($FFFFFFFF).l
-	bset.l	#0,d5
-	bset.l	#0,(a2)
-	bset.l	#0,(a2)+
-	bset.l	#0,-(a2)
-	bset.l	#0,$7FFF(a2)
-	bset.l	#0,$7F(a2,d5.w)
-	bset.l	#0,($FFFFFFFF).w
-	bset.l	#0,($FFFFFFFF).l
 	bset	d5,d5
-	bset	#0,d5
 	bset	d5,(a2)
-	bset	#0,(a2)
 	bset	d5,(a2)+
-	bset	#0,(a2)+
 	bset	d5,-(a2)
-	bset	#0,-(a2)
 	bset	d5,$7FFF(a2)
-	bset	#0,$7FFF(a2)
 	bset	d5,$7F(a2,d5.w)
-	bset	#0,$7F(a2,d5.w)
 	bset	d5,($FFFFFFFF).w
-	bset	#0,($FFFFFFFF).w
 	bset	d5,($FFFFFFFF).l
-	bset	#0,($FFFFFFFF).l
+	bset.b	#$FF,d5
+	bset.b	#$FF,(a2)
+	bset.b	#$FF,(a2)+
+	bset.l	#$FF,d5
+	bset.l	#$FF,(a2)
+	bset.l	#$FF,(a2)+
+	bset	#$FF,d5
+	bset	#$FF,(a2)
+	bset	#$FF,(a2)+
+	bset	#$FF,-(a2)
+	bset	#$FF,$7FFF(a2)
+	bset	#$FF,$7F(a2,d5.w)
+	bset	#$FF,($FFFFFFFF).w
+	bset	#$FF,($FFFFFFFF).l
 
 	movep.w	d5,d5
 	movep.w	d5,$7FFF(a2)
@@ -463,6 +233,13 @@
 	move.l	(a2),d5
 	move.l	(a2),a2
 	move.l	(a2),(a2)
+	move.w	sr,d5
+	move.w	sr,(a2)
+	move.w	sr,(a2)+
+	move.w	#$FFFF,ccr
+	move	#$FFFF,ccr
+	move.w	#$FFFF,sr
+	move	#$FFFF,sr
 
 	negx.b	d5
 	negx.b	(a2)
@@ -718,258 +495,6 @@
 	subq.l	#1,d5
 	subq.l	#1,a2
 	subq.l	#1,(a2)
-
-	st.b	d5
-	st.b	(a2)
-	st.b	(a2)+
-	st.b	-(a2)
-	st.b	$7FFF(a2)
-	st.b	$7F(a2,d5.w)
-	st.b	($FFFFFFFF).w
-	st.b	($FFFFFFFF).l
-
-	sf.b	d5
-	sf.b	(a2)
-	sf.b	(a2)+
-	sf.b	-(a2)
-	sf.b	$7FFF(a2)
-	sf.b	$7F(a2,d5.w)
-	sf.b	($FFFFFFFF).w
-	sf.b	($FFFFFFFF).l
-
-	shi.b	d5
-	shi.b	(a2)
-	shi.b	(a2)+
-	shi.b	-(a2)
-	shi.b	$7FFF(a2)
-	shi.b	$7F(a2,d5.w)
-	shi.b	($FFFFFFFF).w
-	shi.b	($FFFFFFFF).l
-
-	sls.b	d5
-	sls.b	(a2)
-	sls.b	(a2)+
-	sls.b	-(a2)
-	sls.b	$7FFF(a2)
-	sls.b	$7F(a2,d5.w)
-	sls.b	($FFFFFFFF).w
-	sls.b	($FFFFFFFF).l
-
-	scc.b	d5
-	scc.b	(a2)
-	scc.b	(a2)+
-	scc.b	-(a2)
-	scc.b	$7FFF(a2)
-	scc.b	$7F(a2,d5.w)
-	scc.b	($FFFFFFFF).w
-	scc.b	($FFFFFFFF).l
-
-	scs.b	d5
-	scs.b	(a2)
-	scs.b	(a2)+
-	scs.b	-(a2)
-	scs.b	$7FFF(a2)
-	scs.b	$7F(a2,d5.w)
-	scs.b	($FFFFFFFF).w
-	scs.b	($FFFFFFFF).l
-
-	sne.b	d5
-	sne.b	(a2)
-	sne.b	(a2)+
-	sne.b	-(a2)
-	sne.b	$7FFF(a2)
-	sne.b	$7F(a2,d5.w)
-	sne.b	($FFFFFFFF).w
-	sne.b	($FFFFFFFF).l
-
-	seq.b	d5
-	seq.b	(a2)
-	seq.b	(a2)+
-	seq.b	-(a2)
-	seq.b	$7FFF(a2)
-	seq.b	$7F(a2,d5.w)
-	seq.b	($FFFFFFFF).w
-	seq.b	($FFFFFFFF).l
-
-	svc.b	d5
-	svc.b	(a2)
-	svc.b	(a2)+
-	svc.b	-(a2)
-	svc.b	$7FFF(a2)
-	svc.b	$7F(a2,d5.w)
-	svc.b	($FFFFFFFF).w
-	svc.b	($FFFFFFFF).l
-
-	svs.b	d5
-	svs.b	(a2)
-	svs.b	(a2)+
-	svs.b	-(a2)
-	svs.b	$7FFF(a2)
-	svs.b	$7F(a2,d5.w)
-	svs.b	($FFFFFFFF).w
-	svs.b	($FFFFFFFF).l
-
-	spl.b	d5
-	spl.b	(a2)
-	spl.b	(a2)+
-	spl.b	-(a2)
-	spl.b	$7FFF(a2)
-	spl.b	$7F(a2,d5.w)
-	spl.b	($FFFFFFFF).w
-	spl.b	($FFFFFFFF).l
-
-	smi.b	d5
-	smi.b	(a2)
-	smi.b	(a2)+
-	smi.b	-(a2)
-	smi.b	$7FFF(a2)
-	smi.b	$7F(a2,d5.w)
-	smi.b	($FFFFFFFF).w
-	smi.b	($FFFFFFFF).l
-
-	sge.b	d5
-	sge.b	(a2)
-	sge.b	(a2)+
-	sge.b	-(a2)
-	sge.b	$7FFF(a2)
-	sge.b	$7F(a2,d5.w)
-	sge.b	($FFFFFFFF).w
-	sge.b	($FFFFFFFF).l
-
-	slt.b	d5
-	slt.b	(a2)
-	slt.b	(a2)+
-	slt.b	-(a2)
-	slt.b	$7FFF(a2)
-	slt.b	$7F(a2,d5.w)
-	slt.b	($FFFFFFFF).w
-	slt.b	($FFFFFFFF).l
-
-	sgt.b	d5
-	sgt.b	(a2)
-	sgt.b	(a2)+
-	sgt.b	-(a2)
-	sgt.b	$7FFF(a2)
-	sgt.b	$7F(a2,d5.w)
-	sgt.b	($FFFFFFFF).w
-	sgt.b	($FFFFFFFF).l
-
-	sle.b	d5
-	sle.b	(a2)
-	sle.b	(a2)+
-	sle.b	-(a2)
-	sle.b	$7FFF(a2)
-	sle.b	$7F(a2,d5.w)
-	sle.b	($FFFFFFFF).w
-	sle.b	($FFFFFFFF).l
-
-	shs.b	d5
-	shs.b	(a2)
-	shs.b	(a2)+
-	shs.b	-(a2)
-	shs.b	$7FFF(a2)
-	shs.b	$7F(a2,d5.w)
-	shs.b	($FFFFFFFF).w
-	shs.b	($FFFFFFFF).l
-
-	slo.b	d5
-	slo.b	(a2)
-	slo.b	(a2)+
-	slo.b	-(a2)
-	slo.b	$7FFF(a2)
-	slo.b	$7F(a2,d5.w)
-	slo.b	($FFFFFFFF).w
-	slo.b	($FFFFFFFF).l
-
-	dbt.w	@,d5
-
-	dbf.w	@,d5
-
-	dbhi.w	@,d5
-
-	dbls.w	@,d5
-
-	dbcc.w	@,d5
-
-	dbcs.w	@,d5
-
-	dbne.w	@,d5
-
-	dbeq.w	@,d5
-
-	dbvc.w	@,d5
-
-	dbvs.w	@,d5
-
-	dbpl.w	@,d5
-
-	dbmi.w	@,d5
-
-	dbge.w	@,d5
-
-	dblt.w	@,d5
-
-	dbgt.w	@,d5
-
-	dble.w	@,d5
-
-	dbhs.w	@,d5
-
-	dblo.w	@,d5
-
-	bra.b	@
-	bra.w	@
-
-	bsr.b	@
-	bsr.w	@
-
-	bhi.b	@
-	bhi.w	@
-
-	bls.b	@
-	bls.w	@
-
-	bcc.b	@
-	bcc.w	@
-
-	bcs.b	@
-	bcs.w	@
-
-	bne.b	@
-	bne.w	@
-
-	beq.b	@
-	beq.w	@
-
-	bvc.b	@
-	bvc.w	@
-
-	bvs.b	@
-	bvs.w	@
-
-	bpl.b	@
-	bpl.w	@
-
-	bmi.b	@
-	bmi.w	@
-
-	bge.b	@
-	bge.w	@
-
-	blt.b	@
-	blt.w	@
-
-	bgt.b	@
-	bgt.w	@
-
-	ble.b	@
-	ble.w	@
-
-	bhs.b	@
-	bhs.w	@
-
-	blo.b	@
-	blo.w	@
 
 	moveq.l	#0,d5
 
