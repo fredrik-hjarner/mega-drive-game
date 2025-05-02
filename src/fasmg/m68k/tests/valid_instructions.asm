@@ -172,7 +172,7 @@
 	btst.b	d5,($FFFFFFFF).l
 	; btst.b	d5,#$55 ; TODO: destination can never be an immediate?!
 	btst.b	d5,@(pc)
-; 	btst.b	d5,@(pc,d5.w)
+	btst.b	d5,@(pc,d5.w)
 
 	btst	d2,d5
 	btst	d5,(a2)
@@ -331,7 +331,7 @@
 	movea.w	($FFFFFFFF).w,a2
 	movea.w	($FFFFFFFF).l,a2
 	movea.w	@(pc),a2
-; 	movea.w	@(pc,d5.w),a2
+	movea.w	@(pc,d5.w),a2
 	movea.l	d5,a2
 	movea.l	a5,a2
 	movea.l	(a2),a2
@@ -342,7 +342,7 @@
 	movea.l	($FFFFFFFF).w,a2
 	movea.l	($FFFFFFFF).l,a2
 	movea.l	@(pc),a2
-; 	movea.l	@(pc,d5.w),a2
+	movea.l	@(pc,d5.w),a2
 
 	move.b	d2,d5
 	move.b	d5,(a2)
@@ -943,8 +943,8 @@
 	chk.w	($FFFFFFFF).w,d5
 	chk.w	($FFFFFFFF).l,d5
 	chk.w	#$FFFF,d5
-	chk.w	@(pc),d5
-; 	chk.w	@(pc,d5.w),d5
+	chk.w	@(pc),d5; TODO: I need to test other values than @ since @ is one token which makes my current tests succeed, but for several tokens it will fail. A `parse_immediate` util would help.
+; 	chk.w	@(pc,d5.w),d5 ; must test this with an too: @(pc,a5.w)
 	chk	d2,d5
 	chk	(a2),d5
 	chk	(a2)+,d5

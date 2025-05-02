@@ -176,3 +176,8 @@ calminstruction parse_indirect_displacement? op
     stringify tmp1
     display "dawdawd: " bappend tmp1 bappend 10
 end calminstruction
+
+; TODO: Remove when not needed or move to test.asm?
+calminstruction parse_pc_index? op
+    call m68k.parse_pc_index, op
+end calminstruction

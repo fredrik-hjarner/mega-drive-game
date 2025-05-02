@@ -383,7 +383,7 @@ iterate <instr,  instr_bits>, \
              b,    2, \
              l,    2
 
-        calminstruction instr.size? op1*, ea*
+        calminstruction instr.size? operands&
                 local op1_bits
                 local op1_type_bit
                 local bit_index
@@ -395,8 +395,9 @@ iterate <instr,  instr_bits>, \
                 compute bit_index, 0
                 compute bit_index_size, size_in_bytes ; This is the value when op1 is imm
 
-                call m68k.parse_operand@op1, op1
-                call m68k.parse_operand@op2, ea
+                call m68k.split_operands, operands
+                call m68k.parse_operand@op1, m68k.split_operands_result.op1
+                call m68k.parse_operand@op2, m68k.split_operands_result.op2
 
                 ; TODO: If I do compute and result is a boolean is that 0/1 then?
                 ;       because if that's the case I could use that in places for
@@ -407,7 +408,7 @@ iterate <instr,  instr_bits>, \
             ; op1_is_dn
                 jno op1_is_imm ; TODO: I mean I have not validated that though...
                 ; compute op1_bits, (op1 - m68k.data_reg) shl 1
-                compute op1_bits, (0 scaleof op1) shl 1 ; TODO: This is nicer?
+                compute op1_bits, @op1.ea_reg_bits shl 1
                 compute op1_type_bit, 1
                 compute bit_index_size, 0
                 jump emit_bytes
@@ -780,14 +781,15 @@ iterate <size,  size_bits>, \
         w,      11b, \
         l,      10b
 
-        calminstruction movea.size? ea*, an*
+        calminstruction movea.size? operands&
             ; display 10 bappend 'movea:' bappend 10
 
             local tmp
             arrange tmp, =size
 
-            call m68k.parse_operand@op1, ea, tmp
-            call m68k.parse_operand@op2, an
+            call m68k.split_operands, operands
+            call m68k.parse_operand@op1, m68k.split_operands_result.op1, tmp
+            call m68k.parse_operand@op2, m68k.split_operands_result.op2
 
             ; first byte
             emit 1, size_bits shl 4 + @op2.ea_reg_bits shl 1

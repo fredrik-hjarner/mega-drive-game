@@ -324,10 +324,41 @@ iterate op, @op1,@op2
             ;; (d,pc) a.k.a. d(pc) - program counter with displacement ;;;;;;;;;
             check_pc_displacement:
                     call m68k.parse_pc_displacement, operand
-                    jnope unknown
+                    jnope check_pc_index
                     compute type, '(d,pc)'
                     compute ea_mode_bits, 111b
                     compute ea_reg_bits, 010b
+                    compute ext_bytes, 2
+                    ; This stuff is because the d(pc) is relative to the
+                    ; operands own extension words is, and the previous operand
+                    ; could have added extension words so that why that has to
+                    ; be subtracted.
+                    ; some instructions swap the order of the
+                    ; arguments so it's complicated.
+                    ; I add the element `pc` to it so that it's value can be
+                    ; "evaluated/computed" later (in emit_ext_words). Since
+                    ; emit_ext_words will probabaly be executed when the code
+                    ; "knows" how many extension words into the instruction we
+                    ; are this will work.
+                    ; TODO: I could prolly do this in a better/nice way
+                    ; such as store old $ in a variable somewhere maybe.
+                    ; compute ext_bytes_bits, $*pc + m68k.ret_imm
+                    ; TODO: There's a bug lurking here where imm/displacement
+                    ;       is to big, but if it's too big or not can not be
+                    ;       known here in the code, there has to be a check
+                    ;       later when the extension words are emitted.
+                    ; TODO: I should remove  m68k.ret_imm and return data
+                    ;       in the same way `parse_pc_index` does.
+                    compute ext_bytes_bits, pc_displacement * m68k.ret_imm
+                    jump done
+            ;; (d,pc,xn.[wl]) a.k.a. d(pc,xn.[wl]) - program conter with index ;
+            check_pc_index:
+                    call m68k.parse_pc_index, operand
+                    check m68k.parse_pc_index_result.is_pc_index = 1
+                    jno unknown
+                    compute type, '(d,pc,xn)'
+                    compute ea_mode_bits, 111b
+                    compute ea_reg_bits, 011b
                     compute ext_bytes, 2
                     ; This stuff is because the d(pc) is relative to the
                     ; operands own extension words is, and the previous operand
@@ -341,7 +372,19 @@ iterate op, @op1,@op2
                     ; see `emit_ext_words` function.
                     ; TODO: I could prolly do this in a better/nice way
                     ; such as store old $ in a variable somewhere maybe.
-                    compute ext_bytes_bits, $*pc + m68k.ret_imm
+                    ; TODO: m68k.ret_imm? that might be a bad name...
+                    ; TODO: There's a bug lurking here where imm/displacement
+                    ;       is to big, but if it's too big or not can not be
+                    ;       known here in the code, there has to be a check
+                    ;       later when the extension words are emitted.
+                    ; TODO: Maybe I could do this computation in
+                    ;       `parse_pc_index` and so on with the rest of the
+                    ;       functions.
+                    compute ext_bytes_bits, \
+                        m68k.parse_pc_index_result.m shl 15 + \
+                        m68k.parse_pc_index_result.xn shl 12 + \
+                        m68k.parse_pc_index_result.s shl 11 + \
+                        m68k.parse_pc_index_result.d * pc_index
                     jump done
             ;; Temporary stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             unknown:
@@ -418,3 +461,52 @@ iterate op, @op1,@op2
 
     end namespace
 end iterate
+
+;; SPLIT_OPERANDS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; TODO: Comment. Look at comment on the commented out function above.
+define m68k.split_operands_result
+namespace m68k.split_operands_result
+    define num_operands
+    define op1
+    define op2
+end namespace
+
+calminstruction m68k.split_operands? line&
+        local tmp
+
+        match op1 =, op2, line, ()
+        jyes two_operands
+    ; one_operand:
+        ; display 'parse_operands: one_operand' bappend 10
+
+        ; match op1, line, ()
+    
+        ; arrange tmp, op1
+        ; stringify tmp
+        ; display tmp bappend 10
+    
+        call m68k.parse_operand@op1, line
+
+        compute m68k.split_operands_result.num_operands, 1
+        arrange m68k.split_operands_result.op1, line
+
+        exit
+    two_operands:
+        ; display 'parse_operands: two_operands' bappend 10
+
+        ; arrange tmp, op1
+        ; stringify tmp
+        ; display tmp bappend 10
+
+        ; arrange tmp, op2
+        ; stringify tmp
+        ; display tmp bappend 10
+        
+        ; call m68k.parse_operand@op1, op1
+        ; call m68k.parse_operand@op2, op2
+
+        compute m68k.split_operands_result.num_operands, 2
+        arrange m68k.split_operands_result.op1, op1
+        arrange m68k.split_operands_result.op2, op2
+end calminstruction

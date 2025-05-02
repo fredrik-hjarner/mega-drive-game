@@ -30,3 +30,10 @@ element sr
 element ccr
 ; TODO: Comment
 element usp
+
+; TODO: pc_displacement and pc_index are not really registers, so maybe more
+;       them?
+; TODO: Comment
+element pc_displacement
+; TODO: Comment
+element pc_index

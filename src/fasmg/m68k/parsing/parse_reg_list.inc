@@ -70,10 +70,10 @@ iterate reg_list, @reg_list1,@reg_list2
                     compute mask_word_reverse, 0
 
                 ; Display operand
-                    arrange opstr, operand
-                    stringify opstr
-                    display 10
-                    display opstr bappend ":" bappend 10
+                    ; arrange opstr, operand
+                    ; stringify opstr
+                    ; display 10
+                    ; display opstr bappend ":" bappend 10
 
                 ; Check if operator is a single register token
                     call m68k.parse_single_register#reg_list, operand
@@ -103,54 +103,22 @@ iterate reg_list, @reg_list1,@reg_list2
                     compute mask_word_reverse, reg_groups_mask_word_reverse
                     jump done
                 done:
-                    ;; Log stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                    ; ;; Log stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-                    ; is_reg_list
-                    arrange tmp1, is_reg_list
-                    stringify tmp1
-                    display 'is_reg_list:                  ' bappend tmp1 bappend 10
+                    ; ; is_reg_list
+                    ; arrange tmp1, is_reg_list
+                    ; stringify tmp1
+                    ; display 'is_reg_list:                  ' bappend tmp1 bappend 10
 
-                    ; mask_word
-                    arrange tmp1, mask_word
-                    stringify tmp1
-                    display 'mask_word:                    ' bappend tmp1 bappend 10
+                    ; ; mask_word
+                    ; arrange tmp1, mask_word
+                    ; stringify tmp1
+                    ; display 'mask_word:                    ' bappend tmp1 bappend 10
 
-                    ; mask_word_reverse
-                    arrange tmp1, mask_word_reverse
-                    stringify tmp1
-                    display 'mask_word_reverse:            ' bappend tmp1 bappend 10
-
-                    arrange tail, operand
-
-            ; ;; Some initial parsing to see if this is a reg_list at all ;;;;;;;;
-            ;         match tmp1 =/ tmp2, tail
-            ;         jyes parse_tail
-            ;         display 'FAILED MATCH: match tmp1 =/ tmp2, tail' bappend 10
-
-            ;         match tmp1 =- tmp2, tail
-            ;         jyes check_reg_interval
-            ;         ; So it contain a - but that does not prove
-            ;         display 'FAILED MATCH: match tmp1 =- tmp2, tail' bappend 10
-            ;         jump check_single_reg
-            ;     check_reg_interval:
-            ;         ; TODO: Too long lines :'/
-            ;         ;     |- check if tmp1 and tmp2 are data regs --------------------------|   |- check if tmp1 and tmp2 are address regs -----------------------------|
-            ;         check ((tmp1 relativeto m68k.data_reg) & (tmp2 relativeto m68k.data_reg)) | ((tmp1 relativeto m68k.address_reg) & (tmp2 relativeto m68k.address_reg))
-            ;         jyes parse_tail
-            ;     ; Check if single register
-            ;     check_single_reg:
-            ;         check operand relativeto m68k.data_reg | operand relativeto m68k.address_reg
-            ;         jyes parse_tail
-            ;         display 'FAILED CHECK: relativeto regs' bappend 10
-            ;         jump not_reg_list
-
-            ; parse_tail:
-            ;     display 'Is a register list!' bappend 10
-            ;     exit
-
-            ; not_reg_list:
-            ;     display 'Not a register list!' bappend 10
-                
+                    ; ; mask_word_reverse
+                    ; arrange tmp1, mask_word_reverse
+                    ; stringify tmp1
+                    ; display 'mask_word_reverse:            ' bappend tmp1 bappend 10
         end calminstruction
 
 ;; parse_reg_groups ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -436,22 +404,22 @@ iterate reg_list, @reg_list1,@reg_list2
                 transform tmp2, single_reg_mask_words_reverse
                 compute reg_range_mask_word_reverse, ((tmp1 shl 1)-1) xor (tmp2 - 1)
             done:
-                ;; Display log ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                ; ;; Display log ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-                ; reg_range_found
-                arrange tmp1, reg_range_found
-                stringify tmp1
-                display 'reg_range_found:              ' bappend tmp1 bappend 10
+                ; ; reg_range_found
+                ; arrange tmp1, reg_range_found
+                ; stringify tmp1
+                ; display 'reg_range_found:              ' bappend tmp1 bappend 10
 
-                ; reg_range_mask_word
-                arrange tmp1, reg_range_mask_word
-                stringify tmp1
-                display 'reg_range_mask_word:          ' bappend tmp1 bappend 10
+                ; ; reg_range_mask_word
+                ; arrange tmp1, reg_range_mask_word
+                ; stringify tmp1
+                ; display 'reg_range_mask_word:          ' bappend tmp1 bappend 10
 
-                 ; reg_range_mask_word_reverse
-                arrange tmp1, reg_range_mask_word_reverse
-                stringify tmp1
-                display 'reg_range_mask_word_reverse:  ' bappend tmp1 bappend 10
+                ;  ; reg_range_mask_word_reverse
+                ; arrange tmp1, reg_range_mask_word_reverse
+                ; stringify tmp1
+                ; display 'reg_range_mask_word_reverse:  ' bappend tmp1 bappend 10
 
         end calminstruction
 

@@ -1,3 +1,6 @@
+; TODO: Move is_one_token into here because it may be a good util.
+; TODO: A match_any util would be nice.
+
 define xxcalm
 namespace xxcalm
     ; Handling return values in famsg can be a bit awkward so here I have
@@ -61,4 +64,9 @@ calminstruction calminstruction?.@? statement&
         assemble statement
 end calminstruction
 
-; TODO: Move is_one_token into here because it may be a good util.
+
+; ARRange, STRingify
+; macro calminstruction?.arr_str? dest*, src*
+;     arrange dest, src
+;     stringify dest
+; end macro

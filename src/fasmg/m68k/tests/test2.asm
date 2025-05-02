@@ -48,9 +48,15 @@ include "m68k.inc"
 
     ; parse_reg_list d0
     ; parse_reg_list d0-d1
-    parse_reg_list d0/d1
+    ; parse_reg_list d0/d1
 
     ; movem.w (a2),d5-a7
+
+    ; parse_pc_index <@(pc,d5.w)>
+    ; parse_operands @(pc,d5.w)
+    ; parse_operands $10(pc,d5.w)
+    ; parse_operands 4-2(pc,d0.w),a1
+    btst.b	d5,@(pc,d5.w)
 
     endif
 
