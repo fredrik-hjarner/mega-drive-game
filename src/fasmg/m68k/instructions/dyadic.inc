@@ -263,15 +263,16 @@ iterate <instr,  first_byte>, \
             w,      0b, \
             l,      1b
 
-            calminstruction instr.size ea*, an*
+            calminstruction instr.size operands&
                 ; TODO: I am not sure why I have to do this to get the call to work.
                 arrange _size, =size
 
-                call m68k.parse_operand@op1, ea, _size
-                call m68k.parse_operand@op2, an, _size
+                call m68k.split_operands, operands
+                call m68k.parse_operand@op1, m68k.split_operands_result.op1, _size
+                call m68k.parse_operand@op2, m68k.split_operands_result.op2, _size
 
                 ; first byte
-                emit 1, first_byte + (0 scaleof an) shl 1 + size_bit
+                emit 1, first_byte + @op2.ea_reg_bits shl 1 + size_bit
 
                 ; second byte 
                 emit 1, 11000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
@@ -292,12 +293,13 @@ iterate <size,  size_bits>, \
 
         ; Syntax:
         ;     EOR.[bwl] Dn,<ea>
-        calminstruction eor.size? dn*, ea*
-            call m68k.parse_operand@op1, dn
-            call m68k.parse_operand@op2, ea
+        calminstruction eor.size? operands&
+            call m68k.split_operands, operands
+            call m68k.parse_operand@op1, m68k.split_operands_result.op1
+            call m68k.parse_operand@op2, m68k.split_operands_result.op2
 
             ; first byte
-            emit 1, 10110001b + (0 scaleof dn) shl 1
+            emit 1, 10110001b + @op1.ea_reg_bits shl 1
 
             ; second byte
             emit 1, size_bits shl 6 + @op2.ea_mode_bits shl 3 + @op2.ea_reg_bits
@@ -308,12 +310,13 @@ iterate <size,  size_bits>, \
 
         ; Syntax:
         ;     CMP.[bwl] <ea>,Dn
-        calminstruction cmp.size? ea*, dn*
-            call m68k.parse_operand@op1, ea
-            call m68k.parse_operand@op2, dn
+        calminstruction cmp.size? operands&
+            call m68k.split_operands, operands
+            call m68k.parse_operand@op1, m68k.split_operands_result.op1
+            call m68k.parse_operand@op2, m68k.split_operands_result.op2
 
             ; first byte
-            emit 1, 10110000b + (0 scaleof dn) shl 1
+            emit 1, 10110000b + @op2.ea_reg_bits shl 1
 
             ; second byte
             emit 1, size_bits shl 6 + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
