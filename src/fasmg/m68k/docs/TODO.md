@@ -69,6 +69,8 @@
   etc. as any permutation (example `(d8,PC,Xn)`).
   I need to implement that if other assemblers
   support that...
+* What is this about:
+  btst.b	d5,#$55 ; TODO: destination can never be an immediate?! ; See clownassembler tests it's mentioned in two files there.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; things that cause unrecoverable errors in fasmg                            ;;

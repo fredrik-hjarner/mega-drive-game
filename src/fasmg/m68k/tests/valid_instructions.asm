@@ -170,7 +170,6 @@
 	btst.b	d5,$7F(a2,d5.w)
 	btst.b	d5,($FFFFFFFF).w
 	btst.b	d5,($FFFFFFFF).l
-	; btst.b	d5,#$55 ; TODO: destination can never be an immediate?!
 	btst.b	d5,@(pc)
 	btst.b	d5,@(pc,d5.w)
 
