@@ -149,6 +149,7 @@ include "instructions/niladic.inc"
 include "instructions/monadic.inc"
 include "instructions/dyadic.inc"
 include "instructions/variadic.inc"
+include "instructions/move.inc"
 
 include "instructions/aliases.inc"
 
