@@ -355,7 +355,7 @@ iterate op, @op1,@op2
             check_pc_index:
                     call m68k.parse_pc_index, operand
                     check m68k.parse_pc_index_result.is_pc_index = 1
-                    jno unknown
+                    jno check_memory_index
                     compute type, '(d,pc,xn)'
                     compute ea_mode_bits, 111b
                     compute ea_reg_bits, 011b
@@ -385,6 +385,23 @@ iterate op, @op1,@op2
                         m68k.parse_pc_index_result.xn shl 12 + \
                         m68k.parse_pc_index_result.s shl 11 + \
                         m68k.parse_pc_index_result.d * pc_index
+                    jump done
+            ;; (d,an,xn.[wl]) a.k.a. d(an,xn.[wl]) - Address Register Indirect with Index ;
+            check_memory_index:
+                    call m68k.parse_mem_index, operand
+                    check m68k.parse_mem_index_result.is_mem_index = 1
+                    jno unknown
+                    compute type, '(d,an,xn)'
+                    compute ea_mode_bits, 110b
+                    compute ea_reg_bits, m68k.parse_mem_index_result.an
+                    compute ext_bytes, 2
+                    ; TODO: The displacement could only be max one byte
+                    ;       and I should validate that.
+                    compute ext_bytes_bits, \
+                        m68k.parse_mem_index_result.m shl 15 + \
+                        m68k.parse_mem_index_result.xn shl 12 + \
+                        m68k.parse_mem_index_result.s shl 11 + \
+                        m68k.parse_mem_index_result.d
                     jump done
             ;; Temporary stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             unknown:

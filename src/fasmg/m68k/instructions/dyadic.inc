@@ -870,11 +870,12 @@ iterate <instr,  instr_word,         ccr_variant,        sr_variant>, \
             w,      'w',      01b,        2, \
             l,      'l',      10b,        4
 
-            calminstruction instr.size? imm*, ea*
+            calminstruction instr.size? operands&
                 local tmp
 
-                call m68k.parse_operand@op1, imm
-                call m68k.parse_operand@op2, ea
+                call m68k.split_operands, operands
+                call m68k.parse_operand@op1, m68k.split_operands_result.op1
+                call m68k.parse_operand@op2, m68k.split_operands_result.op2
 
             ;; CCR CASE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                 ; TODO: Add .type_token for convenience? Prolly not...
@@ -934,27 +935,26 @@ end iterate ; <instr, instr_word>
 ; TODO: Restrict to valid addressing modes for the instructions.
 ; Valid imm range: 1-8 (8 is encoded as 000b i.e. 0).
 iterate <instr,  first_byte>, \
-        \ ; Add Quick
         addq,    01010000b, \
-        \ ; Subtract Quick
         subq,    01010001b
     iterate <size,  size_bits>, \
             b,      00b, \
             w,      01b, \
             l,      10b
 
-            calminstruction instr.size? imm*, ea*
+            calminstruction instr.size? operands&
                 local tmp
 
-                call m68k.parse_operand@op1, imm
-                call m68k.parse_operand@op2, ea
+                call m68k.split_operands, operands
+                call m68k.parse_operand@op1, m68k.split_operands_result.op1
+                call m68k.parse_operand@op2, m68k.split_operands_result.op2
 
-                assert_min imm, 1
-                assert_max imm, 8
+                assert_min @op1.imm, 1
+                assert_max @op1.imm, 8
 
                 ; first byte
                 ; 8 is encoded as 000b
-                compute tmp, imm mod 8 ; TODO: Is this compute needed?
+                compute tmp, @op1.imm mod 8 ; TODO: Is this compute needed?
                 emit 1, first_byte + tmp shl 1
 
                 ; second byte

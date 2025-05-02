@@ -10,13 +10,9 @@
 ; though it seems that 8 will be encoded as zero.
 ; TODO: Inconsistent, I have instr and instr_bits on other places.
 iterate <instr_prefix,  instr>, \
-        \ ; Arithmetic Shift
         as,             00b, \
-        \ ; Logical Shift
         ls,             01b, \
-        \ ; Rotate with Extend
         rox,            10b, \
-        \ ; Rotate
         ro,             11b
     iterate <dir_suffix,  dir>, \
             r,            0b, \
@@ -139,14 +135,15 @@ iterate <instr_prefix,  instr>, \
             ; Description:
             ;     Arithmetic Shift Left.
             ;     See the different variants for more documentation.
-            calminstruction instr_prefix#dir_suffix#.#size_suffix? op1*, op2
-                    match , op2
+            calminstruction instr_prefix#dir_suffix#.#size_suffix? operands&
+                    call m68k.split_operands, operands
+                    check m68k.split_operands_result.num_operands = 1
                     jyes one_operand
                 ; two_operands:
-                    instr_prefix#dir_suffix#_#size_suffix#_dyadic op1, op2
+                    instr_prefix#dir_suffix#_#size_suffix#_dyadic m68k.split_operands_result.op1, m68k.split_operands_result.op2
                     jump done
                 one_operand:
-                    instr_prefix#dir_suffix#_#size_suffix#_monadic op1
+                    instr_prefix#dir_suffix#_#size_suffix#_monadic m68k.split_operands_result.op1
                 done:
             end calminstruction
 

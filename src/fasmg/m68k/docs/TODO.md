@@ -65,6 +65,10 @@
 * I now support `$7FFF(a2)` but I should also support `($7FFF,a2)` and add a lot
       of test cases to test that.
 * vasm m68k manual has info about some of it's optimizations.
+* Crap, maybe it's possible to write `(d8,Xn,PC)`
+  etc. as any permutation (example `(d8,PC,Xn)`).
+  I need to implement that if other assemblers
+  support that...
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; things that cause unrecoverable errors in fasmg                            ;;

@@ -56,7 +56,8 @@ include "m68k.inc"
     ; parse_operands @(pc,d5.w)
     ; parse_operands $10(pc,d5.w)
     ; parse_operands 4-2(pc,d0.w),a1
-    btst.b	d5,@(pc,d5.w)
+    ; btst.b	d5,@(pc,d5.w)
+    ori.b	#$FF,$7F(a2,d5.w)
 
     endif
 

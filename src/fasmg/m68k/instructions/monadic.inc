@@ -93,8 +93,9 @@ iterate <cc,  cc_bits>, \
         gt,     1110b, \
         le,     1111b
 
-        calminstruction s#cc.b? ea*
-                call m68k.parse_operand@op1, ea
+        calminstruction s#cc.b? operands&
+                call m68k.split_operands, operands
+                call m68k.parse_operand@op1, m68k.split_operands_result.op1
 
                 ; first byte
                 emit 1, 01010000b + cc_bits
@@ -125,25 +126,19 @@ end iterate ; <cc, cc_bits>
 ;     tst also supports (d,PC)  (d,PC,Xn) modes
 ; TODO: Restrict to valid addressing modes for the instructions.
 iterate <instr,  first_byte>, \
-        \ ; 
         negx,    01000000b, \
-        \ ; Clear
         clr,     01000010b, \
-        \ ; 
         neg,     01000100b, \
-        \ ; 
         not,     01000110b, \
-        \ ; 
         tst,     01001010b
     iterate <size,  size_bits>, \
             b,      00b, \
             w,      01b, \
             l,      10b
     
-            calminstruction instr.size? ea*
-                ; local tmp
-
-                call m68k.parse_operand@op1, ea
+            calminstruction instr.size? operands&
+                call m68k.split_operands, operands
+                call m68k.parse_operand@op1, m68k.split_operands_result.op1
 
                 emit 1, first_byte
                 emit 1, size_bits shl 6 + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
