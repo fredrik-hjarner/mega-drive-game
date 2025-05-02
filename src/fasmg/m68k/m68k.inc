@@ -150,6 +150,7 @@ include "instructions/monadic.inc"
 include "instructions/dyadic.inc"
 include "instructions/variadic.inc"
 include "instructions/move.inc"
+include "instructions/ori_andi_subi_addi_eori_cmpi.inc"
 
 include "instructions/aliases.inc"
 

@@ -1,9 +1,9 @@
 ; Taken from https://github.com/Clownacy/clownassembler/blob/master/tests/valid%20instructions.asm
 
 	ori.b	#$FF,ccr ; TODO: Have ccr test for ori.w ori.l which should fail.
-; 	ori	#$FF,ccr
+	ori	#$FF,ccr
 	ori.w	#$FFFF,sr ; TODO: Have sr test for ori.b ori.l which should fail
-; 	ori	#$FFFF,sr
+	ori	#$FFFF,sr
 	ori.b	#$FF,d5
 	ori.b	#$FF,(a2)
 	ori.b	#$FF,(a2)+
@@ -30,9 +30,9 @@
 	ori.l	#$FFFFFFFF,($FFFFFFFF).l
 
 	andi.b	#$FF,ccr ; TODO: Have ccr test for .w .l which should fail.
-; 	andi	#$FF,ccr
+	andi	#$FF,ccr
 	andi.w	#$FFFF,sr
-; 	andi	#$FFFF,sr
+	andi	#$FFFF,sr
 	andi.b	#$FF,d5
 	andi.b	#$FF,(a2)
 	andi.b	#$FF,(a2)+
@@ -109,9 +109,9 @@
 	addi.l	#$FFFFFFFF,($FFFFFFFF).l
 
 	eori.b	#$FF,ccr ; TODO: Have ccr test for .w .l which should fail.
-; 	eori	#$FF,ccr
+	eori	#$FF,ccr
 	eori.w	#$FFFF,sr
-; 	eori	#$FFFF,sr
+	eori	#$FFFF,sr
 	eori.b	#$FF,d5
 	eori.b	#$FF,(a2)
 	eori.b	#$FF,(a2)+

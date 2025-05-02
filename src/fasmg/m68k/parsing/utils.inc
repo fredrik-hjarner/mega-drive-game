@@ -146,10 +146,10 @@ calminstruction m68k.parse_pc_index operand*
         local tmp2 ; TODO: remove?
         local opstr
 
-        display 'parse_pc_index' bappend 10
+        ; display 'parse_pc_index' bappend 10
         arrange opstr, operand
         stringify opstr
-        display 'operand: ' bappend opstr bappend 10
+        ; display 'operand: ' bappend opstr bappend 10
 
         local d
         local _pc
@@ -165,7 +165,7 @@ calminstruction m68k.parse_pc_index operand*
 
         match d(_pc=,xn.s), operand
         jnope nope
-        display 'matched d(pc,xn.s)' bappend 10
+        ; display 'matched d(pc,xn.s)' bappend 10
 
         ; TODO: Actually it could be several tokens such as in `$123` (seems #$123 is not valid format)
         ; That's computable anyway i.e. d should be computable into a number.
@@ -181,21 +181,21 @@ calminstruction m68k.parse_pc_index operand*
     ; TODO: I could probably remove this check
         match tmp1 tmp2, _pc
         jyes nope
-        display 'pc is one token' bappend 10
+        ; display 'pc is one token' bappend 10
 
     ; validate_xn_is_one_token:
     ; TODO: I could probably remove this check
         match tmp1 tmp2, xn
         jyes nope
-        display 'xn is one token' bappend 10
+        ; display 'xn is one token' bappend 10
 
     ; validate_s_is_one_token:
     ; TODO: I could probably remove this check
         match tmp1 tmp2, s
         jyes nope
-        display 's is one token' bappend 10
+        ; display 's is one token' bappend 10
         stringify s
-        display "s: " bappend s bappend 10
+        ; display "s: " bappend s bappend 10
 
         check d eqtype 0 & _pc eq pc & (xn relativeto m68k.data_reg | xn relativeto m68k.address_reg) & (s = 'w' | s = 'l')
         jno nope
@@ -223,10 +223,10 @@ calminstruction m68k.parse_pc_index operand*
         compute m68k.parse_pc_index_result.xn,          0 scaleof xn
         compute m68k.parse_pc_index_result.d,           d
 
-        display opstr bappend ' matched d(pc,xn.s)' bappend 10
+        ; display opstr bappend ' matched d(pc,xn.s)' bappend 10
         exit
     nope:
-        display opstr bappend ' did NOT match d(pc,xn.s)' bappend 10
+        ; display opstr bappend ' did NOT match d(pc,xn.s)' bappend 10
 end calminstruction
 
 ;; PARSE_MEM_INDEX ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -269,10 +269,10 @@ calminstruction m68k.parse_mem_index operand*
         local tmp2 ; TODO: remove?
         local opstr
 
-        display 'parse_mem_index' bappend 10
+        ; display 'parse_mem_index' bappend 10
         arrange opstr, operand
         stringify opstr
-        display 'operand: ' bappend opstr bappend 10
+        ; display 'operand: ' bappend opstr bappend 10
 
         local d
         local an
@@ -289,7 +289,7 @@ calminstruction m68k.parse_mem_index operand*
 
         match d(an=,xn.s), operand
         jnope nope
-        display 'matched d(an,xn.s)' bappend 10
+        ; display 'matched d(an,xn.s)' bappend 10
 
         ; TODO: Actually it could be several tokens such as in `$123` (seems #$123 is not valid format)
         ; That's computable anyway i.e. d should be computable into a number.
@@ -305,21 +305,21 @@ calminstruction m68k.parse_mem_index operand*
     ; TODO: I could probably remove this check
         match tmp1 tmp2, an
         jyes nope
-        display 'an is one token' bappend 10
+        ; display 'an is one token' bappend 10
 
     ; validate_xn_is_one_token:
     ; TODO: I could probably remove this check
         match tmp1 tmp2, xn
         jyes nope
-        display 'xn is one token' bappend 10
+        ; display 'xn is one token' bappend 10
 
     ; validate_s_is_one_token:
     ; TODO: I could probably remove this check
         match tmp1 tmp2, s
         jyes nope
-        display 's is one token' bappend 10
+        ; display 's is one token' bappend 10
         stringify s
-        display "s: " bappend s bappend 10
+        ; display "s: " bappend s bappend 10
 
         check d eqtype 0 & an relativeto m68k.address_reg & (xn relativeto m68k.data_reg | xn relativeto m68k.address_reg) & (s = 'w' | s = 'l')
         jno nope
@@ -348,8 +348,8 @@ calminstruction m68k.parse_mem_index operand*
         compute m68k.parse_mem_index_result.xn,           0 scaleof xn
         compute m68k.parse_mem_index_result.d,            d
 
-        display opstr bappend ' matched d(an,xn.s)' bappend 10
+        ; display opstr bappend ' matched d(an,xn.s)' bappend 10
         exit
     nope:
-        display opstr bappend ' did NOT match d(an,xn.s)' bappend 10
+        ; display opstr bappend ' did NOT match d(an,xn.s)' bappend 10
 end calminstruction
