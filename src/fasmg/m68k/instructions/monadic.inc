@@ -50,8 +50,9 @@ iterate <instr, instr_word>, \
         pea.l,  0100100001000000b, \
         tas.b,  0100101011000000b
 
-        calminstruction instr? ea*
-            call m68k.parse_operand@op1, ea
+        calminstruction instr? operands&
+            call m68k.split_operands, operands
+            call m68k.parse_operand@op1, m68k.split_operands_result.op1
 
             ; first word
             ; bswap is needed because famg outputs in little-endian
@@ -349,10 +350,11 @@ iterate <instr,  second_byte>, \
         \ ; Jump Subroutine
         jsr,     10000000b
 
-        calminstruction instr? ea*
+        calminstruction instr? operands&
             local tmp
 
-            call m68k.parse_operand@op1, ea
+            call m68k.split_operands, operands
+            call m68k.parse_operand@op1, m68k.split_operands_result.op1
 
             emit 1, 01001110b
             emit 1, second_byte + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits

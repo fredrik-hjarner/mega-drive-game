@@ -184,7 +184,7 @@
 	btst	d5,($FFFFFFFF).l
 	btst	d5,#$55
 	btst	d5,@(pc)
-; 	btst	d5,@(pc,d5.w)
+	btst	d5,@(pc,d5.w)
 
 	btst.l	#0,d5 ; TODO: Need to try to shift with more values than #0.
 	btst.b	#0,(a2)
@@ -195,7 +195,7 @@
 	btst.b	#0,($FFFFFFFF).w
 	btst.b	#0,($FFFFFFFF).l
 	btst.b	#0,@(pc)
-; 	btst.b	#0,@(pc,d5.w)
+	btst.b	#0,@(pc,d5.w)
 
 	btst	#0,d5
 	btst	#0,(a2)
@@ -206,7 +206,7 @@
 	btst	#0,($FFFFFFFF).w
 	btst	#0,($FFFFFFFF).l
 	btst	#0,@(pc)
-; 	btst	#0,@(pc,d5.w)
+	btst	#0,@(pc,d5.w)
 
 	bchg.l	d2,d5
 	bchg.b	d5,(a2)
@@ -784,14 +784,14 @@
 	pea.l	($FFFFFFFF).w
 	pea.l	($FFFFFFFF).l
 	pea.l	@(pc)
-; 	pea.l	@(pc,d5.w)
+	pea.l	@(pc,d5.w)
 	pea	(a2)
 	pea	$7FFF(a2)
 ; 	pea	$7F(a2,d5.w)
 	pea	($FFFFFFFF).w
 	pea	($FFFFFFFF).l
 	pea	@(pc)
-; 	pea	@(pc,d5.w)
+	pea	@(pc,d5.w)
 
 	illegal
 
@@ -869,7 +869,7 @@
 	jsr	($FFFFFFFF).w
 	jsr	($FFFFFFFF).l
 	jsr	@(pc)
-; 	jsr	@(pc,d5.w)
+	jsr	@(pc,d5.w)
 
 	jmp	(a2)
 	jmp	$7FFF(a2)
@@ -877,7 +877,7 @@
 	jmp	($FFFFFFFF).w
 	jmp	($FFFFFFFF).l
 	jmp	@(pc)
-; 	jmp	@(pc,d5.w)
+	jmp	@(pc,d5.w)
 
 	movem.w	d5-a7,(a2)
 	movem.w	d5-a7,-(a2)
@@ -892,7 +892,7 @@
 	movem.w	($FFFFFFFF).w,d5-a7
 	movem.w	($FFFFFFFF).l,d5-a7
 	movem.w	@(pc),d5-a7
-; 	movem.w	@(pc,d5.w),d5-a7
+	movem.w	@(pc,d5.w),d5-a7
 	movem.l	d5-a7,(a2)
 	movem.l	d5-a7,-(a2)
 	movem.l	d5-a7,$7FFF(a2)
@@ -906,7 +906,7 @@
 	movem.l	($FFFFFFFF).w,d5-a7
 	movem.l	($FFFFFFFF).l,d5-a7
 	movem.l	@(pc),d5-a7
-; 	movem.l	@(pc,d5.w),d5-a7
+	movem.l	@(pc,d5.w),d5-a7
 
 ; I added few move movem tests!
 
@@ -925,14 +925,14 @@
 	lea.l	($FFFFFFFF).w,a2
 	lea.l	($FFFFFFFF).l,a2
 	lea.l	@(pc),a2
-; 	lea.l	@(pc,d5.w),a2
+	lea.l	@(pc,d5.w),a2
 	lea	(a2),a2
 	lea	$7FFF(a2),a2
 ; 	lea	$7F(a2,d5.w),a2
 	lea	($FFFFFFFF).w,a2
 	lea	($FFFFFFFF).l,a2
 	lea	@(pc),a2
-; 	lea	@(pc,d5.w),a2
+	lea	@(pc,d5.w),a2
 
 	chk.w	d2,d5
 	chk.w	(a2),d5
@@ -944,7 +944,7 @@
 	chk.w	($FFFFFFFF).l,d5
 	chk.w	#$FFFF,d5
 	chk.w	@(pc),d5; TODO: I need to test other values than @ since @ is one token which makes my current tests succeed, but for several tokens it will fail. A `parse_immediate` util would help.
-; 	chk.w	@(pc,d5.w),d5 ; must test this with an too: @(pc,a5.w)
+	chk.w	@(pc,d5.w),d5 ; must test this with an too: @(pc,a5.w)
 	chk	d2,d5
 	chk	(a2),d5
 	chk	(a2)+,d5
@@ -955,7 +955,7 @@
 	chk	($FFFFFFFF).l,d5
 	chk	#$FFFF,d5
 	chk	@(pc),d5
-; 	chk	@(pc,d5.w),d5
+	chk	@(pc,d5.w),d5
 
 	addq.b	#1,d5
 	addq.b	#1,(a2)
@@ -1406,7 +1406,7 @@
 	divu.w	($FFFFFFFF).l,d5
 	divu.w	#$FFFF,d5
 	divu.w	@(pc),d5
-; 	divu.w	@(pc,d5.w),d5
+	divu.w	@(pc,d5.w),d5
 	divu	d2,d5
 	divu	(a2),d5
 	divu	(a2)+,d5
@@ -1417,7 +1417,7 @@
 	divu	($FFFFFFFF).l,d5
 	divu	#$FFFF,d5
 	divu	@(pc),d5
-; 	divu	@(pc,d5.w),d5
+	divu	@(pc,d5.w),d5
 
 	divs.w	d2,d5
 	divs.w	(a2),d5
@@ -1429,7 +1429,7 @@
 	divs.w	($FFFFFFFF).l,d5
 	divs.w	#$FFFF,d5
 	divs.w	@(pc),d5
-; 	divs.w	@(pc,d5.w),d5
+	divs.w	@(pc,d5.w),d5
 	divs	d2,d5
 	divs	(a2),d5
 	divs	(a2)+,d5
@@ -1440,7 +1440,7 @@
 	divs	($FFFFFFFF).l,d5
 	divs	#$FFFF,d5
 	divs	@(pc),d5
-; 	divs	@(pc,d5.w),d5
+	divs	@(pc,d5.w),d5
 
 	sbcd.b	d2,d5
 	sbcd.b	-(a2),-(a2)
@@ -1456,7 +1456,7 @@
 	or.b	($FFFFFFFF).w,d5
 	or.b	($FFFFFFFF).l,d5
 	or.b	@(pc),d5
-; 	or.b	@(pc,d5.w),d5
+	or.b	@(pc,d5.w),d5
 	or.b	d5,(a2)
 	or.b	d5,(a2)+
 	or.b	d5,-(a2)
@@ -1473,7 +1473,7 @@
 	or.w	($FFFFFFFF).w,d5
 	or.w	($FFFFFFFF).l,d5
 	or.w	@(pc),d5
-; 	or.w	@(pc,d5.w),d5
+	or.w	@(pc,d5.w),d5
 	or.w	d5,(a2)
 	or.w	d5,(a2)+
 	or.w	d5,-(a2)
@@ -1490,7 +1490,7 @@
 	or.l	($FFFFFFFF).w,d5
 	or.l	($FFFFFFFF).l,d5
 	or.l	@(pc),d5
-; 	or.l	@(pc,d5.w),d5
+	or.l	@(pc,d5.w),d5
 	or.l	d5,(a2)
 	or.l	d5,(a2)+
 	or.l	d5,-(a2)
@@ -1508,7 +1508,7 @@
 	sub.b	($FFFFFFFF).w,d5
 	sub.b	($FFFFFFFF).l,d5
 	sub.b	@(pc),d5
-; 	sub.b	@(pc,d5.w),d5
+	sub.b	@(pc,d5.w),d5
 	sub.b	d5,(a2)
 	sub.b	d5,(a2)+
 	sub.b	d5,-(a2)
@@ -1525,7 +1525,7 @@
 	sub.w	($FFFFFFFF).w,d5
 	sub.w	($FFFFFFFF).l,d5
 	sub.w	@(pc),d5
-; 	sub.w	@(pc,d5.w),d5
+	sub.w	@(pc,d5.w),d5
 	sub.w	d5,(a2)
 	sub.w	d5,(a2)+
 	sub.w	d5,-(a2)
@@ -1542,7 +1542,7 @@
 	sub.l	($FFFFFFFF).w,d5
 	sub.l	($FFFFFFFF).l,d5
 	sub.l	@(pc),d5
-; 	sub.l	@(pc,d5.w),d5
+	sub.l	@(pc,d5.w),d5
 	sub.l	d5,(a2)
 	sub.l	d5,(a2)+
 	sub.l	d5,-(a2)

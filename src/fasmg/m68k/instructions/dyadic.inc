@@ -137,9 +137,10 @@ end calminstruction
 
 ; Syntax:
 ;     chk.w <ea>,dn
-calminstruction chk.w? ea*, dn*
-    call m68k.parse_operand@op1, ea
-    call m68k.parse_operand@op2, dn
+calminstruction chk.w? operands&
+    call m68k.split_operands, operands
+    call m68k.parse_operand@op1, m68k.split_operands_result.op1
+    call m68k.parse_operand@op2, m68k.split_operands_result.op2
 
     ; first byte
     emit 1, 01000001b + @op2.ea_reg_bits shl 1
@@ -336,12 +337,13 @@ iterate <instr,  first_byte>, \
         mulu,    11000000b, \
         muls,    11000001b
 
-        calminstruction instr.w? ea*, dn*
-            call m68k.parse_operand@op1, ea
-            call m68k.parse_operand@op2, dn
+        calminstruction instr.w? operands&
+            call m68k.split_operands, operands
+            call m68k.parse_operand@op1, m68k.split_operands_result.op1
+            call m68k.parse_operand@op2, m68k.split_operands_result.op2
 
             ; first byte
-            emit 1, first_byte + (0 scaleof dn) shl 1
+            emit 1, first_byte + @op2.ea_reg_bits shl 1
 
             ; second byte
             emit 1, 11000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
@@ -442,7 +444,7 @@ iterate <size,  size_bits>, \
         ; Syntax:
         ;     movem.[wl] <ea>,<register list>
         ;     movem.[wl] <register list>,<ea>
-        calminstruction movem.size? op1*, op2*
+        calminstruction movem.size? operands&
                     ; display 10 bappend 'movem:' bappend 10
 
                     local direction
@@ -458,15 +460,16 @@ iterate <size,  size_bits>, \
                     ; compute direction, 0
                     ; compute bit_mask, 0
 
-                    call m68k.parse_reg_list@reg_list1, op1
-                    call m68k.parse_reg_list@reg_list2, op2
+                    call m68k.split_operands, operands
+                    call m68k.parse_reg_list@reg_list1, m68k.split_operands_result.op1
+                    call m68k.parse_reg_list@reg_list2, m68k.split_operands_result.op2
 
 
             ; Figure out direction
                     check @reg_list1.is_reg_list = 1
                     jyes reglist_to_ea
             ; ea_to_reglist:
-                    call m68k.parse_operand@op1, op1
+                    call m68k.parse_operand@op1, m68k.split_operands_result.op1
                     compute direction, 1
                     ; TODO: Instead of doing all these twice for the 2 cases
                     ;       can I not `arrange ea, @op1 or something??
@@ -483,7 +486,7 @@ iterate <size,  size_bits>, \
                 skip_reverse1: ; TODO: just jump to emit_bytes instead?
                     jump emit_bytes
             reglist_to_ea:
-                    call m68k.parse_operand@op2, op2
+                    call m68k.parse_operand@op2, m68k.split_operands_result.op2
                     compute direction, 0
                     compute ea_mode_bits, @op2.ea_mode_bits
                     compute ea_reg_bits, @op2.ea_reg_bits
@@ -535,14 +538,15 @@ iterate <instr,  first_byte>, \
             w,      01b, \
             l,      10b
 
-            calminstruction instr.size? op1*, op2*
+            calminstruction instr.size? operands&
                     local _size
 
                     ; TODO: I am not sure why I have to do this to get the call to work.
                     arrange _size, =size
 
-                    call m68k.parse_operand@op1, op1, _size
-                    call m68k.parse_operand@op2, op2, _size
+                    call m68k.split_operands, operands
+                    call m68k.parse_operand@op1, m68k.split_operands_result.op1, _size
+                    call m68k.parse_operand@op2, m68k.split_operands_result.op2, _size
 
                     ; TODO: This is a sloppy check, do a more complete check in the
                     ; future.
@@ -807,11 +811,10 @@ iterate <size,  size_bits>, \
 end iterate ; <size, size_bits>
 
 ; TODO: Comment
-calminstruction lea.l? ea*, an*
-    ; display 10 bappend 'lea:' bappend 10
-
-    call m68k.parse_operand@op1, ea
-    call m68k.parse_operand@op2, an
+calminstruction lea.l? operands&
+    call m68k.split_operands, operands
+    call m68k.parse_operand@op1, m68k.split_operands_result.op1
+    call m68k.parse_operand@op2, m68k.split_operands_result.op2
 
     ; first byte
     emit 1, 01000001b + @op2.ea_reg_bits shl 1
