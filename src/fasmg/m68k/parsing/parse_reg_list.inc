@@ -12,7 +12,6 @@
 ; for example @reg_list1.type
 ; Use parse_reg_list by suffixing it will either @reg_list1 or @reg_list2 like this:
 ;     parse_reg_list@reg_list1 some_operand_to_parse
-; This is just for convenience.
 define @reg_list1 @reg_list1
 define @reg_list2 @reg_list2
 
@@ -24,7 +23,6 @@ iterate reg_list, @reg_list1,@reg_list2
         define single_reg_found ; TODO: Comment
         define single_reg_mask_word ; TODO: Comment
         define single_reg_mask_word_reverse ; TODO: Comment
-        define single_reg_type ; TODO: Comment
 
         ; populated by parse_reg_list
         define is_reg_list ; TODO: Comment
@@ -42,8 +40,6 @@ iterate reg_list, @reg_list1,@reg_list2
         define reg_groups_mask_word_reverse ; TODO: Comment
 
         ; Supposed to be call:ed.
-        ; TODO: Maybe this should not be called with @reg_list1/@reg_list2 but
-        ;       @reg_list1/@reg_list2?
         ;
         ; Side-effects:
         ;     is_reg_list
@@ -179,63 +175,21 @@ iterate reg_list, @reg_list1,@reg_list2
                 err "duplicated registers in register list"
         end calminstruction
 
-        ; TODO: Comment
-        ; For use with parse_single_register.
-        ; I suppose these need to be reverse somehow later.
-        ; TODO: Or maybe parse_single_register should not return this
-        ;       but rather a higher up function should take care of this stuff
-        ;       a function that knows if forward or reversed mask should be used
-        ; TODO: These kinda stuff could also be made with `iterate`...
+
+        ; movem uses a 16-bit word to store the regs it's moving and each bit
+        ; represents a register.
+        ; The `single_reg_mask_words` namespace contains the mask bit for each
+        ; register.
+        ; For some odd reason for the specific case of `-(an)` addressing mode
+        ; the register mask must be encoded in reverse, so that's why I have
+        ; two set of masks here.
         define single_reg_mask_words
-        namespace single_reg_mask_words
-            define d0 1 shl 0
-            define d1 1 shl 1 
-            define d2 1 shl 2
-            define d3 1 shl 3
-            define d4 1 shl 4
-            define d5 1 shl 5
-            define d6 1 shl 6
-            define d7 1 shl 7
-            define a0 1 shl (0 + 8)
-            define a1 1 shl (1 + 8)
-            define a2 1 shl (2 + 8)
-            define a3 1 shl (3 + 8)
-            define a4 1 shl (4 + 8)
-            define a5 1 shl (5 + 8)
-            define a6 1 shl (6 + 8)
-            define a7 1 shl (7 + 8)
-        end namespace
-
-        ; Same as above but reversed
-        ; TODO: These kinda stuff could also be made with `iterate`...
         define single_reg_mask_words_reverse
-        namespace single_reg_mask_words_reverse
-            define a7 1 shl 0
-            define a6 1 shl 1 
-            define a5 1 shl 2
-            define a4 1 shl 3
-            define a3 1 shl 4
-            define a2 1 shl 5
-            define a1 1 shl 6
-            define a0 1 shl 7
-            define d7 1 shl (0 + 8)
-            define d6 1 shl (1 + 8)
-            define d5 1 shl (2 + 8)
-            define d4 1 shl (3 + 8)
-            define d3 1 shl (4 + 8)
-            define d2 1 shl (5 + 8)
-            define d1 1 shl (6 + 8)
-            define d0 1 shl (7 + 8)
-        end namespace
 
-        ; TODO: Double-check if I am even using `single_reg_types`
-        define single_reg_types
-        namespace single_reg_types
-            iterate i, 0,1,2,3,4,5,6,7
-                define d#i 'dreg'
-                define a#i 'areg'
-            end iterate
-        end namespace
+        iterate reg, d0,d1,d2,d3,d4,d5,d6,d7,a0,a1,a2,a3,a4,a5,a6,a7
+            define single_reg_mask_words.reg         1 shl (%-1)
+            define single_reg_mask_words_reverse.reg 1 shl (%%-%)
+        end iterate
 
 ;; parse_single_register ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -256,9 +210,6 @@ iterate reg_list, @reg_list1,@reg_list2
         ;     @reg_list1.single_reg_mask_word_reverse
         ;         single_reg_mask_word but reversed
         ;
-        ;     @reg_list1.single_reg_type
-        ;         'dreg' - data register
-        ;         'areg' - address register
         calminstruction m68k.parse_single_register#reg_list operand*
                 local tmp1
                 local tmp2
@@ -267,7 +218,6 @@ iterate reg_list, @reg_list1,@reg_list2
                 compute single_reg_found, 0
                 compute single_reg_mask_word, 0
                 compute single_reg_mask_word_reverse, 0
-                compute single_reg_type, 'unknown'
 
             ; Validate is not empty
                 match , operand
@@ -282,11 +232,6 @@ iterate reg_list, @reg_list1,@reg_list2
                 check operand relativeto m68k.data_reg | operand relativeto m68k.address_reg
                 jno done
                 ; display '== was a single register ==' bappend 10
-
-                ; single_reg_type
-                arrange single_reg_type, operand
-                transform single_reg_type, single_reg_types
-                compute single_reg_type, single_reg_type ; TODO: Is this needed?
 
                 ; mask
                 arrange single_reg_mask_word, operand
@@ -309,9 +254,6 @@ iterate reg_list, @reg_list1,@reg_list2
                 ; arrange tmp1, single_reg_found
                 ; stringify tmp1
                 ; display 'single_reg_found:             ' bappend tmp1 bappend 10
-
-                ; ; single_reg_type
-                ; display 'single_reg_type:              ' bappend single_reg_type bappend 10
 
                 ; ; single_reg_mask_word
                 ; arrange tmp1, single_reg_mask_word

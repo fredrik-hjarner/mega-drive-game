@@ -1,4 +1,4 @@
-; even exists in m68k assemblers it seems so I need it kinda.
+; `even` directive is common in m68k assemblers.
 macro even
     align 2
 end macro
@@ -10,6 +10,8 @@ macro cnop offset,alignment
     align alignment | offset
 end macro
 
+; Adds support for operators commonly used in m68k assemblers.
+; For example << is shl in fasmg. 
 ; Example:
 ;     input:  (((l1)  &  $3FFF) <<  16) + (((l1)  &  $C000) >>  14)
 ;     output: (((l1) and $3FFF) shl 16) + (((l1) and $C000) shr 14)

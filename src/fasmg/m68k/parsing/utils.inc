@@ -9,28 +9,26 @@ calminstruction m68k.is_one_token? source_text*
     ; check_zero_tokens:
         match ,source_text
         jno check_more_than_one
-        ; display "zero tokens" bappend 10 bappend 10
         compute xxcalm.ret, 0
         exit
     check_more_than_one:
         match a b,source_text
         jno is_one_token
-        ; display "more than one tokens" bappend 10 bappend 10
         compute xxcalm.ret, 0
         exit
     is_one_token:
-        ; display "one token" bappend 10 bappend 10
         compute xxcalm.ret, 1
 end calminstruction
 
 ; Some temporary vars where return values are stored
 ; TODO: Think if there is a better cleaner way of doing this.
+;       These should probably be removed.
 namespace m68k
     define ret_imm
     define ret_reg
 end namespace
 
-; Supposed to be callable.
+; Supposed to be called.
 ; Side-effects:
 ;     m68k.ret_imm
 ;     m68k.ret_reg
@@ -117,13 +115,16 @@ namespace m68k.parse_pc_index_result
     ;     0 if the register is a data register
     ;     1 if the register is an address register
     define m
+
     ; xn is the number of the register
     ; 000b - 111b i.e. 0 to 7
     define xn
+
     ; s
     ;     0 for word
     ;     1 for long
     define s
+
     ; Note: What is saved in d is actually not the displacement relative to the
     ; program counter but is the computed value of what the user put in to the
     ; operand (at the d location). The displacement relative to pc can't be
@@ -138,8 +139,8 @@ namespace m68k.parse_pc_index_result
     define d
 end namespace
 
-; TODO: Update and corret comment.
-; Supposed to be callable.
+; TODO: Update and correct comment.
+; Supposed to be called.
 calminstruction m68k.parse_pc_index operand*
         local tmp
         local tmp1 ; TODO: remove?
@@ -164,7 +165,7 @@ calminstruction m68k.parse_pc_index operand*
         compute m68k.parse_pc_index_result.d,           0
 
         match d(_pc=,xn.s), operand
-        jnope nope
+        jno nope
         ; display 'matched d(pc,xn.s)' bappend 10
 
         ; TODO: Actually it could be several tokens such as in `$123` (seems #$123 is not valid format)
@@ -240,13 +241,16 @@ namespace m68k.parse_mem_index_result
     ;     0 if the register is a data register
     ;     1 if the register is an address register
     define m
+
     ; xn is the number of the register
     ; 000b - 111b i.e. 0 to 7
     define xn
+
     ; s
     ;     0 for word
     ;     1 for long
     define s
+
     ; Note: What is saved in d is actually not the displacement relative to the
     ; program counter but is the computed value of what the user put in to the
     ; operand (at the d location). The displacement relative to pc can't be
@@ -288,7 +292,7 @@ calminstruction m68k.parse_mem_index operand*
         compute m68k.parse_mem_index_result.d,           0
 
         match d(an=,xn.s), operand
-        jnope nope
+        jno nope
         ; display 'matched d(an,xn.s)' bappend 10
 
         ; TODO: Actually it could be several tokens such as in `$123` (seems #$123 is not valid format)
@@ -321,7 +325,9 @@ calminstruction m68k.parse_mem_index operand*
         stringify s
         ; display "s: " bappend s bappend 10
 
-        check d eqtype 0 & an relativeto m68k.address_reg & (xn relativeto m68k.data_reg | xn relativeto m68k.address_reg) & (s = 'w' | s = 'l')
+        check d eqtype 0 & an relativeto m68k.address_reg & \
+              (xn relativeto m68k.data_reg | xn relativeto m68k.address_reg) & \
+              (s = 'w' | s = 'l')
         jno nope
         ; compute xxcalm.ret, 1
         ; ; display 10 bappend PC DISPLACEMENT" bappend 10 bappend 10

@@ -18,9 +18,6 @@
 ;     eori.b #<data>,ccr
 ;     eori.w #<data>,sr
 ; TODO: Double check addressing modes for each instruction.
-; TODO: ori, andi and eori have "to sr/ccr" variants.
-;       Dunno, I could check if they are defined and then call the
-;       `ori_to_ccr.b` et cetera.
 ; TODO: Should validate that imm.l, imm.w and imm.b are within bounds.
 ; TODO: Explain ccr_variant and sr_variant and that 0 mean instr has no such.
 iterate <instr,  instr_word,         ccr_variant,        sr_variant>, \
@@ -52,12 +49,10 @@ iterate <instr,  instr_word,         ccr_variant,        sr_variant>, \
                         jno check_sr
 
                         ; first word
-                        ; bswap is needed because fasmg outputs in little-endian
-                        emit 2, ccr_variant bswap 2
+                        emit 2, ccr_variant
 
                         ; imm
-                        ; bswap is needed because fasmg outputs in little-endian
-                        emit 2, @op1.imm bswap 2
+                        emit 2, @op1.imm
                         exit
                 ;; SR CASE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                 check_sr:
@@ -66,12 +61,10 @@ iterate <instr,  instr_word,         ccr_variant,        sr_variant>, \
                         jno normal_case
 
                         ; first word
-                        ; bswap is needed because fasmg outputs in little-endian
-                        emit 2, sr_variant bswap 2
+                        emit 2, sr_variant
 
                         ; imm
-                        ; bswap is needed because fasmg outputs in little-endian
-                        emit 2, @op1.imm bswap 2
+                        emit 2, @op1.imm
                         exit
                 normal_case:
                         ; TODO: Assert that imm is within bounds.
@@ -79,12 +72,10 @@ iterate <instr,  instr_word,         ccr_variant,        sr_variant>, \
                         ; assert_max imm, 8
 
                         ; first word
-                        ; bswap is needed because famg outputs in little-endian
-                        emit 2, (instr_word + size_bits shl 6 + @op2.ea_mode_bits shl 3 + @op2.ea_reg_bits) bswap 2
+                        emit 2, instr_word + size_bits shl 6 + @op2.ea_mode_bits shl 3 + @op2.ea_reg_bits
                         
                         ; immediate bytes
-                        ; bswap is needed because famg outputs in little-endian
-                        emit imm_bytes, @op1.imm bswap imm_bytes
+                        emit imm_bytes, @op1.imm
 
                         ; extension words
                         call emit_ext_words, @op2.ext_bytes, @op2.ext_bytes_bits

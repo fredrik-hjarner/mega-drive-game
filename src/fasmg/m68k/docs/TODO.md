@@ -1,28 +1,9 @@
 * Implement `assert_word_aligned` and use it in every instruction.
-* Generate tests with famg macros. Output text with overridden emit/assemble.
-  Then run vasm, clownassembler and famsg on that to be able to diff output.
-  Also check what vams and clownassembler accept and does not accept.
 * Make macro that "marks" all labels (label stuff interceptor thingie).
   I also need to mark labels create with the `label` instruction.
 * I've seen d0.b/d0.w/d0.l used in some code but how does that work?
   I probaly should add support for that if it makes sense.
-* Remove my exporting of instructions macros to preprocess.asm,
-  because I will no longer need it, because I have a much better way to test now
-  Remove the different forms of _assemble and _emit too.
-* Hm could I override `emit` to output in big-endian?? That should be possible
-  right? That would make the code less messy and I could skip using `bswap`.
-* ~~`<<` creates some problems... since fasmg uses `shl` instead.~~
-  ~~I wonder if I could fix that with `match`....~~
-  ~~    ```~~
-  ~~        match a? =<=< b?, maybe_number~~
-  ~~        jno skip~~
-  ~~        arrange maybe_number, a =shl b~~
-  ~~    skip:~~
-  ~~    ```~~
-  ~~Same problem with other operators such as `|` as fasmg uses `or` instead.~~
 * Make sure all instructions are case-insensitive.
-* Add alias macros for instructions that only have one size
-  such as lea for lea.l
 * Hm, could I do wrappers for all instructions that log the name and the
   parameters, then executes the instruction, then logs @op1/@op2 values??
   because that's be neat so I can easily disable/enable logging.
@@ -37,17 +18,11 @@
   data_reg and address_reg elements, or actually if I can have both.
 * If `$` is part on an expression then that expression MUST be `compute`:ed
       before any `emit` is done since otherwise it will change the value of `$`!
-      This particular problem probably needs a well-thought out solution.
-      You can see some of my primitive fixes by searching for `label_val`.
-      It would be better if it came "pre-computed" from parse_operand though.
+      You can see some of my fix by searching for `pc_index` and
+      `pc_displacement`.
 * I could probably have a `iterate <size, size_bytes>` and have bcc, bra and bsr
       in it to save a bit of space/code duplication (also .s alias has to be
       move into aliases.inc file for that to work smoothly).
-* An idea I could have `parse_operand[@ea1|@ea2|dn1|dn2|an1|an2]`
-      then I could have `reset@ea1` etc to reset vals to defaults
-      then I could just emit <ea1> and <ea2> extension bits with one small macro
-      or something
-      ... though I don't know that may just be cumbersome...
 * Maybe I should have branching instruction have .s as default and .b as the
       alias instead, dunno. Also I should move the alias into compat directory
       maybe?
@@ -82,6 +57,12 @@
   chk.w	@(pc,d5.w),d5 ; must test this with an too: @(pc,a5.w)
   cmpm.b	(a2)+,(a1)+ ; TODO: More test of cmpm
   ror.w	(a2) ; TODO: What happens if you do ror.b (a2) or ror.l (a2) ?
+* It is extra important to validate all the instructions that have "i variants"
+      such as cmp -> cmpi et cetera. Currently cmp is allowed to take "imm"
+      which will be very confusing for the user, so I need to stop that
+      and perhaps examine what happens when you put an imm into the cmp
+      instruction if it is totally invalid or just sub-optimal because 
+      the manual says "imm" is allowed actually!!!
 * TODO: Check the real instruction reference instead since it is more reliable:
   https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf
   https://web.njit.edu/~rosensta/classes/architecture/252software/code.pdf
@@ -98,4 +79,13 @@
 dividing an expression that contains an element, right?
 
 ---
+
+`arrange op1, m68k.split_operands_result.op1`
+It does not work since it will try to resolve `m68k` `split` tokens separately.
+That's really not an unrecoverable error, it's just a user error so to speak.
+
+---
+
+
+
 

@@ -3,7 +3,7 @@ export type OperandType =
     | "dn" | "an" | "(an)" | "(an)+" | "-(an)" | "d(an)" | "d(an,ix)" 
     | "abs.w" | "abs.l" | "d(pc)" | "d(pc,ix)" | "imm" | "imm3" | "imm4" 
     | "imm8" | "imm8s" | "imm16" | "imm16s" | "label" | "register_list" | "ccr"
-    | "sr" | "usp";
+    | "sr" | "usp" | "dc.b" | "dc.w" | "dc.l";
 
 // "" means without size suffix.
 export type OperandSize = "b" | "w" | "l" | "s" | "";
@@ -22,6 +22,27 @@ export type Group = {
 export type InstructionSet = Group[];
 
 export const data: InstructionSet = [
+  // Data declaration instructions
+  {
+    instructions: ["dc"],
+    variants: [
+      {
+        sizes: ["b"],
+        sourceOperands: [],
+        destOperands: ["dc.b"]
+      },
+      {
+        sizes: ["w"],
+        sourceOperands: [],
+        destOperands: ["dc.w"]
+      },
+      {
+        sizes: ["l"],
+        sourceOperands: [],
+        destOperands: ["dc.l"]
+      }
+    ]
+  },
   // Immediate to CCR/SR instructions group
   {
     instructions: ["ori", "andi", "eori"],

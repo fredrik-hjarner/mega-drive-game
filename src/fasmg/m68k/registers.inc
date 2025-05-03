@@ -31,9 +31,10 @@ element ccr
 ; TODO: Comment
 element usp
 
-; TODO: pc_displacement and pc_index are not really registers, so maybe more
+; TODO: pc_displacement and pc_index are not really registers, so maybe move
 ;       them?
-; TODO: Comment
+; The `pc_displacement` is added to values when the d(pc) addressing mode is
+; used.
 element pc_displacement
-; TODO: Comment
+; The `pc_index` is added to values when the d(pc,xn) addressing mode is used.
 element pc_index

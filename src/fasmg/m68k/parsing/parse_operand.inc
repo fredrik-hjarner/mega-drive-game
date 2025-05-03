@@ -6,25 +6,26 @@
 ; is really. I was needed to set the `ext_bytes` to the correct value when the
 ; operande is an immediate.
 define m68k.instr_size_to_imm_size
-define m68k.instr_size_to_imm_size.b 2
-define m68k.instr_size_to_imm_size.w 2
-define m68k.instr_size_to_imm_size.l 4
-; TODO: This looks better but I think the eventual error message will be worse.
-; m68k.instr_size_to_imm_size.b := 2
-; m68k.instr_size_to_imm_size.w := 2
-; m68k.instr_size_to_imm_size.l := 4
+namespace m68k.instr_size_to_imm_size
+    define b 2
+    define w 2
+    define l 4
+end namespace
 
 ; Define variable/namespace where parse_operand will store its results,
 ; for example @op1.type
 ; Use parse_operand by suffixing it will either @op1 or @op2 like this:
 ;     parse_operand@op1 some_operand_to_parse
-; This is just for convenience.
 define @op1 @op1
 define @op2 @op2
 
 iterate op, @op1,@op2
     namespace op
         ;; Define values in the @op1 and @op2 namespaces. ;;;;;;;;;;;;;;;;;;;;;;
+
+        ; TODO: I really ought to make it is a bit nicer for the user get info
+        ;       about the operands, so go through this code again and see if
+        ;       variables needs to be added or change names.
 
         ; TODO: use these instead:
         ;     Dn  An  (An)  (An)+  ‑(An)  (d,An)  (d,An,Xi)  ABS.W  ABS.L  (d,PC)  (d,PC,Xn)  imm
@@ -86,17 +87,13 @@ iterate op, @op1,@op2
         ;     'l'               (absolute long addressing)
         ; define abs_size ; TODO I propbably don't need this?
 
-        ; TODO: Think about this...
-        ; define reg_bits
-
         ; TODO: Probably change name to `parse_effective_address`,
         ; but I am not sure that's a good idea or not because maybe this
         ; could be used for dn, an etc too.
         ;
         ; The `instr_size` argument is needed to set `ext_bytes` to the correct
-        ; value for immediate values (when thne official syntax specifies <ea>).
+        ; value for immediate values (when the official syntax specifies <ea>).
         calminstruction m68k.parse_operand#op operand*, instr_size
-                    ; locals
                     local tmp
                     local opstr
                     local maybe_number
@@ -123,9 +120,7 @@ iterate op, @op1,@op2
                     jno check_if_minus_an
                     compute type, '(an)'
                     compute ea_mode_bits, 010b
-                    compute ea_reg_bits, an - m68k.address_reg
-                    ; compute ext_bytes, 0
-                    ; compute ext_bytes_bits, 0
+                    compute ea_reg_bits, 0 scaleof an
                     jump done
             ; -(an) ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             check_if_minus_an:
@@ -135,9 +130,7 @@ iterate op, @op1,@op2
                     jno check_if_plus_an
                     compute type, '-(an)'
                     compute ea_mode_bits, 100b
-                    compute ea_reg_bits, an - m68k.address_reg
-                    ; compute ext_bytes, 0
-                    ; compute ext_bytes_bits, 0
+                    compute ea_reg_bits, 0 scaleof an
                     jump done
             ; (an)+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             check_if_plus_an:
@@ -147,9 +140,7 @@ iterate op, @op1,@op2
                     jno check_if_immediate
                     compute type, '(an)+'
                     compute ea_mode_bits, 011b
-                    compute ea_reg_bits, an - m68k.address_reg
-                    ; compute ext_bytes, 0
-                    ; compute ext_bytes_bits, 0
+                    compute ea_reg_bits, 0 scaleof an
                     jump done
             ;; imm ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             ; TODO: Immediate can have either 1 or 2 extension words!
@@ -185,16 +176,16 @@ iterate op, @op1,@op2
                     compute ext_bytes_bits, imm
 
                     ; If instr_size is empty (optional argument) then ext_bytes
-                    ; will have it's default value 0, which is think might be
-                    ; good. The way fasmg works is  that `emit 0, n` throws
-                    ; an error when n is not 0, so in order words trying to
-                    ; output "immediate extension words" will only succeed
-                    ; if instr_size is not empty, I think that will work with
-                    ; how 68000 instructions tend to work...
+                    ; will have it's default value 0 (or 2 when imm), which is
+                    ; think might be good. The way fasmg works is  that
+                    ; `emit 0, n` throws an error when n is not 0, so in order
+                    ; words trying to output "immediate extension words" will
+                    ; only succeed if instr_size is not empty, I think that will
+                    ; work with how 68000 instructions tend to work...
                     match , instr_size
                     jyes empty_instr_size
-                    arrange tmp, =m68k.=instr_size_to_imm_size.instr_size
-                    transform tmp
+                    arrange tmp, instr_size
+                    transform tmp, m68k.instr_size_to_imm_size
                     ; stringify tmp
                     ; display tmp bappend 10 bappend 10 bappend 10
                     jyes skip_invalid_size_err
@@ -489,40 +480,19 @@ namespace m68k.split_operands_result
     define op2
 end namespace
 
+; Supposed to be called.
+; TODO: Maybe it's better to add @op1.tokens and @op2.tokens to hold the
+;       tokens of the operands?
 calminstruction m68k.split_operands? line&
-        local tmp
-
+        local op1, op2
         match op1 =, op2, line, ()
         jyes two_operands
     ; one_operand:
-        ; display 'parse_operands: one_operand' bappend 10
-
-        ; match op1, line, ()
-    
-        ; arrange tmp, op1
-        ; stringify tmp
-        ; display tmp bappend 10
-    
         call m68k.parse_operand@op1, line
-
         compute m68k.split_operands_result.num_operands, 1
         arrange m68k.split_operands_result.op1, line
-
         exit
     two_operands:
-        ; display 'parse_operands: two_operands' bappend 10
-
-        ; arrange tmp, op1
-        ; stringify tmp
-        ; display tmp bappend 10
-
-        ; arrange tmp, op2
-        ; stringify tmp
-        ; display tmp bappend 10
-        
-        ; call m68k.parse_operand@op1, op1
-        ; call m68k.parse_operand@op2, op2
-
         compute m68k.split_operands_result.num_operands, 2
         arrange m68k.split_operands_result.op1, op1
         arrange m68k.split_operands_result.op2, op2

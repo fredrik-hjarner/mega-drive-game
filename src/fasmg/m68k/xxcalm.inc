@@ -9,15 +9,12 @@ namespace xxcalm
     ; TODO: Override `jyes` and `jno` to look at this value if it is not -1
     ;       since -1 is the default "non-value" and what I reset it back to
     ;       when a `jyes`/`jno` check has been performed.
+    ; TODO: I should remove this.
     ret = -1
-
-    ; These are just convenience variables to hold tokens whose value you don't
-    ; care about (like /dev/null sort of).
-    define null_token1
-    define null_token2
 end namespace
 
 ; TODO: Comment
+; TODO: I should remove this.
 macro calminstruction?.jyup? label*
     ; TODO: Check for -1 here because that would indicate error.
     check xxcalm.ret = 1
@@ -26,6 +23,7 @@ macro calminstruction?.jyup? label*
 end macro
 
 ; TODO: Comment
+; TODO: I should remove this.
 macro calminstruction?.jnope? label*
     ; TODO: Check for -1 here because that would indicate error.
     check xxcalm.ret = 0
@@ -66,7 +64,13 @@ end calminstruction
 
 
 ; ARRange, STRingify
-; macro calminstruction?.arr_str? dest*, src*
-;     arrange dest, src
-;     stringify dest
-; end macro
+macro calminstruction?.arr_str? var*, val*
+    arrange var, val
+    stringify var
+end macro
+
+; ARRange, TRAnsform
+macro calminstruction?.arr_tra? var*, val*
+    arrange var, val
+    transform var
+end macro

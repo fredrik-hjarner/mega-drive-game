@@ -8,145 +8,84 @@
 
 ; Seems all of these only allow the immediate operande to be 1-8
 ; though it seems that 8 will be encoded as zero.
-; TODO: Inconsistent, I have instr and instr_bits on other places.
-iterate <instr_prefix,  instr>, \
+iterate <instr,  instr_bits>, \
         as,             00b, \
         ls,             01b, \
         rox,            10b, \
         ro,             11b
-    iterate <dir_suffix,  dir>, \
+    iterate <dir,  dir_bit>, \
             r,            0b, \
             l,            1b
-        iterate <size_suffix,  size>, \
+        iterate <size,  size_bits>, \
                 b,             00b, \
                 w,             01b, \
                 l,             10b
 
-            ; TODO: Comment
-            ; TODO: I think this one can only be .w
-            ;       Seems manual says if monadic then it shift a word.
-            ;       Double-check this. As it is I generate instructions for
-            ;       all sizes right now.
-            macro calminstruction?.instr_prefix#dir_suffix#_#size_suffix#_monadic? ea*
-                call m68k.parse_operand@op1, ea
-
-                ; first byte
-                emit 1, 11100000b + instr shl 1 + dir
-
-                ; second byte
-                emit 1, 11000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
-
-                ; <ea> extension words
-                call emit_ext_words, @op1.ext_bytes, @op1.ext_bytes_bits
-            end macro
-
-            ; Description:
-            ;     Shift the contents of a memory location by number of bits specified in
-            ;     the `rotation` operand.
-            ; Arguments:
-            ;     rotation:
-            ;         - either a data register
-            ;         - or an immediate value 000 - 111
-            ;     dn: The data register that gets shifted: d0 - d7
-            ; TODO:
-            ;     Remember there is also a monadic version of this instruction!!!
-            macro calminstruction?.instr_prefix#dir_suffix#_#size_suffix#_dyadic? op1*, dn*
-                    new @data_reg
-                    new @done_dyadic
-
-                    check op1 relativeto m68k.data_reg
-                    @ jyes @data_reg
-                ; immediate:
-                    instr_prefix#dir_suffix#_#size_suffix#_dyadic_imm op1, dn
-                    @ jump @done_dyadic
-                @ @data_reg:
-                    instr_prefix#dir_suffix#_#size_suffix#_dyadic_data_reg op1, dn
-                @ @done_dyadic:
-            end macro
-
-            ; Description:
-            ;     Shift the contents of a memory location by number of bits specified in
-            ;     the `rotation` operand.
-            ; Arguments:
-            ;     rotation:
-            ;         - either a data register
-            ;         - or an immediate value 000 - 111
-            ;     dn: The data register that gets shifted: d0 - d7
-            ; TODO:
-            ;     Remember there is also a monadic version of this instruction!!!
-            macro calminstruction?.instr_prefix#dir_suffix#_#size_suffix#_dyadic_data_reg? dn1*, dn2*
-                local tmp
-
+            ; Supposed to be called.
+            calminstruction instr#dir#size#_dyadic_data_reg? dn1*, dn2*
                 assert_data_reg dn1
                 assert_data_reg dn2
 
-                ; 0 1 2 3 4    5    6    7      8  9  10 11 12 13 14 15
-                ; 1 1 1 0 Rot1 Rot2 Rot3 D      S1 S2 M  0  0  Dn Dn Dn
-                ; D = 0 -> Right shift
-                ; D = 1 -> Left shift
-                ; S = Size (00 = Byte, 01 = Word, 10 = Long)
-                compute tmp, dn1 ; TODO: Is this compute needed?
-                ;                                                   Direction
-                emit 1, 11100000b + ((tmp - m68k.data_reg) shl 1) + dir
+                emit 1, 11100000b + (0 scaleof dn1) shl 1 + dir_bit
+                emit 1, size_bits shl 6 + 1 shl 5 + instr_bits shl 3 + \
+                        (0 scaleof dn2)
+            end calminstruction
 
-                ;            Size           Imm/Dreg    Instruction
-                compute tmp, (size shl 6) + (1 shl 5) + (instr shl 3) + (dn2 - m68k.data_reg)
-                emit 1, tmp
-            end macro
-
-            ; Description:
-            ;     Shift the contents of a memory location by number of bits specified in
-            ;     the `rotation` operand.
-            ; Arguments:
-            ;     rotation:
-            ;         - either a data register
-            ;         - or an immediate value 000 - 111
-            ;     dn: The data register that gets shifted: d0 - d7
-            ; TODO:
-            ;     Remember there is also a monadic version of this instruction!!!
-            macro calminstruction?.instr_prefix#dir_suffix#_#size_suffix#_dyadic_imm? imm*, dn*
-                    ; jno errz
-
+            ; Supposed to be called.
+            calminstruction instr#dir#size#_dyadic_imm? imm*, dn*
                     local tmp
 
                     assert_min imm, 1
                     assert_max imm, 8
                     assert_data_reg dn
 
-                    ; 0 1 2 3 4    5    6    7      8  9  10 11 12 13 14 15
-                    ; 1 1 1 0 Rot1 Rot2 Rot3 D      S1 S2 M  0  0  Dn Dn Dn
-                    ; D = 0 -> Right shift
-                    ; D = 1 -> Left shift
-                    ; S = Size (00 = Byte, 01 = Word, 10 = Long)
                     ; 8 is encoded as 0, I think mod with 8 takes care of that.
-                    compute tmp, imm mod 8 ; TODO: Is this compute needed?
-                    ;                                 Direction
-                    emit 1, 11100000b + (tmp shl 1) + dir
-
-                    ;            Size           Imm/Dreg    Instruction
-                    compute tmp, (size shl 6) + (0 shl 5) + (instr shl 3) + (dn - m68k.data_reg)
-                    emit 1, tmp
-                ;     jump ddd
-                ; errz:
-                ;     err "Error: blow up!!"
-                ; ddd:
-            end macro
+                    compute tmp, imm mod 8
+                    emit 1, 11100000b + (tmp shl 1) + dir_bit
+                    emit 1, size_bits shl 6 + instr_bits shl 3 + (0 scaleof dn)
+            end calminstruction
 
             ; Description:
             ;     Arithmetic Shift Left.
             ;     See the different variants for more documentation.
-            calminstruction instr_prefix#dir_suffix#.#size_suffix? operands&
-                    call m68k.split_operands, operands
-                    check m68k.split_operands_result.num_operands = 1
-                    jyes one_operand
+            ; Arguments (monadic):
+            ;     <ea>:
+            ;         shift this location left by 1 bit
+            ; Arguments (dyadic):
+            ;     rotation:
+            ;         - either a data register
+            ;         - or an immediate value 000 - 111
+            ;     dn: The data register that gets shifted: d0 - d7
+            calminstruction instr#dir#.#size? operands&
+                        local op1, op2
+
+                        call m68k.split_operands, operands
+                        arr_tra op1, =m68k.=split_operands_result.=op1
+                        arr_tra op2, =m68k.=split_operands_result.=op2
+                        check m68k.split_operands_result.num_operands = 1
+                        jyes one_operand
                 ; two_operands:
-                    instr_prefix#dir_suffix#_#size_suffix#_dyadic m68k.split_operands_result.op1, m68k.split_operands_result.op2
-                    jump done
+                        check op1 relativeto m68k.data_reg
+                        jyes data_reg
+                    ; immediate:
+                        call instr#dir#size#_dyadic_imm, op1, op2
+                        exit
+                    data_reg:
+                        call instr#dir#size#_dyadic_data_reg, op1, op2
+                        exit
                 one_operand:
-                    instr_prefix#dir_suffix#_#size_suffix#_monadic m68k.split_operands_result.op1
-                done:
+                        ; TODO: I think this one can only be .w
+                        ; Seems manual says if monadic then it shift a word.
+                        ; Double-check this. As it is I generate instructions
+                        ; for all sizes right now.
+                        emit 1, 11100000b + instr_bits shl 1 + dir_bit
+                        emit 1, 11000000b + @op1.ea_mode_bits shl 3 + \
+                                @op1.ea_reg_bits
+
+                        ; <ea> extension words
+                        call emit_ext_words, @op1.ext_bytes, @op1.ext_bytes_bits
             end calminstruction
 
-        end iterate ; <size_suffix, size>
-    end iterate ; <direction_suffix, direction>
-end iterate ; <instr_prefix, instr>
+        end iterate ; <size, size_bits>
+    end iterate ; <dir, dir_bit>
+end iterate ; <instr, instr_bits>

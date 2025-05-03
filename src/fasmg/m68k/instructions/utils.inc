@@ -3,7 +3,7 @@
 ; TODO: Explain why this exists and what the purpose is.
 ; I need to convert positive and negative numbers to binary, to do that
 ; I use `store` and `load` since the store command does such a conversion.
-; I am not sure if there is anothher easier way to make such a conversion.
+; I am not sure if there is another easier way to make such a conversion.
 virtual at 0
     one_byte::
     rb 1
@@ -41,37 +41,18 @@ calminstruction emit_ext_words? ext_bytes*, ext_bytes_bits*
         ; So I need to check which one of them it is.
         check 1 elementof ext_bytes_bits eq pc_displacement
         jyes pc_displacement
-        ; display 'WDWDAWAWDAWWAWDAWDAWDAWDAWD' bappend 10 bappend 10 bappend 10
-
-        ; arrange tmp, element_1_scale
-        ; stringify tmp
-        ; display "element_1_scale: " bappend tmp bappend 10
-
-        ; compute tmp, $
-        ; arrange tmp, tmp
-        ; stringify tmp
-        ; display "$: " bappend tmp bappend 10
-
+    ; pc_index:
         compute element_1_scale, element_1_scale - $
+        ; use `store` and `load` for data massaging. needed so that negative
+        ; values are constrained within1 byte.
         store one_byte:0, 1, element_1_scale
         load element_1_scale, one_byte:0, 1
-        emit ext_bytes, ((0 scaleof ext_bytes_bits) or element_1_scale) bswap ext_bytes
-
+        emit ext_bytes, (0 scaleof ext_bytes_bits) or element_1_scale
         jump done
     pc_displacement:
-        ; bswap is needed because fasmg outputs in little-endian
-        ; emit ext_bytes, ((0 scaleof ext_bytes_bits) - $) bswap ext_bytes
-        ; compute element_1_scale, element_1_scale - $
-        ; jno normal ; TODO: better label name
-        ; data massaging. needed so that negative values are constrained within
-        ; 1 byte.
-        ; store area1:0, 0, element_1_scale
-    ; normal:
-        emit ext_bytes, (element_1_scale - $) bswap ext_bytes
+        emit ext_bytes, element_1_scale - $
         jump done
     default_case:
-        ; bswap is needed because fasmg outputs in little-endian
-        ; emit ext_bytes, ext_bytes_bits bswap ext_bytes
-        emit ext_bytes, ext_bytes_bits bswap ext_bytes
+        emit ext_bytes, ext_bytes_bits
     done:
 end calminstruction

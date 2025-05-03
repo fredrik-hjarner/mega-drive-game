@@ -1,5 +1,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Motorola 68000 monadicinstructions                                         ;;
+;; Motorola 68000 monadic instructions                                        ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; UNLK ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -10,7 +10,7 @@
 ;     Unsized
 calminstruction unlk? an*
     call m68k.parse_operand@op1, an
-    emit 2, (0100111001011000b + @op1.ea_reg_bits) bswap 2
+    emit 2, 0100111001011000b + @op1.ea_reg_bits
 end calminstruction
 
 ;; STOP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -26,12 +26,10 @@ calminstruction stop? imm*
     call m68k.parse_operand@op1, imm
 
     ; first word
-    ; bswap is needed because famg outputs in little-endian
-    emit 2, 0100111001110010b bswap 2
+    emit 2, 0100111001110010b
 
     ; imm
-    ; bswap is needed because famg outputs in little-endian
-    emit 2, @op1.imm bswap 2
+    emit 2, @op1.imm
 end calminstruction
 
 ;; NCBD, PEA, TAS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -55,8 +53,7 @@ iterate <instr, instr_word>, \
             call m68k.parse_operand@op1, m68k.split_operands_result.op1
 
             ; first word
-            ; bswap is needed because famg outputs in little-endian
-            emit 2, (instr_word + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits) bswap 2
+            emit 2, instr_word + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
 
             ; <ea> extension words
             call emit_ext_words, @op1.ext_bytes, @op1.ext_bytes_bits
@@ -155,7 +152,6 @@ end iterate ; <instr, first_byte>
 ;   bcc.w <label>
 ;
 ; TODO: What exactly does label and literal mean in this context?
-; TODO: Add the different aliases for the conditions.
 ; Aliases:
 ;     hs = cc
 ;     lo = cs
@@ -213,8 +209,7 @@ iterate <cc,  cc_bits>, \
 
             emit 1, 01100000b + cc_bits
             emit 1, 0 ; second byte being zero
-            ; bswap is needed because famg outputs in little-endian
-            emit 2, (label_val - pc) bswap 2
+            emit 2, label_val - pc
         end calminstruction
 
         ; alias for .b
@@ -238,9 +233,7 @@ end iterate ; <cc, cc_bits>
 ;
 ; TODO: What exactly does label and literal mean in this context?
 iterate <instr,  first_byte>, \
-        \ ; Branch
         bra,     01100000b, \
-        \ ; Branch Subroutine
         bsr,     01100001b
 
         ; TODO: Check if fits in a byte. Maybe do that in parse_operand?
@@ -277,49 +270,28 @@ iterate <instr,  first_byte>, \
 
             emit 1, first_byte
             emit 1, 0 ; second byte being zero
-            ; bswap is needed because famg outputs in little-endian
-            emit 2, (label_val - pc) bswap 2
+            emit 2, label_val - pc
         end calminstruction
 
 end iterate ; <instr, first_byte>
 
-; Syntax: ext.w dn
-;
-; Description:
-;     Sign-extend a data register.
-;     .w extends from byte to word
-;     .l extends from word to long
-; Arguments:
-;     dn: data register (d0 - d7)
-; TODO: Assert that dn is a data register
-;       with `relativeto` or whatever one is supposed to use.
-calminstruction ext.w? dn*
-    local tmp
+;; EXL ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    call m68k.parse_operand@op1, dn
+; Syntax:
+;     ext.[wl] dn
+iterate <size,  size_bit>, \
+        w,      0, \
+        l,      1
 
-    assert_data_reg dn
+        calminstruction ext.size? dn*
+            call m68k.parse_operand@op1, dn
+            assert_data_reg dn
+            emit 2, 0100_1000___1000_0000_b + size_bit shl 6 + @op1.ea_reg_bits
+        end calminstruction
+            
+end iterate ; <size, size_bit>
 
-    emit 1, 01001000b
-    ;            1S000000b ; S = 0-> .w, S = 1-> .l
-    compute tmp, 10000000b + (dn - m68k.data_reg) ; TODO: Move this into emit!
-    emit 1, tmp
-end calminstruction
-
-; Syntax: ext.l dn
-;
-calminstruction ext.l? dn*
-    local tmp
-
-    call m68k.parse_operand@op1, dn
-
-    assert_data_reg dn
-
-    emit 1, 01001000b
-    ;            1S000000b ; S = 0-> .w, S = 1-> .l
-    compute tmp, 11000000b + (dn - m68k.data_reg) ; TODO: Move this into emit!
-    emit 1, tmp
-end calminstruction
+;; JMP, JSR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Syntax:
 ;     jmp <ea>
@@ -331,14 +303,10 @@ end calminstruction
 ;       ✓     ✓       ✓        ✓
 ; TODO: Restrict to valid addressing modes for jmp/jsr.
 iterate <instr,  second_byte>, \
-        \ ; Jump
         jmp,     11000000b, \
-        \ ; Jump Subroutine
         jsr,     10000000b
 
         calminstruction instr? operands&
-            local tmp
-
             call m68k.split_operands, operands
             call m68k.parse_operand@op1, m68k.split_operands_result.op1
 
@@ -356,18 +324,13 @@ end iterate ; <instr, second_byte>
 ; Exchange the upper and lower 16-bit words of a data register.
 ; arguments:
 ;     dn: data register (d0 - d7)
-; TODO: Assert that dn is a data register
-;       with `relativeto` or whatever one is supposed to use.
 calminstruction swap.w? dn*
-    local tmp
-
     call m68k.parse_operand@op1, dn
 
     assert_data_reg dn
 
     emit 1, 01001000b
-    compute tmp, 01000000b + (dn - m68k.data_reg) ; TODO: Move this into emit!
-    emit 1, tmp
+    emit 1, 01000000b + @op1.ea_reg_bits
 end calminstruction
 
 ; Syntax: trap #<vector>
@@ -376,8 +339,6 @@ end calminstruction
 ; arguments:
 ;     vector: 0000 - 1111
 calminstruction trap? vector*
-        local tmp
-
         call m68k.parse_operand@op1, vector
 
         check @op1.type eq 'imm'
@@ -393,6 +354,5 @@ calminstruction trap? vector*
         assert_max vector, 15
 
         emit 1, 01001110b
-        compute tmp, 01000000b + vector ; TODO: Move this into emit!
-        emit 1, tmp
+        emit 1, 01000000b + vector
 end calminstruction

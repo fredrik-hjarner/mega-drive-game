@@ -24,7 +24,7 @@ build_vasm:
 #	vasm -Fbin -spaces -wfail -o tests/test.bin tests/valid_instructions.asm
 
 build:
-	fasmg tests/test.asm tests/test.bin -e20
+	fasmg tests/test_fasmg.asm tests/test.bin -e20
 
 # build2 is just for me to have a separate test file to play around with.
 build2:

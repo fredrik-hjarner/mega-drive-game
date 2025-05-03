@@ -125,11 +125,7 @@ calminstruction exg.l? reg1*, reg2*
             compute reg1_bits,  @op2.ea_reg_bits
             compute reg2_bits,  @op1.ea_reg_bits
     emit_bytes:
-
-            ; first byte
             emit 1, 11000001b + reg1_bits shl 1
-
-            ; second byte
             emit 1, type_bits1 shl 6 + type_bits2 shl 3 + reg2_bits
 end calminstruction
 
@@ -163,8 +159,7 @@ calminstruction link.w? an*, imm*
     call m68k.parse_operand@op2, imm
 
     ; first word
-    ; bswap is needed because fasmg outputs in little-endian
-    emit 2, (0100111001010000b + @op1.ea_reg_bits) bswap 2
+    emit 2, 0100111001010000b + @op1.ea_reg_bits
 
     ; extension words
     call emit_ext_words, @op2.ext_bytes, @op2.ext_bytes_bits
@@ -201,11 +196,7 @@ iterate <instr,  first_byte>, \
         ; Is -(an) to -(an)
             compute m_bit, 1
         emit_bytes:
-
-            ; first byte
             emit 1, first_byte + @op2.ea_reg_bits shl 1
-
-            ; second byte 
             emit 1, size_bits shl 6 + m_bit shl 3 + @op1.ea_reg_bits
         end calminstruction
     end iterate ; <size, size_bits>
@@ -224,27 +215,23 @@ iterate <instr,  first_byte>, \
         abcd,    11000001b
 
         calminstruction instr.b op1*, op2*
-            local m_bit
+                local m_bit
 
-            ; Init default values
-            compute m_bit, 0 ; dn to dn
+                ; Init default values
+                compute m_bit, 0 ; dn to dn
 
-            call m68k.parse_operand@op1, op1
-            call m68k.parse_operand@op2, op2
+                call m68k.parse_operand@op1, op1
+                call m68k.parse_operand@op2, op2
 
-            ; TODO: This check is just to make it work. I need
-            ; to make a more serious check for valid addressing modes.
-            check @op1.type = '-(an)'
-            jno emit_bytes
-        ; Is -(an) to -(an)
-            compute m_bit, 1
-        emit_bytes:
-
-            ; first byte
-            emit 1, first_byte + @op2.ea_reg_bits shl 1
-
-            ; second byte 
-            emit 1, m_bit shl 3 + @op1.ea_reg_bits
+                ; TODO: This check is just to make it work. I need
+                ; to make a more serious check for valid addressing modes.
+                check @op1.type = '-(an)'
+                jno emit_bytes
+            ; Is -(an) to -(an)
+                compute m_bit, 1
+            emit_bytes:
+                emit 1, first_byte + @op2.ea_reg_bits shl 1
+                emit 1, m_bit shl 3 + @op1.ea_reg_bits
         end calminstruction
 
 end iterate ; <instr, first_byte>
@@ -345,10 +332,7 @@ iterate <instr,  first_byte>, \
             call m68k.parse_operand@op1, m68k.split_operands_result.op1
             call m68k.parse_operand@op2, m68k.split_operands_result.op2
 
-            ; first byte
             emit 1, first_byte + @op2.ea_reg_bits shl 1
-
-            ; second byte
             emit 1, 11000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
 
             ; <ea> extension words
@@ -404,9 +388,7 @@ iterate <instr,  instr_bits>, \
                 call m68k.parse_operand@op1, m68k.split_operands_result.op1
                 call m68k.parse_operand@op2, m68k.split_operands_result.op2
 
-                ; TODO: If I do compute and result is a boolean is that 0/1 then?
-                ;       because if that's the case I could use that in places for
-                ;       sure, it would sort of be like a ternary op in fasmg.
+                ; TODO:
                 ;   If type was a token instead of a value, the I suppose I
                 ;   could use transform too, i.e. transform the type to 1 or 0.
                 check @op1.type = 'dn'
@@ -424,8 +406,7 @@ iterate <instr,  instr_bits>, \
                 emit 1, instr_bits shl 6 + @op2.ea_mode_bits shl 3 +  @op2.ea_reg_bits
 
                 ; bit index
-                ; bswap is needed because famg outputs in little-endian
-                emit bit_index_size, bit_index bswap bit_index_size
+                emit bit_index_size, bit_index
 
                 ; <ea> extension words
                 call emit_ext_words, @op2.ext_bytes, @op2.ext_bytes_bits
@@ -444,8 +425,6 @@ iterate <size,  size_bits>, \
         ;     movem.[wl] <ea>,<register list>
         ;     movem.[wl] <register list>,<ea>
         calminstruction movem.size? operands&
-                    ; display 10 bappend 'movem:' bappend 10
-
                     local direction
                     local bit_mask
                     local ea_mode_bits
@@ -462,7 +441,6 @@ iterate <size,  size_bits>, \
                     call m68k.split_operands, operands
                     call m68k.parse_reg_list@reg_list1, m68k.split_operands_result.op1
                     call m68k.parse_reg_list@reg_list2, m68k.split_operands_result.op2
-
 
             ; Figure out direction
                     check @reg_list1.is_reg_list = 1
@@ -499,16 +477,11 @@ iterate <size,  size_bits>, \
                     compute bit_mask, @reg_list1.mask_word_reverse
                 skip_reverse2: ; TODO: just jump to emit_bytes instead?
             emit_bytes:
-
-                    ; first byte
                     emit 1, 01001000b + direction shl 2
-
-                    ; second byte
                     emit 1, 10000000b + size_bits shl 6 + ea_mode_bits shl 3 + ea_reg_bits
 
                     ; register list bit mask
-                    ; bswap is needed because famg outputs in little-endian
-                    emit 2, bit_mask bswap 2
+                    emit 2, bit_mask
 
                     ; <ea> extension words
                     call emit_ext_words, ext_bytes, ext_bytes_bits
@@ -634,13 +607,11 @@ iterate <cc,  cc_bits>, \
             emit 1, 11001000b + @op1.ea_reg_bits
 
             ; immediate word
-            ; bswap is needed because famg outputs in little-endian
-            emit 2, (label_val - pc) bswap 2
+            emit 2, label_val - pc
         end calminstruction
 
 end iterate ; <cc, cc_bits>
 
-; TODO: Comment
 ; Syntax:
 ;     movea.[wl] <ea>,an
 iterate <size,  size_bits>, \
@@ -657,10 +628,7 @@ iterate <size,  size_bits>, \
             call m68k.parse_operand@op1, m68k.split_operands_result.op1, tmp
             call m68k.parse_operand@op2, m68k.split_operands_result.op2
 
-            ; first byte
             emit 1, size_bits shl 4 + @op2.ea_reg_bits shl 1
-
-            ; second byte
             emit 1, 01000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
                         
             ; extension words
@@ -678,10 +646,7 @@ calminstruction lea.l? operands&
     call m68k.parse_operand@op1, m68k.split_operands_result.op1
     call m68k.parse_operand@op2, m68k.split_operands_result.op2
 
-    ; first byte
     emit 1, 01000001b + @op2.ea_reg_bits shl 1
-
-    ; second byte
     emit 1, 11000000b + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits
                 
     ; extension words
@@ -720,7 +685,7 @@ iterate <instr,  first_byte>, \
 
                 ; first byte
                 ; 8 is encoded as 000b
-                compute tmp, @op1.imm mod 8 ; TODO: Is this compute needed?
+                compute tmp, @op1.imm mod 8
                 emit 1, first_byte + tmp shl 1
 
                 ; second byte
@@ -740,25 +705,17 @@ end iterate ; <instr, first_byte>
 ; Arguments:
 ;     data: 0000_0000 - 1111_1111
 ;     dn: d0 - d7
-; TODO: Test.
 ; TODO: Give error if data is out of range.
-; TODO: Handle # character.
 ; TODO: Validate that dn is a data register.
 ; TODO: Figure out how to work with signed numbers so it works with
 ;       whatever formats you can use in normal m68k assemblers
 ;       I assume 1111_1111b and -1d are should both be allowed?!
 calminstruction moveq.l? data*, dn*
-    local tmp
-
     call m68k.parse_operand@op1, data
     call m68k.parse_operand@op2, dn
 
     assert_data_reg dn
 
-    ; 0 1 2 3 4  5  6  7
-    ; 0 1 1 1 dn dn dn 0
-    compute tmp, 01110000b + ((dn - m68k.data_reg) shl 1) 
-    emit 1, tmp
-    compute tmp, data
-    emit 1, tmp
+    emit 1, 01110000b + @op2.ea_reg_bits shl 1
+    emit 1, data
 end calminstruction

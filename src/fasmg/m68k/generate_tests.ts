@@ -20,13 +20,13 @@ const examples: Record<OperandType, string[]> = {
   "d(pc)": ["@(pc)"],
   "d(pc,ix)": ["@(pc,d5.w)"],
   // TODO: Rename to imm32?
-  "imm": ["#0", "#4", "#$FF", "#$7FFF", "#$FFFF", "#$FFFFFFFF"],
+  "imm": ["#0", "#4", "#$FF", "#$7FFF", "#$FFFF", "#$FFFFFFFF", '#"WXYZ"'],
   "imm3": ["#1", "#7"],
   "imm4": ["#2"],
-  "imm8": ["#0", "#$FF"],
+  "imm8": ["#0", "#$FF", '#"X"'],
   // s suffix means signed
   "imm8s": ["#0", "#$7F"],
-  "imm16": ["#0", "#4", "#$FF", "#$2700", "#$7FFF",  "#$FFFF"],
+  "imm16": ["#0", "#4", "#$FF", '#"XY"', "#$2700", "#$7FFF",  "#$FFFF"],
   // TODO: singed numbers
   "imm16s": ["#0", "#4", "#$FF", "#$2700", "#$7FFF",  "#$FFFF"],
   "label": [
@@ -36,7 +36,10 @@ const examples: Record<OperandType, string[]> = {
   "register_list": ["d5-a7", "d0-d7/a0-a7", "d0-d1/a0-a1", "d0/d1/d2/d3-d4"],
   "ccr": ["ccr"],
   "sr": ["sr"],
-  "usp": ["usp"]
+  "usp": ["usp"],
+  "dc.b": ["0, 5", "$0A, $FF", "'string'", "1,1,10,12"],
+  "dc.w": ["0", "$FFFF", "1,1,1"],
+  "dc.l": ["0", "$FFFFFFFF", "1,1,1"]
 };
 
 // Helper function to get example values
