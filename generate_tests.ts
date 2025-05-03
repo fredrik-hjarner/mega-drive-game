@@ -9,9 +9,9 @@ const instructionsData = data;
 // Example values for each addressing mode
 const examples: Record<OperandType, string[]> = {
   "dn": ["d2", "d5"],
-  "an": ["a2", "a5"],
+  "an": ["a2", "a5", "a7"],
   "(an)": ["(a2)", "(a5)"],
-  "(an)+": ["(a2)+", "(a5)+"],
+  "(an)+": ["(a1)+", "(a2)+", "(a5)+"],
   "-(an)": ["-(a2)", "-(a5)"],
   "d(an)": ["$7FFF(a2)", "$7FFF(a5)"],
   "d(an,ix)": ["$7F(a2,d5.w)", "$7F(a5,d2.w)"],
@@ -19,17 +19,18 @@ const examples: Record<OperandType, string[]> = {
   "abs.l": ["($FFFFFFFF).l"],
   "d(pc)": ["@(pc)"],
   "d(pc,ix)": ["@(pc,d5.w)"],
-  "imm": ["#0", "#$FF", "#$FFFF", "#$FFFFFFFF"],
+  "imm": ["#0", "#4", "#$FF", "#$7FFF", "#$FFFF", "#$FFFFFFFF"],
   "imm3": ["#1", "#7"],
   "imm4": ["#2"],
   "imm8": ["#0", "#$FF"],
+  // s suffix means signed
   "imm8s": ["#0", "#$7F"],
-  "imm16": ["#0", "#$FF", "#$FFFF"],
+  "imm16": ["#0", "#$FF", "#$2700", "#$FFFF"],
   "label": [
     "@",
     // "label",
   ],
-  "register_list": ["d5-a7", "d0-d7/a0-a7"],
+  "register_list": ["d5-a7", "d0-d7/a0-a7", "d0-d1/a0-a1", "d0/d1/d2/d3-d4"],
   "ccr": ["ccr"],
   "sr": ["sr"],
   "usp": ["usp"]
@@ -71,7 +72,8 @@ function generateValidTests() {
           continue;
         }
 
-        const sizes = [...new Set([...variant.sizes, ""])] as OperandSize[];
+        // const sizes = [...new Set([...variant.sizes, ""])] as OperandSize[];
+        const sizes = variant.sizes;
         
         // Process sizes for this variant
         for (const size of sizes) {

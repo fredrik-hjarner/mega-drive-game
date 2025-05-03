@@ -5,6 +5,7 @@ export type OperandType =
     | "imm8" | "imm8s" | "imm16" | "label" | "register_list" | "ccr" | "sr"
     | "usp";
 
+// "" means without size suffix.
 export type OperandSize = "b" | "w" | "l" | "s" | "";
 
 export type InstructionVariant = {
@@ -27,13 +28,13 @@ export const data: InstructionSet = [
     variants: [
       // CCR variant
       {
-        sizes: ["b"],
-        sourceOperands: ["imm"],
+        sizes: ["b", ""],
+        sourceOperands: ["imm8"],
         destOperands: ["ccr"]
       },
       // SR variant
       {
-        sizes: ["w"],
+        sizes: ["w", ""],
         sourceOperands: ["imm"],
         destOperands: ["sr"]
       },
@@ -61,23 +62,23 @@ export const data: InstructionSet = [
     instructions: ["btst"],
     variants: [
       {
-        sizes: ["l"],
+        sizes: ["l", ""],
         sourceOperands: ["dn"],
         destOperands: ["dn"]
       },
       {
-        sizes: ["b"],
+        sizes: ["b", ""],
         sourceOperands: ["dn"],
         destOperands: ["(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"]
       },
       {
-        sizes: ["l"],
+        sizes: ["l", ""],
         sourceOperands: ["imm8"],
         destOperands: ["dn"]
       },
       {
-        sizes: ["b"],
-        sourceOperands: ["imm"],
+        sizes: ["b", ""],
+        sourceOperands: ["imm8"],
         destOperands: ["(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"]
       }
     ]
@@ -87,23 +88,23 @@ export const data: InstructionSet = [
     instructions: ["bchg", "bclr", "bset"],
     variants: [
       {
-        sizes: ["l"],
+        sizes: ["l", ""],
         sourceOperands: ["dn"],
         destOperands: ["dn"]
       },
       {
-        sizes: ["b"],
+        sizes: ["b", ""],
         sourceOperands: ["dn"],
         destOperands: ["(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
       },
       {
-        sizes: ["l"],
+        sizes: ["l", ""],
         sourceOperands: ["imm8"],
         destOperands: ["dn"]
       },
       {
-        sizes: ["b"],
-        sourceOperands: ["imm"],
+        sizes: ["b", ""],
+        sourceOperands: ["imm8"],
         destOperands: ["(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
       }
     ]
@@ -113,7 +114,7 @@ export const data: InstructionSet = [
     instructions: ["st", "sf", "shi", "sls", "scc", "scs", "sne", "seq", "svc", "svs", "spl", "smi", "sge", "slt", "sgt", "sle", "shs", "slo"],
     variants: [
       {
-        sizes: ["b"],
+        sizes: ["b", ""],
         sourceOperands: [],
         destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
       }
@@ -135,7 +136,7 @@ export const data: InstructionSet = [
     instructions: ["dbt", "dbf", "dbhi", "dbls", "dbcc", "dbcs", "dbne", "dbeq", "dbvc", "dbvs", "dbpl", "dbmi", "dbge", "dblt", "dbgt", "dble", "dbhs", "dblo"],
     variants: [
       {
-        sizes: ["w"],
+        sizes: ["w", ""],
         sourceOperands: ["dn"],
         destOperands: ["label"]
       }
@@ -179,11 +180,11 @@ export const data: InstructionSet = [
       },
       // // TODO: This includes "an"???
       // https://github.com/prb28/m68k-instructions-documentation/blob/master/instructions/move.md
-      // {
-      //   sizes: ["w", "l"],
-      //   sourceOperands: ["an"],
-      //   destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-      // },
+      {
+        sizes: ["w", "l"],
+        sourceOperands: ["an"],
+        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+      },
       {
         sizes: ["w"],
         sourceOperands: ["sr"],
@@ -201,12 +202,12 @@ export const data: InstructionSet = [
       },
       // MOVE USP
       {
-        sizes: ["l"],
+        sizes: ["l", ""],
         sourceOperands: ["usp"],
         destOperands: ["an"]
       },
       {
-        sizes: ["l"],
+        sizes: ["l", ""],
         sourceOperands: ["an"],
         destOperands: ["usp"]
       }
@@ -228,7 +229,7 @@ export const data: InstructionSet = [
     instructions: ["tas"],
     variants: [
       {
-        sizes: ["b"],
+        sizes: ["b", ""],
         sourceOperands: [],
         destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
       }
@@ -250,7 +251,7 @@ export const data: InstructionSet = [
     instructions: ["swap"],
     variants: [
       {
-        sizes: [""],
+        sizes: ["w", ""],
         sourceOperands: [],
         destOperands: ["dn"]
       }
@@ -261,7 +262,7 @@ export const data: InstructionSet = [
     instructions: ["nbcd"],
     variants: [
       {
-        sizes: ["b"],
+        sizes: ["b", ""],
         sourceOperands: [],
         destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
       }
@@ -272,7 +273,7 @@ export const data: InstructionSet = [
     instructions: ["pea"],
     variants: [
       {
-        sizes: ["l"],
+        sizes: ["l", ""],
         sourceOperands: ["(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
         destOperands: []
       }
@@ -316,7 +317,7 @@ export const data: InstructionSet = [
     instructions: ["link"],
     variants: [
       {
-        sizes: ["w"],
+        sizes: ["w", ""],
         sourceOperands: ["an"],
         destOperands: ["imm"]
       }
@@ -376,7 +377,7 @@ export const data: InstructionSet = [
     instructions: ["lea"],
     variants: [
       {
-        sizes: ["l"],
+        sizes: ["l", ""],
         sourceOperands: ["(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
         destOperands: ["an"]
       }
@@ -387,7 +388,7 @@ export const data: InstructionSet = [
     instructions: ["chk"],
     variants: [
       {
-        sizes: ["w"],
+        sizes: ["w", ""],
         sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
         destOperands: ["dn"]
       }
@@ -414,7 +415,7 @@ export const data: InstructionSet = [
     instructions: ["moveq"],
     variants: [
       {
-        sizes: ["l"],
+        sizes: ["l", ""],
         sourceOperands: ["imm8s"],
         destOperands: ["dn"]
       }
@@ -425,7 +426,7 @@ export const data: InstructionSet = [
     instructions: ["divu", "divs"],
     variants: [
       {
-        sizes: ["w"],
+        sizes: ["w", ""],
         sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
         destOperands: ["dn"]
       }
@@ -436,12 +437,12 @@ export const data: InstructionSet = [
     instructions: ["sbcd", "abcd"],
     variants: [
       {
-        sizes: ["b"],
+        sizes: ["b", ""],
         sourceOperands: ["dn"],
         destOperands: ["dn"]
       },
       {
-        sizes: ["b"],
+        sizes: ["b", ""],
         sourceOperands: ["-(an)"],
         destOperands: ["-(an)"]
       },
@@ -569,7 +570,7 @@ export const data: InstructionSet = [
     instructions: ["mulu", "muls"],
     variants: [
       {
-        sizes: ["w"],
+        sizes: ["w", ""],
         sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
         destOperands: ["dn"]
       }
@@ -580,7 +581,7 @@ export const data: InstructionSet = [
     instructions: ["exg"],
     variants: [
       {
-        sizes: ["l"],
+        sizes: ["l", ""],
         sourceOperands: ["dn", "an"],
         destOperands: ["dn", "an"]
       }
@@ -607,7 +608,7 @@ export const data: InstructionSet = [
         destOperands: ["dn"]
       },
       {
-        sizes: ["w"],
+        sizes: ["w", ""],
         sourceOperands: [],
         destOperands: ["(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
       }

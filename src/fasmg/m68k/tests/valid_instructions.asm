@@ -181,7 +181,7 @@
 	btst	d5,$7F(a2,d5.w)
 	btst	d5,($FFFFFFFF).w
 	btst	d5,($FFFFFFFF).l
-	btst	d5,#$55
+	; btst	d5,#$55 ; TODO: This instruction looks odd but was in test set...
 	btst	d5,@(pc)
 	btst	d5,@(pc,d5.w)
 

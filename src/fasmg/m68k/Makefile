@@ -34,6 +34,10 @@ build:
 build2:
 	fasmg tests/test2.asm tests/test2.bin -e20
 
+build_new:
+	fasmg tests/test2.asm tests/test2.bin -e20
+	make hexdump
+
 hexdump:
 	xxd -b -c1 tests/test.bin | cut -d' ' -f2,4 > tests/test.hex
 #  hexdump -v -e '/1 "%02x\n"' tests/test.bin > tests/test.hex
