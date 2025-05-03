@@ -35,7 +35,7 @@ build2:
 	fasmg tests/test2.asm tests/test2.bin -e20
 
 build_new:
-	fasmg tests/test2.asm tests/test2.bin -e20
+	fasmg tests/test_new.asm tests/test2.bin -e20
 	make hexdump
 
 hexdump:

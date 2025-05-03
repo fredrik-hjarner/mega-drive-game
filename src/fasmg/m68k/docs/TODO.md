@@ -71,6 +71,17 @@
   support that...
 * What is this about:
   btst.b	d5,#$55 ; TODO: destination can never be an immediate?! ; See clownassembler tests it's mentioned in two files there.
+* ori.b	#$FF,ccr ; TODO: Have ccr test for ori.w ori.l which should fail.
+  ori.w	#$FFFF,sr ; TODO: Have sr test for ori.b ori.l which should fail
+  andi.b	#$FF,ccr ; TODO: Have ccr test for .w .l which should fail.
+  eori.b	#$FF,ccr ; TODO: Have ccr test for .w .l which should fail.
+  btst.l	#0,d5 ; TODO: Need to try to shift with more values than #0.
+  move.w	@(pc,d5.w),sr ; TODO: Add move tests without size suffix!
+  chk.w	@(pc),d5; TODO: I need to test other values than @ since @ is
+      one token which makes my current tests succeed, but for several tokens it will fail. A `parse_immediate` util would help.
+  chk.w	@(pc,d5.w),d5 ; must test this with an too: @(pc,a5.w)
+  cmpm.b	(a2)+,(a1)+ ; TODO: More test of cmpm
+  ror.w	(a2) ; TODO: What happens if you do ror.b (a2) or ror.l (a2) ?
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; things that cause unrecoverable errors in fasmg                            ;;
