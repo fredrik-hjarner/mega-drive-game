@@ -1659,184 +1659,112 @@
 	slo.b	($FFFFFFFF).l
 
 	bra.s	@
-	bra.s	label
 	bra.w	@
-	bra.w	label
 
 	bsr.s	@
-	bsr.s	label
 	bsr.w	@
-	bsr.w	label
 
 	bhi.s	@
-	bhi.s	label
 	bhi.w	@
-	bhi.w	label
 
 	bls.s	@
-	bls.s	label
 	bls.w	@
-	bls.w	label
 
 	bcc.s	@
-	bcc.s	label
 	bcc.w	@
-	bcc.w	label
 
 	bcs.s	@
-	bcs.s	label
 	bcs.w	@
-	bcs.w	label
 
 	bne.s	@
-	bne.s	label
 	bne.w	@
-	bne.w	label
 
 	beq.s	@
-	beq.s	label
 	beq.w	@
-	beq.w	label
 
 	bvc.s	@
-	bvc.s	label
 	bvc.w	@
-	bvc.w	label
 
 	bvs.s	@
-	bvs.s	label
 	bvs.w	@
-	bvs.w	label
 
 	bpl.s	@
-	bpl.s	label
 	bpl.w	@
-	bpl.w	label
 
 	bmi.s	@
-	bmi.s	label
 	bmi.w	@
-	bmi.w	label
 
 	bge.s	@
-	bge.s	label
 	bge.w	@
-	bge.w	label
 
 	blt.s	@
-	blt.s	label
 	blt.w	@
-	blt.w	label
 
 	bgt.s	@
-	bgt.s	label
 	bgt.w	@
-	bgt.w	label
 
 	ble.s	@
-	ble.s	label
 	ble.w	@
-	ble.w	label
 
 	bhs.s	@
-	bhs.s	label
 	bhs.w	@
-	bhs.w	label
 
 	blo.s	@
-	blo.s	label
 	blo.w	@
-	blo.w	label
 
 	dbt.w	d2,@
-	dbt.w	d2,label
 	dbt.w	d5,@
-	dbt.w	d5,label
 
 	dbf.w	d2,@
-	dbf.w	d2,label
 	dbf.w	d5,@
-	dbf.w	d5,label
 
 	dbhi.w	d2,@
-	dbhi.w	d2,label
 	dbhi.w	d5,@
-	dbhi.w	d5,label
 
 	dbls.w	d2,@
-	dbls.w	d2,label
 	dbls.w	d5,@
-	dbls.w	d5,label
 
 	dbcc.w	d2,@
-	dbcc.w	d2,label
 	dbcc.w	d5,@
-	dbcc.w	d5,label
 
 	dbcs.w	d2,@
-	dbcs.w	d2,label
 	dbcs.w	d5,@
-	dbcs.w	d5,label
 
 	dbne.w	d2,@
-	dbne.w	d2,label
 	dbne.w	d5,@
-	dbne.w	d5,label
 
 	dbeq.w	d2,@
-	dbeq.w	d2,label
 	dbeq.w	d5,@
-	dbeq.w	d5,label
 
 	dbvc.w	d2,@
-	dbvc.w	d2,label
 	dbvc.w	d5,@
-	dbvc.w	d5,label
 
 	dbvs.w	d2,@
-	dbvs.w	d2,label
 	dbvs.w	d5,@
-	dbvs.w	d5,label
 
 	dbpl.w	d2,@
-	dbpl.w	d2,label
 	dbpl.w	d5,@
-	dbpl.w	d5,label
 
 	dbmi.w	d2,@
-	dbmi.w	d2,label
 	dbmi.w	d5,@
-	dbmi.w	d5,label
 
 	dbge.w	d2,@
-	dbge.w	d2,label
 	dbge.w	d5,@
-	dbge.w	d5,label
 
 	dblt.w	d2,@
-	dblt.w	d2,label
 	dblt.w	d5,@
-	dblt.w	d5,label
 
 	dbgt.w	d2,@
-	dbgt.w	d2,label
 	dbgt.w	d5,@
-	dbgt.w	d5,label
 
 	dble.w	d2,@
-	dble.w	d2,label
 	dble.w	d5,@
-	dble.w	d5,label
 
 	dbhs.w	d2,@
-	dbhs.w	d2,label
 	dbhs.w	d5,@
-	dbhs.w	d5,label
 
 	dblo.w	d2,@
-	dblo.w	d2,label
 	dblo.w	d5,@
-	dblo.w	d5,label
 
 	movep.w	$7FFF(a2),d2
 	movep.w	$7FFF(a2),d5
@@ -5426,5 +5354,3 @@
 	ror.w	$7F(a5,d2.w)
 	ror.w	($FFFFFFFF).w
 	ror.w	($FFFFFFFF).l
-
-label:

@@ -23,7 +23,10 @@ const examples: Record<OperandType, string[]> = {
   "imm3": ["#1", "#7"],
   "imm4": ["#2"],
   "imm8": ["#0", "#$FF"],
-  "label": ["@", "label"],
+  "label": [
+    "@",
+    // "label",
+  ],
   "register_list": ["d5-a7", "d0-d7/a0-a7"],
   "ccr": ["ccr"],
   "sr": ["sr"]
@@ -109,7 +112,7 @@ function generateValidTests() {
   }
   
   // Add label for instructions that need it
-  output += `\nlabel:\n`;
+  // output += `\nlabel:\n`;
   
   return output;
 }
