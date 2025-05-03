@@ -3,21 +3,18 @@ export const data = {
         "ori": [
             {
                 // CCR variant
-                "variant": "to_ccr",
                 "sizes": ["b"],
                 "sourceOperands": ["imm"],
                 "destOperands": ["ccr"]
             },
             {
                 // SR variant
-                "variant": "to_sr",
                 "sizes": ["w"],
                 "sourceOperands": ["imm"],
                 "destOperands": ["sr"]
             },
             {
                 // Standard variant
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["imm"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -26,21 +23,18 @@ export const data = {
         "andi": [
             {
                 // CCR variant
-                "variant": "to_ccr",
                 "sizes": ["b"],
                 "sourceOperands": ["imm"],
                 "destOperands": ["ccr"]
             },
             {
                 // SR variant  
-                "variant": "to_sr",
                 "sizes": ["w"],
                 "sourceOperands": ["imm"],
                 "destOperands": ["sr"]
             },
             {
                 // Standard variant
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["imm"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -48,7 +42,6 @@ export const data = {
         ],
         "subi": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["imm"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -56,7 +49,6 @@ export const data = {
         ],
         "addi": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["imm"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -65,21 +57,18 @@ export const data = {
         "eori": [
             {
                 // CCR variant
-                "variant": "to_ccr",
                 "sizes": ["b"],
                 "sourceOperands": ["imm"],
                 "destOperands": ["ccr"]
             },
             {
                 // SR variant
-                "variant": "to_sr",
                 "sizes": ["w"],
                 "sourceOperands": ["imm"],
                 "destOperands": ["sr"]
             },
             {
                 // Standard variant
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["imm"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -87,7 +76,6 @@ export const data = {
         ],
         "cmpi": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["imm"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -95,63 +83,94 @@ export const data = {
         ],
         "btst": [
             {
-                "variant": "register",
-                "sizes": ["b", "l"],
+                "sizes": ["l"],
                 "sourceOperands": ["dn"],
-                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"]
+                "destOperands": ["dn"]
             },
             {
-                "variant": "immediate",
-                "sizes": ["b", "l"],
+                "sizes": ["b"],
+                "sourceOperands": ["dn"],
+                "destOperands": [ "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"]
+            },
+            {
+                "sizes": ["l"],
                 "sourceOperands": ["imm"],
-                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"]
+                "destOperands": ["dn"]
+            },
+            {
+                "sizes": ["b"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"]
             }
         ],
         "bchg": [
             {
-                "variant": "register",
-                "sizes": ["b", "l"],
+                "sizes": ["l"],
                 "sourceOperands": ["dn"],
-                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+                "destOperands": ["dn"]
             },
             {
-                "variant": "immediate",
-                "sizes": ["b", "l"],
+                "sizes": ["b"],
+                "sourceOperands": ["dn"],
+                "destOperands": [ "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            },
+            {
+                "sizes": ["l"],
                 "sourceOperands": ["imm"],
-                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+                "destOperands": ["dn"]
+            },
+            {
+                "sizes": ["b"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
             }
         ],
         "bclr": [
             {
-                "variant": "register",
-                "sizes": ["b", "l"],
+                "sizes": ["l"],
                 "sourceOperands": ["dn"],
-                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+                "destOperands": ["dn"]
             },
             {
-                "variant": "immediate",
-                "sizes": ["b", "l"],
+                "sizes": ["b"],
+                "sourceOperands": ["dn"],
+                "destOperands": [ "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            },
+            {
+                "sizes": ["l"],
                 "sourceOperands": ["imm"],
-                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+                "destOperands": ["dn"]
+            },
+            {
+                "sizes": ["b"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
             }
         ],
         "bset": [
             {
-                "variant": "register",
-                "sizes": ["b", "l"],
+                "sizes": ["l"],
                 "sourceOperands": ["dn"],
-                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+                "destOperands": ["dn"]
             },
             {
-                "variant": "immediate",
-                "sizes": ["b", "l"],
+                "sizes": ["b"],
+                "sourceOperands": ["dn"],
+                "destOperands": [ "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            },
+            {
+                "sizes": ["l"],
                 "sourceOperands": ["imm"],
-                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+                "destOperands": ["dn"]
+            },
+            {
+                "sizes": ["b"],
+                "sourceOperands": ["imm"],
+                "destOperands": ["(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
             }
         ],
         "movep": [
             {
-                "variant": "standard",
                 "sizes": ["w", "l"],
                 "sourceOperands": ["dn", "d(an)"],
                 "destOperands": ["dn", "d(an)"]
@@ -159,7 +178,6 @@ export const data = {
         ],
         "movea": [
             {
-                "variant": "standard",
                 "sizes": ["w", "l"],
                 "sourceOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
                 "destOperands": ["an"]
@@ -167,25 +185,21 @@ export const data = {
         ],
         "move": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
                 "destOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
             },
             {
-                "variant": "from_sr",
                 "sizes": ["w"],
                 "sourceOperands": ["sr"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
             },
             {
-                "variant": "to_ccr",
                 "sizes": ["w"],
                 "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
                 "destOperands": ["ccr"]
             },
             {
-                "variant": "to_sr",
                 "sizes": ["w"],
                 "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
                 "destOperands": ["sr"]
@@ -193,7 +207,6 @@ export const data = {
         ],
         "negx": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": [],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -201,7 +214,6 @@ export const data = {
         ],
         "clr": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": [],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -209,7 +221,6 @@ export const data = {
         ],
         "neg": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": [],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -217,7 +228,6 @@ export const data = {
         ],
         "not": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": [],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -225,7 +235,6 @@ export const data = {
         ],
         "ext": [
             {
-                "variant": "standard",
                 "sizes": ["w", "l"],
                 "sourceOperands": [],
                 "destOperands": ["dn"]
@@ -233,7 +242,6 @@ export const data = {
         ],
         "nbcd": [
             {
-                "variant": "standard",
                 "sizes": ["b"],
                 "sourceOperands": [],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -241,7 +249,6 @@ export const data = {
         ],
         "swap": [
             {
-                "variant": "standard",
                 "sizes": ["w"],
                 "sourceOperands": [],
                 "destOperands": ["dn"]
@@ -249,7 +256,6 @@ export const data = {
         ],
         "pea": [
             {
-                "variant": "standard",
                 "sizes": ["l"],
                 "sourceOperands": ["(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
                 "destOperands": []
@@ -257,7 +263,6 @@ export const data = {
         ],
         "illegal": [
             {
-                "variant": "standard",
                 "sizes": [""],
                 "sourceOperands": [],
                 "destOperands": []
@@ -265,7 +270,6 @@ export const data = {
         ],
         "tas": [
             {
-                "variant": "standard",
                 "sizes": ["b"],
                 "sourceOperands": [],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -273,7 +277,6 @@ export const data = {
         ],
         "tst": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": [],
                 "destOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"]
@@ -281,7 +284,6 @@ export const data = {
         ],
         "trap": [
             {
-                "variant": "standard",
                 "sizes": [""],
                 "sourceOperands": ["imm4"],
                 "destOperands": []
@@ -289,7 +291,6 @@ export const data = {
         ],
         "link": [
             {
-                "variant": "standard",
                 "sizes": ["w"],
                 "sourceOperands": ["imm"],
                 "destOperands": ["an"]
@@ -297,7 +298,6 @@ export const data = {
         ],
         "unlk": [
             {
-                "variant": "standard",
                 "sizes": [""],
                 "sourceOperands": [],
                 "destOperands": ["an"]
@@ -305,7 +305,6 @@ export const data = {
         ],
         "move usp": [
             {
-                "variant": "standard",
                 "sizes": ["l"],
                 "sourceOperands": ["an"],
                 "destOperands": ["an"]
@@ -313,7 +312,6 @@ export const data = {
         ],
         "reset": [
             {
-                "variant": "standard",
                 "sizes": [""],
                 "sourceOperands": [],
                 "destOperands": []
@@ -321,7 +319,6 @@ export const data = {
         ],
         "nop": [
             {
-                "variant": "standard",
                 "sizes": [""],
                 "sourceOperands": [],
                 "destOperands": []
@@ -329,7 +326,6 @@ export const data = {
         ],
         "stop": [
             {
-                "variant": "standard",
                 "sizes": [""],
                 "sourceOperands": ["imm"],
                 "destOperands": []
@@ -337,7 +333,6 @@ export const data = {
         ],
         "rte": [
             {
-                "variant": "standard",
                 "sizes": [""],
                 "sourceOperands": [],
                 "destOperands": []
@@ -345,7 +340,6 @@ export const data = {
         ],
         "rts": [
             {
-                "variant": "standard",
                 "sizes": [""],
                 "sourceOperands": [],
                 "destOperands": []
@@ -353,7 +347,6 @@ export const data = {
         ],
         "trapv": [
             {
-                "variant": "standard",
                 "sizes": [""],
                 "sourceOperands": [],
                 "destOperands": []
@@ -361,7 +354,6 @@ export const data = {
         ],
         "rtr": [
             {
-                "variant": "standard",
                 "sizes": [""],
                 "sourceOperands": [],
                 "destOperands": []
@@ -369,7 +361,6 @@ export const data = {
         ],
         "jsr": [
             {
-                "variant": "standard",
                 "sizes": [""],
                 "sourceOperands": ["(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
                 "destOperands": []
@@ -377,7 +368,6 @@ export const data = {
         ],
         "jmp": [
             {
-                "variant": "standard",
                 "sizes": [""],
                 "sourceOperands": ["(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
                 "destOperands": []
@@ -385,7 +375,6 @@ export const data = {
         ],
         "movem": [
             {
-                "variant": "standard",
                 "sizes": ["w", "l"],
                 "sourceOperands": ["register_list", "(an)", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
                 "destOperands": ["register_list", "(an)", "(an)+", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -393,7 +382,6 @@ export const data = {
         ],
         "lea": [
             {
-                "variant": "standard",
                 "sizes": ["l"],
                 "sourceOperands": ["(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
                 "destOperands": ["an"]
@@ -401,7 +389,6 @@ export const data = {
         ],
         "chk": [
             {
-                "variant": "standard",
                 "sizes": ["w"],
                 "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
                 "destOperands": ["dn"]
@@ -409,7 +396,6 @@ export const data = {
         ],
         "addq": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["imm3"],
                 "destOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -417,7 +403,6 @@ export const data = {
         ],
         "subq": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["imm3"],
                 "destOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -425,7 +410,6 @@ export const data = {
         ],
         "moveq": [
             {
-                "variant": "standard",
                 "sizes": ["l"],
                 "sourceOperands": ["imm8"],
                 "destOperands": ["dn"]
@@ -433,7 +417,6 @@ export const data = {
         ],
         "divu": [
             {
-                "variant": "standard",
                 "sizes": ["w"],
                 "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
                 "destOperands": ["dn"]
@@ -441,7 +424,6 @@ export const data = {
         ],
         "divs": [
             {
-                "variant": "standard",
                 "sizes": ["w"],
                 "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
                 "destOperands": ["dn"]
@@ -449,7 +431,6 @@ export const data = {
         ],
         "sbcd": [
             {
-                "variant": "standard",
                 "sizes": ["b"],
                 "sourceOperands": ["dn", "-(an)"],
                 "destOperands": ["dn", "-(an)"]
@@ -457,7 +438,6 @@ export const data = {
         ],
         "or": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -465,7 +445,6 @@ export const data = {
         ],
         "sub": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -473,7 +452,6 @@ export const data = {
         ],
         "subx": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["dn", "-(an)"],
                 "destOperands": ["dn", "-(an)"]
@@ -481,7 +459,6 @@ export const data = {
         ],
         "suba": [
             {
-                "variant": "standard",
                 "sizes": ["w", "l"],
                 "sourceOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
                 "destOperands": ["an"]
@@ -489,7 +466,6 @@ export const data = {
         ],
         "eor": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["dn"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -497,7 +473,6 @@ export const data = {
         ],
         "cmpm": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["(an)+"],
                 "destOperands": ["(an)+"]
@@ -505,7 +480,6 @@ export const data = {
         ],
         "cmp": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
                 "destOperands": ["dn"]
@@ -513,7 +487,6 @@ export const data = {
         ],
         "cmpa": [
             {
-                "variant": "standard",
                 "sizes": ["w", "l"],
                 "sourceOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
                 "destOperands": ["an"]
@@ -521,7 +494,6 @@ export const data = {
         ],
         "mulu": [
             {
-                "variant": "standard",
                 "sizes": ["w"],
                 "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
                 "destOperands": ["dn"]
@@ -529,7 +501,6 @@ export const data = {
         ],
         "muls": [
             {
-                "variant": "standard",
                 "sizes": ["w"],
                 "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
                 "destOperands": ["dn"]
@@ -537,7 +508,6 @@ export const data = {
         ],
         "abcd": [
             {
-                "variant": "standard",
                 "sizes": ["b"],
                 "sourceOperands": ["dn", "-(an)"],
                 "destOperands": ["dn", "-(an)"]
@@ -545,7 +515,6 @@ export const data = {
         ],
         "exg": [
             {
-                "variant": "standard",
                 "sizes": ["l"],
                 "sourceOperands": ["dn", "an"],
                 "destOperands": ["dn", "an"]
@@ -553,7 +522,6 @@ export const data = {
         ],
         "and": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -561,7 +529,6 @@ export const data = {
         ],
         "add": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -569,7 +536,6 @@ export const data = {
         ],
         "addx": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["dn", "-(an)"],
                 "destOperands": ["dn", "-(an)"]
@@ -577,7 +543,6 @@ export const data = {
         ],
         "adda": [
             {
-                "variant": "standard",
                 "sizes": ["w", "l"],
                 "sourceOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
                 "destOperands": ["an"]
@@ -585,7 +550,6 @@ export const data = {
         ],
         "asl": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["dn", "imm3"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -593,7 +557,6 @@ export const data = {
         ],
         "asr": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["dn", "imm3"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -601,7 +564,6 @@ export const data = {
         ],
         "lsl": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["dn", "imm3"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -609,7 +571,6 @@ export const data = {
         ],
         "lsr": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["dn", "imm3"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -617,7 +578,6 @@ export const data = {
         ],
         "roxl": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["dn", "imm3"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -625,7 +585,6 @@ export const data = {
         ],
         "roxr": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["dn", "imm3"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -633,7 +592,6 @@ export const data = {
         ],
         "rol": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["dn", "imm3"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
@@ -641,7 +599,6 @@ export const data = {
         ],
         "ror": [
             {
-                "variant": "standard",
                 "sizes": ["b", "w", "l"],
                 "sourceOperands": ["dn", "imm3"],
                 "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
