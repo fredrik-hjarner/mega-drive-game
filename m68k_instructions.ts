@@ -455,9 +455,8 @@ export const data: InstructionSet = [
       },
     ]
   },
-  // Subtraction operations // verified
   {
-    instructions: ["sub"], // verified
+    instructions: ["sub", "add"], // verified
     variants: [
       {
         sizes: ["b", "w", "l"], // verified
@@ -476,14 +475,18 @@ export const data: InstructionSet = [
       }
     ]
   },
-  // SUBX
   {
-    instructions: ["subx"],
+    instructions: ["subx", "addx"], // verified
     variants: [
       {
-        sizes: ["b", "w", "l"],
-        sourceOperands: ["dn", "-(an)"],
-        destOperands: ["dn", "-(an)"]
+        sizes: ["b", "w", "l"], // verified
+        sourceOperands: ["dn"], // verified
+        destOperands: ["dn"] // verified
+      },
+      {
+        sizes: ["b", "w", "l"], // verified
+        sourceOperands: ["-(an)"], // verified
+        destOperands: ["-(an)"] // verified
       }
     ]
   },
@@ -561,28 +564,6 @@ export const data: InstructionSet = [
         sizes: ["l"],
         sourceOperands: ["dn", "an"],
         destOperands: ["dn", "an"]
-      }
-    ]
-  },
-  // Addition operations
-  {
-    instructions: ["add"],
-    variants: [
-      {
-        sizes: ["b", "w", "l"],
-        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-      }
-    ]
-  },
-  // ADDX
-  {
-    instructions: ["addx"],
-    variants: [
-      {
-        sizes: ["b", "w", "l"],
-        sourceOperands: ["dn", "-(an)"],
-        destOperands: ["dn", "-(an)"]
       }
     ]
   },
