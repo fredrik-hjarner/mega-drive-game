@@ -309,8 +309,8 @@ export const data: InstructionSet = [
     variants: [
       {
         sizes: ["w"],
-        sourceOperands: ["imm"],
-        destOperands: ["an"]
+        sourceOperands: ["an"],
+        destOperands: ["imm"]
       }
     ]
   },
@@ -347,14 +347,19 @@ export const data: InstructionSet = [
       }
     ]
   },
-  // MOVEM
+  // MOVEM // verified
   {
     instructions: ["movem"],
-    variants: [
+    variants: [ // verified
       {
-        sizes: ["w", "l"],
-        sourceOperands: ["register_list", "(an)", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
-        destOperands: ["register_list", "(an)", "(an)+", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+        sizes: ["w", "l"], // verified
+        sourceOperands: ["register_list"], // verified
+        destOperands: ["(an)", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+      },
+      {
+        sizes: ["w", "l"], // verified
+        sourceOperands: ["(an)", "(an)+", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"], // verified
+        destOperands: ["register_list"] // verified
       }
     ]
   },
@@ -380,15 +385,20 @@ export const data: InstructionSet = [
       }
     ]
   },
-  // Quick operations
+  // Quick operations // verified
   {
-    instructions: ["addq", "subq"],
-    variants: [
+    instructions: ["addq", "subq"], // verified
+    variants: [ // verified
       {
         sizes: ["b", "w", "l"],
-        sourceOperands: ["imm3"],
-        destOperands: ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-      }
+        sourceOperands: ["imm3"], // verified
+        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"] // verified
+      },
+      {
+        sizes: ["w", "l"], // verified
+        sourceOperands: ["imm3"], // verified
+        destOperands: ["an"] // verified
+      },
     ]
   },
   // MOVEQ

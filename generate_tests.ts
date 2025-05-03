@@ -111,9 +111,6 @@ function generateValidTests() {
   // Add label for instructions that need it
   output += `\nlabel:\n`;
   
-  // Add end marker
-  output += `\trts\n`;
-  
   return output;
 }
 
