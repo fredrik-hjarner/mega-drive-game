@@ -83,7 +83,7 @@ iterate <instr,  instr_word,         ccr_variant,        sr_variant>, \
                         emit 2, (instr_word + size_bits shl 6 + @op2.ea_mode_bits shl 3 + @op2.ea_reg_bits) bswap 2
                         
                         ; immediate bytes
-                        ; bswap is needed because famg outputs in little-endian :'/
+                        ; bswap is needed because famg outputs in little-endian
                         emit imm_bytes, @op1.imm bswap imm_bytes
 
                         ; extension words

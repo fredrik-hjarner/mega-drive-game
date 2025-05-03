@@ -213,7 +213,7 @@ iterate <cc,  cc_bits>, \
 
             emit 1, 01100000b + cc_bits
             emit 1, 0 ; second byte being zero
-            ; bswap is needed because famg outputs in little-endian :'/
+            ; bswap is needed because famg outputs in little-endian
             emit 2, (label_val - pc) bswap 2
         end calminstruction
 
@@ -277,7 +277,7 @@ iterate <instr,  first_byte>, \
 
             emit 1, first_byte
             emit 1, 0 ; second byte being zero
-            ; bswap is needed because famg outputs in little-endian :'/
+            ; bswap is needed because famg outputs in little-endian
             emit 2, (label_val - pc) bswap 2
         end calminstruction
 

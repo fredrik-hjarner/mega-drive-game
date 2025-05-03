@@ -14,15 +14,15 @@ iterate <size,  size_bit>, \
         w,      0b, \
         l,      1b
 
-    calminstruction movep.size? an1*, an2*
+    calminstruction movep.size? op1*, op2*
             local direction
             local reg_bits1
             local reg_bits2
             local ext_bytes
             local ext_bytes_bits
 
-            call m68k.parse_operand@op1, an1
-            call m68k.parse_operand@op2, an2
+            call m68k.parse_operand@op1, op1
+            call m68k.parse_operand@op2, op2
 
             ; Initial default values
             compute direction, 1 ; Default is dn to (d,an)
@@ -410,25 +410,21 @@ iterate <instr,  instr_bits>, \
                 ;   If type was a token instead of a value, the I suppose I
                 ;   could use transform too, i.e. transform the type to 1 or 0.
                 check @op1.type = 'dn'
-            ; op1_is_dn
                 jno op1_is_imm ; TODO: I mean I have not validated that though...
-                ; compute op1_bits, (op1 - m68k.data_reg) shl 1
+            ; op1_is_dn
                 compute op1_bits, @op1.ea_reg_bits shl 1
                 compute op1_type_bit, 1
                 compute bit_index_size, 0
                 jump emit_bytes
             op1_is_imm:
-                compute bit_index, 0
+                compute bit_index, @op1.imm
             emit_bytes:
 
-                ; first byte
                 emit 1, op1_bits + op1_type_bit
-
-                ; second byte
                 emit 1, instr_bits shl 6 + @op2.ea_mode_bits shl 3 +  @op2.ea_reg_bits
 
                 ; bit index
-                ; bswap is needed because famg outputs in little-endian :'/
+                ; bswap is needed because famg outputs in little-endian
                 emit bit_index_size, bit_index bswap bit_index_size
 
                 ; <ea> extension words
@@ -511,7 +507,7 @@ iterate <size,  size_bits>, \
                     emit 1, 10000000b + size_bits shl 6 + ea_mode_bits shl 3 + ea_reg_bits
 
                     ; register list bit mask
-                    ; bswap is needed because famg outputs in little-endian :'/
+                    ; bswap is needed because famg outputs in little-endian
                     emit 2, bit_mask bswap 2
 
                     ; <ea> extension words
@@ -594,43 +590,27 @@ end iterate ; <instr, first_byte>
 ;     hs = cc
 ;     lo = cs
 iterate <cc,  cc_bits>, \
-        \ ; True
         t,      0000b, \
-        \ ; False
         f,      0001b, \
         \ ; Alias for f
         ra,     0001b, \
-        \ ; 
         hi,     0010b, \
-        \ ; 
         ls,     0011b, \
-        \ ; 
         cc,     0100b, \
         \ ; Alias for cc
         hs,     0100b, \
-        \ ; 
         cs,     0101b, \
         \ ; Alias for cs
         lo,     0101b, \
-        \ ; 
         ne,     0110b, \
-        \ ; 
         eq,     0111b, \
-        \ ; 
         vc,     1000b, \
-        \ ; 
         vs,     1001b, \
-        \ ; 
         pl,     1010b, \
-        \ ; 
         mi,     1011b, \
-        \ ; 
         ge,     1100b, \
-        \ ; 
         lt,     1101b, \
-        \ ; 
         gt,     1110b, \
-        \ ; 
         le,     1111b
 
         ; TODO: Check if displacement fits a in word.
@@ -654,7 +634,7 @@ iterate <cc,  cc_bits>, \
             emit 1, 11001000b + @op1.ea_reg_bits
 
             ; immediate word
-            ; bswap is needed because famg outputs in little-endian :'/
+            ; bswap is needed because famg outputs in little-endian
             emit 2, (label_val - pc) bswap 2
         end calminstruction
 

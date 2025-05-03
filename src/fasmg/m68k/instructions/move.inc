@@ -95,7 +95,7 @@ calminstruction move_ea_to_ea size:w
         err "size error" ; TODO: Better error message
     skip_size_error:
         ; emit 1st and 2nd byte in one go
-        ; bswap is needed because famg outputs in little-endian :'/
+        ; bswap is needed because famg outputs in little-endian
         emit 2, (size_bits shl 12 + @op2.ea_reg_bits shl 9 + @op2.ea_mode_bits shl 6 + @op1.ea_mode_bits shl 3 + @op1.ea_reg_bits) bswap 2
 
         ; op1 extension words

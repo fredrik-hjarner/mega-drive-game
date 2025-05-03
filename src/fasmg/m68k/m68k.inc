@@ -100,7 +100,7 @@ calminstruction dc.w? tail&
         match head, tail
         compute last_argument, 1
     at_least_two_arguments:
-        ; bswap is needed because famg outputs in little-endian :'/
+        ; bswap is needed because famg outputs in little-endian
         compute head, head bswap 2
         emit 2, head
     maybe_next:
@@ -120,7 +120,7 @@ calminstruction dc.l? tail&
         match head, tail
         compute last_argument, 1
     at_least_two_arguments:
-        ; bswap is needed because famg outputs in little-endian :'/
+        ; bswap is needed because famg outputs in little-endian
         compute head, head bswap 4
         emit 4, head
     maybe_next:

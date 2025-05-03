@@ -356,19 +356,19 @@ export const data: InstructionSet = [
       }
     ]
   },
-  // MOVEM // verified
+  // MOVEM
   {
     instructions: ["movem"],
-    variants: [ // verified
+    variants: [
       {
-        sizes: ["w", "l"], // verified
-        sourceOperands: ["register_list"], // verified
+        sizes: ["w", "l"],
+        sourceOperands: ["register_list"],
         destOperands: ["(an)", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
       },
       {
-        sizes: ["w", "l"], // verified
-        sourceOperands: ["(an)", "(an)+", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"], // verified
-        destOperands: ["register_list"] // verified
+        sizes: ["w", "l"],
+        sourceOperands: ["(an)", "(an)+", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
+        destOperands: ["register_list"]
       }
     ]
   },
@@ -395,19 +395,19 @@ export const data: InstructionSet = [
       }
     ]
   },
-  // Quick operations // verified
+  // Quick operations
   {
-    instructions: ["addq", "subq"], // verified
-    variants: [ // verified
+    instructions: ["addq", "subq"],
+    variants: [
       {
         sizes: ["b", "w", "l"],
-        sourceOperands: ["imm3"], // verified
-        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"] // verified
+        sourceOperands: ["imm3"],
+        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
       },
       {
-        sizes: ["w", "l"], // verified
-        sourceOperands: ["imm3"], // verified
-        destOperands: ["an"] // verified
+        sizes: ["w", "l"],
+        sourceOperands: ["imm3"],
+        destOperands: ["an"]
       },
     ]
   },
@@ -449,58 +449,58 @@ export const data: InstructionSet = [
       },
     ]
   },
-  // Logical operations // verified
+  // Logical operations
   {
-    instructions: ["or", "and"], // verified
+    instructions: ["or", "and"],
     variants: [
       {
-        sizes: ["b", "w", "l"], // verified
+        sizes: ["b", "w", "l"],
         // TODO: This includes "imm"???
         // https://github.com/prb28/m68k-instructions-documentation/blob/master/instructions/and.md
-        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"], // verified
-        destOperands: ["dn"] // verified
+        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
+        destOperands: ["dn"]
       },
       {
-        sizes: ["b", "w", "l"], // verified
-        sourceOperands: ["dn"], // verified
-        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"] // verified
+        sizes: ["b", "w", "l"],
+        sourceOperands: ["dn"],
+        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
       },
     ]
   },
   {
-    instructions: ["sub", "add"], // verified
+    instructions: ["sub", "add"],
     variants: [
       {
-        sizes: ["b", "w", "l"], // verified
+        sizes: ["b", "w", "l"],
         // TODO: This includes "imm"???
         // https://github.com/prb28/m68k-instructions-documentation/blob/master/instructions/add.md
-        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"], // verified
-        destOperands: ["dn"] // verified
+        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
+        destOperands: ["dn"]
       },
       {
-        sizes: ["w", "l"], // verified
-        sourceOperands: ["an"], // verified
-        destOperands: ["dn"] // verified
+        sizes: ["w", "l"],
+        sourceOperands: ["an"],
+        destOperands: ["dn"]
       },
       {
-        sizes: ["b", "w", "l"], // verified
-        sourceOperands: ["dn"], // verified
-        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"] // verified
+        sizes: ["b", "w", "l"],
+        sourceOperands: ["dn"],
+        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
       }
     ]
   },
   {
-    instructions: ["subx", "addx"], // verified
+    instructions: ["subx", "addx"],
     variants: [
       {
-        sizes: ["b", "w", "l"], // verified
-        sourceOperands: ["dn"], // verified
-        destOperands: ["dn"] // verified
+        sizes: ["b", "w", "l"],
+        sourceOperands: ["dn"],
+        destOperands: ["dn"]
       },
       {
-        sizes: ["b", "w", "l"], // verified
-        sourceOperands: ["-(an)"], // verified
-        destOperands: ["-(an)"] // verified
+        sizes: ["b", "w", "l"],
+        sourceOperands: ["-(an)"],
+        destOperands: ["-(an)"]
       }
     ]
   },
@@ -539,19 +539,19 @@ export const data: InstructionSet = [
   },
   // CMP
   {
-    instructions: ["cmp"], // verified
+    instructions: ["cmp"],
     variants: [
       {
-        sizes: ["b", "w", "l"], // verified
+        sizes: ["b", "w", "l"],
         // TODO: This includes "imm"???
         // https://github.com/prb28/m68k-instructions-documentation/blob/master/instructions/cmp.md
-        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"], // verified
-        destOperands: ["dn"] // verified
+        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"],
+        destOperands: ["dn"]
       },
       {
-        sizes: ["w", "l"], // verified
-        sourceOperands: [ "an"], // verified
-        destOperands: ["dn"] // verified
+        sizes: ["w", "l"],
+        sourceOperands: [ "an"],
+        destOperands: ["dn"]
       }
     ]
   },
