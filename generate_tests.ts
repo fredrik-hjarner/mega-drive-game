@@ -44,67 +44,73 @@ function generateValidTests() {
   let output = "";
   let previousInstrName = ""; // Track the previous instruction name
   
-  // Process each instruction
-  for (const [instrName, instrVariants] of Object.entries(instructionsData.instructions)) {
-    // Add a newline between different instructions
-    if (previousInstrName && previousInstrName !== instrName) {
-      output += "\n";
-    }
+  // Process each group in the data
+  for (const group of instructionsData) {
+    // Get the variants for this group
+    const variants = group.variants;
     
-    // Process variants
-    for (const variant of instrVariants) {
-      // Handle instructions with no operands
-      if (variant.sourceOperands.length === 0 && variant.destOperands.length === 0) {
-        output += `\t${instrName}\n`;
-        continue;
+    // Process each instruction in this group
+    for (const instrName of group.instructions) {
+      // Add a newline between different instructions
+      if (previousInstrName && previousInstrName !== instrName) {
+        output += "\n";
       }
       
-      // Process sizes for this variant
-      for (const size of variant.sizes) {
-        const sizeSuffix = size ? `.${size}` : '';
+      // Process variants
+      for (const variant of variants) {
+        // Handle instructions with no operands
+        if (variant.sourceOperands.length === 0 && variant.destOperands.length === 0) {
+          output += `\t${instrName}\n`;
+          continue;
+        }
         
-        // Single operand instructions (dest only)
-        if (variant.sourceOperands.length === 0 && variant.destOperands.length > 0) {        
-          for (const destOp of variant.destOperands) {
-            const destExample = getExampleValue(destOp, size, instrName);
-            output += `\t${instrName}${sizeSuffix}\t${destExample}\n`;
-          }
-        }
-        // Source-only instructions (like branch)
-        else if (variant.sourceOperands.length > 0 && variant.destOperands.length === 0) {
-          for (const srcOp of variant.sourceOperands) {
-            const srcExample = getExampleValue(srcOp, size, instrName);
-            output += `\t${instrName}${sizeSuffix}\t${srcExample}\n`;
-          }
-        }
-        // Two-operand instructions - systematically generate all combinations
-        else if (variant.sourceOperands.length > 0 && variant.destOperands.length > 0) {
-          // Generate all combinations
-          for (const srcOp of variant.sourceOperands) {
-            const srcExample = getExampleValue(srcOp, size, instrName);
-            
+        // Process sizes for this variant
+        for (const size of variant.sizes) {
+          const sizeSuffix = size ? `.${size}` : '';
+          
+          // Single operand instructions (dest only)
+          if (variant.sourceOperands.length === 0 && variant.destOperands.length > 0) {        
             for (const destOp of variant.destOperands) {
               const destExample = getExampleValue(destOp, size, instrName);
-              output += `\t${instrName}${sizeSuffix}\t${srcExample},${destExample}\n`;
+              output += `\t${instrName}${sizeSuffix}\t${destExample}\n`;
+            }
+          }
+          // Source-only instructions (like branch)
+          else if (variant.sourceOperands.length > 0 && variant.destOperands.length === 0) {
+            for (const srcOp of variant.sourceOperands) {
+              const srcExample = getExampleValue(srcOp, size, instrName);
+              output += `\t${instrName}${sizeSuffix}\t${srcExample}\n`;
+            }
+          }
+          // Two-operand instructions - systematically generate all combinations
+          else if (variant.sourceOperands.length > 0 && variant.destOperands.length > 0) {
+            // Generate all combinations
+            for (const srcOp of variant.sourceOperands) {
+              const srcExample = getExampleValue(srcOp, size, instrName);
+              
+              for (const destOp of variant.destOperands) {
+                const destExample = getExampleValue(destOp, size, instrName);
+                output += `\t${instrName}${sizeSuffix}\t${srcExample},${destExample}\n`;
+              }
+            }
+          }
+        }
+        
+        // For bit manipulation instructions, also generate without size specifier
+        if (['btst', 'bchg', 'bclr', 'bset'].includes(instrName)) {
+          for (const srcOp of variant.sourceOperands) {
+            const srcExample = getExampleValue(srcOp, '', instrName);
+            
+            for (const destOp of variant.destOperands) {
+              const destExample = getExampleValue(destOp, '', instrName);
+              output += `\t${instrName}\t${srcExample},${destExample}\n`;
             }
           }
         }
       }
       
-      // For bit manipulation and other instructions, also generate without size specifier
-      if (['btst', 'bchg', 'bclr', 'bset'].includes(instrName)) {
-        for (const srcOp of variant.sourceOperands) {
-          const srcExample = getExampleValue(srcOp, '', instrName);
-          
-          for (const destOp of variant.destOperands) {
-            const destExample = getExampleValue(destOp, '', instrName);
-            output += `\t${instrName}\t${srcExample},${destExample}\n`;
-          }
-        }
-      }
+      previousInstrName = instrName;
     }
-    
-    previousInstrName = instrName;
   }
   
   // Add end marker
@@ -120,9 +126,8 @@ function generateTestFiles() {
   // Define output path
   const validTestsPath = './valid_instructions.asm';
   
-  // Write file using Node.js fs module which Bun supports
-  const fs = require('fs');
-  fs.writeFileSync(validTestsPath, validTests);
+  // Write file using Bun.write
+  Bun.write(validTestsPath, validTests);
   console.log(`Valid tests written to: ${validTestsPath}`);
 }
 
