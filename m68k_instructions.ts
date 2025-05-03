@@ -125,7 +125,7 @@ export const data: InstructionSet = [
     instructions: ["bra", "bsr", "bhi", "bls", "bcc", "bcs", "bne", "beq", "bvc", "bvs", "bpl", "bmi", "bge", "blt", "bgt", "ble", "bhs", "blo"],
     variants: [
       {
-        sizes: ["s", "w"],
+        sizes: ["s", "w", ""],
         sourceOperands: ["label"],
         destOperands: []
       }

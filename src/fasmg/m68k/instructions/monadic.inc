@@ -160,37 +160,23 @@ end iterate ; <instr, first_byte>
 ;     hs = cc
 ;     lo = cs
 iterate <cc,  cc_bits>, \
-        \ ; 
         hi,     0010b, \
-        \ ; 
         ls,     0011b, \
-        \ ; 
         cc,     0100b, \
         \ ; Alias for cc
         hs,     0100b, \
-        \ ; 
         cs,     0101b, \
         \ ; Alias for cs
         lo,     0101b, \
-        \ ; 
         ne,     0110b, \
-        \ ; 
         eq,     0111b, \
-        \ ; 
         vc,     1000b, \
-        \ ; 
         vs,     1001b, \
-        \ ; 
         pl,     1010b, \
-        \ ; 
         mi,     1011b, \
-        \ ; 
         ge,     1100b, \
-        \ ; 
         lt,     1101b, \
-        \ ; 
         gt,     1110b, \
-        \ ; 
         le,     1111b
 
         ; TODO: Check if fits in a byte. Maybe do that in parse_operand?
@@ -235,6 +221,11 @@ iterate <cc,  cc_bits>, \
         ; TODO: Move to aliases.inc file!!!
         macro b#cc.s? line&
             b#cc.b line
+        end macro
+
+        ; TODO: Move to aliases.inc file!!!
+        macro b#cc? line&
+            b#cc.w line
         end macro
 
 end iterate ; <cc, cc_bits>

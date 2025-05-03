@@ -189,3 +189,11 @@ iterate d, l,r
     end macro
 
 end iterate
+
+macro bra? line&
+    bra.w line
+end macro
+
+macro bsr? line&
+    bsr.w line
+end macro

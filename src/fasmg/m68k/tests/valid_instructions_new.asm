@@ -2372,57 +2372,75 @@
 
 	bra.s	@
 	bra.w	@
+	bra	@
 
 	bsr.s	@
 	bsr.w	@
+	bsr	@
 
 	bhi.s	@
 	bhi.w	@
+	bhi	@
 
 	bls.s	@
 	bls.w	@
+	bls	@
 
 	bcc.s	@
 	bcc.w	@
+	bcc	@
 
 	bcs.s	@
 	bcs.w	@
+	bcs	@
 
 	bne.s	@
 	bne.w	@
+	bne	@
 
 	beq.s	@
 	beq.w	@
+	beq	@
 
 	bvc.s	@
 	bvc.w	@
+	bvc	@
 
 	bvs.s	@
 	bvs.w	@
+	bvs	@
 
 	bpl.s	@
 	bpl.w	@
+	bpl	@
 
 	bmi.s	@
 	bmi.w	@
+	bmi	@
 
 	bge.s	@
 	bge.w	@
+	bge	@
 
 	blt.s	@
 	blt.w	@
+	blt	@
 
 	bgt.s	@
 	bgt.w	@
+	bgt	@
 
 	ble.s	@
 	ble.w	@
+	ble	@
 
 	bhs.s	@
 	bhs.w	@
+	bhs	@
 
 	blo.s	@
 	blo.w	@
+	blo	@
 
 	dbt.w	d2,@
 	dbt.w	d5,@
