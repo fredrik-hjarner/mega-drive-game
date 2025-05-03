@@ -2,7 +2,8 @@
 export type OperandType = 
     | "dn" | "an" | "(an)" | "(an)+" | "-(an)" | "d(an)" | "d(an,ix)" 
     | "abs.w" | "abs.l" | "d(pc)" | "d(pc,ix)" | "imm" | "imm3" | "imm4" 
-    | "imm8" | "imm8s" | "imm16" | "label" | "register_list" | "ccr" | "sr";
+    | "imm8" | "imm8s" | "imm16" | "label" | "register_list" | "ccr" | "sr"
+    | "usp";
 
 export type OperandSize = "b" | "w" | "l" | "s" | "";
 
@@ -172,15 +173,17 @@ export const data: InstructionSet = [
     instructions: ["move"],
     variants: [
       {
-        sizes: ["b"],
+        sizes: ["b", "w", "l"],
         sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "imm", "d(pc)", "d(pc,ix)"],
         destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
       },
-      {
-        sizes: ["w", "l"],
-        sourceOperands: ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "imm", "d(pc)", "d(pc,ix)"],
-        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-      },
+      // // TODO: This includes "an"???
+      // https://github.com/prb28/m68k-instructions-documentation/blob/master/instructions/move.md
+      // {
+      //   sizes: ["w", "l"],
+      //   sourceOperands: ["an"],
+      //   destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+      // },
       {
         sizes: ["w"],
         sourceOperands: ["sr"],
@@ -199,8 +202,13 @@ export const data: InstructionSet = [
       // MOVE USP
       {
         sizes: ["l"],
-        sourceOperands: ["an"],
+        sourceOperands: ["usp"],
         destOperands: ["an"]
+      },
+      {
+        sizes: ["l"],
+        sourceOperands: ["an"],
+        destOperands: ["usp"]
       }
     ]
   },

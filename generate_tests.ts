@@ -31,7 +31,8 @@ const examples: Record<OperandType, string[]> = {
   ],
   "register_list": ["d5-a7", "d0-d7/a0-a7"],
   "ccr": ["ccr"],
-  "sr": ["sr"]
+  "sr": ["sr"],
+  "usp": ["usp"]
 };
 
 // Helper function to get example values

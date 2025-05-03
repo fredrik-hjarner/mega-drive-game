@@ -1862,34 +1862,6 @@
 	move.w	d5,($FFFFFFFF).w
 	move.w	d2,($FFFFFFFF).l
 	move.w	d5,($FFFFFFFF).l
-	move.w	a2,d2
-	move.w	a2,d5
-	move.w	a5,d2
-	move.w	a5,d5
-	move.w	a2,(a2)
-	move.w	a2,(a5)
-	move.w	a5,(a2)
-	move.w	a5,(a5)
-	move.w	a2,(a2)+
-	move.w	a2,(a5)+
-	move.w	a5,(a2)+
-	move.w	a5,(a5)+
-	move.w	a2,-(a2)
-	move.w	a2,-(a5)
-	move.w	a5,-(a2)
-	move.w	a5,-(a5)
-	move.w	a2,$7FFF(a2)
-	move.w	a2,$7FFF(a5)
-	move.w	a5,$7FFF(a2)
-	move.w	a5,$7FFF(a5)
-	move.w	a2,$7F(a2,d5.w)
-	move.w	a2,$7F(a5,d2.w)
-	move.w	a5,$7F(a2,d5.w)
-	move.w	a5,$7F(a5,d2.w)
-	move.w	a2,($FFFFFFFF).w
-	move.w	a5,($FFFFFFFF).w
-	move.w	a2,($FFFFFFFF).l
-	move.w	a5,($FFFFFFFF).l
 	move.w	(a2),d2
 	move.w	(a2),d5
 	move.w	(a5),d2
@@ -2170,34 +2142,6 @@
 	move.l	d5,($FFFFFFFF).w
 	move.l	d2,($FFFFFFFF).l
 	move.l	d5,($FFFFFFFF).l
-	move.l	a2,d2
-	move.l	a2,d5
-	move.l	a5,d2
-	move.l	a5,d5
-	move.l	a2,(a2)
-	move.l	a2,(a5)
-	move.l	a5,(a2)
-	move.l	a5,(a5)
-	move.l	a2,(a2)+
-	move.l	a2,(a5)+
-	move.l	a5,(a2)+
-	move.l	a5,(a5)+
-	move.l	a2,-(a2)
-	move.l	a2,-(a5)
-	move.l	a5,-(a2)
-	move.l	a5,-(a5)
-	move.l	a2,$7FFF(a2)
-	move.l	a2,$7FFF(a5)
-	move.l	a5,$7FFF(a2)
-	move.l	a5,$7FFF(a5)
-	move.l	a2,$7F(a2,d5.w)
-	move.l	a2,$7F(a5,d2.w)
-	move.l	a5,$7F(a2,d5.w)
-	move.l	a5,$7F(a5,d2.w)
-	move.l	a2,($FFFFFFFF).w
-	move.l	a5,($FFFFFFFF).w
-	move.l	a2,($FFFFFFFF).l
-	move.l	a5,($FFFFFFFF).l
 	move.l	(a2),d2
 	move.l	(a2),d5
 	move.l	(a5),d2
@@ -2504,10 +2448,10 @@
 	move.w	#$FF,sr
 	move.w	#$FFFF,sr
 	move.w	#$FFFFFFFF,sr
-	move.l	a2,a2
-	move.l	a2,a5
-	move.l	a5,a2
-	move.l	a5,a5
+	move.l	usp,a2
+	move.l	usp,a5
+	move.l	a2,usp
+	move.l	a5,usp
 
 	negx.b	d2
 	negx.b	d5

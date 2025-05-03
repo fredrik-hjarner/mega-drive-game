@@ -5,12 +5,14 @@ all: build hexdump
 clown: clownassembler hexdump
 # This is only to test if the test generator is working
 clown_new:
-	clownassembler -c -o tests/test.bin -i tests/valid_instructions_new.asm
+	clownassembler -w -c -o tests/test.bin -i tests/valid_instructions_new.asm
+	make hexdump
 
 vasm: build_vasm hexdump
 # This is only to test if the test generator is working
 vasm_new:
 	sed 's/@/\*/g' tests/valid_instructions_new.asm | vasm -no-opt -Fbin -spaces -wfail -o tests/test.bin
+	make hexdump
 
 # clownassembler runs `valid_instructions.asm` directly while fasmg runs a wrapper
 # file that includes the m68k instruction set.
