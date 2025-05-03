@@ -70,9 +70,11 @@ function generateValidTests() {
           output += `\t${instrName}\n`;
           continue;
         }
+
+        const sizes = [...new Set([...variant.sizes, ""])] as OperandSize[];
         
         // Process sizes for this variant
-        for (const size of variant.sizes) {
+        for (const size of sizes) {
           const sizeSuffix = size ? `.${size}` : '';
           
           // Single operand instructions (dest only)
