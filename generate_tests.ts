@@ -3,7 +3,7 @@
 // This script generates test cases for 68K assembly instructions
 
 // Load instruction definitions from TypeScript file
-import { data, OperandType } from './m68k_instructions.ts';
+import { data, OperandSize, OperandType } from './m68k_instructions.ts';
 const instructionsData = data;
 
 // Example values for each addressing mode
@@ -23,6 +23,7 @@ const examples: Record<OperandType, string[]> = {
   "imm3": ["#1", "#7"],
   "imm4": ["#2"],
   "imm8": ["#0", "#$FF"],
+  "imm16": ["#0", "#$FF", "#$FFFF"],
   "label": [
     "@",
     // "label",
@@ -33,8 +34,14 @@ const examples: Record<OperandType, string[]> = {
 };
 
 // Helper function to get example values
-function getExampleValues(operandType) {
-  return examples[operandType] || [];
+function getExampleValues(operandType, instr: string, size: OperandSize) {
+  // special cases.
+  if(size === 'b' && operandType === 'imm') {
+    return ["#0", "#$FF"];
+  }
+
+  // default case
+  return examples[operandType];
 }
 
 // Generate valid test cases
@@ -69,7 +76,7 @@ function generateValidTests() {
           // Single operand instructions (dest only)
           if (variant.sourceOperands.length === 0 && variant.destOperands.length > 0) {
             for (const destOp of variant.destOperands) {
-              const destExamples = getExampleValues(destOp);
+              const destExamples = getExampleValues(destOp, instrName, size);
               
               for (const destExample of destExamples) {
                 output += `\t${instrName}${sizeSuffix}\t${destExample}\n`;
@@ -79,7 +86,7 @@ function generateValidTests() {
           // Source-only instructions (like branch)
           else if (variant.sourceOperands.length > 0 && variant.destOperands.length === 0) {
             for (const srcOp of variant.sourceOperands) {
-              const srcExamples = getExampleValues(srcOp);
+              const srcExamples = getExampleValues(srcOp, instrName, size);
               
               for (const srcExample of srcExamples) {
                 output += `\t${instrName}${sizeSuffix}\t${srcExample}\n`;
@@ -90,10 +97,10 @@ function generateValidTests() {
           else if (variant.sourceOperands.length > 0 && variant.destOperands.length > 0) {
             // Generate all combinations for all instructions
             for (const srcOp of variant.sourceOperands) {
-              const srcExamples = getExampleValues(srcOp);
+              const srcExamples = getExampleValues(srcOp, instrName, size);
               
               for (const destOp of variant.destOperands) {
-                const destExamples = getExampleValues(destOp);
+                const destExamples = getExampleValues(destOp, instrName, size);
                 
                 // Generate all combinations of source and dest examples
                 for (const srcExample of srcExamples) {

@@ -1,7 +1,5 @@
 	ori.b	#0,ccr
 	ori.b	#$FF,ccr
-	ori.b	#$FFFF,ccr
-	ori.b	#$FFFFFFFF,ccr
 	ori.w	#0,sr
 	ori.w	#$FF,sr
 	ori.w	#$FFFF,sr
@@ -10,58 +8,30 @@
 	ori.b	#0,d5
 	ori.b	#$FF,d2
 	ori.b	#$FF,d5
-	ori.b	#$FFFF,d2
-	ori.b	#$FFFF,d5
-	ori.b	#$FFFFFFFF,d2
-	ori.b	#$FFFFFFFF,d5
 	ori.b	#0,(a2)
 	ori.b	#0,(a5)
 	ori.b	#$FF,(a2)
 	ori.b	#$FF,(a5)
-	ori.b	#$FFFF,(a2)
-	ori.b	#$FFFF,(a5)
-	ori.b	#$FFFFFFFF,(a2)
-	ori.b	#$FFFFFFFF,(a5)
 	ori.b	#0,(a2)+
 	ori.b	#0,(a5)+
 	ori.b	#$FF,(a2)+
 	ori.b	#$FF,(a5)+
-	ori.b	#$FFFF,(a2)+
-	ori.b	#$FFFF,(a5)+
-	ori.b	#$FFFFFFFF,(a2)+
-	ori.b	#$FFFFFFFF,(a5)+
 	ori.b	#0,-(a2)
 	ori.b	#0,-(a5)
 	ori.b	#$FF,-(a2)
 	ori.b	#$FF,-(a5)
-	ori.b	#$FFFF,-(a2)
-	ori.b	#$FFFF,-(a5)
-	ori.b	#$FFFFFFFF,-(a2)
-	ori.b	#$FFFFFFFF,-(a5)
 	ori.b	#0,$7FFF(a2)
 	ori.b	#0,$7FFF(a5)
 	ori.b	#$FF,$7FFF(a2)
 	ori.b	#$FF,$7FFF(a5)
-	ori.b	#$FFFF,$7FFF(a2)
-	ori.b	#$FFFF,$7FFF(a5)
-	ori.b	#$FFFFFFFF,$7FFF(a2)
-	ori.b	#$FFFFFFFF,$7FFF(a5)
 	ori.b	#0,$7F(a2,d5.w)
 	ori.b	#0,$7F(a5,d2.w)
 	ori.b	#$FF,$7F(a2,d5.w)
 	ori.b	#$FF,$7F(a5,d2.w)
-	ori.b	#$FFFF,$7F(a2,d5.w)
-	ori.b	#$FFFF,$7F(a5,d2.w)
-	ori.b	#$FFFFFFFF,$7F(a2,d5.w)
-	ori.b	#$FFFFFFFF,$7F(a5,d2.w)
 	ori.b	#0,($FFFFFFFF).w
 	ori.b	#$FF,($FFFFFFFF).w
-	ori.b	#$FFFF,($FFFFFFFF).w
-	ori.b	#$FFFFFFFF,($FFFFFFFF).w
 	ori.b	#0,($FFFFFFFF).l
 	ori.b	#$FF,($FFFFFFFF).l
-	ori.b	#$FFFF,($FFFFFFFF).l
-	ori.b	#$FFFFFFFF,($FFFFFFFF).l
 	ori.w	#0,d2
 	ori.w	#0,d5
 	ori.w	#$FF,d2
@@ -177,8 +147,6 @@
 
 	andi.b	#0,ccr
 	andi.b	#$FF,ccr
-	andi.b	#$FFFF,ccr
-	andi.b	#$FFFFFFFF,ccr
 	andi.w	#0,sr
 	andi.w	#$FF,sr
 	andi.w	#$FFFF,sr
@@ -187,58 +155,30 @@
 	andi.b	#0,d5
 	andi.b	#$FF,d2
 	andi.b	#$FF,d5
-	andi.b	#$FFFF,d2
-	andi.b	#$FFFF,d5
-	andi.b	#$FFFFFFFF,d2
-	andi.b	#$FFFFFFFF,d5
 	andi.b	#0,(a2)
 	andi.b	#0,(a5)
 	andi.b	#$FF,(a2)
 	andi.b	#$FF,(a5)
-	andi.b	#$FFFF,(a2)
-	andi.b	#$FFFF,(a5)
-	andi.b	#$FFFFFFFF,(a2)
-	andi.b	#$FFFFFFFF,(a5)
 	andi.b	#0,(a2)+
 	andi.b	#0,(a5)+
 	andi.b	#$FF,(a2)+
 	andi.b	#$FF,(a5)+
-	andi.b	#$FFFF,(a2)+
-	andi.b	#$FFFF,(a5)+
-	andi.b	#$FFFFFFFF,(a2)+
-	andi.b	#$FFFFFFFF,(a5)+
 	andi.b	#0,-(a2)
 	andi.b	#0,-(a5)
 	andi.b	#$FF,-(a2)
 	andi.b	#$FF,-(a5)
-	andi.b	#$FFFF,-(a2)
-	andi.b	#$FFFF,-(a5)
-	andi.b	#$FFFFFFFF,-(a2)
-	andi.b	#$FFFFFFFF,-(a5)
 	andi.b	#0,$7FFF(a2)
 	andi.b	#0,$7FFF(a5)
 	andi.b	#$FF,$7FFF(a2)
 	andi.b	#$FF,$7FFF(a5)
-	andi.b	#$FFFF,$7FFF(a2)
-	andi.b	#$FFFF,$7FFF(a5)
-	andi.b	#$FFFFFFFF,$7FFF(a2)
-	andi.b	#$FFFFFFFF,$7FFF(a5)
 	andi.b	#0,$7F(a2,d5.w)
 	andi.b	#0,$7F(a5,d2.w)
 	andi.b	#$FF,$7F(a2,d5.w)
 	andi.b	#$FF,$7F(a5,d2.w)
-	andi.b	#$FFFF,$7F(a2,d5.w)
-	andi.b	#$FFFF,$7F(a5,d2.w)
-	andi.b	#$FFFFFFFF,$7F(a2,d5.w)
-	andi.b	#$FFFFFFFF,$7F(a5,d2.w)
 	andi.b	#0,($FFFFFFFF).w
 	andi.b	#$FF,($FFFFFFFF).w
-	andi.b	#$FFFF,($FFFFFFFF).w
-	andi.b	#$FFFFFFFF,($FFFFFFFF).w
 	andi.b	#0,($FFFFFFFF).l
 	andi.b	#$FF,($FFFFFFFF).l
-	andi.b	#$FFFF,($FFFFFFFF).l
-	andi.b	#$FFFFFFFF,($FFFFFFFF).l
 	andi.w	#0,d2
 	andi.w	#0,d5
 	andi.w	#$FF,d2
@@ -354,8 +294,6 @@
 
 	eori.b	#0,ccr
 	eori.b	#$FF,ccr
-	eori.b	#$FFFF,ccr
-	eori.b	#$FFFFFFFF,ccr
 	eori.w	#0,sr
 	eori.w	#$FF,sr
 	eori.w	#$FFFF,sr
@@ -364,58 +302,30 @@
 	eori.b	#0,d5
 	eori.b	#$FF,d2
 	eori.b	#$FF,d5
-	eori.b	#$FFFF,d2
-	eori.b	#$FFFF,d5
-	eori.b	#$FFFFFFFF,d2
-	eori.b	#$FFFFFFFF,d5
 	eori.b	#0,(a2)
 	eori.b	#0,(a5)
 	eori.b	#$FF,(a2)
 	eori.b	#$FF,(a5)
-	eori.b	#$FFFF,(a2)
-	eori.b	#$FFFF,(a5)
-	eori.b	#$FFFFFFFF,(a2)
-	eori.b	#$FFFFFFFF,(a5)
 	eori.b	#0,(a2)+
 	eori.b	#0,(a5)+
 	eori.b	#$FF,(a2)+
 	eori.b	#$FF,(a5)+
-	eori.b	#$FFFF,(a2)+
-	eori.b	#$FFFF,(a5)+
-	eori.b	#$FFFFFFFF,(a2)+
-	eori.b	#$FFFFFFFF,(a5)+
 	eori.b	#0,-(a2)
 	eori.b	#0,-(a5)
 	eori.b	#$FF,-(a2)
 	eori.b	#$FF,-(a5)
-	eori.b	#$FFFF,-(a2)
-	eori.b	#$FFFF,-(a5)
-	eori.b	#$FFFFFFFF,-(a2)
-	eori.b	#$FFFFFFFF,-(a5)
 	eori.b	#0,$7FFF(a2)
 	eori.b	#0,$7FFF(a5)
 	eori.b	#$FF,$7FFF(a2)
 	eori.b	#$FF,$7FFF(a5)
-	eori.b	#$FFFF,$7FFF(a2)
-	eori.b	#$FFFF,$7FFF(a5)
-	eori.b	#$FFFFFFFF,$7FFF(a2)
-	eori.b	#$FFFFFFFF,$7FFF(a5)
 	eori.b	#0,$7F(a2,d5.w)
 	eori.b	#0,$7F(a5,d2.w)
 	eori.b	#$FF,$7F(a2,d5.w)
 	eori.b	#$FF,$7F(a5,d2.w)
-	eori.b	#$FFFF,$7F(a2,d5.w)
-	eori.b	#$FFFF,$7F(a5,d2.w)
-	eori.b	#$FFFFFFFF,$7F(a2,d5.w)
-	eori.b	#$FFFFFFFF,$7F(a5,d2.w)
 	eori.b	#0,($FFFFFFFF).w
 	eori.b	#$FF,($FFFFFFFF).w
-	eori.b	#$FFFF,($FFFFFFFF).w
-	eori.b	#$FFFFFFFF,($FFFFFFFF).w
 	eori.b	#0,($FFFFFFFF).l
 	eori.b	#$FF,($FFFFFFFF).l
-	eori.b	#$FFFF,($FFFFFFFF).l
-	eori.b	#$FFFFFFFF,($FFFFFFFF).l
 	eori.w	#0,d2
 	eori.w	#0,d5
 	eori.w	#$FF,d2
@@ -533,58 +443,30 @@
 	subi.b	#0,d5
 	subi.b	#$FF,d2
 	subi.b	#$FF,d5
-	subi.b	#$FFFF,d2
-	subi.b	#$FFFF,d5
-	subi.b	#$FFFFFFFF,d2
-	subi.b	#$FFFFFFFF,d5
 	subi.b	#0,(a2)
 	subi.b	#0,(a5)
 	subi.b	#$FF,(a2)
 	subi.b	#$FF,(a5)
-	subi.b	#$FFFF,(a2)
-	subi.b	#$FFFF,(a5)
-	subi.b	#$FFFFFFFF,(a2)
-	subi.b	#$FFFFFFFF,(a5)
 	subi.b	#0,(a2)+
 	subi.b	#0,(a5)+
 	subi.b	#$FF,(a2)+
 	subi.b	#$FF,(a5)+
-	subi.b	#$FFFF,(a2)+
-	subi.b	#$FFFF,(a5)+
-	subi.b	#$FFFFFFFF,(a2)+
-	subi.b	#$FFFFFFFF,(a5)+
 	subi.b	#0,-(a2)
 	subi.b	#0,-(a5)
 	subi.b	#$FF,-(a2)
 	subi.b	#$FF,-(a5)
-	subi.b	#$FFFF,-(a2)
-	subi.b	#$FFFF,-(a5)
-	subi.b	#$FFFFFFFF,-(a2)
-	subi.b	#$FFFFFFFF,-(a5)
 	subi.b	#0,$7FFF(a2)
 	subi.b	#0,$7FFF(a5)
 	subi.b	#$FF,$7FFF(a2)
 	subi.b	#$FF,$7FFF(a5)
-	subi.b	#$FFFF,$7FFF(a2)
-	subi.b	#$FFFF,$7FFF(a5)
-	subi.b	#$FFFFFFFF,$7FFF(a2)
-	subi.b	#$FFFFFFFF,$7FFF(a5)
 	subi.b	#0,$7F(a2,d5.w)
 	subi.b	#0,$7F(a5,d2.w)
 	subi.b	#$FF,$7F(a2,d5.w)
 	subi.b	#$FF,$7F(a5,d2.w)
-	subi.b	#$FFFF,$7F(a2,d5.w)
-	subi.b	#$FFFF,$7F(a5,d2.w)
-	subi.b	#$FFFFFFFF,$7F(a2,d5.w)
-	subi.b	#$FFFFFFFF,$7F(a5,d2.w)
 	subi.b	#0,($FFFFFFFF).w
 	subi.b	#$FF,($FFFFFFFF).w
-	subi.b	#$FFFF,($FFFFFFFF).w
-	subi.b	#$FFFFFFFF,($FFFFFFFF).w
 	subi.b	#0,($FFFFFFFF).l
 	subi.b	#$FF,($FFFFFFFF).l
-	subi.b	#$FFFF,($FFFFFFFF).l
-	subi.b	#$FFFFFFFF,($FFFFFFFF).l
 	subi.w	#0,d2
 	subi.w	#0,d5
 	subi.w	#$FF,d2
@@ -702,58 +584,30 @@
 	addi.b	#0,d5
 	addi.b	#$FF,d2
 	addi.b	#$FF,d5
-	addi.b	#$FFFF,d2
-	addi.b	#$FFFF,d5
-	addi.b	#$FFFFFFFF,d2
-	addi.b	#$FFFFFFFF,d5
 	addi.b	#0,(a2)
 	addi.b	#0,(a5)
 	addi.b	#$FF,(a2)
 	addi.b	#$FF,(a5)
-	addi.b	#$FFFF,(a2)
-	addi.b	#$FFFF,(a5)
-	addi.b	#$FFFFFFFF,(a2)
-	addi.b	#$FFFFFFFF,(a5)
 	addi.b	#0,(a2)+
 	addi.b	#0,(a5)+
 	addi.b	#$FF,(a2)+
 	addi.b	#$FF,(a5)+
-	addi.b	#$FFFF,(a2)+
-	addi.b	#$FFFF,(a5)+
-	addi.b	#$FFFFFFFF,(a2)+
-	addi.b	#$FFFFFFFF,(a5)+
 	addi.b	#0,-(a2)
 	addi.b	#0,-(a5)
 	addi.b	#$FF,-(a2)
 	addi.b	#$FF,-(a5)
-	addi.b	#$FFFF,-(a2)
-	addi.b	#$FFFF,-(a5)
-	addi.b	#$FFFFFFFF,-(a2)
-	addi.b	#$FFFFFFFF,-(a5)
 	addi.b	#0,$7FFF(a2)
 	addi.b	#0,$7FFF(a5)
 	addi.b	#$FF,$7FFF(a2)
 	addi.b	#$FF,$7FFF(a5)
-	addi.b	#$FFFF,$7FFF(a2)
-	addi.b	#$FFFF,$7FFF(a5)
-	addi.b	#$FFFFFFFF,$7FFF(a2)
-	addi.b	#$FFFFFFFF,$7FFF(a5)
 	addi.b	#0,$7F(a2,d5.w)
 	addi.b	#0,$7F(a5,d2.w)
 	addi.b	#$FF,$7F(a2,d5.w)
 	addi.b	#$FF,$7F(a5,d2.w)
-	addi.b	#$FFFF,$7F(a2,d5.w)
-	addi.b	#$FFFF,$7F(a5,d2.w)
-	addi.b	#$FFFFFFFF,$7F(a2,d5.w)
-	addi.b	#$FFFFFFFF,$7F(a5,d2.w)
 	addi.b	#0,($FFFFFFFF).w
 	addi.b	#$FF,($FFFFFFFF).w
-	addi.b	#$FFFF,($FFFFFFFF).w
-	addi.b	#$FFFFFFFF,($FFFFFFFF).w
 	addi.b	#0,($FFFFFFFF).l
 	addi.b	#$FF,($FFFFFFFF).l
-	addi.b	#$FFFF,($FFFFFFFF).l
-	addi.b	#$FFFFFFFF,($FFFFFFFF).l
 	addi.w	#0,d2
 	addi.w	#0,d5
 	addi.w	#$FF,d2
@@ -871,58 +725,30 @@
 	cmpi.b	#0,d5
 	cmpi.b	#$FF,d2
 	cmpi.b	#$FF,d5
-	cmpi.b	#$FFFF,d2
-	cmpi.b	#$FFFF,d5
-	cmpi.b	#$FFFFFFFF,d2
-	cmpi.b	#$FFFFFFFF,d5
 	cmpi.b	#0,(a2)
 	cmpi.b	#0,(a5)
 	cmpi.b	#$FF,(a2)
 	cmpi.b	#$FF,(a5)
-	cmpi.b	#$FFFF,(a2)
-	cmpi.b	#$FFFF,(a5)
-	cmpi.b	#$FFFFFFFF,(a2)
-	cmpi.b	#$FFFFFFFF,(a5)
 	cmpi.b	#0,(a2)+
 	cmpi.b	#0,(a5)+
 	cmpi.b	#$FF,(a2)+
 	cmpi.b	#$FF,(a5)+
-	cmpi.b	#$FFFF,(a2)+
-	cmpi.b	#$FFFF,(a5)+
-	cmpi.b	#$FFFFFFFF,(a2)+
-	cmpi.b	#$FFFFFFFF,(a5)+
 	cmpi.b	#0,-(a2)
 	cmpi.b	#0,-(a5)
 	cmpi.b	#$FF,-(a2)
 	cmpi.b	#$FF,-(a5)
-	cmpi.b	#$FFFF,-(a2)
-	cmpi.b	#$FFFF,-(a5)
-	cmpi.b	#$FFFFFFFF,-(a2)
-	cmpi.b	#$FFFFFFFF,-(a5)
 	cmpi.b	#0,$7FFF(a2)
 	cmpi.b	#0,$7FFF(a5)
 	cmpi.b	#$FF,$7FFF(a2)
 	cmpi.b	#$FF,$7FFF(a5)
-	cmpi.b	#$FFFF,$7FFF(a2)
-	cmpi.b	#$FFFF,$7FFF(a5)
-	cmpi.b	#$FFFFFFFF,$7FFF(a2)
-	cmpi.b	#$FFFFFFFF,$7FFF(a5)
 	cmpi.b	#0,$7F(a2,d5.w)
 	cmpi.b	#0,$7F(a5,d2.w)
 	cmpi.b	#$FF,$7F(a2,d5.w)
 	cmpi.b	#$FF,$7F(a5,d2.w)
-	cmpi.b	#$FFFF,$7F(a2,d5.w)
-	cmpi.b	#$FFFF,$7F(a5,d2.w)
-	cmpi.b	#$FFFFFFFF,$7F(a2,d5.w)
-	cmpi.b	#$FFFFFFFF,$7F(a5,d2.w)
 	cmpi.b	#0,($FFFFFFFF).w
 	cmpi.b	#$FF,($FFFFFFFF).w
-	cmpi.b	#$FFFF,($FFFFFFFF).w
-	cmpi.b	#$FFFFFFFF,($FFFFFFFF).w
 	cmpi.b	#0,($FFFFFFFF).l
 	cmpi.b	#$FF,($FFFFFFFF).l
-	cmpi.b	#$FFFF,($FFFFFFFF).l
-	cmpi.b	#$FFFFFFFF,($FFFFFFFF).l
 	cmpi.w	#0,d2
 	cmpi.w	#0,d5
 	cmpi.w	#$FF,d2
@@ -1072,66 +898,34 @@
 	btst.l	#0,d5
 	btst.l	#$FF,d2
 	btst.l	#$FF,d5
-	btst.l	#$FFFF,d2
-	btst.l	#$FFFF,d5
-	btst.l	#$FFFFFFFF,d2
-	btst.l	#$FFFFFFFF,d5
 	btst.b	#0,(a2)
 	btst.b	#0,(a5)
 	btst.b	#$FF,(a2)
 	btst.b	#$FF,(a5)
-	btst.b	#$FFFF,(a2)
-	btst.b	#$FFFF,(a5)
-	btst.b	#$FFFFFFFF,(a2)
-	btst.b	#$FFFFFFFF,(a5)
 	btst.b	#0,(a2)+
 	btst.b	#0,(a5)+
 	btst.b	#$FF,(a2)+
 	btst.b	#$FF,(a5)+
-	btst.b	#$FFFF,(a2)+
-	btst.b	#$FFFF,(a5)+
-	btst.b	#$FFFFFFFF,(a2)+
-	btst.b	#$FFFFFFFF,(a5)+
 	btst.b	#0,-(a2)
 	btst.b	#0,-(a5)
 	btst.b	#$FF,-(a2)
 	btst.b	#$FF,-(a5)
-	btst.b	#$FFFF,-(a2)
-	btst.b	#$FFFF,-(a5)
-	btst.b	#$FFFFFFFF,-(a2)
-	btst.b	#$FFFFFFFF,-(a5)
 	btst.b	#0,$7FFF(a2)
 	btst.b	#0,$7FFF(a5)
 	btst.b	#$FF,$7FFF(a2)
 	btst.b	#$FF,$7FFF(a5)
-	btst.b	#$FFFF,$7FFF(a2)
-	btst.b	#$FFFF,$7FFF(a5)
-	btst.b	#$FFFFFFFF,$7FFF(a2)
-	btst.b	#$FFFFFFFF,$7FFF(a5)
 	btst.b	#0,$7F(a2,d5.w)
 	btst.b	#0,$7F(a5,d2.w)
 	btst.b	#$FF,$7F(a2,d5.w)
 	btst.b	#$FF,$7F(a5,d2.w)
-	btst.b	#$FFFF,$7F(a2,d5.w)
-	btst.b	#$FFFF,$7F(a5,d2.w)
-	btst.b	#$FFFFFFFF,$7F(a2,d5.w)
-	btst.b	#$FFFFFFFF,$7F(a5,d2.w)
 	btst.b	#0,($FFFFFFFF).w
 	btst.b	#$FF,($FFFFFFFF).w
-	btst.b	#$FFFF,($FFFFFFFF).w
-	btst.b	#$FFFFFFFF,($FFFFFFFF).w
 	btst.b	#0,($FFFFFFFF).l
 	btst.b	#$FF,($FFFFFFFF).l
-	btst.b	#$FFFF,($FFFFFFFF).l
-	btst.b	#$FFFFFFFF,($FFFFFFFF).l
 	btst.b	#0,@(pc)
 	btst.b	#$FF,@(pc)
-	btst.b	#$FFFF,@(pc)
-	btst.b	#$FFFFFFFF,@(pc)
 	btst.b	#0,@(pc,d5.w)
 	btst.b	#$FF,@(pc,d5.w)
-	btst.b	#$FFFF,@(pc,d5.w)
-	btst.b	#$FFFFFFFF,@(pc,d5.w)
 
 	bchg.l	d2,d2
 	bchg.l	d2,d5
@@ -1165,58 +959,30 @@
 	bchg.l	#0,d5
 	bchg.l	#$FF,d2
 	bchg.l	#$FF,d5
-	bchg.l	#$FFFF,d2
-	bchg.l	#$FFFF,d5
-	bchg.l	#$FFFFFFFF,d2
-	bchg.l	#$FFFFFFFF,d5
 	bchg.b	#0,(a2)
 	bchg.b	#0,(a5)
 	bchg.b	#$FF,(a2)
 	bchg.b	#$FF,(a5)
-	bchg.b	#$FFFF,(a2)
-	bchg.b	#$FFFF,(a5)
-	bchg.b	#$FFFFFFFF,(a2)
-	bchg.b	#$FFFFFFFF,(a5)
 	bchg.b	#0,(a2)+
 	bchg.b	#0,(a5)+
 	bchg.b	#$FF,(a2)+
 	bchg.b	#$FF,(a5)+
-	bchg.b	#$FFFF,(a2)+
-	bchg.b	#$FFFF,(a5)+
-	bchg.b	#$FFFFFFFF,(a2)+
-	bchg.b	#$FFFFFFFF,(a5)+
 	bchg.b	#0,-(a2)
 	bchg.b	#0,-(a5)
 	bchg.b	#$FF,-(a2)
 	bchg.b	#$FF,-(a5)
-	bchg.b	#$FFFF,-(a2)
-	bchg.b	#$FFFF,-(a5)
-	bchg.b	#$FFFFFFFF,-(a2)
-	bchg.b	#$FFFFFFFF,-(a5)
 	bchg.b	#0,$7FFF(a2)
 	bchg.b	#0,$7FFF(a5)
 	bchg.b	#$FF,$7FFF(a2)
 	bchg.b	#$FF,$7FFF(a5)
-	bchg.b	#$FFFF,$7FFF(a2)
-	bchg.b	#$FFFF,$7FFF(a5)
-	bchg.b	#$FFFFFFFF,$7FFF(a2)
-	bchg.b	#$FFFFFFFF,$7FFF(a5)
 	bchg.b	#0,$7F(a2,d5.w)
 	bchg.b	#0,$7F(a5,d2.w)
 	bchg.b	#$FF,$7F(a2,d5.w)
 	bchg.b	#$FF,$7F(a5,d2.w)
-	bchg.b	#$FFFF,$7F(a2,d5.w)
-	bchg.b	#$FFFF,$7F(a5,d2.w)
-	bchg.b	#$FFFFFFFF,$7F(a2,d5.w)
-	bchg.b	#$FFFFFFFF,$7F(a5,d2.w)
 	bchg.b	#0,($FFFFFFFF).w
 	bchg.b	#$FF,($FFFFFFFF).w
-	bchg.b	#$FFFF,($FFFFFFFF).w
-	bchg.b	#$FFFFFFFF,($FFFFFFFF).w
 	bchg.b	#0,($FFFFFFFF).l
 	bchg.b	#$FF,($FFFFFFFF).l
-	bchg.b	#$FFFF,($FFFFFFFF).l
-	bchg.b	#$FFFFFFFF,($FFFFFFFF).l
 
 	bclr.l	d2,d2
 	bclr.l	d2,d5
@@ -1250,58 +1016,30 @@
 	bclr.l	#0,d5
 	bclr.l	#$FF,d2
 	bclr.l	#$FF,d5
-	bclr.l	#$FFFF,d2
-	bclr.l	#$FFFF,d5
-	bclr.l	#$FFFFFFFF,d2
-	bclr.l	#$FFFFFFFF,d5
 	bclr.b	#0,(a2)
 	bclr.b	#0,(a5)
 	bclr.b	#$FF,(a2)
 	bclr.b	#$FF,(a5)
-	bclr.b	#$FFFF,(a2)
-	bclr.b	#$FFFF,(a5)
-	bclr.b	#$FFFFFFFF,(a2)
-	bclr.b	#$FFFFFFFF,(a5)
 	bclr.b	#0,(a2)+
 	bclr.b	#0,(a5)+
 	bclr.b	#$FF,(a2)+
 	bclr.b	#$FF,(a5)+
-	bclr.b	#$FFFF,(a2)+
-	bclr.b	#$FFFF,(a5)+
-	bclr.b	#$FFFFFFFF,(a2)+
-	bclr.b	#$FFFFFFFF,(a5)+
 	bclr.b	#0,-(a2)
 	bclr.b	#0,-(a5)
 	bclr.b	#$FF,-(a2)
 	bclr.b	#$FF,-(a5)
-	bclr.b	#$FFFF,-(a2)
-	bclr.b	#$FFFF,-(a5)
-	bclr.b	#$FFFFFFFF,-(a2)
-	bclr.b	#$FFFFFFFF,-(a5)
 	bclr.b	#0,$7FFF(a2)
 	bclr.b	#0,$7FFF(a5)
 	bclr.b	#$FF,$7FFF(a2)
 	bclr.b	#$FF,$7FFF(a5)
-	bclr.b	#$FFFF,$7FFF(a2)
-	bclr.b	#$FFFF,$7FFF(a5)
-	bclr.b	#$FFFFFFFF,$7FFF(a2)
-	bclr.b	#$FFFFFFFF,$7FFF(a5)
 	bclr.b	#0,$7F(a2,d5.w)
 	bclr.b	#0,$7F(a5,d2.w)
 	bclr.b	#$FF,$7F(a2,d5.w)
 	bclr.b	#$FF,$7F(a5,d2.w)
-	bclr.b	#$FFFF,$7F(a2,d5.w)
-	bclr.b	#$FFFF,$7F(a5,d2.w)
-	bclr.b	#$FFFFFFFF,$7F(a2,d5.w)
-	bclr.b	#$FFFFFFFF,$7F(a5,d2.w)
 	bclr.b	#0,($FFFFFFFF).w
 	bclr.b	#$FF,($FFFFFFFF).w
-	bclr.b	#$FFFF,($FFFFFFFF).w
-	bclr.b	#$FFFFFFFF,($FFFFFFFF).w
 	bclr.b	#0,($FFFFFFFF).l
 	bclr.b	#$FF,($FFFFFFFF).l
-	bclr.b	#$FFFF,($FFFFFFFF).l
-	bclr.b	#$FFFFFFFF,($FFFFFFFF).l
 
 	bset.l	d2,d2
 	bset.l	d2,d5
@@ -1335,58 +1073,30 @@
 	bset.l	#0,d5
 	bset.l	#$FF,d2
 	bset.l	#$FF,d5
-	bset.l	#$FFFF,d2
-	bset.l	#$FFFF,d5
-	bset.l	#$FFFFFFFF,d2
-	bset.l	#$FFFFFFFF,d5
 	bset.b	#0,(a2)
 	bset.b	#0,(a5)
 	bset.b	#$FF,(a2)
 	bset.b	#$FF,(a5)
-	bset.b	#$FFFF,(a2)
-	bset.b	#$FFFF,(a5)
-	bset.b	#$FFFFFFFF,(a2)
-	bset.b	#$FFFFFFFF,(a5)
 	bset.b	#0,(a2)+
 	bset.b	#0,(a5)+
 	bset.b	#$FF,(a2)+
 	bset.b	#$FF,(a5)+
-	bset.b	#$FFFF,(a2)+
-	bset.b	#$FFFF,(a5)+
-	bset.b	#$FFFFFFFF,(a2)+
-	bset.b	#$FFFFFFFF,(a5)+
 	bset.b	#0,-(a2)
 	bset.b	#0,-(a5)
 	bset.b	#$FF,-(a2)
 	bset.b	#$FF,-(a5)
-	bset.b	#$FFFF,-(a2)
-	bset.b	#$FFFF,-(a5)
-	bset.b	#$FFFFFFFF,-(a2)
-	bset.b	#$FFFFFFFF,-(a5)
 	bset.b	#0,$7FFF(a2)
 	bset.b	#0,$7FFF(a5)
 	bset.b	#$FF,$7FFF(a2)
 	bset.b	#$FF,$7FFF(a5)
-	bset.b	#$FFFF,$7FFF(a2)
-	bset.b	#$FFFF,$7FFF(a5)
-	bset.b	#$FFFFFFFF,$7FFF(a2)
-	bset.b	#$FFFFFFFF,$7FFF(a5)
 	bset.b	#0,$7F(a2,d5.w)
 	bset.b	#0,$7F(a5,d2.w)
 	bset.b	#$FF,$7F(a2,d5.w)
 	bset.b	#$FF,$7F(a5,d2.w)
-	bset.b	#$FFFF,$7F(a2,d5.w)
-	bset.b	#$FFFF,$7F(a5,d2.w)
-	bset.b	#$FFFFFFFF,$7F(a2,d5.w)
-	bset.b	#$FFFFFFFF,$7F(a5,d2.w)
 	bset.b	#0,($FFFFFFFF).w
 	bset.b	#$FF,($FFFFFFFF).w
-	bset.b	#$FFFF,($FFFFFFFF).w
-	bset.b	#$FFFFFFFF,($FFFFFFFF).w
 	bset.b	#0,($FFFFFFFF).l
 	bset.b	#$FF,($FFFFFFFF).l
-	bset.b	#$FFFF,($FFFFFFFF).l
-	bset.b	#$FFFFFFFF,($FFFFFFFF).l
 
 	st.b	d2
 	st.b	d5
@@ -2072,58 +1782,30 @@
 	move.b	#0,d5
 	move.b	#$FF,d2
 	move.b	#$FF,d5
-	move.b	#$FFFF,d2
-	move.b	#$FFFF,d5
-	move.b	#$FFFFFFFF,d2
-	move.b	#$FFFFFFFF,d5
 	move.b	#0,(a2)
 	move.b	#0,(a5)
 	move.b	#$FF,(a2)
 	move.b	#$FF,(a5)
-	move.b	#$FFFF,(a2)
-	move.b	#$FFFF,(a5)
-	move.b	#$FFFFFFFF,(a2)
-	move.b	#$FFFFFFFF,(a5)
 	move.b	#0,(a2)+
 	move.b	#0,(a5)+
 	move.b	#$FF,(a2)+
 	move.b	#$FF,(a5)+
-	move.b	#$FFFF,(a2)+
-	move.b	#$FFFF,(a5)+
-	move.b	#$FFFFFFFF,(a2)+
-	move.b	#$FFFFFFFF,(a5)+
 	move.b	#0,-(a2)
 	move.b	#0,-(a5)
 	move.b	#$FF,-(a2)
 	move.b	#$FF,-(a5)
-	move.b	#$FFFF,-(a2)
-	move.b	#$FFFF,-(a5)
-	move.b	#$FFFFFFFF,-(a2)
-	move.b	#$FFFFFFFF,-(a5)
 	move.b	#0,$7FFF(a2)
 	move.b	#0,$7FFF(a5)
 	move.b	#$FF,$7FFF(a2)
 	move.b	#$FF,$7FFF(a5)
-	move.b	#$FFFF,$7FFF(a2)
-	move.b	#$FFFF,$7FFF(a5)
-	move.b	#$FFFFFFFF,$7FFF(a2)
-	move.b	#$FFFFFFFF,$7FFF(a5)
 	move.b	#0,$7F(a2,d5.w)
 	move.b	#0,$7F(a5,d2.w)
 	move.b	#$FF,$7F(a2,d5.w)
 	move.b	#$FF,$7F(a5,d2.w)
-	move.b	#$FFFF,$7F(a2,d5.w)
-	move.b	#$FFFF,$7F(a5,d2.w)
-	move.b	#$FFFFFFFF,$7F(a2,d5.w)
-	move.b	#$FFFFFFFF,$7F(a5,d2.w)
 	move.b	#0,($FFFFFFFF).w
 	move.b	#$FF,($FFFFFFFF).w
-	move.b	#$FFFF,($FFFFFFFF).w
-	move.b	#$FFFFFFFF,($FFFFFFFF).w
 	move.b	#0,($FFFFFFFF).l
 	move.b	#$FF,($FFFFFFFF).l
-	move.b	#$FFFF,($FFFFFFFF).l
-	move.b	#$FFFFFFFF,($FFFFFFFF).l
 	move.b	@(pc),d2
 	move.b	@(pc),d5
 	move.b	@(pc),(a2)
@@ -3122,7 +2804,6 @@
 	stop	#0
 	stop	#$FF
 	stop	#$FFFF
-	stop	#$FFFFFFFF
 
 	jsr	(a2)
 	jsr	(a5)
@@ -3624,10 +3305,6 @@
 	or.b	#0,d5
 	or.b	#$FF,d2
 	or.b	#$FF,d5
-	or.b	#$FFFF,d2
-	or.b	#$FFFF,d5
-	or.b	#$FFFFFFFF,d2
-	or.b	#$FFFFFFFF,d5
 	or.w	d2,d2
 	or.w	d2,d5
 	or.w	d5,d2
@@ -3829,10 +3506,6 @@
 	and.b	#0,d5
 	and.b	#$FF,d2
 	and.b	#$FF,d5
-	and.b	#$FFFF,d2
-	and.b	#$FFFF,d5
-	and.b	#$FFFFFFFF,d2
-	and.b	#$FFFFFFFF,d5
 	and.w	d2,d2
 	and.w	d2,d5
 	and.w	d5,d2
@@ -4034,10 +3707,6 @@
 	sub.b	#0,d5
 	sub.b	#$FF,d2
 	sub.b	#$FF,d5
-	sub.b	#$FFFF,d2
-	sub.b	#$FFFF,d5
-	sub.b	#$FFFFFFFF,d2
-	sub.b	#$FFFFFFFF,d5
 	sub.w	d2,d2
 	sub.w	d2,d5
 	sub.w	d5,d2
@@ -4247,10 +3916,6 @@
 	add.b	#0,d5
 	add.b	#$FF,d2
 	add.b	#$FF,d5
-	add.b	#$FFFF,d2
-	add.b	#$FFFF,d5
-	add.b	#$FFFFFFFF,d2
-	add.b	#$FFFFFFFF,d5
 	add.w	d2,d2
 	add.w	d2,d5
 	add.w	d5,d2
@@ -4697,10 +4362,6 @@
 	cmp.b	#0,d5
 	cmp.b	#$FF,d2
 	cmp.b	#$FF,d5
-	cmp.b	#$FFFF,d2
-	cmp.b	#$FFFF,d5
-	cmp.b	#$FFFFFFFF,d2
-	cmp.b	#$FFFFFFFF,d5
 	cmp.w	d2,d2
 	cmp.w	d2,d5
 	cmp.w	d5,d2

@@ -2,7 +2,7 @@
 export type OperandType = 
     | "dn" | "an" | "(an)" | "(an)+" | "-(an)" | "d(an)" | "d(an,ix)" 
     | "abs.w" | "abs.l" | "d(pc)" | "d(pc,ix)" | "imm" | "imm3" | "imm4" 
-    | "imm8" | "label" | "register_list" | "ccr" | "sr";
+    | "imm8" | "imm16" | "label" | "register_list" | "ccr" | "sr";
 
 export type OperandSize = "b" | "w" | "l" | "s" | "";
 
@@ -71,7 +71,7 @@ export const data: InstructionSet = [
       },
       {
         sizes: ["l"],
-        sourceOperands: ["imm"],
+        sourceOperands: ["imm8"],
         destOperands: ["dn"]
       },
       {
@@ -97,7 +97,7 @@ export const data: InstructionSet = [
       },
       {
         sizes: ["l"],
-        sourceOperands: ["imm"],
+        sourceOperands: ["imm8"],
         destOperands: ["dn"]
       },
       {
@@ -331,7 +331,7 @@ export const data: InstructionSet = [
     variants: [
       {
         sizes: [""],
-        sourceOperands: ["imm"],
+        sourceOperands: ["imm16"],
         destOperands: []
       }
     ]
