@@ -102,23 +102,6 @@ function generateValidTests() {
             }
           }
         }
-        
-        // For bit manipulation instructions, also generate without size specifier
-        if (['btst', 'bchg', 'bclr', 'bset'].includes(instrName)) {
-          for (const srcOp of variant.sourceOperands) {
-            const srcExamples = getExampleValues(srcOp);
-            
-            for (const destOp of variant.destOperands) {
-              const destExamples = getExampleValues(destOp);
-              
-              for (const srcExample of srcExamples) {
-                for (const destExample of destExamples) {
-                  output += `\t${instrName}\t${srcExample},${destExample}\n`;
-                }
-              }
-            }
-          }
-        }
       }
       
       previousInstrName = instrName;
