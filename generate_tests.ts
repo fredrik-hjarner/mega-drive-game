@@ -7,7 +7,7 @@ import { data } from './m68k_instructions.ts';
 const instructionsData = data;
 
 // Function to generate example values for each operand type, with size awareness
-function getExampleValue(operandType, size = '') {
+function getExampleValue(operandType, size = '', instr) {
   switch(operandType) {
     case "dn": return "d5";
     case "an": return "a2";
@@ -20,7 +20,10 @@ function getExampleValue(operandType, size = '') {
     case "abs.l": return "($FFFFFFFF).l";
     case "d(pc)": return "@(pc)";
     case "d(pc,ix)": return "@(pc,d5.w)";
-    case "imm": 
+    case "imm":
+      if (['btst', 'bchg', 'bclr'].includes(instr)) {
+        return "#0";
+      }
       if (size === 'b') return "#$FF";
       if (size === 'w') return "#$FFFF";
       if (size === 'l') return "#$FFFFFFFF";
@@ -36,19 +39,6 @@ function getExampleValue(operandType, size = '') {
   }
 }
 
-// A standard order for addressing modes to ensure consistency
-const standardAddressingModeOrder = [
-  "dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm", 
-  "imm3", "imm4", "imm8", "label", "register_list", "ccr", "sr"
-];
-
-// Sort operands by the standard order
-function sortByStandardOrder(operands) {
-  return operands.sort((a, b) => {
-    return standardAddressingModeOrder.indexOf(a) - standardAddressingModeOrder.indexOf(b);
-  });
-}
-
 // Generate valid test cases
 function generateValidTests() {
   let output = "";
@@ -61,47 +51,8 @@ function generateValidTests() {
       output += "\n";
     }
     
-    // Process variants in a specific order:
-    // 1. CCR variants first
-    // 2. SR variants second
-    // 3. Standard variants last
-    
-    // Find special variants
-    const ccrVariants = instrVariants.filter(v => v.destOperands.includes("ccr"));
-    const srVariants = instrVariants.filter(v => v.destOperands.includes("sr"));
-    
-    // Get remaining "standard" variants
-    const standardVariants = instrVariants.filter(v => 
-      !v.destOperands.includes("ccr") && !v.destOperands.includes("sr"));
-    
-    // Process CCR variants first
-    for (const variant of ccrVariants) {
-      for (const size of variant.sizes) {
-        const sizeSuffix = size ? `.${size}` : '';
-        const immediate = size === 'b' ? '#$FF' : '#$FFFF';
-        
-        // With size
-        output += `\t${instrName}${sizeSuffix}\t${immediate},ccr\n`;
-        // Without size
-        output += `\t${instrName}\t${immediate},ccr\n`;
-      }
-    }
-    
-    // Process SR variants second
-    for (const variant of srVariants) {
-      for (const size of variant.sizes) {
-        const sizeSuffix = size ? `.${size}` : '';
-        const immediate = '#$FFFF';
-        
-        // With size
-        output += `\t${instrName}${sizeSuffix}\t${immediate},sr\n`;
-        // Without size
-        output += `\t${instrName}\t${immediate},sr\n`;
-      }
-    }
-    
-    // Process standard variants
-    for (const variant of standardVariants) {
+    // Process variants
+    for (const variant of instrVariants) {
       // Handle instructions with no operands
       if (variant.sourceOperands.length === 0 && variant.destOperands.length === 0) {
         output += `\t${instrName}\n`;
@@ -113,37 +64,27 @@ function generateValidTests() {
         const sizeSuffix = size ? `.${size}` : '';
         
         // Single operand instructions (dest only)
-        if (variant.sourceOperands.length === 0 && variant.destOperands.length > 0) {
-          // Sort destination operands by standard order
-          const sortedDestOps = sortByStandardOrder([...variant.destOperands]);
-          
-          for (const destOp of sortedDestOps) {
-            const destExample = getExampleValue(destOp, size);
+        if (variant.sourceOperands.length === 0 && variant.destOperands.length > 0) {        
+          for (const destOp of variant.destOperands) {
+            const destExample = getExampleValue(destOp, size, instrName);
             output += `\t${instrName}${sizeSuffix}\t${destExample}\n`;
           }
         }
         // Source-only instructions (like branch)
         else if (variant.sourceOperands.length > 0 && variant.destOperands.length === 0) {
-          // Sort source operands by standard order
-          const sortedSrcOps = sortByStandardOrder([...variant.sourceOperands]);
-          
-          for (const srcOp of sortedSrcOps) {
-            const srcExample = getExampleValue(srcOp, size);
+          for (const srcOp of variant.sourceOperands) {
+            const srcExample = getExampleValue(srcOp, size, instrName);
             output += `\t${instrName}${sizeSuffix}\t${srcExample}\n`;
           }
         }
         // Two-operand instructions - systematically generate all combinations
         else if (variant.sourceOperands.length > 0 && variant.destOperands.length > 0) {
-          // Sort operands by standard order
-          const sortedSrcOps = sortByStandardOrder([...variant.sourceOperands]);
-          const sortedDestOps = sortByStandardOrder([...variant.destOperands]);
-          
           // Generate all combinations
-          for (const srcOp of sortedSrcOps) {
-            const srcExample = getExampleValue(srcOp, size);
+          for (const srcOp of variant.sourceOperands) {
+            const srcExample = getExampleValue(srcOp, size, instrName);
             
-            for (const destOp of sortedDestOps) {
-              const destExample = getExampleValue(destOp, size);
+            for (const destOp of variant.destOperands) {
+              const destExample = getExampleValue(destOp, size, instrName);
               output += `\t${instrName}${sizeSuffix}\t${srcExample},${destExample}\n`;
             }
           }
@@ -152,14 +93,11 @@ function generateValidTests() {
       
       // For bit manipulation and other instructions, also generate without size specifier
       if (['btst', 'bchg', 'bclr', 'bset'].includes(instrName)) {
-        const sortedSrcOps = sortByStandardOrder([...variant.sourceOperands]);
-        const sortedDestOps = sortByStandardOrder([...variant.destOperands]);
-        
-        for (const srcOp of sortedSrcOps) {
-          const srcExample = getExampleValue(srcOp);
+        for (const srcOp of variant.sourceOperands) {
+          const srcExample = getExampleValue(srcOp, '', instrName);
           
-          for (const destOp of sortedDestOps) {
-            const destExample = getExampleValue(destOp);
+          for (const destOp of variant.destOperands) {
+            const destExample = getExampleValue(destOp, '', instrName);
             output += `\t${instrName}\t${srcExample},${destExample}\n`;
           }
         }

@@ -1,4 +1,24 @@
-export const data = {
+// Types for M68k instructions data
+export type OperandType = 
+  | "dn" | "an" | "(an)" | "(an)+" | "-(an)" | "d(an)" | "d(an,ix)" 
+  | "abs.w" | "abs.l" | "d(pc)" | "d(pc,ix)" | "imm" | "imm3" | "imm4" 
+  | "imm8" | "label" | "register_list" | "ccr" | "sr";
+
+export type OperandSize = "b" | "w" | "l" | "";
+
+export type InstructionVariant = {
+  sizes: OperandSize[];
+  sourceOperands: OperandType[];
+  destOperands: OperandType[];
+};
+
+export type InstructionSet = {
+  instructions: {
+    [instructionName: string]: InstructionVariant[];
+  };
+};
+
+export const data: InstructionSet = {
   "instructions": {
         "ori": [
             {
@@ -172,9 +192,14 @@ export const data = {
         "movep": [
             {
                 "sizes": ["w", "l"],
-                "sourceOperands": ["dn", "d(an)"],
-                "destOperands": ["dn", "d(an)"]
-            }
+                "sourceOperands": ["d(an)"],
+                "destOperands": ["dn"]
+            },
+            {
+                "sizes": ["w", "l"],
+                "sourceOperands": ["dn"],
+                "destOperands": ["d(an)"]
+            },
         ],
         "movea": [
             {
@@ -185,9 +210,14 @@ export const data = {
         ],
         "move": [
             {
-                "sizes": ["b", "w", "l"],
-                "sourceOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-                "destOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+                "sizes": ["b"],
+                "sourceOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "imm", "d(pc)", "d(pc,ix)"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+            },
+            {
+                "sizes": ["w", "l"],
+                "sourceOperands": ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "imm", "d(pc)", "d(pc,ix)"],
+                "destOperands": ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
             },
             {
                 "sizes": ["w"],

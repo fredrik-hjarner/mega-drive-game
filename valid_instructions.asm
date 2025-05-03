@@ -1,7 +1,5 @@
 	ori.b	#$FF,ccr
-	ori	#$FF,ccr
 	ori.w	#$FFFF,sr
-	ori	#$FFFF,sr
 	ori.b	#$FF,d5
 	ori.b	#$FF,(a2)
 	ori.b	#$FF,(a2)+
@@ -28,9 +26,7 @@
 	ori.l	#$FFFFFFFF,($FFFFFFFF).l
 
 	andi.b	#$FF,ccr
-	andi	#$FF,ccr
 	andi.w	#$FFFF,sr
-	andi	#$FFFF,sr
 	andi.b	#$FF,d5
 	andi.b	#$FF,(a2)
 	andi.b	#$FF,(a2)+
@@ -107,9 +103,7 @@
 	addi.l	#$FFFFFFFF,($FFFFFFFF).l
 
 	eori.b	#$FF,ccr
-	eori	#$FF,ccr
 	eori.w	#$FFFF,sr
-	eori	#$FFFF,sr
 	eori.b	#$FF,d5
 	eori.b	#$FF,(a2)
 	eori.b	#$FF,(a2)+
@@ -180,26 +174,26 @@
 	btst	d5,($FFFFFFFF).l
 	btst	d5,@(pc)
 	btst	d5,@(pc,d5.w)
-	btst.l	#$FFFFFFFF,d5
-	btst	#$FF,d5
-	btst.b	#$FF,(a2)
-	btst.b	#$FF,(a2)+
-	btst.b	#$FF,-(a2)
-	btst.b	#$FF,$7FFF(a2)
-	btst.b	#$FF,$7F(a2,d5.w)
-	btst.b	#$FF,($FFFFFFFF).w
-	btst.b	#$FF,($FFFFFFFF).l
-	btst.b	#$FF,@(pc)
-	btst.b	#$FF,@(pc,d5.w)
-	btst	#$FF,(a2)
-	btst	#$FF,(a2)+
-	btst	#$FF,-(a2)
-	btst	#$FF,$7FFF(a2)
-	btst	#$FF,$7F(a2,d5.w)
-	btst	#$FF,($FFFFFFFF).w
-	btst	#$FF,($FFFFFFFF).l
-	btst	#$FF,@(pc)
-	btst	#$FF,@(pc,d5.w)
+	btst.l	#0,d5
+	btst	#0,d5
+	btst.b	#0,(a2)
+	btst.b	#0,(a2)+
+	btst.b	#0,-(a2)
+	btst.b	#0,$7FFF(a2)
+	btst.b	#0,$7F(a2,d5.w)
+	btst.b	#0,($FFFFFFFF).w
+	btst.b	#0,($FFFFFFFF).l
+	btst.b	#0,@(pc)
+	btst.b	#0,@(pc,d5.w)
+	btst	#0,(a2)
+	btst	#0,(a2)+
+	btst	#0,-(a2)
+	btst	#0,$7FFF(a2)
+	btst	#0,$7F(a2,d5.w)
+	btst	#0,($FFFFFFFF).w
+	btst	#0,($FFFFFFFF).l
+	btst	#0,@(pc)
+	btst	#0,@(pc,d5.w)
 
 	bchg.l	d5,d5
 	bchg	d5,d5
@@ -217,22 +211,22 @@
 	bchg	d5,$7F(a2,d5.w)
 	bchg	d5,($FFFFFFFF).w
 	bchg	d5,($FFFFFFFF).l
-	bchg.l	#$FFFFFFFF,d5
-	bchg	#$FF,d5
-	bchg.b	#$FF,(a2)
-	bchg.b	#$FF,(a2)+
-	bchg.b	#$FF,-(a2)
-	bchg.b	#$FF,$7FFF(a2)
-	bchg.b	#$FF,$7F(a2,d5.w)
-	bchg.b	#$FF,($FFFFFFFF).w
-	bchg.b	#$FF,($FFFFFFFF).l
-	bchg	#$FF,(a2)
-	bchg	#$FF,(a2)+
-	bchg	#$FF,-(a2)
-	bchg	#$FF,$7FFF(a2)
-	bchg	#$FF,$7F(a2,d5.w)
-	bchg	#$FF,($FFFFFFFF).w
-	bchg	#$FF,($FFFFFFFF).l
+	bchg.l	#0,d5
+	bchg	#0,d5
+	bchg.b	#0,(a2)
+	bchg.b	#0,(a2)+
+	bchg.b	#0,-(a2)
+	bchg.b	#0,$7FFF(a2)
+	bchg.b	#0,$7F(a2,d5.w)
+	bchg.b	#0,($FFFFFFFF).w
+	bchg.b	#0,($FFFFFFFF).l
+	bchg	#0,(a2)
+	bchg	#0,(a2)+
+	bchg	#0,-(a2)
+	bchg	#0,$7FFF(a2)
+	bchg	#0,$7F(a2,d5.w)
+	bchg	#0,($FFFFFFFF).w
+	bchg	#0,($FFFFFFFF).l
 
 	bclr.l	d5,d5
 	bclr	d5,d5
@@ -250,22 +244,22 @@
 	bclr	d5,$7F(a2,d5.w)
 	bclr	d5,($FFFFFFFF).w
 	bclr	d5,($FFFFFFFF).l
-	bclr.l	#$FFFFFFFF,d5
-	bclr	#$FF,d5
-	bclr.b	#$FF,(a2)
-	bclr.b	#$FF,(a2)+
-	bclr.b	#$FF,-(a2)
-	bclr.b	#$FF,$7FFF(a2)
-	bclr.b	#$FF,$7F(a2,d5.w)
-	bclr.b	#$FF,($FFFFFFFF).w
-	bclr.b	#$FF,($FFFFFFFF).l
-	bclr	#$FF,(a2)
-	bclr	#$FF,(a2)+
-	bclr	#$FF,-(a2)
-	bclr	#$FF,$7FFF(a2)
-	bclr	#$FF,$7F(a2,d5.w)
-	bclr	#$FF,($FFFFFFFF).w
-	bclr	#$FF,($FFFFFFFF).l
+	bclr.l	#0,d5
+	bclr	#0,d5
+	bclr.b	#0,(a2)
+	bclr.b	#0,(a2)+
+	bclr.b	#0,-(a2)
+	bclr.b	#0,$7FFF(a2)
+	bclr.b	#0,$7F(a2,d5.w)
+	bclr.b	#0,($FFFFFFFF).w
+	bclr.b	#0,($FFFFFFFF).l
+	bclr	#0,(a2)
+	bclr	#0,(a2)+
+	bclr	#0,-(a2)
+	bclr	#0,$7FFF(a2)
+	bclr	#0,$7F(a2,d5.w)
+	bclr	#0,($FFFFFFFF).w
+	bclr	#0,($FFFFFFFF).l
 
 	bset.l	d5,d5
 	bset	d5,d5
@@ -300,14 +294,10 @@
 	bset	#$FF,($FFFFFFFF).w
 	bset	#$FF,($FFFFFFFF).l
 
-	movep.w	d5,d5
-	movep.w	d5,$7FFF(a2)
 	movep.w	$7FFF(a2),d5
-	movep.w	$7FFF(a2),$7FFF(a2)
-	movep.l	d5,d5
-	movep.l	d5,$7FFF(a2)
 	movep.l	$7FFF(a2),d5
-	movep.l	$7FFF(a2),$7FFF(a2)
+	movep.w	d5,$7FFF(a2)
+	movep.l	d5,$7FFF(a2)
 
 	movea.w	d5,a2
 	movea.w	a2,a2
@@ -334,12 +324,7 @@
 	movea.l	@(pc,d5.w),a2
 	movea.l	#$FFFFFFFF,a2
 
-	move.w	#$FFFF,ccr
-	move	#$FFFF,ccr
-	move.w	#$FFFF,sr
-	move	#$FFFF,sr
 	move.b	d5,d5
-	move.b	d5,a2
 	move.b	d5,(a2)
 	move.b	d5,(a2)+
 	move.b	d5,-(a2)
@@ -347,17 +332,7 @@
 	move.b	d5,$7F(a2,d5.w)
 	move.b	d5,($FFFFFFFF).w
 	move.b	d5,($FFFFFFFF).l
-	move.b	a2,d5
-	move.b	a2,a2
-	move.b	a2,(a2)
-	move.b	a2,(a2)+
-	move.b	a2,-(a2)
-	move.b	a2,$7FFF(a2)
-	move.b	a2,$7F(a2,d5.w)
-	move.b	a2,($FFFFFFFF).w
-	move.b	a2,($FFFFFFFF).l
 	move.b	(a2),d5
-	move.b	(a2),a2
 	move.b	(a2),(a2)
 	move.b	(a2),(a2)+
 	move.b	(a2),-(a2)
@@ -366,7 +341,6 @@
 	move.b	(a2),($FFFFFFFF).w
 	move.b	(a2),($FFFFFFFF).l
 	move.b	(a2)+,d5
-	move.b	(a2)+,a2
 	move.b	(a2)+,(a2)
 	move.b	(a2)+,(a2)+
 	move.b	(a2)+,-(a2)
@@ -375,7 +349,6 @@
 	move.b	(a2)+,($FFFFFFFF).w
 	move.b	(a2)+,($FFFFFFFF).l
 	move.b	-(a2),d5
-	move.b	-(a2),a2
 	move.b	-(a2),(a2)
 	move.b	-(a2),(a2)+
 	move.b	-(a2),-(a2)
@@ -384,7 +357,6 @@
 	move.b	-(a2),($FFFFFFFF).w
 	move.b	-(a2),($FFFFFFFF).l
 	move.b	$7FFF(a2),d5
-	move.b	$7FFF(a2),a2
 	move.b	$7FFF(a2),(a2)
 	move.b	$7FFF(a2),(a2)+
 	move.b	$7FFF(a2),-(a2)
@@ -393,7 +365,6 @@
 	move.b	$7FFF(a2),($FFFFFFFF).w
 	move.b	$7FFF(a2),($FFFFFFFF).l
 	move.b	$7F(a2,d5.w),d5
-	move.b	$7F(a2,d5.w),a2
 	move.b	$7F(a2,d5.w),(a2)
 	move.b	$7F(a2,d5.w),(a2)+
 	move.b	$7F(a2,d5.w),-(a2)
@@ -402,7 +373,6 @@
 	move.b	$7F(a2,d5.w),($FFFFFFFF).w
 	move.b	$7F(a2,d5.w),($FFFFFFFF).l
 	move.b	($FFFFFFFF).w,d5
-	move.b	($FFFFFFFF).w,a2
 	move.b	($FFFFFFFF).w,(a2)
 	move.b	($FFFFFFFF).w,(a2)+
 	move.b	($FFFFFFFF).w,-(a2)
@@ -411,7 +381,6 @@
 	move.b	($FFFFFFFF).w,($FFFFFFFF).w
 	move.b	($FFFFFFFF).w,($FFFFFFFF).l
 	move.b	($FFFFFFFF).l,d5
-	move.b	($FFFFFFFF).l,a2
 	move.b	($FFFFFFFF).l,(a2)
 	move.b	($FFFFFFFF).l,(a2)+
 	move.b	($FFFFFFFF).l,-(a2)
@@ -419,8 +388,15 @@
 	move.b	($FFFFFFFF).l,$7F(a2,d5.w)
 	move.b	($FFFFFFFF).l,($FFFFFFFF).w
 	move.b	($FFFFFFFF).l,($FFFFFFFF).l
+	move.b	#$FF,d5
+	move.b	#$FF,(a2)
+	move.b	#$FF,(a2)+
+	move.b	#$FF,-(a2)
+	move.b	#$FF,$7FFF(a2)
+	move.b	#$FF,$7F(a2,d5.w)
+	move.b	#$FF,($FFFFFFFF).w
+	move.b	#$FF,($FFFFFFFF).l
 	move.b	@(pc),d5
-	move.b	@(pc),a2
 	move.b	@(pc),(a2)
 	move.b	@(pc),(a2)+
 	move.b	@(pc),-(a2)
@@ -429,7 +405,6 @@
 	move.b	@(pc),($FFFFFFFF).w
 	move.b	@(pc),($FFFFFFFF).l
 	move.b	@(pc,d5.w),d5
-	move.b	@(pc,d5.w),a2
 	move.b	@(pc,d5.w),(a2)
 	move.b	@(pc,d5.w),(a2)+
 	move.b	@(pc,d5.w),-(a2)
@@ -437,17 +412,7 @@
 	move.b	@(pc,d5.w),$7F(a2,d5.w)
 	move.b	@(pc,d5.w),($FFFFFFFF).w
 	move.b	@(pc,d5.w),($FFFFFFFF).l
-	move.b	#$FF,d5
-	move.b	#$FF,a2
-	move.b	#$FF,(a2)
-	move.b	#$FF,(a2)+
-	move.b	#$FF,-(a2)
-	move.b	#$FF,$7FFF(a2)
-	move.b	#$FF,$7F(a2,d5.w)
-	move.b	#$FF,($FFFFFFFF).w
-	move.b	#$FF,($FFFFFFFF).l
 	move.w	d5,d5
-	move.w	d5,a2
 	move.w	d5,(a2)
 	move.w	d5,(a2)+
 	move.w	d5,-(a2)
@@ -456,7 +421,6 @@
 	move.w	d5,($FFFFFFFF).w
 	move.w	d5,($FFFFFFFF).l
 	move.w	a2,d5
-	move.w	a2,a2
 	move.w	a2,(a2)
 	move.w	a2,(a2)+
 	move.w	a2,-(a2)
@@ -465,7 +429,6 @@
 	move.w	a2,($FFFFFFFF).w
 	move.w	a2,($FFFFFFFF).l
 	move.w	(a2),d5
-	move.w	(a2),a2
 	move.w	(a2),(a2)
 	move.w	(a2),(a2)+
 	move.w	(a2),-(a2)
@@ -474,7 +437,6 @@
 	move.w	(a2),($FFFFFFFF).w
 	move.w	(a2),($FFFFFFFF).l
 	move.w	(a2)+,d5
-	move.w	(a2)+,a2
 	move.w	(a2)+,(a2)
 	move.w	(a2)+,(a2)+
 	move.w	(a2)+,-(a2)
@@ -483,7 +445,6 @@
 	move.w	(a2)+,($FFFFFFFF).w
 	move.w	(a2)+,($FFFFFFFF).l
 	move.w	-(a2),d5
-	move.w	-(a2),a2
 	move.w	-(a2),(a2)
 	move.w	-(a2),(a2)+
 	move.w	-(a2),-(a2)
@@ -492,7 +453,6 @@
 	move.w	-(a2),($FFFFFFFF).w
 	move.w	-(a2),($FFFFFFFF).l
 	move.w	$7FFF(a2),d5
-	move.w	$7FFF(a2),a2
 	move.w	$7FFF(a2),(a2)
 	move.w	$7FFF(a2),(a2)+
 	move.w	$7FFF(a2),-(a2)
@@ -501,7 +461,6 @@
 	move.w	$7FFF(a2),($FFFFFFFF).w
 	move.w	$7FFF(a2),($FFFFFFFF).l
 	move.w	$7F(a2,d5.w),d5
-	move.w	$7F(a2,d5.w),a2
 	move.w	$7F(a2,d5.w),(a2)
 	move.w	$7F(a2,d5.w),(a2)+
 	move.w	$7F(a2,d5.w),-(a2)
@@ -510,7 +469,6 @@
 	move.w	$7F(a2,d5.w),($FFFFFFFF).w
 	move.w	$7F(a2,d5.w),($FFFFFFFF).l
 	move.w	($FFFFFFFF).w,d5
-	move.w	($FFFFFFFF).w,a2
 	move.w	($FFFFFFFF).w,(a2)
 	move.w	($FFFFFFFF).w,(a2)+
 	move.w	($FFFFFFFF).w,-(a2)
@@ -519,7 +477,6 @@
 	move.w	($FFFFFFFF).w,($FFFFFFFF).w
 	move.w	($FFFFFFFF).w,($FFFFFFFF).l
 	move.w	($FFFFFFFF).l,d5
-	move.w	($FFFFFFFF).l,a2
 	move.w	($FFFFFFFF).l,(a2)
 	move.w	($FFFFFFFF).l,(a2)+
 	move.w	($FFFFFFFF).l,-(a2)
@@ -527,8 +484,15 @@
 	move.w	($FFFFFFFF).l,$7F(a2,d5.w)
 	move.w	($FFFFFFFF).l,($FFFFFFFF).w
 	move.w	($FFFFFFFF).l,($FFFFFFFF).l
+	move.w	#$FFFF,d5
+	move.w	#$FFFF,(a2)
+	move.w	#$FFFF,(a2)+
+	move.w	#$FFFF,-(a2)
+	move.w	#$FFFF,$7FFF(a2)
+	move.w	#$FFFF,$7F(a2,d5.w)
+	move.w	#$FFFF,($FFFFFFFF).w
+	move.w	#$FFFF,($FFFFFFFF).l
 	move.w	@(pc),d5
-	move.w	@(pc),a2
 	move.w	@(pc),(a2)
 	move.w	@(pc),(a2)+
 	move.w	@(pc),-(a2)
@@ -537,7 +501,6 @@
 	move.w	@(pc),($FFFFFFFF).w
 	move.w	@(pc),($FFFFFFFF).l
 	move.w	@(pc,d5.w),d5
-	move.w	@(pc,d5.w),a2
 	move.w	@(pc,d5.w),(a2)
 	move.w	@(pc,d5.w),(a2)+
 	move.w	@(pc,d5.w),-(a2)
@@ -545,17 +508,7 @@
 	move.w	@(pc,d5.w),$7F(a2,d5.w)
 	move.w	@(pc,d5.w),($FFFFFFFF).w
 	move.w	@(pc,d5.w),($FFFFFFFF).l
-	move.w	#$FFFF,d5
-	move.w	#$FFFF,a2
-	move.w	#$FFFF,(a2)
-	move.w	#$FFFF,(a2)+
-	move.w	#$FFFF,-(a2)
-	move.w	#$FFFF,$7FFF(a2)
-	move.w	#$FFFF,$7F(a2,d5.w)
-	move.w	#$FFFF,($FFFFFFFF).w
-	move.w	#$FFFF,($FFFFFFFF).l
 	move.l	d5,d5
-	move.l	d5,a2
 	move.l	d5,(a2)
 	move.l	d5,(a2)+
 	move.l	d5,-(a2)
@@ -564,7 +517,6 @@
 	move.l	d5,($FFFFFFFF).w
 	move.l	d5,($FFFFFFFF).l
 	move.l	a2,d5
-	move.l	a2,a2
 	move.l	a2,(a2)
 	move.l	a2,(a2)+
 	move.l	a2,-(a2)
@@ -573,7 +525,6 @@
 	move.l	a2,($FFFFFFFF).w
 	move.l	a2,($FFFFFFFF).l
 	move.l	(a2),d5
-	move.l	(a2),a2
 	move.l	(a2),(a2)
 	move.l	(a2),(a2)+
 	move.l	(a2),-(a2)
@@ -582,7 +533,6 @@
 	move.l	(a2),($FFFFFFFF).w
 	move.l	(a2),($FFFFFFFF).l
 	move.l	(a2)+,d5
-	move.l	(a2)+,a2
 	move.l	(a2)+,(a2)
 	move.l	(a2)+,(a2)+
 	move.l	(a2)+,-(a2)
@@ -591,7 +541,6 @@
 	move.l	(a2)+,($FFFFFFFF).w
 	move.l	(a2)+,($FFFFFFFF).l
 	move.l	-(a2),d5
-	move.l	-(a2),a2
 	move.l	-(a2),(a2)
 	move.l	-(a2),(a2)+
 	move.l	-(a2),-(a2)
@@ -600,7 +549,6 @@
 	move.l	-(a2),($FFFFFFFF).w
 	move.l	-(a2),($FFFFFFFF).l
 	move.l	$7FFF(a2),d5
-	move.l	$7FFF(a2),a2
 	move.l	$7FFF(a2),(a2)
 	move.l	$7FFF(a2),(a2)+
 	move.l	$7FFF(a2),-(a2)
@@ -609,7 +557,6 @@
 	move.l	$7FFF(a2),($FFFFFFFF).w
 	move.l	$7FFF(a2),($FFFFFFFF).l
 	move.l	$7F(a2,d5.w),d5
-	move.l	$7F(a2,d5.w),a2
 	move.l	$7F(a2,d5.w),(a2)
 	move.l	$7F(a2,d5.w),(a2)+
 	move.l	$7F(a2,d5.w),-(a2)
@@ -618,7 +565,6 @@
 	move.l	$7F(a2,d5.w),($FFFFFFFF).w
 	move.l	$7F(a2,d5.w),($FFFFFFFF).l
 	move.l	($FFFFFFFF).w,d5
-	move.l	($FFFFFFFF).w,a2
 	move.l	($FFFFFFFF).w,(a2)
 	move.l	($FFFFFFFF).w,(a2)+
 	move.l	($FFFFFFFF).w,-(a2)
@@ -627,7 +573,6 @@
 	move.l	($FFFFFFFF).w,($FFFFFFFF).w
 	move.l	($FFFFFFFF).w,($FFFFFFFF).l
 	move.l	($FFFFFFFF).l,d5
-	move.l	($FFFFFFFF).l,a2
 	move.l	($FFFFFFFF).l,(a2)
 	move.l	($FFFFFFFF).l,(a2)+
 	move.l	($FFFFFFFF).l,-(a2)
@@ -635,8 +580,15 @@
 	move.l	($FFFFFFFF).l,$7F(a2,d5.w)
 	move.l	($FFFFFFFF).l,($FFFFFFFF).w
 	move.l	($FFFFFFFF).l,($FFFFFFFF).l
+	move.l	#$FFFFFFFF,d5
+	move.l	#$FFFFFFFF,(a2)
+	move.l	#$FFFFFFFF,(a2)+
+	move.l	#$FFFFFFFF,-(a2)
+	move.l	#$FFFFFFFF,$7FFF(a2)
+	move.l	#$FFFFFFFF,$7F(a2,d5.w)
+	move.l	#$FFFFFFFF,($FFFFFFFF).w
+	move.l	#$FFFFFFFF,($FFFFFFFF).l
 	move.l	@(pc),d5
-	move.l	@(pc),a2
 	move.l	@(pc),(a2)
 	move.l	@(pc),(a2)+
 	move.l	@(pc),-(a2)
@@ -645,7 +597,6 @@
 	move.l	@(pc),($FFFFFFFF).w
 	move.l	@(pc),($FFFFFFFF).l
 	move.l	@(pc,d5.w),d5
-	move.l	@(pc,d5.w),a2
 	move.l	@(pc,d5.w),(a2)
 	move.l	@(pc,d5.w),(a2)+
 	move.l	@(pc,d5.w),-(a2)
@@ -653,15 +604,6 @@
 	move.l	@(pc,d5.w),$7F(a2,d5.w)
 	move.l	@(pc,d5.w),($FFFFFFFF).w
 	move.l	@(pc,d5.w),($FFFFFFFF).l
-	move.l	#$FFFFFFFF,d5
-	move.l	#$FFFFFFFF,a2
-	move.l	#$FFFFFFFF,(a2)
-	move.l	#$FFFFFFFF,(a2)+
-	move.l	#$FFFFFFFF,-(a2)
-	move.l	#$FFFFFFFF,$7FFF(a2)
-	move.l	#$FFFFFFFF,$7F(a2,d5.w)
-	move.l	#$FFFFFFFF,($FFFFFFFF).w
-	move.l	#$FFFFFFFF,($FFFFFFFF).l
 	move.w	sr,d5
 	move.w	sr,(a2)
 	move.w	sr,(a2)+
@@ -670,6 +612,28 @@
 	move.w	sr,$7F(a2,d5.w)
 	move.w	sr,($FFFFFFFF).w
 	move.w	sr,($FFFFFFFF).l
+	move.w	d5,ccr
+	move.w	(a2),ccr
+	move.w	(a2)+,ccr
+	move.w	-(a2),ccr
+	move.w	$7FFF(a2),ccr
+	move.w	$7F(a2,d5.w),ccr
+	move.w	($FFFFFFFF).w,ccr
+	move.w	($FFFFFFFF).l,ccr
+	move.w	@(pc),ccr
+	move.w	@(pc,d5.w),ccr
+	move.w	#$FFFF,ccr
+	move.w	d5,sr
+	move.w	(a2),sr
+	move.w	(a2)+,sr
+	move.w	-(a2),sr
+	move.w	$7FFF(a2),sr
+	move.w	$7F(a2,d5.w),sr
+	move.w	($FFFFFFFF).w,sr
+	move.w	($FFFFFFFF).l,sr
+	move.w	@(pc),sr
+	move.w	@(pc,d5.w),sr
+	move.w	#$FFFF,sr
 
 	negx.b	d5
 	negx.b	(a2)
@@ -879,132 +843,132 @@
 	jmp	@(pc)
 	jmp	@(pc,d5.w)
 
-	movem.w	(a2),(a2)
-	movem.w	(a2),(a2)+
-	movem.w	(a2),$7FFF(a2)
-	movem.w	(a2),$7F(a2,d5.w)
-	movem.w	(a2),($FFFFFFFF).w
-	movem.w	(a2),($FFFFFFFF).l
-	movem.w	(a2),d5-a7
-	movem.w	-(a2),(a2)
-	movem.w	-(a2),(a2)+
-	movem.w	-(a2),$7FFF(a2)
-	movem.w	-(a2),$7F(a2,d5.w)
-	movem.w	-(a2),($FFFFFFFF).w
-	movem.w	-(a2),($FFFFFFFF).l
-	movem.w	-(a2),d5-a7
-	movem.w	$7FFF(a2),(a2)
-	movem.w	$7FFF(a2),(a2)+
-	movem.w	$7FFF(a2),$7FFF(a2)
-	movem.w	$7FFF(a2),$7F(a2,d5.w)
-	movem.w	$7FFF(a2),($FFFFFFFF).w
-	movem.w	$7FFF(a2),($FFFFFFFF).l
-	movem.w	$7FFF(a2),d5-a7
-	movem.w	$7F(a2,d5.w),(a2)
-	movem.w	$7F(a2,d5.w),(a2)+
-	movem.w	$7F(a2,d5.w),$7FFF(a2)
-	movem.w	$7F(a2,d5.w),$7F(a2,d5.w)
-	movem.w	$7F(a2,d5.w),($FFFFFFFF).w
-	movem.w	$7F(a2,d5.w),($FFFFFFFF).l
-	movem.w	$7F(a2,d5.w),d5-a7
-	movem.w	($FFFFFFFF).w,(a2)
-	movem.w	($FFFFFFFF).w,(a2)+
-	movem.w	($FFFFFFFF).w,$7FFF(a2)
-	movem.w	($FFFFFFFF).w,$7F(a2,d5.w)
-	movem.w	($FFFFFFFF).w,($FFFFFFFF).w
-	movem.w	($FFFFFFFF).w,($FFFFFFFF).l
-	movem.w	($FFFFFFFF).w,d5-a7
-	movem.w	($FFFFFFFF).l,(a2)
-	movem.w	($FFFFFFFF).l,(a2)+
-	movem.w	($FFFFFFFF).l,$7FFF(a2)
-	movem.w	($FFFFFFFF).l,$7F(a2,d5.w)
-	movem.w	($FFFFFFFF).l,($FFFFFFFF).w
-	movem.w	($FFFFFFFF).l,($FFFFFFFF).l
-	movem.w	($FFFFFFFF).l,d5-a7
-	movem.w	@(pc),(a2)
-	movem.w	@(pc),(a2)+
-	movem.w	@(pc),$7FFF(a2)
-	movem.w	@(pc),$7F(a2,d5.w)
-	movem.w	@(pc),($FFFFFFFF).w
-	movem.w	@(pc),($FFFFFFFF).l
-	movem.w	@(pc),d5-a7
-	movem.w	@(pc,d5.w),(a2)
-	movem.w	@(pc,d5.w),(a2)+
-	movem.w	@(pc,d5.w),$7FFF(a2)
-	movem.w	@(pc,d5.w),$7F(a2,d5.w)
-	movem.w	@(pc,d5.w),($FFFFFFFF).w
-	movem.w	@(pc,d5.w),($FFFFFFFF).l
-	movem.w	@(pc,d5.w),d5-a7
+	movem.w	d5-a7,d5-a7
 	movem.w	d5-a7,(a2)
 	movem.w	d5-a7,(a2)+
 	movem.w	d5-a7,$7FFF(a2)
 	movem.w	d5-a7,$7F(a2,d5.w)
 	movem.w	d5-a7,($FFFFFFFF).w
 	movem.w	d5-a7,($FFFFFFFF).l
-	movem.w	d5-a7,d5-a7
-	movem.l	(a2),(a2)
-	movem.l	(a2),(a2)+
-	movem.l	(a2),$7FFF(a2)
-	movem.l	(a2),$7F(a2,d5.w)
-	movem.l	(a2),($FFFFFFFF).w
-	movem.l	(a2),($FFFFFFFF).l
-	movem.l	(a2),d5-a7
-	movem.l	-(a2),(a2)
-	movem.l	-(a2),(a2)+
-	movem.l	-(a2),$7FFF(a2)
-	movem.l	-(a2),$7F(a2,d5.w)
-	movem.l	-(a2),($FFFFFFFF).w
-	movem.l	-(a2),($FFFFFFFF).l
-	movem.l	-(a2),d5-a7
-	movem.l	$7FFF(a2),(a2)
-	movem.l	$7FFF(a2),(a2)+
-	movem.l	$7FFF(a2),$7FFF(a2)
-	movem.l	$7FFF(a2),$7F(a2,d5.w)
-	movem.l	$7FFF(a2),($FFFFFFFF).w
-	movem.l	$7FFF(a2),($FFFFFFFF).l
-	movem.l	$7FFF(a2),d5-a7
-	movem.l	$7F(a2,d5.w),(a2)
-	movem.l	$7F(a2,d5.w),(a2)+
-	movem.l	$7F(a2,d5.w),$7FFF(a2)
-	movem.l	$7F(a2,d5.w),$7F(a2,d5.w)
-	movem.l	$7F(a2,d5.w),($FFFFFFFF).w
-	movem.l	$7F(a2,d5.w),($FFFFFFFF).l
-	movem.l	$7F(a2,d5.w),d5-a7
-	movem.l	($FFFFFFFF).w,(a2)
-	movem.l	($FFFFFFFF).w,(a2)+
-	movem.l	($FFFFFFFF).w,$7FFF(a2)
-	movem.l	($FFFFFFFF).w,$7F(a2,d5.w)
-	movem.l	($FFFFFFFF).w,($FFFFFFFF).w
-	movem.l	($FFFFFFFF).w,($FFFFFFFF).l
-	movem.l	($FFFFFFFF).w,d5-a7
-	movem.l	($FFFFFFFF).l,(a2)
-	movem.l	($FFFFFFFF).l,(a2)+
-	movem.l	($FFFFFFFF).l,$7FFF(a2)
-	movem.l	($FFFFFFFF).l,$7F(a2,d5.w)
-	movem.l	($FFFFFFFF).l,($FFFFFFFF).w
-	movem.l	($FFFFFFFF).l,($FFFFFFFF).l
-	movem.l	($FFFFFFFF).l,d5-a7
-	movem.l	@(pc),(a2)
-	movem.l	@(pc),(a2)+
-	movem.l	@(pc),$7FFF(a2)
-	movem.l	@(pc),$7F(a2,d5.w)
-	movem.l	@(pc),($FFFFFFFF).w
-	movem.l	@(pc),($FFFFFFFF).l
-	movem.l	@(pc),d5-a7
-	movem.l	@(pc,d5.w),(a2)
-	movem.l	@(pc,d5.w),(a2)+
-	movem.l	@(pc,d5.w),$7FFF(a2)
-	movem.l	@(pc,d5.w),$7F(a2,d5.w)
-	movem.l	@(pc,d5.w),($FFFFFFFF).w
-	movem.l	@(pc,d5.w),($FFFFFFFF).l
-	movem.l	@(pc,d5.w),d5-a7
+	movem.w	(a2),d5-a7
+	movem.w	(a2),(a2)
+	movem.w	(a2),(a2)+
+	movem.w	(a2),$7FFF(a2)
+	movem.w	(a2),$7F(a2,d5.w)
+	movem.w	(a2),($FFFFFFFF).w
+	movem.w	(a2),($FFFFFFFF).l
+	movem.w	-(a2),d5-a7
+	movem.w	-(a2),(a2)
+	movem.w	-(a2),(a2)+
+	movem.w	-(a2),$7FFF(a2)
+	movem.w	-(a2),$7F(a2,d5.w)
+	movem.w	-(a2),($FFFFFFFF).w
+	movem.w	-(a2),($FFFFFFFF).l
+	movem.w	$7FFF(a2),d5-a7
+	movem.w	$7FFF(a2),(a2)
+	movem.w	$7FFF(a2),(a2)+
+	movem.w	$7FFF(a2),$7FFF(a2)
+	movem.w	$7FFF(a2),$7F(a2,d5.w)
+	movem.w	$7FFF(a2),($FFFFFFFF).w
+	movem.w	$7FFF(a2),($FFFFFFFF).l
+	movem.w	$7F(a2,d5.w),d5-a7
+	movem.w	$7F(a2,d5.w),(a2)
+	movem.w	$7F(a2,d5.w),(a2)+
+	movem.w	$7F(a2,d5.w),$7FFF(a2)
+	movem.w	$7F(a2,d5.w),$7F(a2,d5.w)
+	movem.w	$7F(a2,d5.w),($FFFFFFFF).w
+	movem.w	$7F(a2,d5.w),($FFFFFFFF).l
+	movem.w	($FFFFFFFF).w,d5-a7
+	movem.w	($FFFFFFFF).w,(a2)
+	movem.w	($FFFFFFFF).w,(a2)+
+	movem.w	($FFFFFFFF).w,$7FFF(a2)
+	movem.w	($FFFFFFFF).w,$7F(a2,d5.w)
+	movem.w	($FFFFFFFF).w,($FFFFFFFF).w
+	movem.w	($FFFFFFFF).w,($FFFFFFFF).l
+	movem.w	($FFFFFFFF).l,d5-a7
+	movem.w	($FFFFFFFF).l,(a2)
+	movem.w	($FFFFFFFF).l,(a2)+
+	movem.w	($FFFFFFFF).l,$7FFF(a2)
+	movem.w	($FFFFFFFF).l,$7F(a2,d5.w)
+	movem.w	($FFFFFFFF).l,($FFFFFFFF).w
+	movem.w	($FFFFFFFF).l,($FFFFFFFF).l
+	movem.w	@(pc),d5-a7
+	movem.w	@(pc),(a2)
+	movem.w	@(pc),(a2)+
+	movem.w	@(pc),$7FFF(a2)
+	movem.w	@(pc),$7F(a2,d5.w)
+	movem.w	@(pc),($FFFFFFFF).w
+	movem.w	@(pc),($FFFFFFFF).l
+	movem.w	@(pc,d5.w),d5-a7
+	movem.w	@(pc,d5.w),(a2)
+	movem.w	@(pc,d5.w),(a2)+
+	movem.w	@(pc,d5.w),$7FFF(a2)
+	movem.w	@(pc,d5.w),$7F(a2,d5.w)
+	movem.w	@(pc,d5.w),($FFFFFFFF).w
+	movem.w	@(pc,d5.w),($FFFFFFFF).l
+	movem.l	d5-a7,d5-a7
 	movem.l	d5-a7,(a2)
 	movem.l	d5-a7,(a2)+
 	movem.l	d5-a7,$7FFF(a2)
 	movem.l	d5-a7,$7F(a2,d5.w)
 	movem.l	d5-a7,($FFFFFFFF).w
 	movem.l	d5-a7,($FFFFFFFF).l
-	movem.l	d5-a7,d5-a7
+	movem.l	(a2),d5-a7
+	movem.l	(a2),(a2)
+	movem.l	(a2),(a2)+
+	movem.l	(a2),$7FFF(a2)
+	movem.l	(a2),$7F(a2,d5.w)
+	movem.l	(a2),($FFFFFFFF).w
+	movem.l	(a2),($FFFFFFFF).l
+	movem.l	-(a2),d5-a7
+	movem.l	-(a2),(a2)
+	movem.l	-(a2),(a2)+
+	movem.l	-(a2),$7FFF(a2)
+	movem.l	-(a2),$7F(a2,d5.w)
+	movem.l	-(a2),($FFFFFFFF).w
+	movem.l	-(a2),($FFFFFFFF).l
+	movem.l	$7FFF(a2),d5-a7
+	movem.l	$7FFF(a2),(a2)
+	movem.l	$7FFF(a2),(a2)+
+	movem.l	$7FFF(a2),$7FFF(a2)
+	movem.l	$7FFF(a2),$7F(a2,d5.w)
+	movem.l	$7FFF(a2),($FFFFFFFF).w
+	movem.l	$7FFF(a2),($FFFFFFFF).l
+	movem.l	$7F(a2,d5.w),d5-a7
+	movem.l	$7F(a2,d5.w),(a2)
+	movem.l	$7F(a2,d5.w),(a2)+
+	movem.l	$7F(a2,d5.w),$7FFF(a2)
+	movem.l	$7F(a2,d5.w),$7F(a2,d5.w)
+	movem.l	$7F(a2,d5.w),($FFFFFFFF).w
+	movem.l	$7F(a2,d5.w),($FFFFFFFF).l
+	movem.l	($FFFFFFFF).w,d5-a7
+	movem.l	($FFFFFFFF).w,(a2)
+	movem.l	($FFFFFFFF).w,(a2)+
+	movem.l	($FFFFFFFF).w,$7FFF(a2)
+	movem.l	($FFFFFFFF).w,$7F(a2,d5.w)
+	movem.l	($FFFFFFFF).w,($FFFFFFFF).w
+	movem.l	($FFFFFFFF).w,($FFFFFFFF).l
+	movem.l	($FFFFFFFF).l,d5-a7
+	movem.l	($FFFFFFFF).l,(a2)
+	movem.l	($FFFFFFFF).l,(a2)+
+	movem.l	($FFFFFFFF).l,$7FFF(a2)
+	movem.l	($FFFFFFFF).l,$7F(a2,d5.w)
+	movem.l	($FFFFFFFF).l,($FFFFFFFF).w
+	movem.l	($FFFFFFFF).l,($FFFFFFFF).l
+	movem.l	@(pc),d5-a7
+	movem.l	@(pc),(a2)
+	movem.l	@(pc),(a2)+
+	movem.l	@(pc),$7FFF(a2)
+	movem.l	@(pc),$7F(a2,d5.w)
+	movem.l	@(pc),($FFFFFFFF).w
+	movem.l	@(pc),($FFFFFFFF).l
+	movem.l	@(pc,d5.w),d5-a7
+	movem.l	@(pc,d5.w),(a2)
+	movem.l	@(pc,d5.w),(a2)+
+	movem.l	@(pc,d5.w),$7FFF(a2)
+	movem.l	@(pc,d5.w),$7F(a2,d5.w)
+	movem.l	@(pc,d5.w),($FFFFFFFF).w
+	movem.l	@(pc,d5.w),($FFFFFFFF).l
 
 	lea.l	(a2),a2
 	lea.l	$7FFF(a2),a2
