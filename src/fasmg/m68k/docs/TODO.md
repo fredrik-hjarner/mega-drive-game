@@ -82,6 +82,9 @@
   chk.w	@(pc,d5.w),d5 ; must test this with an too: @(pc,a5.w)
   cmpm.b	(a2)+,(a1)+ ; TODO: More test of cmpm
   ror.w	(a2) ; TODO: What happens if you do ror.b (a2) or ror.l (a2) ?
+* TODO: Check the real instruction reference instead since it is more reliable:
+  https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf
+  https://web.njit.edu/~rosensta/classes/architecture/252software/code.pdf
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; things that cause unrecoverable errors in fasmg                            ;;

@@ -19,13 +19,16 @@ const examples: Record<OperandType, string[]> = {
   "abs.l": ["($FFFFFFFF).l"],
   "d(pc)": ["@(pc)"],
   "d(pc,ix)": ["@(pc,d5.w)"],
+  // TODO: Rename to imm32?
   "imm": ["#0", "#4", "#$FF", "#$7FFF", "#$FFFF", "#$FFFFFFFF"],
   "imm3": ["#1", "#7"],
   "imm4": ["#2"],
   "imm8": ["#0", "#$FF"],
   // s suffix means signed
   "imm8s": ["#0", "#$7F"],
-  "imm16": ["#0", "#$FF", "#$2700", "#$FFFF"],
+  "imm16": ["#0", "#4", "#$FF", "#$2700", "#$7FFF",  "#$FFFF"],
+  // TODO: singed numbers
+  "imm16s": ["#0", "#4", "#$FF", "#$2700", "#$7FFF",  "#$FFFF"],
   "label": [
     "@",
     // "label",
@@ -40,7 +43,9 @@ const examples: Record<OperandType, string[]> = {
 function getExampleValues(operandType, instr: string, size: OperandSize) {
   // special cases.
   if(size === 'b' && operandType === 'imm') {
-    return ["#0", "#$FF"];
+    return examples["imm8"];
+  } else if(size === 'w' && operandType === 'imm') {
+    return examples["imm16"];
   }
 
   // default case

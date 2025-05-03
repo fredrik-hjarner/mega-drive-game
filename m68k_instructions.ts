@@ -2,8 +2,8 @@
 export type OperandType = 
     | "dn" | "an" | "(an)" | "(an)+" | "-(an)" | "d(an)" | "d(an,ix)" 
     | "abs.w" | "abs.l" | "d(pc)" | "d(pc,ix)" | "imm" | "imm3" | "imm4" 
-    | "imm8" | "imm8s" | "imm16" | "label" | "register_list" | "ccr" | "sr"
-    | "usp";
+    | "imm8" | "imm8s" | "imm16" | "imm16s" | "label" | "register_list" | "ccr"
+    | "sr" | "usp";
 
 // "" means without size suffix.
 export type OperandSize = "b" | "w" | "l" | "s" | "";
@@ -35,7 +35,7 @@ export const data: InstructionSet = [
       // SR variant
       {
         sizes: ["w", ""],
-        sourceOperands: ["imm"],
+        sourceOperands: ["imm16"],
         destOperands: ["sr"]
       },
       // Standard variant
@@ -319,7 +319,7 @@ export const data: InstructionSet = [
       {
         sizes: ["w", ""],
         sourceOperands: ["an"],
-        destOperands: ["imm"]
+        destOperands: ["imm16s"]
       }
     ]
   },
@@ -389,7 +389,8 @@ export const data: InstructionSet = [
     variants: [
       {
         sizes: ["w", ""],
-        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+        // TODO: Not sure what the max value on imm should be allowed to be here...
+        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm16"],
         destOperands: ["dn"]
       }
     ]
@@ -427,7 +428,7 @@ export const data: InstructionSet = [
     variants: [
       {
         sizes: ["w", ""],
-        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm16"],
         destOperands: ["dn"]
       }
     ]
@@ -571,7 +572,7 @@ export const data: InstructionSet = [
     variants: [
       {
         sizes: ["w", ""],
-        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
+        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm16"],
         destOperands: ["dn"]
       }
     ]
