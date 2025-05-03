@@ -3,40 +3,35 @@
 // This script generates test cases for 68K assembly instructions
 
 // Load instruction definitions from TypeScript file
-import { data } from './m68k_instructions.ts';
+import { data, OperandType } from './m68k_instructions.ts';
 const instructionsData = data;
 
-// Function to generate example values for each operand type, with size awareness
-function getExampleValue(operandType, size = '', instr) {
-  switch(operandType) {
-    case "dn": return "d5";
-    case "an": return "a2";
-    case "(an)": return "(a2)";
-    case "(an)+": return "(a2)+";
-    case "-(an)": return "-(a2)";
-    case "d(an)": return "$7FFF(a2)";
-    case "d(an,ix)": return "$7F(a2,d5.w)";
-    case "abs.w": return "($FFFFFFFF).w";
-    case "abs.l": return "($FFFFFFFF).l";
-    case "d(pc)": return "@(pc)";
-    case "d(pc,ix)": return "@(pc,d5.w)";
-    case "imm":
-      if (['btst', 'bchg', 'bclr'].includes(instr)) {
-        return "#0";
-      }
-      if (size === 'b') return "#$FF";
-      if (size === 'w') return "#$FFFF";
-      if (size === 'l') return "#$FFFFFFFF";
-      return "#$FF"; // default
-    case "imm3": return "#1";
-    case "imm4": return "#2";
-    case "imm8": return "#0";
-    case "label": return "@";
-    case "register_list": return "d5-a7";
-    case "ccr": return "ccr";
-    case "sr": return "sr";
-    default: return "";
-  }
+// Example values for each addressing mode
+const examples: Record<OperandType, string[]> = {
+  "dn": ["d2", "d5"],
+  "an": ["a2", "a5"],
+  "(an)": ["(a2)", "(a5)"],
+  "(an)+": ["(a2)+", "(a5)+"],
+  "-(an)": ["-(a2)", "-(a5)"],
+  "d(an)": ["$7FFF(a2)", "$7FFF(a5)"],
+  "d(an,ix)": ["$7F(a2,d5.w)", "$7F(a5,d2.w)"],
+  "abs.w": ["($FFFFFFFF).w"],
+  "abs.l": ["($FFFFFFFF).l"],
+  "d(pc)": ["@(pc)"],
+  "d(pc,ix)": ["@(pc,d5.w)"],
+  "imm": ["#0", "#$FF", "#$FFFF", "#$FFFFFFFF"],
+  "imm3": ["#1", "#7"],
+  "imm4": ["#2"],
+  "imm8": ["#0", "#$FF"],
+  "label": ["@", "label"],
+  "register_list": ["d5-a7", "d0-d7/a0-a7"],
+  "ccr": ["ccr"],
+  "sr": ["sr"]
+};
+
+// Helper function to get example values
+function getExampleValues(operandType) {
+  return examples[operandType] || [];
 }
 
 // Generate valid test cases
@@ -69,28 +64,40 @@ function generateValidTests() {
           const sizeSuffix = size ? `.${size}` : '';
           
           // Single operand instructions (dest only)
-          if (variant.sourceOperands.length === 0 && variant.destOperands.length > 0) {        
+          if (variant.sourceOperands.length === 0 && variant.destOperands.length > 0) {
             for (const destOp of variant.destOperands) {
-              const destExample = getExampleValue(destOp, size, instrName);
-              output += `\t${instrName}${sizeSuffix}\t${destExample}\n`;
+              const destExamples = getExampleValues(destOp);
+              
+              for (const destExample of destExamples) {
+                output += `\t${instrName}${sizeSuffix}\t${destExample}\n`;
+              }
             }
           }
           // Source-only instructions (like branch)
           else if (variant.sourceOperands.length > 0 && variant.destOperands.length === 0) {
             for (const srcOp of variant.sourceOperands) {
-              const srcExample = getExampleValue(srcOp, size, instrName);
-              output += `\t${instrName}${sizeSuffix}\t${srcExample}\n`;
+              const srcExamples = getExampleValues(srcOp);
+              
+              for (const srcExample of srcExamples) {
+                output += `\t${instrName}${sizeSuffix}\t${srcExample}\n`;
+              }
             }
           }
           // Two-operand instructions - systematically generate all combinations
           else if (variant.sourceOperands.length > 0 && variant.destOperands.length > 0) {
-            // Generate all combinations
+            // Generate all combinations for all instructions
             for (const srcOp of variant.sourceOperands) {
-              const srcExample = getExampleValue(srcOp, size, instrName);
+              const srcExamples = getExampleValues(srcOp);
               
               for (const destOp of variant.destOperands) {
-                const destExample = getExampleValue(destOp, size, instrName);
-                output += `\t${instrName}${sizeSuffix}\t${srcExample},${destExample}\n`;
+                const destExamples = getExampleValues(destOp);
+                
+                // Generate all combinations of source and dest examples
+                for (const srcExample of srcExamples) {
+                  for (const destExample of destExamples) {
+                    output += `\t${instrName}${sizeSuffix}\t${srcExample},${destExample}\n`;
+                  }
+                }
               }
             }
           }
@@ -99,11 +106,16 @@ function generateValidTests() {
         // For bit manipulation instructions, also generate without size specifier
         if (['btst', 'bchg', 'bclr', 'bset'].includes(instrName)) {
           for (const srcOp of variant.sourceOperands) {
-            const srcExample = getExampleValue(srcOp, '', instrName);
+            const srcExamples = getExampleValues(srcOp);
             
             for (const destOp of variant.destOperands) {
-              const destExample = getExampleValue(destOp, '', instrName);
-              output += `\t${instrName}\t${srcExample},${destExample}\n`;
+              const destExamples = getExampleValues(destOp);
+              
+              for (const srcExample of srcExamples) {
+                for (const destExample of destExamples) {
+                  output += `\t${instrName}\t${srcExample},${destExample}\n`;
+                }
+              }
             }
           }
         }
@@ -113,8 +125,11 @@ function generateValidTests() {
     }
   }
   
+  // Add label for instructions that need it
+  output += `\nlabel:\n`;
+  
   // Add end marker
-  output += `\n\trts\n`;
+  output += `\trts\n`;
   
   return output;
 }
@@ -124,7 +139,7 @@ function generateTestFiles() {
   const validTests = generateValidTests();
   
   // Define output path
-  const validTestsPath = './valid_instructions.asm';
+  const validTestsPath = './src/fasmg/m68k/tests/valid_instructions_new.asm';
   
   // Write file using Bun.write
   Bun.write(validTestsPath, validTests);

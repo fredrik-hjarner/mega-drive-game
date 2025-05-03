@@ -4,7 +4,7 @@ export type OperandType =
     | "abs.w" | "abs.l" | "d(pc)" | "d(pc,ix)" | "imm" | "imm3" | "imm4" 
     | "imm8" | "label" | "register_list" | "ccr" | "sr";
 
-export type OperandSize = "b" | "w" | "l" | "";
+export type OperandSize = "b" | "w" | "l" | "s" | "";
 
 export type InstructionVariant = {
     sizes: OperandSize[];
@@ -55,9 +55,9 @@ export const data: InstructionSet = [
       }
     ]
   },
-  // Bit manipulation instructions (register source)
+  // Bit manipulation instructions - BTST (supports PC-relative addressing)
   {
-    instructions: ["btst", "bchg", "bclr", "bset"],
+    instructions: ["btst"],
     variants: [
       {
         sizes: ["l"],
@@ -78,6 +78,65 @@ export const data: InstructionSet = [
         sizes: ["b"],
         sourceOperands: ["imm"],
         destOperands: ["(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"]
+      }
+    ]
+  },
+  // Bit manipulation instructions - BCHG, BCLR, BSET (no PC-relative addressing)
+  {
+    instructions: ["bchg", "bclr", "bset"],
+    variants: [
+      {
+        sizes: ["l"],
+        sourceOperands: ["dn"],
+        destOperands: ["dn"]
+      },
+      {
+        sizes: ["b"],
+        sourceOperands: ["dn"],
+        destOperands: ["(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+      },
+      {
+        sizes: ["l"],
+        sourceOperands: ["imm"],
+        destOperands: ["dn"]
+      },
+      {
+        sizes: ["b"],
+        sourceOperands: ["imm"],
+        destOperands: ["(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+      }
+    ]
+  },
+  // Set according to condition (Scc) instructions
+  {
+    instructions: ["st", "sf", "shi", "sls", "scc", "scs", "sne", "seq", "svc", "svs", "spl", "smi", "sge", "slt", "sgt", "sle", "shs", "slo"],
+    variants: [
+      {
+        sizes: ["b"],
+        sourceOperands: [],
+        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+      }
+    ]
+  },
+  // Branch instructions
+  {
+    instructions: ["bra", "bsr", "bhi", "bls", "bcc", "bcs", "bne", "beq", "bvc", "bvs", "bpl", "bmi", "bge", "blt", "bgt", "ble", "bhs", "blo"],
+    variants: [
+      {
+        sizes: ["s", "w"],
+        sourceOperands: ["label"],
+        destOperands: []
+      }
+    ]
+  },
+  // DBcc instructions
+  {
+    instructions: ["dbt", "dbf", "dbhi", "dbls", "dbcc", "dbcs", "dbne", "dbeq", "dbvc", "dbvs", "dbpl", "dbmi", "dbge", "dblt", "dbgt", "dble", "dbhs", "dblo"],
+    variants: [
+      {
+        sizes: ["w"],
+        sourceOperands: ["dn"],
+        destOperands: ["label"]
       }
     ]
   },
@@ -136,12 +195,18 @@ export const data: InstructionSet = [
         sizes: ["w"],
         sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
         destOperands: ["sr"]
+      },
+      // MOVE USP
+      {
+        sizes: ["l"],
+        sourceOperands: ["an"],
+        destOperands: ["an"]
       }
     ]
   },
-  // Simple memory/register operations
+  // Simple memory/register operations (negx, clr, neg, not)
   {
-    instructions: ["negx", "clr", "neg", "not", "tas"],
+    instructions: ["negx", "clr", "neg", "not"],
     variants: [
       {
         sizes: ["b", "w", "l"],
@@ -150,12 +215,34 @@ export const data: InstructionSet = [
       }
     ]
   },
+  // TAS instruction (byte only)
+  {
+    instructions: ["tas"],
+    variants: [
+      {
+        sizes: ["b"],
+        sourceOperands: [],
+        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+      }
+    ]
+  },
   // Register-only operations
   {
-    instructions: ["ext", "swap"],
+    instructions: ["ext"],
     variants: [
       {
         sizes: ["w", "l"],
+        sourceOperands: [],
+        destOperands: ["dn"]
+      }
+    ]
+  },
+  // SWAP instruction (no size suffix)
+  {
+    instructions: ["swap"],
+    variants: [
+      {
+        sizes: [""],
         sourceOperands: [],
         destOperands: ["dn"]
       }
@@ -201,7 +288,7 @@ export const data: InstructionSet = [
       {
         sizes: ["b", "w", "l"],
         sourceOperands: [],
-        destOperands: ["dn", "an", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"]
+        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
       }
     ]
   },
@@ -234,17 +321,6 @@ export const data: InstructionSet = [
       {
         sizes: [""],
         sourceOperands: [],
-        destOperands: ["an"]
-      }
-    ]
-  },
-  // MOVE USP
-  {
-    instructions: ["move usp"],
-    variants: [
-      {
-        sizes: ["l"],
-        sourceOperands: ["an"],
         destOperands: ["an"]
       }
     ]
@@ -498,7 +574,12 @@ export const data: InstructionSet = [
       {
         sizes: ["b", "w", "l"],
         sourceOperands: ["dn", "imm3"],
-        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+        destOperands: ["dn"]
+      },
+      {
+        sizes: ["w"],
+        sourceOperands: [],
+        destOperands: ["(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
       }
     ]
   }
