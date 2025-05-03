@@ -429,30 +429,50 @@ export const data: InstructionSet = [
     variants: [
       {
         sizes: ["b"],
-        sourceOperands: ["dn", "-(an)"],
-        destOperands: ["dn", "-(an)"]
-      }
+        sourceOperands: ["dn"],
+        destOperands: ["dn"]
+      },
+      {
+        sizes: ["b"],
+        sourceOperands: ["-(an)"],
+        destOperands: ["-(an)"]
+      },
     ]
   },
-  // Logical operations
+  // Logical operations // verified
   {
-    instructions: ["or", "and"],
+    instructions: ["or", "and"], // verified
     variants: [
       {
-        sizes: ["b", "w", "l"],
-        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
-      }
+        sizes: ["b", "w", "l"], // verified
+        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"], // verified
+        destOperands: ["dn"] // verified
+      },
+      {
+        sizes: ["b", "w", "l"], // verified
+        sourceOperands: ["dn"], // verified
+        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"] // verified
+      },
     ]
   },
-  // Subtraction operations
+  // Subtraction operations // verified
   {
-    instructions: ["sub"],
+    instructions: ["sub"], // verified
     variants: [
       {
-        sizes: ["b", "w", "l"],
-        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"]
+        sizes: ["b", "w", "l"], // verified
+        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"], // verified
+        destOperands: ["dn"] // verified
+      },
+      {
+        sizes: ["w", "l"], // verified
+        sourceOperands: ["an"], // verified
+        destOperands: ["dn"] // verified
+      },
+      {
+        sizes: ["b", "w", "l"], // verified
+        sourceOperands: ["dn"], // verified
+        destOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l"] // verified
       }
     ]
   },
