@@ -1,9 +1,9 @@
 #!/usr/bin/env bun
 
 // Path to the original file
-const originalFilePath = "src/fasmg/m68k/tests/valid_instructions.asm";
+const originalFilePath = "tests/valid_instructions.asm";
 // Path to the new generated file
-const generatedFilePath = "./src/fasmg/m68k/tests/valid_instructions_new.asm";
+const generatedFilePath = "tests/valid_instructions_new.asm";
 
 async function compareFiles() {
   // Read both files

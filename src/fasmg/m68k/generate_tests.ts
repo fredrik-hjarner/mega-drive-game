@@ -140,7 +140,7 @@ function generateTestFiles() {
   const validTests = generateValidTests();
   
   // Define output path
-  const validTestsPath = './src/fasmg/m68k/tests/valid_instructions_new.asm';
+  const validTestsPath = './tests/valid_instructions_new.asm';
   
   // Write file using Bun.write
   Bun.write(validTestsPath, validTests);
