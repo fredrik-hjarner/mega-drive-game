@@ -2,7 +2,7 @@
 export type OperandType = 
     | "dn" | "an" | "(an)" | "(an)+" | "-(an)" | "d(an)" | "d(an,ix)" 
     | "abs.w" | "abs.l" | "d(pc)" | "d(pc,ix)" | "imm" | "imm3" | "imm4" 
-    | "imm8" | "imm16" | "label" | "register_list" | "ccr" | "sr";
+    | "imm8" | "imm8s" | "imm16" | "label" | "register_list" | "ccr" | "sr";
 
 export type OperandSize = "b" | "w" | "l" | "s" | "";
 
@@ -407,7 +407,7 @@ export const data: InstructionSet = [
     variants: [
       {
         sizes: ["l"],
-        sourceOperands: ["imm8"],
+        sourceOperands: ["imm8s"],
         destOperands: ["dn"]
       }
     ]
@@ -445,7 +445,9 @@ export const data: InstructionSet = [
     variants: [
       {
         sizes: ["b", "w", "l"], // verified
-        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"], // verified
+        // TODO: This includes "imm"???
+        // https://github.com/prb28/m68k-instructions-documentation/blob/master/instructions/and.md
+        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"], // verified
         destOperands: ["dn"] // verified
       },
       {
@@ -460,7 +462,9 @@ export const data: InstructionSet = [
     variants: [
       {
         sizes: ["b", "w", "l"], // verified
-        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"], // verified
+        // TODO: This includes "imm"???
+        // https://github.com/prb28/m68k-instructions-documentation/blob/master/instructions/add.md
+        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"], // verified
         destOperands: ["dn"] // verified
       },
       {
@@ -525,12 +529,19 @@ export const data: InstructionSet = [
   },
   // CMP
   {
-    instructions: ["cmp"],
+    instructions: ["cmp"], // verified
     variants: [
       {
-        sizes: ["b", "w", "l"],
-        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)", "imm"],
-        destOperands: ["dn"]
+        sizes: ["b", "w", "l"], // verified
+        // TODO: This includes "imm"???
+        // https://github.com/prb28/m68k-instructions-documentation/blob/master/instructions/cmp.md
+        sourceOperands: ["dn", "(an)", "(an)+", "-(an)", "d(an)", "d(an,ix)", "abs.w", "abs.l", "d(pc)", "d(pc,ix)"], // verified
+        destOperands: ["dn"] // verified
+      },
+      {
+        sizes: ["w", "l"], // verified
+        sourceOperands: [ "an"], // verified
+        destOperands: ["dn"] // verified
       }
     ]
   },

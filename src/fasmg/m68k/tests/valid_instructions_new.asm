@@ -3166,8 +3166,8 @@
 
 	moveq.l	#0,d2
 	moveq.l	#0,d5
-	moveq.l	#$FF,d2
-	moveq.l	#$FF,d5
+	moveq.l	#$7F,d2
+	moveq.l	#$7F,d5
 
 	divu.w	d2,d2
 	divu.w	d2,d5
@@ -3301,10 +3301,6 @@
 	or.b	@(pc),d5
 	or.b	@(pc,d5.w),d2
 	or.b	@(pc,d5.w),d5
-	or.b	#0,d2
-	or.b	#0,d5
-	or.b	#$FF,d2
-	or.b	#$FF,d5
 	or.w	d2,d2
 	or.w	d2,d5
 	or.w	d5,d2
@@ -3337,14 +3333,6 @@
 	or.w	@(pc),d5
 	or.w	@(pc,d5.w),d2
 	or.w	@(pc,d5.w),d5
-	or.w	#0,d2
-	or.w	#0,d5
-	or.w	#$FF,d2
-	or.w	#$FF,d5
-	or.w	#$FFFF,d2
-	or.w	#$FFFF,d5
-	or.w	#$FFFFFFFF,d2
-	or.w	#$FFFFFFFF,d5
 	or.l	d2,d2
 	or.l	d2,d5
 	or.l	d5,d2
@@ -3377,14 +3365,6 @@
 	or.l	@(pc),d5
 	or.l	@(pc,d5.w),d2
 	or.l	@(pc,d5.w),d5
-	or.l	#0,d2
-	or.l	#0,d5
-	or.l	#$FF,d2
-	or.l	#$FF,d5
-	or.l	#$FFFF,d2
-	or.l	#$FFFF,d5
-	or.l	#$FFFFFFFF,d2
-	or.l	#$FFFFFFFF,d5
 	or.b	d2,d2
 	or.b	d2,d5
 	or.b	d5,d2
@@ -3502,10 +3482,6 @@
 	and.b	@(pc),d5
 	and.b	@(pc,d5.w),d2
 	and.b	@(pc,d5.w),d5
-	and.b	#0,d2
-	and.b	#0,d5
-	and.b	#$FF,d2
-	and.b	#$FF,d5
 	and.w	d2,d2
 	and.w	d2,d5
 	and.w	d5,d2
@@ -3538,14 +3514,6 @@
 	and.w	@(pc),d5
 	and.w	@(pc,d5.w),d2
 	and.w	@(pc,d5.w),d5
-	and.w	#0,d2
-	and.w	#0,d5
-	and.w	#$FF,d2
-	and.w	#$FF,d5
-	and.w	#$FFFF,d2
-	and.w	#$FFFF,d5
-	and.w	#$FFFFFFFF,d2
-	and.w	#$FFFFFFFF,d5
 	and.l	d2,d2
 	and.l	d2,d5
 	and.l	d5,d2
@@ -3578,14 +3546,6 @@
 	and.l	@(pc),d5
 	and.l	@(pc,d5.w),d2
 	and.l	@(pc,d5.w),d5
-	and.l	#0,d2
-	and.l	#0,d5
-	and.l	#$FF,d2
-	and.l	#$FF,d5
-	and.l	#$FFFF,d2
-	and.l	#$FFFF,d5
-	and.l	#$FFFFFFFF,d2
-	and.l	#$FFFFFFFF,d5
 	and.b	d2,d2
 	and.b	d2,d5
 	and.b	d5,d2
@@ -3703,10 +3663,6 @@
 	sub.b	@(pc),d5
 	sub.b	@(pc,d5.w),d2
 	sub.b	@(pc,d5.w),d5
-	sub.b	#0,d2
-	sub.b	#0,d5
-	sub.b	#$FF,d2
-	sub.b	#$FF,d5
 	sub.w	d2,d2
 	sub.w	d2,d5
 	sub.w	d5,d2
@@ -3739,14 +3695,6 @@
 	sub.w	@(pc),d5
 	sub.w	@(pc,d5.w),d2
 	sub.w	@(pc,d5.w),d5
-	sub.w	#0,d2
-	sub.w	#0,d5
-	sub.w	#$FF,d2
-	sub.w	#$FF,d5
-	sub.w	#$FFFF,d2
-	sub.w	#$FFFF,d5
-	sub.w	#$FFFFFFFF,d2
-	sub.w	#$FFFFFFFF,d5
 	sub.l	d2,d2
 	sub.l	d2,d5
 	sub.l	d5,d2
@@ -3779,14 +3727,6 @@
 	sub.l	@(pc),d5
 	sub.l	@(pc,d5.w),d2
 	sub.l	@(pc,d5.w),d5
-	sub.l	#0,d2
-	sub.l	#0,d5
-	sub.l	#$FF,d2
-	sub.l	#$FF,d5
-	sub.l	#$FFFF,d2
-	sub.l	#$FFFF,d5
-	sub.l	#$FFFFFFFF,d2
-	sub.l	#$FFFFFFFF,d5
 	sub.w	a2,d2
 	sub.w	a2,d5
 	sub.w	a5,d2
@@ -3912,10 +3852,6 @@
 	add.b	@(pc),d5
 	add.b	@(pc,d5.w),d2
 	add.b	@(pc,d5.w),d5
-	add.b	#0,d2
-	add.b	#0,d5
-	add.b	#$FF,d2
-	add.b	#$FF,d5
 	add.w	d2,d2
 	add.w	d2,d5
 	add.w	d5,d2
@@ -3948,14 +3884,6 @@
 	add.w	@(pc),d5
 	add.w	@(pc,d5.w),d2
 	add.w	@(pc,d5.w),d5
-	add.w	#0,d2
-	add.w	#0,d5
-	add.w	#$FF,d2
-	add.w	#$FF,d5
-	add.w	#$FFFF,d2
-	add.w	#$FFFF,d5
-	add.w	#$FFFFFFFF,d2
-	add.w	#$FFFFFFFF,d5
 	add.l	d2,d2
 	add.l	d2,d5
 	add.l	d5,d2
@@ -3988,14 +3916,6 @@
 	add.l	@(pc),d5
 	add.l	@(pc,d5.w),d2
 	add.l	@(pc,d5.w),d5
-	add.l	#0,d2
-	add.l	#0,d5
-	add.l	#$FF,d2
-	add.l	#$FF,d5
-	add.l	#$FFFF,d2
-	add.l	#$FFFF,d5
-	add.l	#$FFFFFFFF,d2
-	add.l	#$FFFFFFFF,d5
 	add.w	a2,d2
 	add.w	a2,d5
 	add.w	a5,d2
@@ -4358,10 +4278,6 @@
 	cmp.b	@(pc),d5
 	cmp.b	@(pc,d5.w),d2
 	cmp.b	@(pc,d5.w),d5
-	cmp.b	#0,d2
-	cmp.b	#0,d5
-	cmp.b	#$FF,d2
-	cmp.b	#$FF,d5
 	cmp.w	d2,d2
 	cmp.w	d2,d5
 	cmp.w	d5,d2
@@ -4394,14 +4310,6 @@
 	cmp.w	@(pc),d5
 	cmp.w	@(pc,d5.w),d2
 	cmp.w	@(pc,d5.w),d5
-	cmp.w	#0,d2
-	cmp.w	#0,d5
-	cmp.w	#$FF,d2
-	cmp.w	#$FF,d5
-	cmp.w	#$FFFF,d2
-	cmp.w	#$FFFF,d5
-	cmp.w	#$FFFFFFFF,d2
-	cmp.w	#$FFFFFFFF,d5
 	cmp.l	d2,d2
 	cmp.l	d2,d5
 	cmp.l	d5,d2
@@ -4434,14 +4342,14 @@
 	cmp.l	@(pc),d5
 	cmp.l	@(pc,d5.w),d2
 	cmp.l	@(pc,d5.w),d5
-	cmp.l	#0,d2
-	cmp.l	#0,d5
-	cmp.l	#$FF,d2
-	cmp.l	#$FF,d5
-	cmp.l	#$FFFF,d2
-	cmp.l	#$FFFF,d5
-	cmp.l	#$FFFFFFFF,d2
-	cmp.l	#$FFFFFFFF,d5
+	cmp.w	a2,d2
+	cmp.w	a2,d5
+	cmp.w	a5,d2
+	cmp.w	a5,d5
+	cmp.l	a2,d2
+	cmp.l	a2,d5
+	cmp.l	a5,d2
+	cmp.l	a5,d5
 
 	cmpa.w	d2,a2
 	cmpa.w	d2,a5

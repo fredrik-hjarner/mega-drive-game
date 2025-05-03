@@ -23,6 +23,7 @@ const examples: Record<OperandType, string[]> = {
   "imm3": ["#1", "#7"],
   "imm4": ["#2"],
   "imm8": ["#0", "#$FF"],
+  "imm8s": ["#0", "#$7F"],
   "imm16": ["#0", "#$FF", "#$FFFF"],
   "label": [
     "@",
