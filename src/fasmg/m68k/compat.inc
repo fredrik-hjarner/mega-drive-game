@@ -10,7 +10,6 @@ macro cnop offset,alignment
     align alignment | offset
 end macro
 
-; TODO: Dunno what a good name for this is.
 ; Example:
 ;     input:  (((l1)  &  $3FFF) <<  16) + (((l1)  &  $C000) >>  14)
 ;     output: (((l1) and $3FFF) shl 16) + (((l1) and $C000) shr 14)
@@ -46,26 +45,10 @@ macro calminstruction?.replace_legacy_operators? expr*
         arrange expr, a =or b
         jump next_or
     done_or:
-
-    ; Display the results of the transformations
-        ; local expr_str
-        ; arrange expr_str, expr
-        ; stringify expr_str
-        ; display expr_str bappend 10
-        ; display expr_str bappend 10
-        ; display expr_str bappend 10
-        ; display expr_str bappend 10
-        ; display expr_str bappend 10
-        ; display expr_str bappend 10
-        ; display expr_str bappend 10
 end macro
 
 ; Replace @ with $ since famsg uses $ for location counter and some m68k
 ; assemblers uses @ instead.
 ; I am not sure this will work well, otherwise I need to come up with another
 ; solution.
-; Oops, I was wrong!!! It is * that is exactly like $
-;     and there is no equivalent for @ (points to the address of the operands
-;     extension word).
-; TODO: Remove or comment this out.
 define @ $
