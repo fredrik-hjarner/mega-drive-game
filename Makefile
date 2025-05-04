@@ -1,4 +1,4 @@
-.PHONY: all preprocess build-preprocessed build-preprocessed-fasmg build hexdump run clean
+.PHONY: all preprocess build-preprocessed build-preprocessed-fasmg build hexdump run clean update-submodules
 
 all: preprocess build-preprocessed hexdump
 
@@ -26,4 +26,10 @@ run:
 clean:
 	rm -f main.bin main.hex main.lst preprocessed.asm
 
+# Should keep/get the fasm68k submodule in sync with fasm68k master branch.
+update-submodules:
+	git submodule update --remote
 
+# Update the branch tracked by the main repo.
+stage-submodules:
+	git add fasm68k

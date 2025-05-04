@@ -1,0 +1,4 @@
+[submodule "fasm68k"]
+	path = fasm68k
+	url = git@github.com:fredrik-hjarner/fasm68k.git
+	branch = master
