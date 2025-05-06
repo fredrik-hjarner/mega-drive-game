@@ -1,4 +1,4 @@
-.PHONY: all preprocess build-preprocessed build-preprocessed-fasmg build hexdump run clean update-submodules
+.PHONY: all preprocess build-preprocessed fasm68k build hexdump run clean update-submodules
 
 all: preprocess build-preprocessed hexdump
 
@@ -8,9 +8,10 @@ preprocess:
 build-preprocessed:
 	clownassembler -c -l main.lst -o main.bin -i preprocessed.asm
 
-build-preprocessed-fasmg:
-	fasmg preprocessed.asm main.bin -e10
-	xxd -b -c1 main.bin | cut -d' ' -f2,4 > main.hex
+fasm68k:
+#	make preprocess
+	fasm68k preprocessed.asm main.bin -e10
+	make hexdump
 # hexdump -C -v main.bin > main.hex
 
 # build:
