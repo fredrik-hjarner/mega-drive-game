@@ -6,7 +6,8 @@ macro emit? line&
     ; vasm needs equs to not be prefixed with whitespace.
     ; vasm needs other stuff to be prefixed with whitespace.
     match a= =equ= b, line
-    else match c= =macro, line
+    else match a= =macro, line
+    else match a= =rs.b c, line
     else
         db 20h, 20h, 20h, 20h
     end match

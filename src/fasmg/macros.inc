@@ -21,28 +21,6 @@ macro calminstruction?.assemble2? &line&
     emit 1, 10
 end macro
 
-; curr_var_addr stores where to place the next variable in RAM.
-; It is initialized to the start of RAM.
-curr_var_addr = $FF0000
-
-; Declares a word variable in RAM.
-calminstruction word var_name
-    local tmp
-    arrange tmp, var_name =equ= curr_var_addr
-    assemble2 tmp
-    ; increment the address for the next variable
-    compute curr_var_addr, curr_var_addr + 2
-end calminstruction
-
-; Declares a byte variable in RAM.
-calminstruction byte var_name
-    local tmp
-    arrange tmp, var_name =equ= curr_var_addr
-    assemble2 tmp
-    ; increment the address for the next variable
-    compute curr_var_addr, curr_var_addr + 1
-end calminstruction
-
 ; arguments:
 ;     reg_nr: register number: 0-23d
 ;     value:  value: 8 bits
@@ -209,7 +187,5 @@ define gamepads_get_input +gamepads_get_input
 
 ; Make visible to the preprocessor
 ; define bappend +bappend
-define word +word
-define byte +byte
 define set_vdp_register +set_vdp_register
 define meta_version +meta_version

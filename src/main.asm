@@ -1,9 +1,6 @@
-; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; ;; Some stuff I have to toggle between assemblers...                        ;;
-; ;; Copy this into preprocessed.asm file.                                    ;;
-; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-; include "fasm68k/fasm68k.inc"
+; Set address where stuff allocated with `rs` will be.
+; rs will be used to place stuff in RAM and RAM start at $FF0000.
+rsset $FF0000
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
@@ -486,30 +483,30 @@ error:
 ; VARIABLES
 ; RAM starts at $FF0000
 ; TODO: I should probably clear RAM at startup?
-; TODO: Using equs at hard-coded addresses is the only methods I've
-; found to declare RAM variables. It seems dumb though.
 ; TODO: How does alignment and data work now again? Does data need
 ; to always be word-aligned?
 ; =================================================================
 
-word color_index
-word hscroll_amount
-; word vscroll_amount
+; rs address is set to $FF0000 with rsset at the start of the file
 
-byte gamepad1_up
-byte gamepad1_down
-byte gamepad1_left
-byte gamepad1_right
-byte gamepad1_b
-byte gamepad1_c
-byte gamepad1_a
-byte gamepad1_start
+color_index     rs.w 1
+hscroll_amount  rs.w 1
+; vscroll_amount    rs.w 1
 
-byte gamepad2_up
-byte gamepad2_down
-byte gamepad2_left
-byte gamepad2_right
-byte gamepad2_b
-byte gamepad2_c
-byte gamepad2_a
-byte gamepad2_start
+gamepad1_up     rs.b 1
+gamepad1_down   rs.b 1
+gamepad1_left   rs.b 1
+gamepad1_right  rs.b 1
+gamepad1_b      rs.b 1
+gamepad1_c      rs.b 1
+gamepad1_a      rs.b 1
+gamepad1_start  rs.b 1
+
+gamepad2_up     rs.b 1
+gamepad2_down   rs.b 1
+gamepad2_left   rs.b 1
+gamepad2_right  rs.b 1
+gamepad2_b      rs.b 1
+gamepad2_c      rs.b 1
+gamepad2_a      rs.b 1
+gamepad2_start  rs.b 1
