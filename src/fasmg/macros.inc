@@ -69,9 +69,13 @@ define set_palette_color +set_palette_color
 ; arguments:
 ;     addr: address: $0000-$FFFF
 ; https://segaretro.org/Sega_Mega_Drive/VDP_general_usage
-macro set_write_vram addr
-    emit move.l #$40000000+(((addr)&$3FFF)<<16)+(((addr)&$C000)>>14),vdp_ctrl.l
-end macro
+calminstruction set_write_vram? addr
+    local tmp
+    ; TODO: compute does not work here because it can't work in preprocess.asm.
+    ; compute tmp, $40000000 + ((addr and $3FFF) shl 16)+((addr and $C000) shr 14)
+    arrange tmp, =move.=l= =#$40000000+(((addr)&$3FFF)<<16)+(((addr)&$C000)>>14),=vdp_ctrl.=l
+    _assemble tmp
+end calminstruction
 define set_write_vram +set_write_vram
 
 ; arguments:
