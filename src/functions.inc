@@ -55,6 +55,7 @@ update_hscroll:
         rte
 
 ; TODO: Comment
+; A plane tile is one word.
 ; arguments:
 ;     d0.l: Tile index  : 11 bits
 ;     d1.b: Palette     : 0-3

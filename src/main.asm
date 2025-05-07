@@ -76,8 +76,8 @@ skip_tmss:
     ;                     |              1 - 128kB of VRAM
     ;                     | +------- #5: 0 - disable v-blank interrupts
     ;                     | |            1 - enable v-blank interrupts
-    ;                     | | +----- #3: 0 - 224 pixel high (28 cell) NTSC mode
-    ;                     | | |          1 - 240 pixel high (30 cell) PAL mode
+    ;                     | | +----- #3: 0 - 224 pixel high (28 tiles) NTSC mode
+    ;                     | | |          1 - 240 pixel high (30 tiles) PAL mode
     ;                     | | |
     set_vdp_register $01, 00000100b      ; bits 1, 0 are always 0
     ;                      | | |
@@ -102,7 +102,7 @@ skip_tmss:
     ;                      +-------- #6: Used for 128kB VRAM.
 
     ; Window Name Table Location
-    ; Place it at $4000
+    ; Place it at $0000
     ;                       +------- #5: 0 - + 0 to address
     ;                       |            1 - + $8000 (32768) to address
     ;                       | +----- #3: 0 - + 0 to address
@@ -111,7 +111,7 @@ skip_tmss:
     ;                       | | |        1 - + $800 (2048) to address
     ;                       | | |        note: #1 is ignored in 320 wide mode
     ;                       | | |
-    set_vdp_register $03, 00010000b      ; bits 7 & 0 are always 0
+    set_vdp_register $03, 00000000b      ; bits 7 & 0 are always 0
     ;                      | | |
     ;                      | | +---- #2: 0 - + 0 to address
     ;                      | |           1 - + $1000 (4096) to address
@@ -183,14 +183,14 @@ skip_tmss:
     ;                                    1 - vertical scroll mode 16px
 
     ; Mode Register 4
-    ;                     +--------- #7: 0 - 256 pixel (32 cell) wide mode
-    ;                     |              1 - 320 pixel (40 cell) wide mode
+    ;                     +--------- #7: 0 - 256 pixel (32 tiles) wide mode
+    ;                     |              1 - 320 pixel (40 tiles) wide mode
     ;                     | +------- #5: 0 - 
     ;                     | |            1 - replace vsync pixel clock (??)
     ;                     | | +----- #3: 0 - disable shadow / highlight
     ;                     | | |          1 - enable shadow / highlight
-    ;                     | | |  +-- #0: 0 - 256 pixel (32 cell) wide mode
-    ;                     | | |  |       1 - 320 pixel (40 cell) wide mode
+    ;                     | | |  +-- #0: 0 - 256 pixel (32 tiles) wide mode
+    ;                     | | |  |       1 - 320 pixel (40 tiles) wide mode
     ;                     | | |  |
     set_vdp_register $0C, 10000001b      ; bits 7 & 0 must be the same value
     ;                      | | |
@@ -288,23 +288,23 @@ skip_tmss:
     ; -----------------------------------------------------------------
     move.l  #$C0000000, vdp_ctrl.l    ; Start writing at CRAM $0000
     
-    ; Set some colors
-    set_palette_color 0, 0, 0        ; Color 0
-    set_palette_color 1, 0, 0        ; Color 1
-    set_palette_color 2, 0, 0        ; Color 2
-    set_palette_color 3, 0, 0        ; Color 3
-    set_palette_color 4, 0, 0        ; Color 4
-    set_palette_color 5, 0, 0        ; Color 5
-    set_palette_color 6, 0, 0        ; Color 6
-    set_palette_color 7, 0, 0        ; Color 7
-    set_palette_color 7, 0, 1        ; Color 8
-    set_palette_color 7, 0, 2        ; Color 9
-    set_palette_color 7, 0, 3        ; Color 10
-    set_palette_color 7, 0, 4        ; Color 11
-    set_palette_color 7, 0, 5        ; Color 12
-    set_palette_color 7, 0, 6        ; Color 13
-    set_palette_color 7, 0, 7        ; Color 14
-    set_palette_color 7, 1, 7        ; Color 15
+    ; Most awesome palette you've ever seen!
+    set_palette_color 0, 0, 0 ; 0  transparent (black)
+    set_palette_color 7, 1, 1 ; 1  bright red
+    set_palette_color 7, 7, 0 ; 2  bright yellow
+    set_palette_color 1, 7, 1 ; 3  bright green
+    set_palette_color 0, 6, 6 ; 4  bright teal
+    set_palette_color 1, 1, 7 ; 5  bright blue
+    set_palette_color 5, 0, 5 ; 6  bright purple
+    set_palette_color 5, 0, 0 ; 7  dark red
+    set_palette_color 3, 3, 0 ; 8  dark yellow
+    set_palette_color 0, 5, 0 ; 9  dark green
+    set_palette_color 0, 3, 3 ; 10 dark teal
+    set_palette_color 0, 0, 5 ; 11 dark blue
+    set_palette_color 3, 0, 3 ; 12 dark purple
+    set_palette_color 0, 0, 0 ; 13 black
+    set_palette_color 4, 4, 4 ; 14 gray
+    set_palette_color 7, 7, 7 ; 15 white
 
 
     ; =================================================================
@@ -313,7 +313,7 @@ skip_tmss:
 
     move.l  #$40000000, vdp_ctrl.l    ; Start writing at VRAM $0000
 
-    ; Tile $0
+    ; Tile $0 ; Fully transparent
     move.l #$00000000, vdp_data.l ; row 1
     move.l #$00000000, vdp_data.l ; row 2
     move.l #$00000000, vdp_data.l ; row 3
@@ -323,27 +323,7 @@ skip_tmss:
     move.l #$00000000, vdp_data.l ; row 7
     move.l #$00000000, vdp_data.l ; row 8
 
-    ; Tile $1
-    move.l #$10000000, vdp_data.l ; row 1
-    move.l #$11000000, vdp_data.l ; row 2
-    move.l #$11100000, vdp_data.l ; row 3
-    move.l #$11110000, vdp_data.l ; row 4
-    move.l #$11111000, vdp_data.l ; row 5
-    move.l #$11111100, vdp_data.l ; row 6
-    move.l #$11111110, vdp_data.l ; row 7
-    move.l #$11111111, vdp_data.l ; row 8
-
-    ; Tile $2
-    move.l #$00011000, vdp_data.l ; row 1
-    move.l #$00011000, vdp_data.l ; row 2
-    move.l #$00011000, vdp_data.l ; row 3
-    move.l #$11111111, vdp_data.l ; row 4
-    move.l #$11111111, vdp_data.l ; row 5
-    move.l #$00011000, vdp_data.l ; row 6
-    move.l #$00011000, vdp_data.l ; row 7
-    move.l #$00011000, vdp_data.l ; row 8
-
-    ; Tile $3
+    ; Tile $1 ; Full sware color 1
     move.l #$11111111, vdp_data.l ; row 1
     move.l #$11111111, vdp_data.l ; row 2
     move.l #$11111111, vdp_data.l ; row 3
@@ -353,15 +333,55 @@ skip_tmss:
     move.l #$11111111, vdp_data.l ; row 7
     move.l #$11111111, vdp_data.l ; row 8
 
+    ; Tile $2
+    move.l #$22222222, vdp_data.l ; row 1
+    move.l #$22222222, vdp_data.l ; row 2
+    move.l #$22222222, vdp_data.l ; row 3
+    move.l #$22222222, vdp_data.l ; row 4
+    move.l #$22222222, vdp_data.l ; row 5
+    move.l #$22222222, vdp_data.l ; row 6
+    move.l #$22222222, vdp_data.l ; row 7
+    move.l #$22222222, vdp_data.l ; row 8
+
+    ; Tile $3
+    move.l #$33333333, vdp_data.l ; row 1
+    move.l #$33333333, vdp_data.l ; row 2
+    move.l #$33333333, vdp_data.l ; row 3
+    move.l #$33333333, vdp_data.l ; row 4
+    move.l #$33333333, vdp_data.l ; row 5
+    move.l #$33333333, vdp_data.l ; row 6
+    move.l #$33333333, vdp_data.l ; row 7
+    move.l #$33333333, vdp_data.l ; row 8
+
     ; Tile $4
-    move.l #$00111100, vdp_data.l ; row 1
-    move.l #$01111110, vdp_data.l ; row 2
-    move.l #$11010111, vdp_data.l ; row 3
-    move.l #$11111111, vdp_data.l ; row 4
-    move.l #$10111011, vdp_data.l ; row 5
-    move.l #$11000111, vdp_data.l ; row 6
-    move.l #$01111110, vdp_data.l ; row 7
-    move.l #$00111100, vdp_data.l ; row 8
+    move.l #$44444444, vdp_data.l ; row 1
+    move.l #$44444444, vdp_data.l ; row 2
+    move.l #$44444444, vdp_data.l ; row 3
+    move.l #$44444444, vdp_data.l ; row 4
+    move.l #$44444444, vdp_data.l ; row 5
+    move.l #$44444444, vdp_data.l ; row 6
+    move.l #$44444444, vdp_data.l ; row 7
+    move.l #$44444444, vdp_data.l ; row 8
+
+    ; Tile $5
+    move.l #$55555555, vdp_data.l ; row 1
+    move.l #$55555555, vdp_data.l ; row 2
+    move.l #$55555555, vdp_data.l ; row 3
+    move.l #$55555555, vdp_data.l ; row 4
+    move.l #$55555555, vdp_data.l ; row 5
+    move.l #$55555555, vdp_data.l ; row 6
+    move.l #$55555555, vdp_data.l ; row 7
+    move.l #$55555555, vdp_data.l ; row 8
+
+    ; Tile $6
+    move.l #$66666666, vdp_data.l ; row 1
+    move.l #$66666666, vdp_data.l ; row 2
+    move.l #$66666666, vdp_data.l ; row 3
+    move.l #$66666666, vdp_data.l ; row 4
+    move.l #$66666666, vdp_data.l ; row 5
+    move.l #$66666666, vdp_data.l ; row 6
+    move.l #$66666666, vdp_data.l ; row 7
+    move.l #$66666666, vdp_data.l ; row 8
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TRYIN' SOME STUFF                                                          ;;
@@ -370,26 +390,36 @@ skip_tmss:
     set_write_vram vram_plane_a_addr
     ; 3FF tiles seems to completely fill the plane
     ; i.e. $FF x $4
-    move.w  #$FF, d1
+    move.w  #plane_w_in_tiles-1, d1
     .loop:
         move.w  #$1, d0      ; Set parameter
         jsr     set_plane_tile.l ; Call subroutine
         dbra.w    d1, .loop     ; Decrement d1 and loop until -1
-    move.w  #$FF, d1
+    move.w  #plane_w_in_tiles-1, d1
     .loop2:
         move.w  #$2, d0      ; Set parameter
         jsr     set_plane_tile.l ; Call subroutine
         dbra.w    d1, .loop2     ; Decrement d1 and loop until -1
-    move.w  #$FF, d1
+    move.w  #plane_w_in_tiles-1, d1
     .loop3:
         move.w  #$3, d0      ; Set parameter
         jsr     set_plane_tile.l ; Call subroutine
         dbra.w    d1, .loop3     ; Decrement d1 and loop until -1
-    move.w  #$FF, d1
+    move.w  #plane_w_in_tiles-1, d1
     .loop4:
         move.w  #$4, d0      ; Set parameter
         jsr     set_plane_tile.l ; Call subroutine
         dbra.w    d1, .loop4     ; Decrement d1 and loop until -1
+    move.w  #plane_w_in_tiles-1, d1
+    .loop5:
+        move.w  #$5, d0      ; Set parameter
+        jsr     set_plane_tile.l ; Call subroutine
+        dbra.w    d1, .loop5     ; Decrement d1 and loop until -1
+    move.w  #plane_w_in_tiles-1, d1
+    .loop6:
+        move.w  #$6, d0      ; Set parameter
+        jsr     set_plane_tile.l ; Call subroutine
+        dbra.w    d1, .loop6     ; Decrement d1 and loop until -1
 
     ; =================================================================
     ; STEP 4: ENABLE DISPLAY AND SET BACKGROUND

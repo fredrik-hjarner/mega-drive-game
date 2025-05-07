@@ -2,12 +2,32 @@ This is how I have layed out the VRAM memory map.
 Maybe I should think about if I could optimize the positions of the various
 tables.
 
-| Address | Description       | Size    |                       |
-|---------|-------------------|---------|-----------------------|
-| $0000   | Tiles             |         | 32 bytes per tile     |
-| $0400   | Horizontal Scroll | 4 bytes | 2 bytes per dimension |
-| $2000   | Plane A           |         | 2 bytes per tile      |
-| $4000   | Window            |         | 2 bytes per tile      |
-| $6000   | Plane B           |         | 2 bytes per tile      |
-| $8000   | Sprites           |         |                       |
-| $FFFF   | End of VRAM       |         |                       |
+Screen sizes:
+    - either 32 or *40* tiles wide.
+    - either 30 or *28*  tiles high.
+
+Possible planes sizes are:
+
+| Height in tiles | Width in tiles | Total tiles    |
+|-----------------|----------------|----------------|
+| 32              | 32             | 1024d = 0400h  |
+| 64              | 32             | 2048d = 0800h  |
+| 128             | 32             | 4096d = 1000h  |
+| 32              | 64             |                |
+| 64              | 64             | 4096d = 1000h  |
+| 128             | 64             |                |
+|                 |                |                |
+|                 |                |                |
+|                 |                |                |
+
+VRAM Memory Map
+
+| Address | Description       | Size    |                                      |
+|---------|-------------------|---------|--------------------------------------|
+| $0000   | Window            | 0 bytes | 2 bytes per tile                     |
+| $0000   | Tiles             |         | 32 bytes per tile                    |
+| $0400   | Horizontal Scroll | 4 bytes | 2 bytes per plane                    |
+| $2000   | Plane A           |         | 2 bytes per tile                     |
+| $6000   | Plane B           |         | 2 bytes per tile                     |
+| $8000   | Sprites           |         |                                      |
+| $FFFF   | End of VRAM       |         |                                      |

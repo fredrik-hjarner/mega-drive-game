@@ -10,6 +10,10 @@ gamepad1_ctrl equ $A10009
 gamepad1_data equ $A10003
 gamepad2_ctrl equ $A1000B
 gamepad2_data equ $A10005
+screen_w_in_tiles equ 40
+screen_h_in_tiles equ 28
+plane_w_in_tiles equ 32
+plane_h_in_tiles equ 32
     dc.l 0
     dc.l Start
     dc.l int2_bus_error
@@ -67,7 +71,7 @@ gamepad2_data equ $A10005
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 181430 '
+    dc.b 'GM 182532 '
     cnop 0,$18E
     dc.w $0000
     dc.b 'J               '
@@ -173,7 +177,7 @@ timer_1Hz_counter rs.w 1
     move.w #32772,vdp_ctrl.l
     move.w #33028,vdp_ctrl.l
     move.w #33288,vdp_ctrl.l
-    move.w #33552,vdp_ctrl.l
+    move.w #33536,vdp_ctrl.l
     move.w #33795,vdp_ctrl.l
     move.w #34112,vdp_ctrl.l
     move.w #34304,vdp_ctrl.l
@@ -200,21 +204,21 @@ timer_1Hz_counter rs.w 1
     dbra.w d7,.ClearRAM
     move.l #$C0000000, vdp_ctrl.l
     move.w #((0)<<9) | ((0)<<5) | ((0)<<1), vdp_data.l
-    move.w #((0)<<9) | ((0)<<5) | ((1)<<1), vdp_data.l
-    move.w #((0)<<9) | ((0)<<5) | ((2)<<1), vdp_data.l
-    move.w #((0)<<9) | ((0)<<5) | ((3)<<1), vdp_data.l
-    move.w #((0)<<9) | ((0)<<5) | ((4)<<1), vdp_data.l
+    move.w #((1)<<9) | ((1)<<5) | ((7)<<1), vdp_data.l
+    move.w #((0)<<9) | ((7)<<5) | ((7)<<1), vdp_data.l
+    move.w #((1)<<9) | ((7)<<5) | ((1)<<1), vdp_data.l
+    move.w #((6)<<9) | ((6)<<5) | ((0)<<1), vdp_data.l
+    move.w #((7)<<9) | ((1)<<5) | ((1)<<1), vdp_data.l
+    move.w #((5)<<9) | ((0)<<5) | ((5)<<1), vdp_data.l
     move.w #((0)<<9) | ((0)<<5) | ((5)<<1), vdp_data.l
-    move.w #((0)<<9) | ((0)<<5) | ((6)<<1), vdp_data.l
-    move.w #((0)<<9) | ((0)<<5) | ((7)<<1), vdp_data.l
-    move.w #((1)<<9) | ((0)<<5) | ((7)<<1), vdp_data.l
-    move.w #((2)<<9) | ((0)<<5) | ((7)<<1), vdp_data.l
-    move.w #((3)<<9) | ((0)<<5) | ((7)<<1), vdp_data.l
-    move.w #((4)<<9) | ((0)<<5) | ((7)<<1), vdp_data.l
-    move.w #((5)<<9) | ((0)<<5) | ((7)<<1), vdp_data.l
-    move.w #((6)<<9) | ((0)<<5) | ((7)<<1), vdp_data.l
-    move.w #((7)<<9) | ((0)<<5) | ((7)<<1), vdp_data.l
-    move.w #((7)<<9) | ((1)<<5) | ((7)<<1), vdp_data.l
+    move.w #((0)<<9) | ((3)<<5) | ((3)<<1), vdp_data.l
+    move.w #((0)<<9) | ((5)<<5) | ((0)<<1), vdp_data.l
+    move.w #((3)<<9) | ((3)<<5) | ((0)<<1), vdp_data.l
+    move.w #((5)<<9) | ((0)<<5) | ((0)<<1), vdp_data.l
+    move.w #((3)<<9) | ((0)<<5) | ((3)<<1), vdp_data.l
+    move.w #((0)<<9) | ((0)<<5) | ((0)<<1), vdp_data.l
+    move.w #((4)<<9) | ((4)<<5) | ((4)<<1), vdp_data.l
+    move.w #((7)<<9) | ((7)<<5) | ((7)<<1), vdp_data.l
     move.l #$40000000, vdp_ctrl.l
     move.l #$00000000, vdp_data.l
     move.l #$00000000, vdp_data.l
@@ -224,22 +228,6 @@ timer_1Hz_counter rs.w 1
     move.l #$00000000, vdp_data.l
     move.l #$00000000, vdp_data.l
     move.l #$00000000, vdp_data.l
-    move.l #$10000000, vdp_data.l
-    move.l #$11000000, vdp_data.l
-    move.l #$11100000, vdp_data.l
-    move.l #$11110000, vdp_data.l
-    move.l #$11111000, vdp_data.l
-    move.l #$11111100, vdp_data.l
-    move.l #$11111110, vdp_data.l
-    move.l #$11111111, vdp_data.l
-    move.l #$00011000, vdp_data.l
-    move.l #$00011000, vdp_data.l
-    move.l #$00011000, vdp_data.l
-    move.l #$11111111, vdp_data.l
-    move.l #$11111111, vdp_data.l
-    move.l #$00011000, vdp_data.l
-    move.l #$00011000, vdp_data.l
-    move.l #$00011000, vdp_data.l
     move.l #$11111111, vdp_data.l
     move.l #$11111111, vdp_data.l
     move.l #$11111111, vdp_data.l
@@ -248,35 +236,77 @@ timer_1Hz_counter rs.w 1
     move.l #$11111111, vdp_data.l
     move.l #$11111111, vdp_data.l
     move.l #$11111111, vdp_data.l
-    move.l #$00111100, vdp_data.l
-    move.l #$01111110, vdp_data.l
-    move.l #$11010111, vdp_data.l
-    move.l #$11111111, vdp_data.l
-    move.l #$10111011, vdp_data.l
-    move.l #$11000111, vdp_data.l
-    move.l #$01111110, vdp_data.l
-    move.l #$00111100, vdp_data.l
+    move.l #$22222222, vdp_data.l
+    move.l #$22222222, vdp_data.l
+    move.l #$22222222, vdp_data.l
+    move.l #$22222222, vdp_data.l
+    move.l #$22222222, vdp_data.l
+    move.l #$22222222, vdp_data.l
+    move.l #$22222222, vdp_data.l
+    move.l #$22222222, vdp_data.l
+    move.l #$33333333, vdp_data.l
+    move.l #$33333333, vdp_data.l
+    move.l #$33333333, vdp_data.l
+    move.l #$33333333, vdp_data.l
+    move.l #$33333333, vdp_data.l
+    move.l #$33333333, vdp_data.l
+    move.l #$33333333, vdp_data.l
+    move.l #$33333333, vdp_data.l
+    move.l #$44444444, vdp_data.l
+    move.l #$44444444, vdp_data.l
+    move.l #$44444444, vdp_data.l
+    move.l #$44444444, vdp_data.l
+    move.l #$44444444, vdp_data.l
+    move.l #$44444444, vdp_data.l
+    move.l #$44444444, vdp_data.l
+    move.l #$44444444, vdp_data.l
+    move.l #$55555555, vdp_data.l
+    move.l #$55555555, vdp_data.l
+    move.l #$55555555, vdp_data.l
+    move.l #$55555555, vdp_data.l
+    move.l #$55555555, vdp_data.l
+    move.l #$55555555, vdp_data.l
+    move.l #$55555555, vdp_data.l
+    move.l #$55555555, vdp_data.l
+    move.l #$66666666, vdp_data.l
+    move.l #$66666666, vdp_data.l
+    move.l #$66666666, vdp_data.l
+    move.l #$66666666, vdp_data.l
+    move.l #$66666666, vdp_data.l
+    move.l #$66666666, vdp_data.l
+    move.l #$66666666, vdp_data.l
+    move.l #$66666666, vdp_data.l
     move.l #$40000000+(((vram_plane_a_addr)&$3FFF)<<16)+(((vram_plane_a_addr)&$C000)>>14),vdp_ctrl.l
-    move.w #$FF, d1
+    move.w #plane_w_in_tiles-1, d1
     .loop:
     move.w #$1, d0
     jsr set_plane_tile.l
     dbra.w d1, .loop
-    move.w #$FF, d1
+    move.w #plane_w_in_tiles-1, d1
     .loop2:
     move.w #$2, d0
     jsr set_plane_tile.l
     dbra.w d1, .loop2
-    move.w #$FF, d1
+    move.w #plane_w_in_tiles-1, d1
     .loop3:
     move.w #$3, d0
     jsr set_plane_tile.l
     dbra.w d1, .loop3
-    move.w #$FF, d1
+    move.w #plane_w_in_tiles-1, d1
     .loop4:
     move.w #$4, d0
     jsr set_plane_tile.l
     dbra.w d1, .loop4
+    move.w #plane_w_in_tiles-1, d1
+    .loop5:
+    move.w #$5, d0
+    jsr set_plane_tile.l
+    dbra.w d1, .loop5
+    move.w #plane_w_in_tiles-1, d1
+    .loop6:
+    move.w #$6, d0
+    jsr set_plane_tile.l
+    dbra.w d1, .loop6
     move.w #34567,vdp_ctrl.l
     move.w #33124,vdp_ctrl.l
     move.w #$2300, sr
