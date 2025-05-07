@@ -71,7 +71,7 @@ plane_h_in_tiles equ 32
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 182749 '
+    dc.b 'GM 182766 '
     cnop 0,$18E
     dc.w $0000
     dc.b 'J               '
@@ -203,22 +203,22 @@ timer_1Hz_counter rs.w 1
     move.w #$0000, (a0)+
     dbra.w d7,.ClearRAM
     move.l #$C0000000, vdp_ctrl.l
-    move.w #((0)<<9) | ((0)<<5) | ((0)<<1), vdp_data.l
-    move.w #((1)<<9) | ((1)<<5) | ((7)<<1), vdp_data.l
-    move.w #((0)<<9) | ((7)<<5) | ((7)<<1), vdp_data.l
-    move.w #((1)<<9) | ((7)<<5) | ((1)<<1), vdp_data.l
-    move.w #((6)<<9) | ((6)<<5) | ((0)<<1), vdp_data.l
-    move.w #((7)<<9) | ((1)<<5) | ((1)<<1), vdp_data.l
-    move.w #((5)<<9) | ((0)<<5) | ((5)<<1), vdp_data.l
-    move.w #((0)<<9) | ((0)<<5) | ((5)<<1), vdp_data.l
-    move.w #((0)<<9) | ((3)<<5) | ((3)<<1), vdp_data.l
-    move.w #((0)<<9) | ((5)<<5) | ((0)<<1), vdp_data.l
-    move.w #((3)<<9) | ((3)<<5) | ((0)<<1), vdp_data.l
-    move.w #((5)<<9) | ((0)<<5) | ((0)<<1), vdp_data.l
-    move.w #((3)<<9) | ((0)<<5) | ((3)<<1), vdp_data.l
-    move.w #((0)<<9) | ((0)<<5) | ((0)<<1), vdp_data.l
-    move.w #((4)<<9) | ((4)<<5) | ((4)<<1), vdp_data.l
-    move.w #((7)<<9) | ((7)<<5) | ((7)<<1), vdp_data.l
+    move.w #0,vdp_data.l
+    move.w #558,vdp_data.l
+    move.w #238,vdp_data.l
+    move.w #738,vdp_data.l
+    move.w #3264,vdp_data.l
+    move.w #3618,vdp_data.l
+    move.w #2570,vdp_data.l
+    move.w #10,vdp_data.l
+    move.w #102,vdp_data.l
+    move.w #160,vdp_data.l
+    move.w #1632,vdp_data.l
+    move.w #2560,vdp_data.l
+    move.w #1542,vdp_data.l
+    move.w #0,vdp_data.l
+    move.w #2184,vdp_data.l
+    move.w #3822,vdp_data.l
     move.l #$40000000, vdp_ctrl.l
     move.l #$00000000, vdp_data.l
     move.l #$00000000, vdp_data.l

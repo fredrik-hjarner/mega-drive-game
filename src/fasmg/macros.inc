@@ -50,16 +50,20 @@ calminstruction meta_version
     _assemble tmp
 end calminstruction
 
+; TODO: Explain exactly what this does and how it is intended to be used.
 ; arguments:
 ;     r: 0-7
 ;     g: 0-7
 ;     b: 0-7
 ; TODO: The name kinda sucks.
 ; TODO: This would be better as an inline fasmg macro.
-macro set_palette_color r, g, b
+calminstruction set_palette_color? r, g, b
+    local tmp
     ; bbb0 ggg0 rrr0
-    emit move.w  #((b)<<9) | ((g)<<5) | ((r)<<1), vdp_data.l
-end macro
+    compute tmp, (b shl 9) or (g shl 5) or (r shl 1)
+    arrange tmp, =move.=w= =#tmp,=vdp_data.=l
+    _assemble tmp
+end calminstruction
 define set_palette_color +set_palette_color
 
 ; arguments:
