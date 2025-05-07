@@ -81,9 +81,16 @@ define set_write_vram +set_write_vram
 ; arguments:
 ;     addr: address: $00-$FF
 ; https://segaretro.org/Sega_Mega_Drive/VDP_general_usage
-macro set_write_vsram addr
-    emit move.l #$40000010+((addr)<<16),vdp_ctrl.l
-end macro
+; macro set_write_vsram addr
+;     emit move.l #$40000010+((addr)<<16),vdp_ctrl.l
+; end macro
+calminstruction set_write_vsram? addr
+    local tmp
+    ; TODO: compute does not work here because it can't work in preprocess.asm.
+    ; compute tmp, $40000010+((addr)<<16)
+    arrange tmp, =move.=l= =#$40000010+((addr)<<16),=vdp_ctrl.=l
+    _assemble tmp
+end calminstruction
 define set_write_vsram +set_write_vsram
 
 ; https://plutiedev.com/controllers
