@@ -69,3 +69,85 @@ update_hscroll:
 set_plane_tile:
     move.w d0, vdp_data.l
     rts
+
+; https://plutiedev.com/controllers
+gamepads_get_input:
+    ; a0 = IoData1 for player 1
+    ;    = IoData2 for player 2
+
+    move.b #$40, gamepad1_ctrl.l
+
+    ; TODO: Wouldn't movea work here as well??
+    ; Why or why not??
+    lea.l  gamepad1_data.l, a0
+    
+    ; set bit 6 (TH) to 1 to get first group of buttons
+    move.b  #$40, (a0)  ; Do 1st step
+    nop                 ; D-pad, B and C
+    nop
+    move.b  (a0), d0
+    not.b d0 ; invert so pressed = 1 instead of 0
+    ; d0 will now contain
+    ; Bit5 	Bit4 	Bit3 	Bit2 	Bit1 	Bit0
+    ; C 	B 	    Right 	Left 	Down 	Up
+
+    ; Up
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_up.l
+
+    ; Down
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_down.l
+
+    ; Left
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_left.l
+
+    ; Right
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_right.l
+
+    ; B
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_b.l
+
+    ; C
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_c.l
+    
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; 2nd set of buttons                                                 ;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    move.b  #$00, (a0)
+    nop
+    nop
+    move.b  (a0), d0
+    not.b d0 ; invert so pressed = 1 instead of 0
+    ; d0 will now contain
+    ; Bit5   Bit4
+    ; Start  A
+
+    ; A
+    lsr.b #4, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_a.l
+
+    ; Start
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_start.l
+    rts

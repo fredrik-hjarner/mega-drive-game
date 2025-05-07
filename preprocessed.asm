@@ -71,7 +71,7 @@ plane_h_in_tiles equ 32
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 182792 '
+    dc.b 'GM 182806 '
     cnop 0,$18E
     dc.w $0000
     dc.b 'J               '
@@ -128,6 +128,51 @@ plane_h_in_tiles equ 32
     rte
     set_plane_tile:
     move.w d0, vdp_data.l
+    rts
+    gamepads_get_input:
+    move.b #$40, gamepad1_ctrl.l
+    lea.l gamepad1_data.l, a0
+    move.b #$40, (a0)
+    nop
+    nop
+    move.b (a0), d0
+    not.b d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_up.l
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_down.l
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_left.l
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_right.l
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_b.l
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_c.l
+    move.b #$00, (a0)
+    nop
+    nop
+    move.b (a0), d0
+    not.b d0
+    lsr.b #4, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_a.l
+    lsr.b #1, d0
+    move.b d0, d1
+    andi.b #1, d1
+    move.b d1, gamepad1_start.l
     rts
 hblanks_per_100Hz_tick equ 156
 hblanks_per_50Hz_tick equ 312
@@ -314,49 +359,7 @@ timer_1Hz_counter rs.w 1
     bra.b MainLoop
     vblank:
     movem.l d1-d2,-(sp)
-    move.b #$40, gamepad1_ctrl.l
-    lea.l gamepad1_data.l, a0
-    move.b #$40, (a0)
-    nop
-    nop
-    move.b (a0), d0
-    not.b d0
-    move.b d0, d1
-    andi.b #1, d1
-    move.b d1, gamepad1_up.l
-    lsr.b #1, d0
-    move.b d0, d1
-    andi.b #1, d1
-    move.b d1, gamepad1_down.l
-    lsr.b #1, d0
-    move.b d0, d1
-    andi.b #1, d1
-    move.b d1, gamepad1_left.l
-    lsr.b #1, d0
-    move.b d0, d1
-    andi.b #1, d1
-    move.b d1, gamepad1_right.l
-    lsr.b #1, d0
-    move.b d0, d1
-    andi.b #1, d1
-    move.b d1, gamepad1_b.l
-    lsr.b #1, d0
-    move.b d0, d1
-    andi.b #1, d1
-    move.b d1, gamepad1_c.l
-    move.b #$00, (a0)
-    nop
-    nop
-    move.b (a0), d0
-    not.b d0
-    lsr.b #4, d0
-    move.b d0, d1
-    andi.b #1, d1
-    move.b d1, gamepad1_a.l
-    lsr.b #1, d0
-    move.b d0, d1
-    andi.b #1, d1
-    move.b d1, gamepad1_start.l
+    jsr gamepads_get_input.l
     jsr update_color.l
     jsr update_hscroll.l
     movem.l (sp)+,d1-d2

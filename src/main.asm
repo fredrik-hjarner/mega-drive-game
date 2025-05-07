@@ -472,7 +472,7 @@ vblank:
         movem.l d1-d2,-(sp)
 
         ; place inputs into variables gamepad1_up, gamepad1_down, etc.
-        gamepads_get_input
+        jsr gamepads_get_input.l
 
         jsr update_color.l
 
