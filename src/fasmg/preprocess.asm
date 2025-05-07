@@ -14,11 +14,44 @@ macro emit? line&
     db `line,13,10
 end macro
 
+; _assemble emits text to clownassembler
+macro calminstruction?._assemble? &line&
+    stringify line
+    ; TODO: Shorten this code?
+    ; clownassembler stuff usually needs to be prefixed with whitespace.
+    emit 1, 20h
+    emit 1, 20h
+    emit 1, 20h
+    emit 1, 20h
+    emit lengthof line, line
+    emit 1, 13
+    emit 1, 10
+end macro
+
+; _emit emits text to clownassembler
+; Only handles 1 byte but that will probably suffice.
+macro calminstruction?._emit? number_of_bytes, value
+        new @string
+        new @done
+
+        local tmp
+        compute tmp, value
+        check tmp eqtype ''
+        @ jyes @string
+    ; not_string:
+        arrange tmp, =dc.=b= tmp
+        _assemble tmp
+        @ jump @done
+    @ @string:
+        arrange tmp, =dc.=b= value
+        _assemble tmp
+    @ @done:
+end macro
+
 define MACROS
 
 ; The macros to be preprocessed go here
 namespace MACROS
-    include "format_clownassembler.inc"
     include "macros.inc"
 end namespace
 

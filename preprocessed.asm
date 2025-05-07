@@ -12,7 +12,7 @@ gamepad2_ctrl equ $A1000B
 gamepad2_data equ $A10005
 screen_w_in_tiles equ 40
 screen_h_in_tiles equ 28
-plane_w_in_tiles equ 32
+plane_w_in_tiles equ 64
 plane_h_in_tiles equ 32
     dc.l 0
     dc.l Start
@@ -71,7 +71,7 @@ plane_h_in_tiles equ 32
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 182532 '
+    dc.b 'GM 182749 '
     cnop 0,$18E
     dc.w $0000
     dc.b 'J               '
@@ -189,7 +189,7 @@ timer_1Hz_counter rs.w 1
     move.w #36097,vdp_ctrl.l
     move.w #36352,vdp_ctrl.l
     move.w #36610,vdp_ctrl.l
-    move.w #36864,vdp_ctrl.l
+    move.w #36865,vdp_ctrl.l
     move.w #37120,vdp_ctrl.l
     move.w #37376,vdp_ctrl.l
     move.l #$40000000, vdp_ctrl.l

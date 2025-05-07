@@ -21,3 +21,9 @@
   maybe push.w, pop.w, push.l, pop.l, etc.
 * Remake all macros in fasmg so all macros are fasmg macros.
 * Move tiles into a separate file.
+* Store all the VDP registers in memory, that way the code can now their values.
+      Then have som kind of sync function that either syncs all or syncs any
+      specific one of them.
+      This would allow me to "toggle", or set the VDP register single
+      bits/settings while keeping the rest of the settings the same.
+      So in other words I can have a function named `set_interlaced val`.

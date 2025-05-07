@@ -12,7 +12,7 @@
 00000000                            gamepad2_data equ $A10005
 00000000                            screen_w_in_tiles equ 40
 00000000                            screen_h_in_tiles equ 28
-00000000                            plane_w_in_tiles equ 32
+00000000                            plane_w_in_tiles equ 64
 00000000                            plane_h_in_tiles equ 32
 00000000 0000 0000                      dc.l 0
 00000004 0000 0000                      dc.l Start
@@ -71,7 +71,7 @@
 00000110 2020 2020 2020 2020 2020+     dc.b '                '
 00000120 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
 00000150 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
-00000180 474D 2031 3832 3533 3220       dc.b 'GM 182532 '
+00000180 474D 2031 3832 3734 3920       dc.b 'GM 182749 '
 0000018A 0000 0000                      cnop 0,$18E
 0000018E 0000                           dc.w $0000
 00000190 4A20 2020 2020 2020 2020+     dc.b 'J               '
@@ -189,7 +189,7 @@
 00000396 33FC 8D01 00C0 0004            move.w #36097,vdp_ctrl.l
 0000039E 33FC 8E00 00C0 0004            move.w #36352,vdp_ctrl.l
 000003A6 33FC 8F02 00C0 0004            move.w #36610,vdp_ctrl.l
-000003AE 33FC 9000 00C0 0004            move.w #36864,vdp_ctrl.l
+000003AE 33FC 9001 00C0 0004            move.w #36865,vdp_ctrl.l
 000003B6 33FC 9100 00C0 0004            move.w #37120,vdp_ctrl.l
 000003BE 33FC 9200 00C0 0004            move.w #37376,vdp_ctrl.l
 000003C6 23FC 4000 0000 00C0 0004       move.l #$40000000, vdp_ctrl.l
@@ -277,32 +277,32 @@
 000006A6 23FC 6666 6666 00C0 0000       move.l #$66666666, vdp_data.l
 000006B0 23FC 6666 6666 00C0 0000       move.l #$66666666, vdp_data.l
 000006BA 23FC 6000 0000 00C0 0004       move.l #$40000000+(((vram_plane_a_addr)&$3FFF)<<16)+(((vram_plane_a_addr)&$C000)>>14),vdp_ctrl.l
-000006C4 323C 001F                      move.w #plane_w_in_tiles-1, d1
+000006C4 323C 003F                      move.w #plane_w_in_tiles-1, d1
 000006C8                                .loop:
 000006C8 303C 0001                      move.w #$1, d0
 000006CC 4EB9 0000 0296                 jsr set_plane_tile.l
 000006D2 51C9 FFF4                      dbra.w d1, .loop
-000006D6 323C 001F                      move.w #plane_w_in_tiles-1, d1
+000006D6 323C 003F                      move.w #plane_w_in_tiles-1, d1
 000006DA                                .loop2:
 000006DA 303C 0002                      move.w #$2, d0
 000006DE 4EB9 0000 0296                 jsr set_plane_tile.l
 000006E4 51C9 FFF4                      dbra.w d1, .loop2
-000006E8 323C 001F                      move.w #plane_w_in_tiles-1, d1
+000006E8 323C 003F                      move.w #plane_w_in_tiles-1, d1
 000006EC                                .loop3:
 000006EC 303C 0003                      move.w #$3, d0
 000006F0 4EB9 0000 0296                 jsr set_plane_tile.l
 000006F6 51C9 FFF4                      dbra.w d1, .loop3
-000006FA 323C 001F                      move.w #plane_w_in_tiles-1, d1
+000006FA 323C 003F                      move.w #plane_w_in_tiles-1, d1
 000006FE                                .loop4:
 000006FE 303C 0004                      move.w #$4, d0
 00000702 4EB9 0000 0296                 jsr set_plane_tile.l
 00000708 51C9 FFF4                      dbra.w d1, .loop4
-0000070C 323C 001F                      move.w #plane_w_in_tiles-1, d1
+0000070C 323C 003F                      move.w #plane_w_in_tiles-1, d1
 00000710                                .loop5:
 00000710 303C 0005                      move.w #$5, d0
 00000714 4EB9 0000 0296                 jsr set_plane_tile.l
 0000071A 51C9 FFF4                      dbra.w d1, .loop5
-0000071E 323C 001F                      move.w #plane_w_in_tiles-1, d1
+0000071E 323C 003F                      move.w #plane_w_in_tiles-1, d1
 00000722                                .loop6:
 00000722 303C 0006                      move.w #$6, d0
 00000726 4EB9 0000 0296                 jsr set_plane_tile.l

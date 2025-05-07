@@ -32,5 +32,5 @@ screen_w_in_tiles equ 40
 screen_h_in_tiles equ 28
 
 ; tile related
-plane_w_in_tiles equ 32 ; 20h
+plane_w_in_tiles equ 64 ; 40h
 plane_h_in_tiles equ 32 ; 20h

@@ -234,7 +234,7 @@ skip_tmss:
     ;                       |            10 - invalid
     ;                       |            11 - 1024 pixels (128 cells)
     ;                       |
-    set_vdp_register $10, 00000000b      ; bits 7, 6, 3 & 2 are always 0
+    set_vdp_register $10, 00000001b      ; bits 7, 6, 3 & 2 are always 0
     ;                           |   width
     ;                           +- #1-0: 00 - 256 pixels (32 cells)
     ;                                    01 - 512 pixels (64 cells)
