@@ -1,3 +1,5 @@
+define preprocess_asm
+
 ; Shamelessly stolen from here:
 ; https://board.flatassembler.net/topic.php?p=242936#242936
 ; Adjusted to work with vasm m68k.
@@ -23,6 +25,15 @@ macro calminstruction?._assemble? &line&
     emit 1, 20h
     emit 1, 20h
     emit 1, 20h
+    emit lengthof line, line
+    emit 1, 13
+    emit 1, 10
+end macro
+
+; TODO: Maybe I can match to see if it contains equ etc. here like macro above?
+macro calminstruction?.assemble_first_column? &line&
+    stringify line
+    ; In vasm labels need to NOT be prefixed with whitespace.
     emit lengthof line, line
     emit 1, 13
     emit 1, 10

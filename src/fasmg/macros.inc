@@ -1,25 +1,42 @@
-; macro calminstruction?.assemble? &line&
-;     stringify line
-;     ; TODO: Shoten this code?
-;     ; vasm stuff usually needs to be prefixed with whitespace.
-;     emit 1, 20h
-;     emit 1, 20h
-;     emit 1, 20h
-;     emit 1, 20h
-;     emit lengthof line, line
-;     emit 1, 13
-;     emit 1, 10
-; end macro
+; INIT
+; this command can be used to give an initial numeric value to local variable
+; at the time when the CALM instruction is defined
+calminstruction calminstruction?.init? var*, val:0
+	compute val, val
+	publish var, val
+end calminstruction
 
-; TODO: Name sucks.
-; TODO: Maybe I can match to see if it contains equ here like macro above?
-macro calminstruction?.assemble2? &line&
-    stringify line
-    ; In vasm labels need to NOT be prefixed with whitespace.
-    emit lengthof line, line
-    emit 1, 13
-    emit 1, 10
-end macro
+
+; Unique labels in CALM with `new` and `@`.
+; From https://board.flatassembler.net/topic.php?p=234192#234192
+; Example:
+;     macro calminstruction?.dispsymbol? sym
+;             new empty
+;             new cont
+;             match , sym
+;             @ jyes empty
+;             display '<not empty>'
+;             @ jump cont
+;         @ empty:
+;             display '<empty>'
+;         @ cont:
+;     end macro
+;     calminstruction test arg1
+;             dispsymbol arg1
+;     end calminstruction
+define ___loc? ___loc?
+calminstruction calminstruction?.new? name*
+        local   new, i
+        init    i, 0
+        compute i, i+1
+        arrange new, name#i
+        arrange name, ___loc.name
+        publish name, new
+end calminstruction
+calminstruction calminstruction?.@? statement&
+        transform statement, ___loc
+        assemble statement
+end calminstruction
 
 ; arguments:
 ;     reg_nr: register number: 0-23d
@@ -38,16 +55,23 @@ calminstruction set_vdp_register reg_nr, value
 end calminstruction
 
 calminstruction meta_version
-    local tmp, quote, s_since_2025, m_since_2025
+        local tmp, quote, s_since_2025, m_since_2025
 
-    arrange quote, '
+        arrange quote, '
 
-    compute tmp, __time__
-    compute s_since_2025, tmp - 1735686000
-    compute m_since_2025, s_since_2025 / 60
-
-    arrange tmp, =dc.=b quote=GM m_since_2025 quote
-    _assemble tmp
+        compute tmp, __time__
+        compute s_since_2025, tmp - 1735686000
+        compute m_since_2025, s_since_2025 / 60
+        check defined preprocess_asm
+        jyes preprocess_asm
+    ; normal case
+        arrange tmp, =GM m_since_2025
+        stringify tmp
+        _emit lengthof tmp, tmp
+        exit
+    preprocess_asm:
+        arrange tmp, =dc.=b quote=GM m_since_2025 quote
+        _assemble tmp
 end calminstruction
 
 ; TODO: Explain exactly what this does and how it is intended to be used.

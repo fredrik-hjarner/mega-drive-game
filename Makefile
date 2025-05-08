@@ -10,7 +10,7 @@ build-preprocessed:
 
 fasm68k:
 #	make preprocess
-	fasm68k preprocessed.asm main.bin -e10
+	fasm68k src/main_fasm68k.asm main.bin -e10
 	make hexdump
 # hexdump -C -v main.bin > main.hex
 
