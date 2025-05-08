@@ -5,6 +5,7 @@ vdp_ctrl  equ $C00004
 vdp_ctrl2 equ $C00006
 
 ; name tables addresses
+vram_tiles_addr   equ $0000
 vram_hscroll_addr equ $0400
 vram_plane_a_addr equ $2000
 vram_plane_b_addr equ $6000

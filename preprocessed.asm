@@ -3,6 +3,7 @@ vdp_data equ $C00000
 vdp_data2 equ $C00002
 vdp_ctrl equ $C00004
 vdp_ctrl2 equ $C00006
+vram_tiles_addr equ $0000
 vram_hscroll_addr equ $0400
 vram_plane_a_addr equ $2000
 vram_plane_b_addr equ $6000
@@ -72,7 +73,7 @@ plane_h_in_tiles equ 32
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 184235'
+    dc.b 'GM 184327'
     cnop 0,$18E
     dc.w $0000
     dc.b 'J               '
@@ -4362,7 +4363,7 @@ timer_1Hz_counter rs.w 1
     move.w #0,vdp_data.l
     move.w #2184,vdp_data.l
     move.w #3822,vdp_data.l
-    move.l #$40000000, vdp_ctrl.l
+    move.l #$40000000+(((vram_tiles_addr)&$3FFF)<<16)+(((vram_tiles_addr)&$C000)>>14),vdp_ctrl.l
     move.l #$00000000, vdp_data.l
     move.l #$00000000, vdp_data.l
     move.l #$00000000, vdp_data.l

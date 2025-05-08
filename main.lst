@@ -3,6 +3,7 @@
 00000000                            vdp_data2 equ $C00002
 00000000                            vdp_ctrl equ $C00004
 00000000                            vdp_ctrl2 equ $C00006
+00000000                            vram_tiles_addr equ $0000
 00000000                            vram_hscroll_addr equ $0400
 00000000                            vram_plane_a_addr equ $2000
 00000000                            vram_plane_b_addr equ $6000
@@ -72,7 +73,7 @@
 00000110 2020 2020 2020 2020 2020+     dc.b '                '
 00000120 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
 00000150 4550 4943 204C 4547 454E+     dc.b 'EPIC LEGENDS OF DESTINY                         '
-00000180 474D 2031 3834 3233 35          dc.b 'GM 184235'
+00000180 474D 2031 3834 3332 37          dc.b 'GM 184327'
 00000189 0000 0000 00                    cnop 0,$18E
 0000018E 0000                           dc.w $0000
 00000190 4A20 2020 2020 2020 2020+     dc.b 'J               '
@@ -4362,7 +4363,7 @@
 000024EC 33FC 0000 00C0 0000            move.w #0,vdp_data.l
 000024F4 33FC 0888 00C0 0000            move.w #2184,vdp_data.l
 000024FC 33FC 0EEE 00C0 0000            move.w #3822,vdp_data.l
-00002504 23FC 4000 0000 00C0 0004       move.l #$40000000, vdp_ctrl.l
+00002504 23FC 4000 0000 00C0 0004       move.l #$40000000+(((vram_tiles_addr)&$3FFF)<<16)+(((vram_tiles_addr)&$C000)>>14),vdp_ctrl.l
 0000250E 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data.l
 00002518 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data.l
 00002522 23FC 0000 0000 00C0 0000       move.l #$00000000, vdp_data.l

@@ -207,3 +207,14 @@ calminstruction str_to_tile_indices str
     done:
 end calminstruction
 define str_to_tile_indices +str_to_tile_indices
+
+; arguments:
+;     c: color: 0-15
+; TODO: This is not working.
+calminstruction create_single_color_tile? c
+    local tmp
+    arrange tmp, =move.=l= =#=$#c#c#c#c#c#c#c#c,=vdp_data.=l
+    transform tmp
+    _assemble tmp
+end calminstruction
+define create_single_color_tile +create_single_color_tile
