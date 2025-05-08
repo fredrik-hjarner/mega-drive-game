@@ -16,6 +16,13 @@ rsset $FF0000
     include "vectors.inc"         ; interrupt vectors
     include "meta.inc"            ; ROM metadata (console name, region, etc.)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; DATA                                                                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    include "planes/a.inc"
+    include "planes/b.inc"
+
 ; =====================================================================
 ; OTHER INCLUDES
 ; =====================================================================
@@ -306,7 +313,6 @@ skip_tmss:
     set_palette_color 4, 4, 4 ; 14 gray
     set_palette_color 7, 7, 7 ; 15 white
 
-
     ; =================================================================
     ; CREATE TILES
     ; =================================================================
@@ -323,7 +329,7 @@ skip_tmss:
     move.l #$00000000, vdp_data.l ; row 7
     move.l #$00000000, vdp_data.l ; row 8
 
-    ; Tile $1 ; Full sware color 1
+    ; Tile $1 ; Full square color 1
     move.l #$11111111, vdp_data.l ; row 1
     move.l #$11111111, vdp_data.l ; row 2
     move.l #$11111111, vdp_data.l ; row 3
@@ -383,43 +389,38 @@ skip_tmss:
     move.l #$66666666, vdp_data.l ; row 7
     move.l #$66666666, vdp_data.l ; row 8
 
+    ; Tile $7
+    move.l #$77777777, vdp_data.l ; row 1
+    move.l #$77777777, vdp_data.l ; row 2
+    move.l #$77777777, vdp_data.l ; row 3
+    move.l #$77777777, vdp_data.l ; row 4
+    move.l #$77777777, vdp_data.l ; row 5
+    move.l #$77777777, vdp_data.l ; row 6
+    move.l #$77777777, vdp_data.l ; row 7
+    move.l #$77777777, vdp_data.l ; row 8
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TRYIN' SOME STUFF                                                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    set_write_vram vram_plane_a_addr
-    ; 3FF tiles seems to completely fill the plane
-    ; i.e. $FF x $4
-    move.w  #plane_w_in_tiles-1, d1
-    .loop:
-        move.w  #$1, d0      ; Set parameter
-        jsr     set_plane_tile.l ; Call subroutine
-        dbra.w    d1, .loop     ; Decrement d1 and loop until -1
-    move.w  #plane_w_in_tiles-1, d1
-    .loop2:
-        move.w  #$2, d0      ; Set parameter
-        jsr     set_plane_tile.l ; Call subroutine
-        dbra.w    d1, .loop2     ; Decrement d1 and loop until -1
-    move.w  #plane_w_in_tiles-1, d1
-    .loop3:
-        move.w  #$3, d0      ; Set parameter
-        jsr     set_plane_tile.l ; Call subroutine
-        dbra.w    d1, .loop3     ; Decrement d1 and loop until -1
-    move.w  #plane_w_in_tiles-1, d1
-    .loop4:
-        move.w  #$4, d0      ; Set parameter
-        jsr     set_plane_tile.l ; Call subroutine
-        dbra.w    d1, .loop4     ; Decrement d1 and loop until -1
-    move.w  #plane_w_in_tiles-1, d1
-    .loop5:
-        move.w  #$5, d0      ; Set parameter
-        jsr     set_plane_tile.l ; Call subroutine
-        dbra.w    d1, .loop5     ; Decrement d1 and loop until -1
-    move.w  #plane_w_in_tiles-1, d1
-    .loop6:
-        move.w  #$6, d0      ; Set parameter
-        jsr     set_plane_tile.l ; Call subroutine
-        dbra.w    d1, .loop6     ; Decrement d1 and loop until -1
+    ; PLANE A
+        set_write_vram vram_plane_a_addr
+        ; observe I need to subtract 1.
+        ;     The reason is that `dbra` will loop until -1 NOT until 0.
+        ; So if d1 was 0, it would still loop 1 time (and not 0 times).
+        move.w  #(plane_a_end-plane_a_start)/2-1, d1
+        movea.l #plane_a_start, a0
+        .loop:
+            move.w (a0)+, vdp_data.l
+            dbra.w d1, .loop            ; Decrement d1 and loop until -1
+
+    ; PLANE B
+        set_write_vram vram_plane_b_addr
+        move.w  #(plane_b_end-plane_b_start)/2-1, d1
+        movea.l #plane_b_start, a0
+        .loop2:
+            move.w (a0)+, vdp_data.l
+            dbra.w d1, .loop2            ; Decrement d1 and loop until -1
 
     ; =================================================================
     ; STEP 4: ENABLE DISPLAY AND SET BACKGROUND

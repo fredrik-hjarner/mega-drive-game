@@ -65,7 +65,8 @@ calminstruction meta_version
         check defined preprocess_asm
         jyes preprocess_asm
     ; normal case
-        arrange tmp, =GM m_since_2025
+        ; TODO: I am missing a space after m_since_2025
+        arrange tmp, =GM m_since_2025 
         stringify tmp
         _emit lengthof tmp, tmp
         exit
@@ -142,3 +143,77 @@ define set_write_vsram +set_write_vsram
 ; define bappend +bappend
 define set_vdp_register +set_vdp_register
 define meta_version +meta_version
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; PLANE STUFF                                                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; TODO: Explain what this is and why it is.
+virtual at 0
+    string_tile_row::
+    rb 64 ; 40h
+end virtual
+; TODO: Explain what this is and why it is.
+virtual at 0
+    char_to_tile_map::
+    rb 256 ; covers all ascii values
+end virtual
+iterate <char, tile>, \
+        ' ',   0, \
+        '0',   0, \
+        '1',   1, \
+        '2',   2, \
+        '3',   3, \
+        '4',   4, \
+        '5',   5, \
+        '6',   6, \
+        '7',   7, \
+        '8',   8, \
+        '9',   9, \
+        'A',   10, \
+        'B',   11, \
+        'C',   12, \
+        'D',   13, \
+        'E',   14, \
+        'F',   15
+
+        store tile:1 at char_to_tile_map:char
+end iterate
+
+calminstruction str_to_tile_indices str
+        local tmp
+        compute tmp, str
+        ; Store the string in the string_tile_row
+        store string_tile_row:0, \  ; offset to store at
+              64, \                 ; number of bytes to store
+              tmp                   ; the value to store (numeric or string)
+        ; now go through all of them and emit each
+        local i
+        compute i, 0
+    next:
+        check i >= 64
+        jyes done
+        ; Quote: The loaded value is always a string of the specified length.
+        load tmp, \                     ; target variable
+             string_tile_row:i, \       ; offset to load from
+             1                          ; number of bytes to load
+        compute tmp, +tmp
+        arrange tmp, tmp
+        load tmp, \                     ; target variable
+             char_to_tile_map:tmp, \    ; offset to load from
+             1                          ; number of bytes to load
+
+        ; TODO: For some reason I can't get _emit to work here.
+        ;       Examine why that might be.
+        ; compute tmp, tmp bswap 2 ; TODO: Use emit_be when possible in the future
+        ; _emit 2, tmp
+        compute tmp, +tmp
+        arrange tmp, tmp
+        arrange tmp, =dc.=w tmp
+        _assemble tmp
+
+        compute i, i + 1
+        jump next
+    done:
+end calminstruction
+define str_to_tile_indices +str_to_tile_indices

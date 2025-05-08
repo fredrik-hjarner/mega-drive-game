@@ -49,8 +49,8 @@ update_hscroll:
         move.w d1, vdp_data.l
         ; now also v.scroll plane A and plane B
         set_write_vsram $0
-        move.w d1, vdp_data.l
-        move.w d1, vdp_data.l
+        move.w d1, vdp_data.l ; plane a
+        ; move.w d1, vdp_data.l ; plane b
     .skip_right:
         rte
 
