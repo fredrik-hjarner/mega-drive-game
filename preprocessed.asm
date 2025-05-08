@@ -72,7 +72,7 @@ plane_h_in_tiles equ 32
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 183975 '
+    dc.b 'GM 184235'
     cnop 0,$18E
     dc.w $0000
     dc.b 'J               '

@@ -16,10 +16,9 @@ macro emit? line&
     db `line,13,10
 end macro
 
-; _assemble emits text to clownassembler
+; _assemble emits text to for either clownassembler or fasm68k to assemble.
 macro calminstruction?._assemble? &line&
     stringify line
-    ; TODO: Shorten this code?
     ; clownassembler stuff usually needs to be prefixed with whitespace.
     emit 1, 20h
     emit 1, 20h
@@ -39,24 +38,24 @@ macro calminstruction?.assemble_first_column? &line&
     emit 1, 10
 end macro
 
-; _emit emits text to clownassembler
-; Only handles 1 byte but that will probably suffice.
-macro calminstruction?._emit? number_of_bytes, value
-        new @string
-        new @done
-
-        local tmp
-        compute tmp, value
-        check tmp eqtype ''
-        @ jyes @string
-    ; not_string:
-        arrange tmp, =dc.=b= tmp
-        _assemble tmp
-        @ jump @done
-    @ @string:
-        arrange tmp, =dc.=b= value
-        _assemble tmp
-    @ @done:
+; These different versions of emit are needed. Couldn't solve it in another way.
+; They intend to output text that can later be assembled by either
+; clownassembler or fasm68k.
+macro calminstruction?._emit_word? number_of_bytes, value
+    local _tmp
+    compute _tmp, +(value bswap 2) ; convert to number in case it is a string.
+    arrange _tmp, _tmp
+    stringify _tmp
+    emit 9, '    dc.w ' 
+    emit lengthof _tmp, _tmp
+    emit 1, 10
+end macro
+macro calminstruction?._emit_str? number_of_bytes, value
+    emit 9, '    dc.b ' 
+    emit 1, ''''
+    emit number_of_bytes, value
+    emit 1, ''''
+    emit 1, 10
 end macro
 
 define MACROS

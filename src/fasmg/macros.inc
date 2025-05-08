@@ -62,17 +62,9 @@ calminstruction meta_version
         compute tmp, __time__
         compute s_since_2025, tmp - 1735686000
         compute m_since_2025, s_since_2025 / 60
-        check defined preprocess_asm
-        jyes preprocess_asm
-    ; normal case
-        ; TODO: I am missing a space after m_since_2025
-        arrange tmp, =GM m_since_2025 
+        arrange tmp, =GM m_since_2025
         stringify tmp
-        _emit lengthof tmp, tmp
-        exit
-    preprocess_asm:
-        arrange tmp, =dc.=b quote=GM m_since_2025 quote
-        _assemble tmp
+        _emit_str lengthof tmp, tmp
 end calminstruction
 
 ; TODO: Explain exactly what this does and how it is intended to be used.
@@ -203,14 +195,12 @@ calminstruction str_to_tile_indices str
              char_to_tile_map:tmp, \    ; offset to load from
              1                          ; number of bytes to load
 
-        ; TODO: For some reason I can't get _emit to work here.
-        ;       Examine why that might be.
-        ; compute tmp, tmp bswap 2 ; TODO: Use emit_be when possible in the future
-        ; _emit 2, tmp
-        compute tmp, +tmp
-        arrange tmp, tmp
-        arrange tmp, =dc.=w tmp
-        _assemble tmp
+        compute tmp, tmp bswap 2 ; TODO: Use emit_be when possible in future.
+        _emit_word 2, tmp
+        ; compute tmp, +tmp
+        ; arrange tmp, tmp
+        ; arrange tmp, =dc.=w tmp
+        ; _assemble tmp
 
         compute i, i + 1
         jump next
