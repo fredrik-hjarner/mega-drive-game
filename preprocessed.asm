@@ -72,7 +72,7 @@ plane_h_in_tiles equ 32
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 183959 '
+    dc.b 'GM 183975 '
     cnop 0,$18E
     dc.w $0000
     dc.b 'J               '
@@ -91,45 +91,44 @@ plane_h_in_tiles equ 32
     dc.b 'JUE             '
     plane_a_start:
     dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
     dc.w 0
-    dc.w 1
-    dc.w 1
-    dc.w 1
     dc.w 1
-    dc.w 1
     dc.w 0
-    dc.w 1
-    dc.w 1
-    dc.w 1
     dc.w 1
-    dc.w 1
     dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
     dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
     dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
     dc.w 0
     dc.w 1
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
@@ -154,6 +153,7 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 0
     dc.w 1
     dc.w 0
     dc.w 0
@@ -218,22 +218,12 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
     dc.w 0
     dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
+    dc.w 0
     dc.w 1
     dc.w 0
     dc.w 1
@@ -243,19 +233,29 @@ plane_h_in_tiles equ 32
     dc.w 1
     dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
     dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
     dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
@@ -358,11 +358,7 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 1
     dc.w 0
-    dc.w 1
-    dc.w 1
     dc.w 1
-    dc.w 1
-    dc.w 1
     dc.w 0
     dc.w 1
     dc.w 0
@@ -370,22 +366,26 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 1
     dc.w 0
-    dc.w 1
-    dc.w 1
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
     dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
     dc.w 0
     dc.w 1
     dc.w 0
     dc.w 0
-    dc.w 1
+    dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
@@ -2140,45 +2140,45 @@ plane_h_in_tiles equ 32
     dc.w 0
     plane_a_end:
     plane_b_start:
-    dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
     dc.w 0
-    dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
     dc.w 1
     dc.w 0
     dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
     dc.w 0
-    dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
     dc.w 0
-    dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
+    dc.w 0
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 0
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
+    dc.w 0
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
+    dc.w 0
+    dc.w 0
     dc.w 1
     dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 0
+    dc.w 0
     dc.w 1
     dc.w 0
     dc.w 0
@@ -2204,45 +2204,33 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
@@ -2268,43 +2256,55 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
     dc.w 0
-    dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
     dc.w 0
-    dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
+    dc.w 0
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
+    dc.w 0
     dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
+    dc.w 0
+    dc.w 0
     dc.w 1
     dc.w 0
     dc.w 1
+    dc.w 0
+    dc.w 0
+    dc.w 0
     dc.w 1
     dc.w 0
     dc.w 0
@@ -2332,45 +2332,32 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
@@ -2396,43 +2383,56 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
-    dc.w 1
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
     dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
     dc.w 1
+    dc.w 0
     dc.w 1
+    dc.w 0
+    dc.w 0
+    dc.w 0
     dc.w 1
     dc.w 0
     dc.w 1
+    dc.w 0
+    dc.w 0
+    dc.w 0
     dc.w 0
     dc.w 0
     dc.w 1
@@ -4208,20 +4208,18 @@ plane_h_in_tiles equ 32
     .skip:
     rts
     update_hscroll:
-    tst.b gamepad1_left.l
+    tst.b gamepad1_down.l
     beq.b .skip_left
     addi.w #-1, hscroll_amount.l
     bra.b .increment
     .skip_left:
-    tst.b gamepad1_right.l
+    tst.b gamepad1_up.l
     beq.b .skip_right
     addi.w #1, hscroll_amount.l
     .increment:
     move.w hscroll_amount.l, d1
     lsr.w #2, d1
     move.l #$40000000+(((vram_hscroll_addr)&$3FFF)<<16)+(((vram_hscroll_addr)&$C000)>>14),vdp_ctrl.l
-    move.w d1, vdp_data.l
-    move.w d1, vdp_data.l
     move.l #$40000010+(($0)<<16),vdp_ctrl.l
     move.w d1, vdp_data.l
     .skip_right:

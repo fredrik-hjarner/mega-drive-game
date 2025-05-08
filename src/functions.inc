@@ -30,24 +30,24 @@ update_color:
 ; TODO: Comment
 update_hscroll:
         ; TODO: clownassembler interprets `jsr label` as `jsr label.l`
-        tst.b gamepad1_left.l
+        tst.b gamepad1_down.l
         beq.b .skip_left
         addi.w #-1, hscroll_amount.l
         bra.b .increment
     .skip_left:
         ; TODO: clownassembler interprets `jsr label` as `jsr label.l`
-        tst.b gamepad1_right.l
+        tst.b gamepad1_up.l
         beq.b .skip_right
         addi.w #1, hscroll_amount.l
     .increment:
         move.w hscroll_amount.l, d1
         ; right shift d1 to slower speed or something.
         lsr.w #2, d1
-        ; now also h.scroll plane A and plane B
+    ; now also h.scroll plane A and plane B
         set_write_vram vram_hscroll_addr
-        move.w d1, vdp_data.l
-        move.w d1, vdp_data.l
-        ; now also v.scroll plane A and plane B
+        ; move.w d1, vdp_data.l ; plane a
+        ; move.w d1, vdp_data.l ; plane b
+    ; now also v.scroll plane A and plane B
         set_write_vsram $0
         move.w d1, vdp_data.l ; plane a
         ; move.w d1, vdp_data.l ; plane b
