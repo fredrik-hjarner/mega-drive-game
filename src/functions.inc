@@ -1,3 +1,7 @@
+; Intended to be the place where memory variables are initialized.
+init_ram_variables:
+    rts
+
 ; arguments:
 ;     d1: color index (0-7)
 ; returns:
@@ -28,31 +32,69 @@ update_color:
         rts
 
 ; TODO: Comment
-update_hscroll:
+update_vscroll:
         ; TODO: clownassembler interprets `jsr label` as `jsr label.l`
         tst.b gamepad1_down.l
-        beq.b .skip_left
-        addi.w #-1, hscroll_amount.l
+        beq.b .skip_down
+        addi.w #-1, vscroll_amount.l
         bra.b .increment
-    .skip_left:
+    .skip_down:
         ; TODO: clownassembler interprets `jsr label` as `jsr label.l`
         tst.b gamepad1_up.l
-        beq.b .skip_right
-        addi.w #1, hscroll_amount.l
+        beq.b .skip_up
+        addi.w #1, vscroll_amount.l
     .increment:
-        move.w hscroll_amount.l, d1
+        move.w vscroll_amount.l, d1
         ; right shift d1 to slower speed or something.
-        lsr.w #2, d1
+        ; Wait what's this now...
+        ;     logical shift right... oh, that's why it's slow.
+        ; So we have the `vscroll_amount` but the actual amount of scrolling
+        ; is that divided by 4.
+        lsr.w #1, d1
     ; now also h.scroll plane A and plane B
-        set_write_vram vram_hscroll_addr
+        ; set_write_vram vram_hscroll_addr
         ; move.w d1, vdp_data.l ; plane a
         ; move.w d1, vdp_data.l ; plane b
     ; now also v.scroll plane A and plane B
         set_write_vsram $0
         move.w d1, vdp_data.l ; plane a
+        neg.w d1
+        move.w d1, vdp_data.l ; plane b
+    .skip_up:
+        rts
+
+; TODO: Comment
+update_hscroll:
+        ; TODO: clownassembler interprets `jsr label` as `jsr label.l`
+        tst.b gamepad1_left.l
+        beq.b .skip_left
+        addi.w #-1, hscroll_amount.l
+        bra.b .increment2
+    .skip_left:
+        ; TODO: clownassembler interprets `jsr label` as `jsr label.l`
+        tst.b gamepad1_right.l
+        beq.b .skip_right
+        addi.w #1, hscroll_amount.l
+    .increment2:
+        move.w hscroll_amount.l, d1
+        ; right shift d1 to slower speed or something.
+        ; Wait what's this now...
+        ;     logical shift right... oh, that's why it's slow.
+        ; So we have the `hscroll_amount` but the actual amount of scrolling
+        ; is that divided by 4.
+        lsr.w #1, d1
+    ; now also h.scroll plane A and plane B
+        set_write_vram vram_hscroll_addr
+        move.w d1, vdp_data.l ; plane a
+        neg.w d1
+        move.w d1, vdp_data.l ; plane b
+    ; now also v.scroll plane A and plane B
+        ; set_write_vsram $0
+        ; move.w d1, vdp_data.l ; plane a
+        ; neg.w d1
         ; move.w d1, vdp_data.l ; plane b
     .skip_right:
-        rte
+        rts
 
 ; TODO: Comment
 ; A plane tile is one word.

@@ -15,7 +15,7 @@ gamepad2_data equ $A10005
 screen_w_in_tiles equ 40
 screen_h_in_tiles equ 28
 plane_w_in_tiles equ 64
-plane_h_in_tiles equ 32
+plane_h_in_tiles equ 64
     dc.l 0
     dc.l Start
     dc.l int2_bus_error
@@ -73,7 +73,7 @@ plane_h_in_tiles equ 32
     dc.b '                '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
     dc.b 'EPIC LEGENDS OF DESTINY                         '
-    dc.b 'GM 184327'
+    dc.b 'GM 185329'
     cnop 0,$18E
     dc.w $0000
     dc.b 'J               '
@@ -91,43 +91,24 @@ plane_h_in_tiles equ 32
     dc.b '                '
     dc.b 'JUE             '
     plane_a_start:
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
@@ -155,45 +136,33 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
@@ -219,43 +188,24 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
@@ -283,45 +233,32 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
@@ -347,43 +284,27 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
-    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
@@ -874,24 +795,43 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
@@ -919,33 +859,45 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
@@ -971,24 +923,43 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
@@ -1016,32 +987,45 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
@@ -1067,27 +1051,43 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
+    dc.w 1
     dc.w 0
     dc.w 0
     dc.w 0
@@ -2142,6 +2142,716 @@ plane_h_in_tiles equ 32
     plane_a_end:
     plane_b_start:
     dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 0
+    dc.w 1
+    dc.w 0
+    dc.w 1
+    dc.w 0
+    dc.w 0
+    dc.w 0
     dc.w 1
     dc.w 0
     dc.w 1
@@ -2172,12 +2882,6 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     dc.w 0
-    dc.w 1
-    dc.w 0
-    dc.w 1
-    dc.w 0
-    dc.w 0
-    dc.w 0
     dc.w 0
     dc.w 0
     dc.w 1
@@ -2437,710 +3141,6 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     dc.w 1
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
-    dc.w 0
     dc.w 0
     dc.w 0
     dc.w 0
@@ -4190,6 +4190,8 @@ plane_h_in_tiles equ 32
     dc.w 0
     dc.w 0
     plane_b_end:
+    init_ram_variables:
+    rts
     set_bg_color:
     move.w #(1<<15 | (7<<8)), d2
     or.w d1, d2
@@ -4208,23 +4210,42 @@ plane_h_in_tiles equ 32
     jsr set_bg_color.l
     .skip:
     rts
-    update_hscroll:
+    update_vscroll:
     tst.b gamepad1_down.l
-    beq.b .skip_left
-    addi.w #-1, hscroll_amount.l
+    beq.b .skip_down
+    addi.w #-1, vscroll_amount.l
     bra.b .increment
-    .skip_left:
+    .skip_down:
     tst.b gamepad1_up.l
-    beq.b .skip_right
-    addi.w #1, hscroll_amount.l
+    beq.b .skip_up
+    addi.w #1, vscroll_amount.l
     .increment:
-    move.w hscroll_amount.l, d1
-    lsr.w #2, d1
-    move.l #$40000000+(((vram_hscroll_addr)&$3FFF)<<16)+(((vram_hscroll_addr)&$C000)>>14),vdp_ctrl.l
+    move.w vscroll_amount.l, d1
+    lsr.w #1, d1
     move.l #$40000010+(($0)<<16),vdp_ctrl.l
     move.w d1, vdp_data.l
+    neg.w d1
+    move.w d1, vdp_data.l
+    .skip_up:
+    rts
+    update_hscroll:
+    tst.b gamepad1_left.l
+    beq.b .skip_left
+    addi.w #-1, hscroll_amount.l
+    bra.b .increment2
+    .skip_left:
+    tst.b gamepad1_right.l
+    beq.b .skip_right
+    addi.w #1, hscroll_amount.l
+    .increment2:
+    move.w hscroll_amount.l, d1
+    lsr.w #1, d1
+    move.l #$40000000+(((vram_hscroll_addr)&$3FFF)<<16)+(((vram_hscroll_addr)&$C000)>>14),vdp_ctrl.l
+    move.w d1, vdp_data.l
+    neg.w d1
+    move.w d1, vdp_data.l
     .skip_right:
-    rte
+    rts
     set_plane_tile:
     move.w d0, vdp_data.l
     rts
@@ -4333,7 +4354,7 @@ timer_1Hz_counter rs.w 1
     move.w #36097,vdp_ctrl.l
     move.w #36352,vdp_ctrl.l
     move.w #36610,vdp_ctrl.l
-    move.w #36865,vdp_ctrl.l
+    move.w #36881,vdp_ctrl.l
     move.w #37120,vdp_ctrl.l
     move.w #37376,vdp_ctrl.l
     move.l #$40000000, vdp_ctrl.l
@@ -4440,15 +4461,17 @@ timer_1Hz_counter rs.w 1
     .loop2:
     move.w (a0)+, vdp_data.l
     dbra.w d1, .loop2
-    move.w #34567,vdp_ctrl.l
+    move.w #34560,vdp_ctrl.l
     move.w #33124,vdp_ctrl.l
     move.w #$2300, sr
+    jsr init_ram_variables.l
     MainLoop:
     bra.b MainLoop
     vblank:
     movem.l d1-d2,-(sp)
     jsr gamepads_get_input.l
     jsr update_color.l
+    jsr update_vscroll.l
     jsr update_hscroll.l
     movem.l (sp)+,d1-d2
     rte
@@ -4472,6 +4495,7 @@ timer_1Hz_counter rs.w 1
     bra.b error
 color_index rs.w 1
 hscroll_amount rs.w 1
+vscroll_amount rs.w 1
 gamepad1_up rs.b 1
 gamepad1_down rs.b 1
 gamepad1_left rs.b 1

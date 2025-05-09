@@ -241,7 +241,7 @@ skip_tmss:
     ;                       |            10 - invalid
     ;                       |            11 - 1024 pixels (128 cells)
     ;                       |
-    set_vdp_register $10, 00000001b      ; bits 7, 6, 3 & 2 are always 0
+    set_vdp_register $10, 00010001b      ; bits 7, 6, 3 & 2 are always 0
     ;                           |   width
     ;                           +- #1-0: 00 - 256 pixels (32 cells)
     ;                                    01 - 512 pixels (64 cells)
@@ -345,7 +345,7 @@ skip_tmss:
     ; =================================================================
     ; STEP 4: ENABLE DISPLAY AND SET BACKGROUND
     ; =================================================================
-    set_vdp_register 7, $07        ; Reg 7: Background color = palette 0, color 7
+    set_vdp_register 7, $00        ; Reg 7: Background color = palette 0, color 0
 
     ; Mode Register 1
     ;                       +------- #5: 0 - left 8 pix not blanked (i.e. normal)
@@ -382,6 +382,9 @@ skip_tmss:
 
     move.w    #$2300, sr		; Enable interrupts.
 
+;; Init RAM variables
+    jsr init_ram_variables.l
+
     ; =================================================================
     ; STEP 5: MAIN LOOP (Do nothing forever)
     ; =================================================================
@@ -397,6 +400,7 @@ vblank:
 
         jsr update_color.l
 
+        jsr update_vscroll.l
         jsr update_hscroll.l
 
         ; Restore registers
@@ -442,7 +446,7 @@ error:
 
 color_index     rs.w 1
 hscroll_amount  rs.w 1
-; vscroll_amount    rs.w 1
+vscroll_amount  rs.w 1
 
 gamepad1_up     rs.b 1
 gamepad1_down   rs.b 1

@@ -22,12 +22,13 @@ Possible planes sizes are:
 
 VRAM Memory Map
 
-| Address | Description       | Size    |                                      |
-|---------|-------------------|---------|--------------------------------------|
-| $0000   | Window            | 0 bytes | 2 bytes per tile                     |
-| $0000   | Tiles             |         | 32 bytes per tile                    |
-| $0400   | Horizontal Scroll | 4 bytes | 2 bytes per plane                    |
-| $2000   | Plane A           |         | 2 bytes per tile                     |
-| $6000   | Plane B           |         | 2 bytes per tile                     |
-| $8000   | Sprites           |         |                                      |
-| $FFFF   | End of VRAM       |         |                                      |
+| Address | Description                     | Size    |                        |
+|---------|---------------------------------|---------|------------------------|
+| $0000   | Window                          | 0 bytes | 2 bytes per tile       |
+| $0000   | Tiles                           |         | 32 bytes per tile      |
+| $0400   | Horizontal Scroll (full screen) | 4 bytes | 2 bytes per plane      |
+|         | Horizontal Scroll (tile)        |         | 2 bytes per tile?      |
+| $2000   | Plane A                         |         | 2 bytes per tile       |
+| $6000   | Plane B                         |         | 2 bytes per tile       |
+| $8000   | Sprites                         |         |                        |
+| $FFFF   | End of VRAM                     |         |                        |
