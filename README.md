@@ -1,15 +1,15 @@
-; mega drive test. 68k processor.
-; using clownassembler.
-; using fasmg to preprocess so I can use fasmg macros.
+Experimenting with the Mega Drive with [fasm68k](https://github.com/fredrik-hjarner/fasm68k).
 
-* to get
-  `git clone --recurse-submodules git@github.com:fredrik-hjarner/mega-drive-game.git`
+Just playing around with Motorola 68000 assembly.
 
-* to build
-  `make build` or just `make`
+### to get
 
-* to install git hooks:
-  `git config core.hooksPath .hooks`
+`git clone --recurse-submodules git@github.com:fredrik-hjarner/mega-drive-game.git`
 
-* clownassembler is a bit pedantic
-  Everything except labels need to be indented.
+### to build
+
+`make build` or just `make`
+
+### to install git hooks
+
+`git config core.hooksPath .hooks`

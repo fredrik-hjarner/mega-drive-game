@@ -13,10 +13,8 @@ fi
 # This helps prevent race conditions with the binary file
 sleep 1
 
-# Assuming your binary is named "mybinary" - replace with actual name
 echo "Adding binary to commit..."
-git add main.*
-git add preprocessed.*
+git add main.bin
 
 # Important: Git tracks what was staged before the hook ran
 # This command restages everything to include our new binary

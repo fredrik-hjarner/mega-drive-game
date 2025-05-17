@@ -2,14 +2,6 @@
 * ~~Use fasmg/fasm2 to proprocess the file with fasmg macros.~~
 * make macros to set up write to CRAM, VRAM and VSRAM
     move.l  #$40000000, vdp_ctrl    ; Start writing at VRAM $0000
-* Implement
-      BRA
-      BSR
-      Bcc
-* Implement
-      dc.b
-      dc.w
-      dc.l
 * Add "Releases" maybe?
 * Add github flows where binary is generated maybe?
 * Add an "artifacts" folder where all artifacts (in binary) are stored.

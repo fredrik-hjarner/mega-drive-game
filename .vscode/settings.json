@@ -4,5 +4,11 @@
         // 40,
         // 64,
         80,
-    ]
+    ],
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "files.associations": {
+        "*.X68": "assembly"
+    },
+    "editor.wordWrap": "off",
 }

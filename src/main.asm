@@ -1,3 +1,5 @@
+include "listing.inc"
+
 ; Set address where stuff allocated with `rs` will be.
 ; rs will be used to place stuff in RAM and RAM start at $FF0000.
 rsset $FF0000
@@ -7,7 +9,7 @@ rsset $FF0000
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     include "consts.inc"
-    include "macros.inc"
+    include "macros/macros.inc"
 
 ; =====================================================================
 ; HEADER 512 bytes ($200 bytes)
@@ -27,6 +29,7 @@ rsset $FF0000
 ; OTHER INCLUDES
 ; =====================================================================
 
+    ; include "vdp.inc"
     include "functions.inc"
     include "timers.inc"
 

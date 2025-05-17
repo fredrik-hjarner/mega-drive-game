@@ -8,6 +8,7 @@ init_ram_variables:
 ;     nothing
 set_bg_color:
     ; Set VDP register 7 to the color index in d1
+    ; TODO: Can't I use `ori` instead?
     move.w  #(1<<15 | (7<<8)), d2    ; Create the command word for register 7
     or.w    d1, d2                   ; OR in the color index from d1
     move.w  d2, vdp_ctrl.l             ; Write to VDP control register
@@ -26,20 +27,17 @@ update_color:
         move.w color_index.l, d1
         ; right shift d1 to get the color index
         lsr.w #2, d1
-        ; TODO: clownassembler interprets `jsr label` as `jsr label.l`
         jsr set_bg_color.l ; TODO: Could be set_bg_color.w prolly.
     .skip:
         rts
 
 ; TODO: Comment
 update_vscroll:
-        ; TODO: clownassembler interprets `jsr label` as `jsr label.l`
         tst.b gamepad1_down.l
         beq.b .skip_down
         addi.w #-1, vscroll_amount.l
         bra.b .increment
     .skip_down:
-        ; TODO: clownassembler interprets `jsr label` as `jsr label.l`
         tst.b gamepad1_up.l
         beq.b .skip_up
         addi.w #1, vscroll_amount.l
@@ -65,13 +63,11 @@ update_vscroll:
 
 ; TODO: Comment
 update_hscroll:
-        ; TODO: clownassembler interprets `jsr label` as `jsr label.l`
         tst.b gamepad1_left.l
         beq.b .skip_left
         addi.w #-1, hscroll_amount.l
         bra.b .increment2
     .skip_left:
-        ; TODO: clownassembler interprets `jsr label` as `jsr label.l`
         tst.b gamepad1_right.l
         beq.b .skip_right
         addi.w #1, hscroll_amount.l
