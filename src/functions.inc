@@ -9,7 +9,7 @@ init_ram_variables:
 set_bg_color:
     ; Set VDP register 7 to the color index in d1
     ; TODO: Can't I use `ori` instead?
-    move.w  #(1<<15 | (7<<8)), d2    ; Create the command word for register 7
+    move.w  #(1 shl 15 or 7 shl 8), d2    ; Create the command word for register 7
     or.w    d1, d2                   ; OR in the color index from d1
     move.w  d2, vdp_ctrl.l             ; Write to VDP control register
     rts
@@ -20,7 +20,7 @@ update_color:
         tst.b (gamepad1_a).l
         beq.b .skip
         addq.w #1, color_index.l
-        cmpi.w #(16<<2), color_index.l
+        cmpi.w #(16 shl 2), color_index.l
         blo.b .increment
         move.w #0, color_index.l
     .increment:
