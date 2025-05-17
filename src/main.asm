@@ -29,7 +29,7 @@ rsset $FF0000
 ; OTHER INCLUDES
 ; =====================================================================
 
-    ; include "vdp.inc"
+    include "vdp.inc"
     include "functions.inc"
     include "timers.inc"
 
@@ -56,6 +56,16 @@ Start:
     ; init_gampads ; TODO: This does not seem to work.
 
 skip_tmss:
+
+    ; =================================================================
+    ; CLEAR "NORMAL" RAM
+    ; $FF0000 - $FFFFFF (64kb)
+    ; =================================================================
+    move.l  #$7FFF, d7             ; Loop counter (64KB / 2 = 32kb)
+    movea.l  #$FF0000, a0
+.ClearRAM:
+    move.w  #$0000, (a0)+          ; Write zero toVRAM 
+    dbra.w    d7,.ClearRAM         ; Decrement and branch until done
 
     ; =================================================================
     ; STEP 1: CONFIGURE VDP REGISTERS (Video Display Processor)
@@ -278,16 +288,6 @@ skip_tmss:
 .ClearVRAM:
     move.l  #$00000000, vdp_data.l        ; Write zero to VRAM (fill with empty tiles)
     dbra.w    d7,.ClearVRAM         ; Decrement and branch until done
-
-    ; =================================================================
-    ; CLEAR "NORMAL" RAM
-    ; $FF0000 - $FFFFFF (64kb)
-    ; =================================================================
-    move.l  #$7FFF, d7             ; Loop counter (64KB / 2 = 32kb)
-    movea.l  #$FF0000, a0
-.ClearRAM:
-    move.w  #$0000, (a0)+          ; Write zero toVRAM 
-    dbra.w    d7,.ClearRAM         ; Decrement and branch until done
 
     ; =================================================================
     ; STEP 3: SET UP COLOR PALETTE (CRAM - Color RAM)

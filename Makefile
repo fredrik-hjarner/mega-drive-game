@@ -2,7 +2,7 @@ all: clean build hexdump
 .PHONY: all
 
 build:
-	fasm68k src/main.asm main.bin -e20 -v2
+	fasm68k src/main.asm main.bin -e30 -v2
 .PHONY: build
 
 hexdump:

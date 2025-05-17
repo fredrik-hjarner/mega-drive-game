@@ -18,6 +18,7 @@ hblanks_per_1Hz_tick    equ 15600 ; $3CF0
 
 ; All words because I am lazy.
 ; 0 -> 1 -> 2 -> 3 -> 4 -> 5 -> ... -> 155 -> 0
+rseven ; so that these following are word-aligned
 timer_100Hz_counter rs.w 1
 timer_50Hz_counter  rs.w 1
 timer_1Hz_counter   rs.w 1
