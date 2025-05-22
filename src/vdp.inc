@@ -9,6 +9,8 @@
 
 ;; DEFAULT VALUES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+; TODO: Maybe I should store them as words instead and bake in the command part,
+;       So I could just send the command without having to construct it.
 ; TODO: Set _ between all bits, I can format the comments better then.
 vdp_register_defaults:
     ; #00h - Mode Register 1
@@ -185,7 +187,7 @@ vdp_register_defaults:
     ; #0Fh
     dc.b $02 ; Reg 15: VRAM auto-increment = 2 bytes
 
-    ; Plane Size                   height
+    ; #10h - Plane Size                   height
     ;      +----- #5-4: 00 - 256 pixels (32 cells)
     ;      |            01 - 512 pixels (64 cells)
     ;      |            10 - invalid
@@ -290,29 +292,30 @@ vdp_sync_register:
     ; TODO: Test with .w. I think that should generate an error since the
     ; RAM addresses are so high up in memory that a .w will not do (except for
     ; the top 32kb or am I thinking wrong?)
-    movea.l #vdp_reg_mode_1, a0
-
-    ; The low order byte is the "data" and that's what we to take from RAM.
+    ; setup a0 so we can grab the data part.
+    movea.l #vdp_reg_ram_addr, a0
+    
+    ; The low order byte is the register number and that's what we need from RAM
     ext.w d0    ; input was d0.b, but we need a word, so extend it to d0.w
-    ; compute reg_ram_addr, vdp_reg_mode_1 + reg_nr
-    ; asm     move.b (reg_ram_addr).l, d1
+    ; So now we can grab the byte of data from memory and combine it into d1
+    move.b (a0, d0.w), d1
 
     ;; sync to vdp ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    move.w (a0, d0.w), vdp_ctrl.l
+    move.w d1, vdp_ctrl.l
     rts
 
 ; Init the vdp registers in normal RAM with the default values from ROM.
 vdp_init:
     ; Don't sync every register because some of them I don't know good values
     ; for.
-    iterate reg_nr,     $0, $1, $2, $3, $3, $5, $6, \
-                        $8, $9, $A, $B, $C, $D, $E, $F, $11, $12
+    iterate reg_nr,     $0, $1, $2, $3, $4, $5, $6, \
+                        $8, $9, $A, $B, $C, $D, $E, $F, $10, $11, $12
 
         ; move from ROM to RAM
         move.b  vdp_register_defaults+reg_nr, vdp_reg_ram_addr+reg_nr
 
-        ; sync to vdp
+        ; now sync to vdp from RAM
         move.b  #reg_nr, d0
         jsr     vdp_sync_register
 
