@@ -148,7 +148,7 @@ skip_tmss:
         ; flips & next
         move.w #0000_0000__0000_0001b, vdp_data.l
         ;                  tile number
-        move.w #0000_0000__0000_0001b, vdp_data.l
+        move.w #0000_0000__0000_0011b, vdp_data.l
         ; horizontal position
         move.w #(128 + 8*19) and (1 shl 9 - 1), vdp_data.l
 
@@ -158,7 +158,7 @@ skip_tmss:
         ; flips & next
         move.w #0000_0000__0000_0000b, vdp_data.l
         ;                  tile number
-        move.w #0000_0000__0000_0001b, vdp_data.l
+        move.w #0000_0000__0000_0101b, vdp_data.l
         ; horizontal position
         move.w #(128 + 8*19) and (1 shl 9 - 1), vdp_data.l
 

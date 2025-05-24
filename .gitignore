@@ -4,4 +4,5 @@ berzerk.hex
 dantos
 src/fasmg/m68k/tests/test.bin
 src/fasmg/m68k/tests/test2.bin
-# main.hex
+main.hex
+main.lst
