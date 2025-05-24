@@ -141,6 +141,27 @@ skip_tmss:
             move.w (a0)+, vdp_data.l
             dbra.w d1, .loop2            ; Decrement d1 and loop until -1
 
+    ; Create a hard-coded sprite
+        set_write_vram vram_sprites_addr
+        ; vertical position
+        move.w #(128 + 8*24) and (1 shl 10 - 1), vdp_data.l
+        ; flips & next
+        move.w #0000_0000__0000_0001b, vdp_data.l
+        ;                  tile number
+        move.w #0000_0000__0000_0001b, vdp_data.l
+        ; horizontal position
+        move.w #(128 + 8*19) and (1 shl 9 - 1), vdp_data.l
+
+    ; Create another hard-coded sprite
+        ; vertical position
+        move.w #(128 + 8*3) and (1 shl 10 - 1), vdp_data.l
+        ; flips & next
+        move.w #0000_0000__0000_0000b, vdp_data.l
+        ;                  tile number
+        move.w #0000_0000__0000_0001b, vdp_data.l
+        ; horizontal position
+        move.w #(128 + 8*19) and (1 shl 9 - 1), vdp_data.l
+
     ; =================================================================
     ; STEP 4: ENABLE DISPLAY AND SET BACKGROUND
     ; =================================================================

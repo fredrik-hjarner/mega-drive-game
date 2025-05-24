@@ -7,6 +7,16 @@
 ;; register.                                                                  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; CONSTANTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+vdp_reg0_enable_display := 1 shl 0
+vdp_reg0_enable_hblank  := 1 shl 4
+
+vdp_reg1_mode4_mode5    := 1 shl 2
+vdp_reg1_ntsc_pal       := 1 shl 3
+vdp_reg1_enable_vblank  := 1 shl 5
+vdp_reg1_enable_display := 1 shl 6
+
 ;; DEFAULT VALUES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; TODO: Maybe I should store them as words instead and bake in the command part,
