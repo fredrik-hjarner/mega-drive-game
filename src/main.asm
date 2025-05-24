@@ -264,24 +264,31 @@ error:
 
 ; rs address is set to $FF0000 with rsset at the start of the file
 
-color_index     rs.w 1
-hscroll_amount  rs.w 1
-vscroll_amount  rs.w 1
+color_index     rs.w
+hscroll_amount  rs.w
+vscroll_amount  rs.w
 
-gamepad1_up     rs.b 1
-gamepad1_down   rs.b 1
-gamepad1_left   rs.b 1
-gamepad1_right  rs.b 1
-gamepad1_b      rs.b 1
-gamepad1_c      rs.b 1
-gamepad1_a      rs.b 1
-gamepad1_start  rs.b 1
+gamepad1_up     rs.b
+gamepad1_down   rs.b
+gamepad1_left   rs.b
+gamepad1_right  rs.b
+gamepad1_b      rs.b
+gamepad1_c      rs.b
+gamepad1_a      rs.b
+gamepad1_start  rs.b
 
-gamepad2_up     rs.b 1
-gamepad2_down   rs.b 1
-gamepad2_left   rs.b 1
-gamepad2_right  rs.b 1
-gamepad2_b      rs.b 1
-gamepad2_c      rs.b 1
-gamepad2_a      rs.b 1
-gamepad2_start  rs.b 1
+gamepad2_up     rs.b
+gamepad2_down   rs.b
+gamepad2_left   rs.b
+gamepad2_right  rs.b
+gamepad2_b      rs.b
+gamepad2_c      rs.b
+gamepad2_a      rs.b
+gamepad2_start  rs.b
+
+; sprite positions
+player1_x       rs.w
+player1_y       rs.w
+player2_x       rs.w
+player2_y       rs.w
+

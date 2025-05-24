@@ -10,9 +10,13 @@ vram_hscroll_addr := $0400
 vram_plane_a_addr := $2000
 vram_plane_b_addr := $6000
 vram_sprites_addr := $8000
+vdp_tiles_addr    := $0000
 
-; tile data addresses
-vdp_tiles_addr equ $0000
+; player positions
+vram_player1_y := vram_sprites_addr + 0 * 2
+vram_player1_x := vram_sprites_addr + 3 * 2
+vram_player2_y := vram_sprites_addr + 4 * 2
+vram_player2_x := vram_sprites_addr + 7 * 2
 
 ; gampads
 gamepad1_ctrl equ $A10009
