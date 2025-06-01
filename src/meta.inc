@@ -15,13 +15,14 @@ dc.b "EPIC LEGENDS OF DESTINY                         " ; 48 bytes: Internationa
 assert $ = $180
 meta_version       ; 14 bytes: Version number
 assert $ = $18E
+checksum:
 dc.w $0000                   ; 2 bytes: Checksum
 assert $ = $190
 dc.b "J               "      ; 16 bytes: I/O support
 assert $ = $1A0
 dc.l $00000000               ; 4 bytes: ROM start address
 assert $ = $1A4
-dc.l $00100000               ; 4 bytes: ROM end address
+dc.l end_of_rom              ; 4 bytes: ROM end address
 assert $ = $1A8
 dc.l $00FF0000               ; 4 bytes: Start of RAM
 assert $ = $1AC

@@ -10,6 +10,7 @@ rsset $FF0000
 
     include "consts.inc"
     include "macros/macros.inc"
+    include "macros/checksum.inc"
 
 ; =====================================================================
 ; HEADER 512 bytes ($200 bytes)
@@ -292,3 +293,13 @@ player1_y       rs.w
 player2_x       rs.w
 player2_y       rs.w
 
+;; PAD ROM ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; fill up to even bytes.
+; even bytes needed to calculate checksum.
+cnop 0, 2
+
+; pad to even 128kb
+; cnop 0, 1024 * 128
+
+end_of_rom:
