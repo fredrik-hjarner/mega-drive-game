@@ -2,84 +2,71 @@
 ;; CREATE TILES                                                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    set_write_vram vram_tiles_addr
+set_write_vram vram_tiles_addr
 
-    ; Tile $0 ; Fully transparent
-    move.l #$00000000, vdp_data.l ; row 1
-    move.l #$00000000, vdp_data.l ; row 2
-    move.l #$00000000, vdp_data.l ; row 3
-    move.l #$00000000, vdp_data.l ; row 4
-    move.l #$00000000, vdp_data.l ; row 5
-    move.l #$00000000, vdp_data.l ; row 6
-    move.l #$00000000, vdp_data.l ; row 7
-    move.l #$00000000, vdp_data.l ; row 8
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ONE-COLORED SQUARES                                                        ;;
+;; Tiles 0 - 15                                                               ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    ; Tile $1 ; Full square color 1
-    move.l #$11111111, vdp_data.l ; row 1
-    move.l #$11111111, vdp_data.l ; row 2
-    move.l #$11111111, vdp_data.l ; row 3
-    move.l #$11111111, vdp_data.l ; row 4
-    move.l #$11111111, vdp_data.l ; row 5
-    move.l #$11111111, vdp_data.l ; row 6
-    move.l #$11111111, vdp_data.l ; row 7
-    move.l #$11111111, vdp_data.l ; row 8
+; p for palette
+iterate p,  0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F
+    repeat 8
+        ; #0pppppppph
+        move.l #0#p#p#p#p#p#p#p#p#h, vdp_data.l ; one row
+    end repeat
+end iterate
 
-    ; Tile $2
-    move.l #$22222222, vdp_data.l ; row 1
-    move.l #$22222222, vdp_data.l ; row 2
-    move.l #$22222222, vdp_data.l ; row 3
-    move.l #$22222222, vdp_data.l ; row 4
-    move.l #$22222222, vdp_data.l ; row 5
-    move.l #$22222222, vdp_data.l ; row 6
-    move.l #$22222222, vdp_data.l ; row 7
-    move.l #$22222222, vdp_data.l ; row 8
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ONE-COLORED HOLLOW SQUARES                                                 ;;
+;; Tiles 16 - 30                                                              ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    ; Tile $3
-    move.l #$33333333, vdp_data.l ; row 1
-    move.l #$33333333, vdp_data.l ; row 2
-    move.l #$33333333, vdp_data.l ; row 3
-    move.l #$33333333, vdp_data.l ; row 4
-    move.l #$33333333, vdp_data.l ; row 5
-    move.l #$33333333, vdp_data.l ; row 6
-    move.l #$33333333, vdp_data.l ; row 7
-    move.l #$33333333, vdp_data.l ; row 8
+; p for palette
+iterate p,  1,2,3,4,5,6,7,8,9,A,B,C,D,E,F
+    ; Pretty unreadable but this is a bordered square with transparent content.
+    move.l #0#p#p#p#p#p#p#p#p#h, vdp_data.l ; row 1
+    move.l #0#p#0_0_0_0_0_0#p#h, vdp_data.l ; row 2
+    move.l #0#p#0_0_0_0_0_0#p#h, vdp_data.l ; row 3
+    move.l #0#p#0_0_0_0_0_0#p#h, vdp_data.l ; row 4
+    move.l #0#p#0_0_0_0_0_0#p#h, vdp_data.l ; row 5
+    move.l #0#p#0_0_0_0_0_0#p#h, vdp_data.l ; row 6
+    move.l #0#p#0_0_0_0_0_0#p#h, vdp_data.l ; row 7
+    move.l #0#p#p#p#p#p#p#p#p#h, vdp_data.l ; row 8
+end iterate
 
-    ; Tile $4
-    move.l #$44444444, vdp_data.l ; row 1
-    move.l #$44444444, vdp_data.l ; row 2
-    move.l #$44444444, vdp_data.l ; row 3
-    move.l #$44444444, vdp_data.l ; row 4
-    move.l #$44444444, vdp_data.l ; row 5
-    move.l #$44444444, vdp_data.l ; row 6
-    move.l #$44444444, vdp_data.l ; row 7
-    move.l #$44444444, vdp_data.l ; row 8
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ONE-COLORED SMALL SQUARES                                                  ;;
+;; Tiles 31 - 45                                                              ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    ; Tile $5
-    move.l #$55555555, vdp_data.l ; row 1
-    move.l #$55555555, vdp_data.l ; row 2
-    move.l #$55555555, vdp_data.l ; row 3
-    move.l #$55555555, vdp_data.l ; row 4
-    move.l #$55555555, vdp_data.l ; row 5
-    move.l #$55555555, vdp_data.l ; row 6
-    move.l #$55555555, vdp_data.l ; row 7
-    move.l #$55555555, vdp_data.l ; row 8
+; p for palette
+iterate p,  1,2,3,4,5,6,7,8,9,A,B,C,D,E,F
+    ; Pretty unreadable but 1px transparent border around solid color square.
+    move.l #0_0_0_0_0_0_0_0_0#h, vdp_data.l ; row 1
+    move.l #0_0#p#p#p#p#p#p#0#h, vdp_data.l ; row 2
+    move.l #0_0#p#p#p#p#p#p#0#h, vdp_data.l ; row 3
+    move.l #0_0#p#p#p#p#p#p#0#h, vdp_data.l ; row 4
+    move.l #0_0#p#p#p#p#p#p#0#h, vdp_data.l ; row 5
+    move.l #0_0#p#p#p#p#p#p#0#h, vdp_data.l ; row 6
+    move.l #0_0#p#p#p#p#p#p#0#h, vdp_data.l ; row 7
+    move.l #0_0_0_0_0_0_0_0_0#h, vdp_data.l ; row 8
+end iterate
 
-    ; Tile $6
-    move.l #$66666666, vdp_data.l ; row 1
-    move.l #$66666666, vdp_data.l ; row 2
-    move.l #$66666666, vdp_data.l ; row 3
-    move.l #$66666666, vdp_data.l ; row 4
-    move.l #$66666666, vdp_data.l ; row 5
-    move.l #$66666666, vdp_data.l ; row 6
-    move.l #$66666666, vdp_data.l ; row 7
-    move.l #$66666666, vdp_data.l ; row 8
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ONE-COLORED TINY SQUARES                                                  ;;
+;; Tiles 46 - 60                                                              ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    ; Tile $7
-    move.l #$77777777, vdp_data.l ; row 1
-    move.l #$77777777, vdp_data.l ; row 2
-    move.l #$77777777, vdp_data.l ; row 3
-    move.l #$77777777, vdp_data.l ; row 4
-    move.l #$77777777, vdp_data.l ; row 5
-    move.l #$77777777, vdp_data.l ; row 6
-    move.l #$77777777, vdp_data.l ; row 7
-    move.l #$77777777, vdp_data.l ; row 8
+; p for palette
+iterate p,  1,2,3,4,5,6,7,8,9,A,B,C,D,E,F
+    ; Pretty unreadable but 3px transparent border around solid color square.
+    move.l #0_0_0_0_0_0_0_0_0#h, vdp_data.l ; row 1
+    move.l #0_0_0_0_0_0_0_0_0#h, vdp_data.l ; row 2
+    move.l #0_0_0_0_0_0_0_0_0#h, vdp_data.l ; row 3
+    move.l #0_0_0_0#p#p#0_0_0#h, vdp_data.l ; row 4
+    move.l #0_0_0_0#p#p#0_0_0#h, vdp_data.l ; row 5
+    move.l #0_0_0_0_0_0_0_0_0#h, vdp_data.l ; row 6
+    move.l #0_0_0_0_0_0_0_0_0#h, vdp_data.l ; row 7
+    move.l #0_0_0_0_0_0_0_0_0#h, vdp_data.l ; row 8
+end iterate

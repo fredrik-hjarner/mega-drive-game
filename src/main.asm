@@ -30,6 +30,7 @@ rsset $FF0000
 ; OTHER INCLUDES
 ; =====================================================================
 
+    include "players.inc"
     include "vdp.inc"
     include "functions.inc"
     include "timers.inc"
@@ -142,26 +143,7 @@ skip_tmss:
             move.w (a0)+, vdp_data.l
             dbra.w d1, .loop2            ; Decrement d1 and loop until -1
 
-    ; Create a hard-coded sprite
-        set_write_vram vram_sprites_addr
-        ; vertical position
-        move.w #(128 + 8*24) and (1 shl 10 - 1), vdp_data.l
-        ; flips & next
-        move.w #0000_0000__0000_0001b, vdp_data.l
-        ;                  tile number
-        move.w #0000_0000__0000_0011b, vdp_data.l
-        ; horizontal position
-        move.w #(128 + 8*19) and (1 shl 9 - 1), vdp_data.l
-
-    ; Create another hard-coded sprite
-        ; vertical position
-        move.w #(128 + 8*3) and (1 shl 10 - 1), vdp_data.l
-        ; flips & next
-        move.w #0000_0000__0000_0000b, vdp_data.l
-        ;                  tile number
-        move.w #0000_0000__0000_0101b, vdp_data.l
-        ; horizontal position
-        move.w #(128 + 8*19) and (1 shl 9 - 1), vdp_data.l
+    jsr create_player_sprites
 
     ; =================================================================
     ; STEP 4: ENABLE DISPLAY AND SET BACKGROUND
@@ -286,12 +268,6 @@ gamepad2_b      rs.b
 gamepad2_c      rs.b
 gamepad2_a      rs.b
 gamepad2_start  rs.b
-
-; sprite positions
-player1_x       rs.w
-player1_y       rs.w
-player2_x       rs.w
-player2_y       rs.w
 
 ;; PAD ROM ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
