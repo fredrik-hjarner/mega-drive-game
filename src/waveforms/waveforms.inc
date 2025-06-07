@@ -1,19 +1,31 @@
 ; wf for waveform
 struc wf byte_array&
-    local l
     .:
     .length:
         dc.w l
     .data:
         dc.b byte_array
-        l := $ - .
+    .size := l
+        l := $ - .data
 end struc ; really, and not end struct?
 
-wf1 wf 10,10,0,1,2,3,4,5,4,3,2,1,0,-1,-2,-3,-4,-5,-4,-3,-2,-1
+repeat 1, i:wf1
+    display 'wf: ', `i, 10
+end repeat
 
-; wave1:
-;     dc.b 0,1,2,3,4,5,4,3,2,1,0,-1,-2,-3,-4,-5,-4,-3,-2,-1
-; wave1_length := $ - wave1
+repeat 1, i:wf1.data
+    display 'wf.data: ', `i, 10
+end repeat
+
+repeat 1, i:wf1.size
+    display 'wf.size: ', `i, 10
+end repeat
+
+wf1 wf  0, 1, 2, 3,     4, 5, 4, 3, \ 
+        2, 1, 0,-1,    -2,-3,-4,-5, \
+       -4,-3,-2,-1,     0, 1, 2, 3, \
+        4, 3, 2, 1,     0,-1,-2,-3, \
+       -4,-5,-4,-3,    -2,-1, 0, 1
 
 ; parameters:
 ;     `a0.l`: waveform
@@ -25,33 +37,20 @@ apply_waveform:
         ; To begin with just hardcode a hscroll.
         set_write_vram vram_hscroll_addr
         ; then just put something in
-        move.w #01, vdp_data.l
-        move.w #01, vdp_data.l
-        move.w #02, vdp_data.l
-        move.w #02, vdp_data.l
-        move.w #03, vdp_data.l
-        move.w #03, vdp_data.l
-        move.w #04, vdp_data.l
-        move.w #04, vdp_data.l
-        move.w #05, vdp_data.l
-        move.w #05, vdp_data.l
-        move.w #06, vdp_data.l
-        move.w #06, vdp_data.l
-        move.w #07, vdp_data.l
-        move.w #07, vdp_data.l
-        move.w #08, vdp_data.l
-        move.w #08, vdp_data.l
-        move.w #09, vdp_data.l
-        move.w #09, vdp_data.l
-        move.w #10, vdp_data.l
-        move.w #10, vdp_data.l
-        move.w #11, vdp_data.l
-        move.w #11, vdp_data.l
-        move.w #12, vdp_data.l
-        move.w #12, vdp_data.l
-        move.w #13, vdp_data.l
-        move.w #13, vdp_data.l
-        move.w #14, vdp_data.l
-        move.w #14, vdp_data.l
+
+    repeat wf1.size, i:0
+        move.b i(a0), d2    ; get wf[0]
+        ext.w d2            ; extend to word
+
+        move.w d2,  vdp_data.l
+        move.w #00, vdp_data.l
+    end repeat
 
         rts
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; RAM                                                                        ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; where is the waveform we are currently
+wf_current_index    rs.w

@@ -1,5 +1,6 @@
 ; Intended to be the place where memory variables are initialized.
 init_ram_variables:
+    ; wf_current_index
     rts
 
 ; arguments:
