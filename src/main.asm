@@ -25,6 +25,7 @@ rsset $FF0000
 
     include "planes/a.inc"
     include "planes/b.inc"
+    include "waveforms/waveforms.inc"
 
 ; =====================================================================
 ; OTHER INCLUDES
@@ -188,6 +189,12 @@ skip_tmss:
 ;; Init RAM variables
     jsr init_ram_variables.l
 
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; EXPERIMENTING WITH WAVEFORMS                                           ;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    jsr apply_waveform.l
+
     ; =================================================================
     ; STEP 5: MAIN LOOP (Do nothing forever)
     ; =================================================================
@@ -203,8 +210,8 @@ vblank:
 
         jsr update_color.l
 
-        jsr update_vscroll.l
-        jsr update_hscroll.l
+        ; jsr update_vscroll.l
+        ; jsr update_hscroll.l ; TODO: disabled so I can try 1px hscrolling.
 
         ; Restore registers
         movem.l (sp)+,d1-d2

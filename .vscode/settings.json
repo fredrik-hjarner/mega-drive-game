@@ -8,7 +8,11 @@
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
     "files.associations": {
-        "*.X68": "assembly"
+        "*.X68": "assembly",
+        "*.asm": "fasmg",
+        "*.inc": "fasmg",
+        "*.alm": "fasmg",
     },
     "editor.wordWrap": "off",
+    "makefile.configureOnOpen": false,
 }

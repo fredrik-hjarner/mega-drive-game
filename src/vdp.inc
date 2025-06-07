@@ -145,7 +145,7 @@ vdp_register_defaults:
     ;        | |        10 - horizontal scroll mode 8px
     ;        | |        11 - horizontal scroll mode 1px
     ;        | |
-    dc.b 00000000b      ; bits 7, 6, 5 & 4 are always 0
+    dc.b 00000011b      ; bits 7, 6, 5 & 4 are always 0
     ;         |
     ;         +---- #2: 0 - vertical scroll mode full screen
     ;                   1 - vertical scroll mode 16px
@@ -181,7 +181,7 @@ vdp_register_defaults:
     ;      | | +--- #1: 0 - + 0 to address
     ;      | | |        1 - + $800 (2048) to address
     ;      | | |
-    dc.b 00000001b
+    dc.b 00000010b
     ;     | | | |
     ;     | | | +-- #0: 0 - + 0 to address
     ;     | | |         1 - + $400 (1024) to address

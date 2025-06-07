@@ -1,7 +1,7 @@
 plane_b_start:
-str_to_tile_indices "                                                                "
-str_to_tile_indices "                                                                "
-str_to_tile_indices "                                                                "
+str_to_tile_indices "222                                                             "
+str_to_tile_indices "222                                                             "
+str_to_tile_indices "222                                                             "
 str_to_tile_indices "                                                                "
 str_to_tile_indices "                                                                "
 str_to_tile_indices "                                                                "
