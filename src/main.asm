@@ -229,7 +229,7 @@ vblank:
         move.b #plane_rows_to_animate, d1 ; rows_to_animate (i.e. plane_end_row - plane_start_row)
         move.w wf1.current_offset, d5 ; start row/index in waveform
         move.b #75, d6
-        jsr apply_waveform.l
+        jsr apply_waveform_ab.l
         ; advance offset
         addq.w #1, wf1.current_offset.l
 
