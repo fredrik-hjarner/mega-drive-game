@@ -103,3 +103,101 @@ apply_waveform:
         bne .loop ;  TODO: which is the correct ne hs or whatever?
 
         rts
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; LOL                                                                        ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+virtual at 0
+    wf_area::
+        rb 129 ; 64 + 64 + 1
+end virtual
+
+macro waveform?
+    macro x? str*
+        ; take the string and convert it to a number between -64 and 64.
+        ; with the help of a virtual output area.
+        ; then emit it as a byte.
+
+        if lengthof str <> 129
+            error "waveform:x: string must be 129 characters long"
+        end if
+
+        store str : 129 at wf_area:0
+
+        ; loop through to find `#`, save index, take -65 to get value
+        ; between -64 and 64
+        local b
+        local result
+        result = -1000
+        repeat 129, i:0
+            ; load from virtual output area
+            load b:1 from wf_area:i
+            if b = '#'
+                result = i - 64
+                break
+            end if
+        end repeat
+
+        if result = -1000
+            error "waveform:x: string must contain a `#`"
+        else
+            db result
+        end if
+    end macro
+
+    macro end?.waveform?
+        purge x?
+        purge end?.waveform?
+    end macro
+end macro
+
+; This kind of construction would be really cool.
+waveform
+    repeat 64
+        ;  | -64                                                           | 0     | 8     | 16                                            | 64
+        x "                                                                #                                                                "
+    end repeat
+
+        ;  | -64                                                           | 0                                                             | 64
+        x "                                                                #                                                                "
+        x "                                                                 #                                                               "
+        x "                                                                  #                                                              "
+        x "                                                                   #                                                             "
+        x "                                                                    #                                                            "
+        x "                                                                     #                                                           "
+        x "                                                                      #                                                          "
+        x "                                                                       #                                                         "
+        x "                                                                        #                                                        "
+        x "                                                                         #                                                       "
+        x "                                                                          #                                                      "
+        x "                                                                           #                                                     "
+        x "                                                                            #                                                    "
+        x "                                                                             #                                                   "
+        x "                                                                              #                                                  "
+        x "                                                                               #                                                 "
+        x "                                                                                #                                                "
+        x "                                                                               #                                                 "
+        x "                                                                              #                                                  "
+        x "                                                                             #                                                   "
+        x "                                                                            #                                                    "
+        x "                                                                           #                                                     "
+        x "                                                                          #                                                      "
+        x "                                                                         #                                                       "
+        x "                                                                        #                                                        "
+        x "                                                                       #                                                         "
+        x "                                                                      #                                                          "
+        x "                                                                     #                                                           "
+        x "                                                                    #                                                            "
+        x "                                                                   #                                                             "
+        x "                                                                  #                                                              "
+        x "                                                                 #                                                               "
+        x "                                                                #                                                                "
+
+    repeat 64
+        ;  | -64                                                           | 0                                                             | 64
+        x "                                                                #                                                                "
+    end repeat
+end waveform
+
+even
