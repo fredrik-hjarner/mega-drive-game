@@ -1,0 +1,8 @@
+rm -f main.bin main.hex
+fasm68k src/main.asm main.bin -e30 -v1
+flat assembler  version g.kta0
+src/waveforms/waveforms.inc [79]:
+	Warning: `sub` does not allow the first operand to be an immediate. Will use `subi` instead.
+
+3 passes, 0.1 seconds, 15328 bytes.
+xxd -b -c1 main.bin | cut -d' ' -f2,4 > main.hex
