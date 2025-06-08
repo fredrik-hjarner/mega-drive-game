@@ -45,6 +45,7 @@ end calminstruction
 ; arguments:
 ;     addr: address: $0000-$FFFF
 ; https://segaretro.org/Sega_Mega_Drive/VDP_general_usage
+; TODO: Make a function of this too, because functions are dynamic.
 calminstruction set_write_vram? addr
     local   tmp
     compute tmp, $40000000 + ((addr and $3FFF) shl 16)+((addr and $C000) shr 14)

@@ -28,15 +28,32 @@ wf1 wf \
     \ ; start off with no transform
      0, 0, 0, 0,     0, 0, 0, 0, \
      0, 0, 0, 0,     0, 0, 0, 0, \
+    \
      0, 0, 0, 0,     0, 0, 0, 0, \
      0, 0, 0, 0,     0, 0, 0, 0, \
+    \
+     0, 0, 0, 0,     0, 0, 0, 0, \
+     0, 0, 0, 0,     0, 0, 0, 0, \
+    \
+     0, 0, 0, 0,     0, 0, 0, 0, \
+     0, 0, 0, 0,     0, 0, 0, 0, \
+    \
     \ ; right
-     1, 2, 3, 4,     5, 6, 7, 8, \ 
+     1, 2, 3, 4,     5, 6, 7, 8, \
+    \
     \ ; left
-     7, 6, 5, 4,     3, 2, 1, 0, \ 
+     7, 6, 5, 4,     3, 2, 1, 0, \
+    \
     \ ; go back to beging "normal"/untransformed again
      0, 0, 0, 0,     0, 0, 0, 0, \
      0, 0, 0, 0,     0, 0, 0, 0, \
+    \
+     0, 0, 0, 0,     0, 0, 0, 0, \
+     0, 0, 0, 0,     0, 0, 0, 0, \
+    \
+     0, 0, 0, 0,     0, 0, 0, 0, \
+     0, 0, 0, 0,     0, 0, 0, 0, \
+    \
      0, 0, 0, 0,     0, 0, 0, 0, \
      0, 0, 0, 0,     0, 0, 0, 0
 
@@ -49,8 +66,20 @@ wf1 wf \
 ;     `d2.w`: current value from waveform
 ;     `d3.w`: loop counter
 ;     `d4.w`: loop counter max
+;     `d6.b`: hscroll addr ; TODO: improve comments!!!
 apply_waveform:
         set_write_vram vram_hscroll_addr
+
+    .right_place_loop: ; TODO: This is dumb. Should instead directly set correct address!
+        cmp.b #0, d6
+        beq .init_main_loop ;  TODO: which is the correct ne hs or whatever?
+
+        move.w #00, vdp_data.l
+        move.w #00, vdp_data.l
+        sub.b #1, d6
+        jmp .right_place_loop
+
+    .init_main_loop:
 
         ; init loop counter = start row/index in waveform
         move.w d5, d3
@@ -64,8 +93,9 @@ apply_waveform:
         ext.w d2            ; extend to word
 
         move.w d2,  vdp_data.l
+        ; TODO: This is dumb. Reason I put 0 here is becasue even are plane a
+        ;       and odd words are plane b. so this just means, dont scroll b...
         move.w #00, vdp_data.l
-
         addq #1, d3
         ; jump to loop if d3 < wf1.size
         cmp.b d4, d3

@@ -222,11 +222,12 @@ vblank:
         ;; WAVEFORM STUFF                                                     ;;
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-        plane_rows_to_animate = 32
+        plane_rows_to_animate = 64
 
         move.l #wf1.data, a0
         move.b #plane_rows_to_animate, d1 ; rows_to_animate (i.e. plane_end_row - plane_start_row)
         move.w wf1.current_offset, d5 ; start row/index in waveform
+        move.b #75, d6
         jsr apply_waveform.l
         ; advance offset
         addq.w #1, wf1.current_offset.l
