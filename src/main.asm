@@ -194,6 +194,8 @@ skip_tmss:
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     move.l #wf1.data, a0
+    move.b #8, d1 ; rows_to_animate (i.e. plane_end_row - plane_start_row)
+    move.w #4, d5 ; start row/index in waveform
     jsr apply_waveform.l
 
     ; =================================================================
