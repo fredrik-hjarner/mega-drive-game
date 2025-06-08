@@ -3,7 +3,7 @@ str_to_tile_indices "1                          3                               
 str_to_tile_indices "1                          3                                    "
 str_to_tile_indices "1                          3                                    "
 str_to_tile_indices "1                          3                                    "
-str_to_tile_indices "1                          3                                    "
+str_to_tile_indices "                                                                "
 str_to_tile_indices "1                          3                                    "
 str_to_tile_indices "1                          3                                    "
 str_to_tile_indices "1                          3                                    "

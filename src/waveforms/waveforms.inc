@@ -3,6 +3,8 @@ struc wf byte_array&
     .:
     .length:
         dc.w l
+    ; Observe current offset resides in RAM!
+    .current_offset rs.w
     .data:
         dc.b byte_array
     .size := l
@@ -25,11 +27,17 @@ end repeat
 wf1 wf \
     \ ; start off with no transform
      0, 0, 0, 0,     0, 0, 0, 0, \
+     0, 0, 0, 0,     0, 0, 0, 0, \
+     0, 0, 0, 0,     0, 0, 0, 0, \
+     0, 0, 0, 0,     0, 0, 0, 0, \
     \ ; right
      1, 2, 3, 4,     5, 6, 7, 8, \ 
     \ ; left
      7, 6, 5, 4,     3, 2, 1, 0, \ 
     \ ; go back to beging "normal"/untransformed again
+     0, 0, 0, 0,     0, 0, 0, 0, \
+     0, 0, 0, 0,     0, 0, 0, 0, \
+     0, 0, 0, 0,     0, 0, 0, 0, \
      0, 0, 0, 0,     0, 0, 0, 0
 
 ; parameters:
@@ -65,10 +73,3 @@ apply_waveform:
         bne .loop ;  TODO: which is the correct ne hs or whatever?
 
         rts
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; RAM                                                                        ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-; where is the waveform we are currently
-wf_current_index    rs.w

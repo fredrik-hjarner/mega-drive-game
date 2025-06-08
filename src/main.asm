@@ -89,6 +89,17 @@ skip_tmss:
     dbra.w    d7,.ClearVRAM         ; Decrement and branch until done
 
     ; =================================================================
+    ; CLEAR VSRAM (Vertical Scroll RAM)
+    ; =================================================================
+
+    ; move.l  #$40000000, vdp_ctrl.l    ; Start writing at VRAM $0000
+    set_write_vsram $0
+    move.w  #20-1, d7             ; Loop counter (80 bytes = 20 longs)
+.ClearVSRAM:
+    move.l  #$00000000, vdp_data.l        ; Write zero to VRAM (fill with empty tiles)
+    dbra.w    d7,.ClearVSRAM         ; Decrement and branch until done
+
+    ; =================================================================
     ; STEP 3: SET UP COLOR PALETTE (CRAM - Color RAM)
     ; =================================================================
     ; CRAM Write Command: $C0000000 | (address << 1)
@@ -189,20 +200,11 @@ skip_tmss:
 ;; Init RAM variables
     jsr init_ram_variables.l
 
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ;; EXPERIMENTING WITH WAVEFORMS                                           ;;
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-    move.l #wf1.data, a0
-    move.b #8, d1 ; rows_to_animate (i.e. plane_end_row - plane_start_row)
-    move.w #4, d5 ; start row/index in waveform
-    jsr apply_waveform.l
-
     ; =================================================================
     ; STEP 5: MAIN LOOP (Do nothing forever)
     ; =================================================================
 MainLoop:
-    bra.b   MainLoop              ; Infinite loop
+        bra.b   MainLoop              ; Infinite loop
 
 vblank:
         ; Save registers we'll modify
@@ -215,6 +217,25 @@ vblank:
 
         ; jsr update_vscroll.l
         ; jsr update_hscroll.l ; TODO: disabled so I can try 1px hscrolling.
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;; WAVEFORM STUFF                                                     ;;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        plane_rows_to_animate = 32
+
+        move.l #wf1.data, a0
+        move.b #plane_rows_to_animate, d1 ; rows_to_animate (i.e. plane_end_row - plane_start_row)
+        move.w wf1.current_offset, d5 ; start row/index in waveform
+        jsr apply_waveform.l
+        ; advance offset
+        addq.w #1, wf1.current_offset.l
+
+        ; if reach end then restart waveform
+        cmp.w #wf1.size-plane_rows_to_animate, wf1.current_offset.l
+        bne .not_reached_end
+        move.w #0, wf1.current_offset.l
+    .not_reached_end:
 
         ; Restore registers
         movem.l (sp)+,d1-d2
