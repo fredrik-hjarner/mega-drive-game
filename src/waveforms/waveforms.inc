@@ -57,55 +57,6 @@ struc waveform?
     end macro
 end struc
 
-wf1 waveform
-    repeat 64
-        ;  | -64                                                           | 0     | 8     | 16                                            | 64
-        x "                                                                #                                                                "
-    end repeat
-
-        ;  | -64                                                           | 0                                                             | 64
-        x "                                                                #                                                                "
-        x "                                                                 #                                                               "
-        x "                                                                  #                                                              "
-        x "                                                                   #                                                             "
-        x "                                                                    #                                                            "
-        x "                                                                     #                                                           "
-        x "                                                                      #                                                          "
-        x "                                                                       #                                                         "
-        x "                                                                        #                                                        "
-        x "                                                                         #                                                       "
-        x "                                                                          #                                                      "
-        x "                                                                           #                                                     "
-        x "                                                                            #                                                    "
-        x "                                                                             #                                                   "
-        x "                                                                              #                                                  "
-        x "                                                                               #                                                 "
-        x "                                                                                #                                                "
-        x "                                                                               #                                                 "
-        x "                                                                              #                                                  "
-        x "                                                                             #                                                   "
-        x "                                                                            #                                                    "
-        x "                                                                           #                                                     "
-        x "                                                                          #                                                      "
-        x "                                                                         #                                                       "
-        x "                                                                        #                                                        "
-        x "                                                                       #                                                         "
-        x "                                                                      #                                                          "
-        x "                                                                     #                                                           "
-        x "                                                                    #                                                            "
-        x "                                                                   #                                                             "
-        x "                                                                  #                                                              "
-        x "                                                                 #                                                               "
-        x "                                                                #                                                                "
-
-    repeat 64
-        ;  | -64                                                           | 0                                                             | 64
-        x "                                                                #                                                                "
-    end repeat
-end waveform
-
-even
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; WAVEFORM FUNCTIONS                                                         ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -146,9 +97,10 @@ apply_waveform:
         ext.w d2            ; extend to word
 
         move.w d2,  vdp_data.l
+        move.w d2,  vdp_data.l
         ; TODO: This is dumb. Reason I put 0 here is becasue even are plane a
         ;       and odd words are plane b. so this just means, dont scroll b...
-        move.w #00, vdp_data.l
+        ; move.w #00, vdp_data.l
         addq #1, d3
         ; jump to loop if d3 < wf1.size
         cmp.b d4, d3
