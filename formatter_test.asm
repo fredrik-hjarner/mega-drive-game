@@ -176,6 +176,10 @@ $deadbeef
 11111111b
 01010101b
 0b
+01_01_01_01b
+01_01_01_01_b
+01'01'01'01b
+01'01'01'01'b
 
 ; Octal:
 777o
@@ -187,6 +191,8 @@ $deadbeef
 FFh     ; Missing leading digit
 abc123  ; Starts with letter
 123x    ; Invalid suffix
+_01_01_01_01b ; invalid
+'01'01'01'01b ; invalid
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; PUNCTUATION - Should be magenta (#FF00FF)
