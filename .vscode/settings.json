@@ -15,4 +15,19 @@
     },
     "editor.wordWrap": "off",
     "makefile.configureOnOpen": false,
+    "files.watcherExclude": {
+        // The default ones:
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/.hg/store/**": true,
+
+        // Adding these settings is an attempt
+        // to speed up vscode.
+        "**/node_modules/**": true,
+        "**/fasm2/**": true,
+        // exlude some java files
+        "**/*.java": true,
+        "**/*.class": true,
+        "**/*.jar": true,
+    }
 }

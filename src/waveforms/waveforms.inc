@@ -78,7 +78,7 @@ iterate suffix, a, b, ab
     ;     `d2.w`: current value from waveform
     ;     `d3.w`: loop counter
     ;     `d4.w`: loop counter max
-    ;     `d6.b`: hscroll addr ; TODO: improve comments!!!
+    ;     `d6.b`: how many pixels at top of screen to ignore, i.e. when scrolling starts.
     apply_waveform_#suffix:
             set_write_vram vram_hscroll_addr
 

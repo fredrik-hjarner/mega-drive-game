@@ -26,3 +26,25 @@ update-submodules:
 stage-submodules:
 	git add fasm68k
 .PHONY: stage-submodules
+
+################################################################################
+#                                                                              #
+# RAM DISK                                                                     #
+#                                                                              #
+################################################################################
+
+# pull into ram disk
+ram-pull:
+	mkdir -p /dev/shm/code/68k
+	rsync -a --delete ~/Desktop/code/68k/ /dev/shm/code/68k
+.PHONY: ram-pull
+
+# push ram disk to hard drive (DRY RUN)
+ram-push-dry:
+	rsync -ain --stats --progress --delete /dev/shm/code/68k/ ~/Desktop/code/68k
+.PHONY: ram-push-dry
+
+# push ram disk to hard drive
+ram-push:
+	rsync -a --stats --progress --delete /dev/shm/code/68k/ ~/Desktop/code/68k
+.PHONY: ram-push

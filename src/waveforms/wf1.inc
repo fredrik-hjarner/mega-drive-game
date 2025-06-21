@@ -1,5 +1,5 @@
 wf1 waveform
-    repeat 64
+    repeat 224
         ;  | -64                                           | -16   | -8    | 0     | 8     | 16                                            | 64
         x "                                                                #                                                                "
     end repeat
@@ -71,7 +71,7 @@ wf1 waveform
         x "                                                               #                                                                 "
         x "                                                                #                                                                "
 
-    repeat 64
+    repeat 224
         ;  | -64                                           | -16   | -8    | 0     | 8     | 16                                            | 64
         x "                                                                #                                                                "
     end repeat
