@@ -226,19 +226,38 @@ vblank:
 
         plane_rows_to_animate = 224
 
+        move.l #wf1.data, a0
+        move.b #plane_rows_to_animate, d1 ; rows_to_animate (i.e. plane_end_row - plane_start_row)
+        move.w wf1.current_offset, d5 ; start row/index in waveform
+        move.b #0, d6 ; at what y position it starts on the screen.
+        jsr apply_waveform_a.l
+        ; advance offset
+        addq.w #1, wf1.current_offset.l
+
+        ; if reach end then restart waveform
+        cmp.w #wf1.size-plane_rows_to_animate, wf1.current_offset.l
+        bne .not_reached_end
+        move.w #0, wf1.current_offset.l
+    .not_reached_end:
+
+    ;; AND NOW PLANE B
+    
+        plane_rows_to_animate = 224
+
         move.l #wf2.data, a0
         move.b #plane_rows_to_animate, d1 ; rows_to_animate (i.e. plane_end_row - plane_start_row)
         move.w wf2.current_offset, d5 ; start row/index in waveform
         move.b #0, d6 ; at what y position it starts on the screen.
-        jsr apply_waveform_ab.l
+        jsr apply_waveform_b.l
         ; advance offset
         addq.w #1, wf2.current_offset.l
 
         ; if reach end then restart waveform
         cmp.w #wf2.size-plane_rows_to_animate, wf2.current_offset.l
-        bne .not_reached_end
+        bne .not_reached_end_b
         move.w #0, wf2.current_offset.l
-    .not_reached_end:
+    .not_reached_end_b:
+
 
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; END OF WAVEFORM STUFF                                                  ;;

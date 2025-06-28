@@ -6,7 +6,7 @@
 virtual at 0
     wf_area::
         ;        negative  positive  zero
-        rb 256 ; 128 +     127 +     1
+        rb 255 ; 127 +     127 +     1
 end virtual
 
 struc waveform?
@@ -21,22 +21,22 @@ struc waveform?
     .data:
 
     macro x? str*
-        ; take the string and convert it to a number between -128 and 127.
+        ; take the string and convert it to a number between -127 and 127.
         ; with the help of a virtual output area.
         ; then emit it as a byte.
 
-        if lengthof str <> 256
-            error "waveform:x: string must be 256 characters long"
+        if lengthof str <> 255
+            error "waveform:x: string must be 255 characters long"
         end if
 
-        store str : 256 at wf_area:0
+        store str : 255 at wf_area:0
 
         ; loop through to find `#`, save index, take -65 to get value
-        ; between -128 and 127
+        ; between -127 and 127
         local b
         local result
         result = -1000
-        repeat 256, i:0
+        repeat 255, i:0
             ; load from virtual output area
             load b:1 from wf_area:i
             if b = '#'
@@ -103,7 +103,21 @@ iterate suffix, a, b, ab
     ;     `d4.w`: loop counter max
     ;     `d6.b`: how many pixels at top of screen to ignore, i.e. when scrolling starts.
     apply_waveform_#suffix:
-            set_write_vram vram_hscroll_addr
+            ; Set vram auto increment to 4 if we're only scrolling one plane.
+            ; Otherwise keep as-is (i.e. 2).
+            match =a, suffix
+                set_vdp_register $0F, 4
+            else match =b, suffix
+                set_vdp_register $0F, 4
+            end match
+
+            ; If scrolling just plane b we need to skip to first plane b row.
+            match =b, suffix
+                set_write_vram vram_hscroll_addr + 2
+            else
+                set_write_vram vram_hscroll_addr
+            end match
+
 
         .right_place_loop: ; TODO: This is dumb. Should instead directly set correct address!
             cmp.b #0, d6
@@ -127,18 +141,16 @@ iterate suffix, a, b, ab
             move.b (a0,d3.w), d2    ; get wf[i]
             ext.w d2            ; extend to word
 
-            ; TODO: This is dumb. Reason I put 0 here is becasue even are
-            ; plane a and odd words are plane b. so inserted zero just meeans
-            ; dont scroll that plane...
+            ; Remember that even words are plane a and odd words are plane b.
+            ; Also remember that we set different auto increment values
+            ; depending on if we're scrolling just one plane or both planes.
             match =a, suffix
                 move.w d2,  vdp_data.l ; scroll a
-                move.w #00, vdp_data.l ; dont scroll b
             else match =b, suffix
-                move.w #00, vdp_data.l ; dont scroll a
                 move.w d2,  vdp_data.l ; scroll b
             else match =ab, suffix
-                move.w d2,  vdp_data.l ; scroll both
-                move.w d2,  vdp_data.l ; scroll both
+                move.w d2,  vdp_data.l ; scroll a
+                move.w d2,  vdp_data.l ; scroll b
             end match
 
             addq #1, d3
@@ -146,6 +158,13 @@ iterate suffix, a, b, ab
             cmp.b d4, d3
             ; bcc .loop
             bne .loop ;  TODO: which is the correct ne hs or whatever?
+
+            ; Reset vram auto increment to 2.
+            match =a, suffix
+                set_vdp_register $0F, 2
+            else match =b, suffix
+                set_vdp_register $0F, 2
+            end match
 
             rts
 end iterate
