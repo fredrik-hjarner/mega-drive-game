@@ -4,7 +4,7 @@
 
 virtual at 0
     wf_area::
-        rb 129 ; 64 + 64 + 1
+        rb 257 ; 128 + 128 + 1
 end virtual
 
 struc waveform?
@@ -17,26 +17,26 @@ struc waveform?
     .data:
 
     macro x? str*
-        ; take the string and convert it to a number between -64 and 64.
+        ; take the string and convert it to a number between -128 and 128.
         ; with the help of a virtual output area.
         ; then emit it as a byte.
 
-        if lengthof str <> 129
-            error "waveform:x: string must be 129 characters long"
+        if lengthof str <> 257
+            error "waveform:x: string must be 257 characters long"
         end if
 
-        store str : 129 at wf_area:0
+        store str : 257 at wf_area:0
 
         ; loop through to find `#`, save index, take -65 to get value
-        ; between -64 and 64
+        ; between -128 and 128
         local b
         local result
         result = -1000
-        repeat 129, i:0
+        repeat 257, i:0
             ; load from virtual output area
             load b:1 from wf_area:i
             if b = '#'
-                result = i - 64
+                result = i - 128
                 break
             end if
         end repeat
