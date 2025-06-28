@@ -5,7 +5,8 @@
 ; virtual output area where string is stored for later/further processing.
 virtual at 0
     wf_area::
-        rb 257 ; 128 + 128 + 1
+        ;        negative  positive  zero
+        rb 256 ; 128 +     127 +     1
 end virtual
 
 struc waveform?
@@ -20,26 +21,26 @@ struc waveform?
     .data:
 
     macro x? str*
-        ; take the string and convert it to a number between -128 and 128.
+        ; take the string and convert it to a number between -128 and 127.
         ; with the help of a virtual output area.
         ; then emit it as a byte.
 
-        if lengthof str <> 257
-            error "waveform:x: string must be 257 characters long"
+        if lengthof str <> 256
+            error "waveform:x: string must be 256 characters long"
         end if
 
-        store str : 257 at wf_area:0
+        store str : 256 at wf_area:0
 
         ; loop through to find `#`, save index, take -65 to get value
-        ; between -128 and 128
+        ; between -128 and 127
         local b
         local result
         result = -1000
-        repeat 257, i:0
+        repeat 256, i:0
             ; load from virtual output area
             load b:1 from wf_area:i
             if b = '#'
-                result = i - 128
+                result = i - 127
                 break
             end if
         end repeat
@@ -47,13 +48,6 @@ struc waveform?
         if result = -1000
             error "waveform:x: string must contain a `#`"
         else
-            ; repeat 1, i:$%
-            ;     display "$%: ", `i, 10
-            ; end repeat
-            ; repeat 1, i:$$
-            ;     display "$$: ", `i, 10
-            ; end repeat
-            ; display 10
             db result
         end if
     end macro
@@ -76,24 +70,14 @@ struc invert_waveform? wf*
     ; Observe current offset resides in RAM!
     .current_offset rs.w
 
-    ; .data := wf.data ; just a test to just use the old wave form.
-
     .data:
         ; here I must load the the data of `wf` and invert each of them then
         ; `db` the result.
         local b
         repeat .size, i:wf.data
-            ; repeat 1, j:$$
-            ;     display "$$: ", `j, 10
-            ; end repeat
-            ; repeat 1, j:$
-            ;     display "$: ", `j, 10
-            ; end repeat
-            ; load b:1 from i
-            ; db 128 - b
+            load b:1 from i
+            db -b
         end repeat
-    
-
 end struc
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
