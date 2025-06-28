@@ -2,6 +2,7 @@
 ;; WAVEFORM STRUC                                                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+; virtual output area where string is stored for later/further processing.
 virtual at 0
     wf_area::
         rb 257 ; 128 + 128 + 1
@@ -10,10 +11,12 @@ end virtual
 struc waveform?
     local l
     .:
+    ; stores the length of the waveform as the first word.
     .length:
         dc.w l
     ; Observe current offset resides in RAM!
     .current_offset rs.w
+    ; the data of the waveform is placed after the length word.
     .data:
 
     macro x? str*
@@ -44,6 +47,13 @@ struc waveform?
         if result = -1000
             error "waveform:x: string must contain a `#`"
         else
+            ; repeat 1, i:$%
+            ;     display "$%: ", `i, 10
+            ; end repeat
+            ; repeat 1, i:$$
+            ;     display "$$: ", `i, 10
+            ; end repeat
+            ; display 10
             db result
         end if
     end macro
@@ -55,6 +65,35 @@ struc waveform?
         .size := l
         l := $ - .data
     end macro
+end struc
+
+; creates a new waveform that is the inverse of the given waveform.
+struc invert_waveform? wf*
+    .:
+    .length:
+        dc.w wf.length
+    .size := wf.size
+    ; Observe current offset resides in RAM!
+    .current_offset rs.w
+
+    ; .data := wf.data ; just a test to just use the old wave form.
+
+    .data:
+        ; here I must load the the data of `wf` and invert each of them then
+        ; `db` the result.
+        local b
+        repeat .size, i:wf.data
+            ; repeat 1, j:$$
+            ;     display "$$: ", `j, 10
+            ; end repeat
+            ; repeat 1, j:$
+            ;     display "$: ", `j, 10
+            ; end repeat
+            ; load b:1 from i
+            ; db 128 - b
+        end repeat
+    
+
 end struc
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

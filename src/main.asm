@@ -27,6 +27,7 @@ rsset $FF0000
     include "planes/b.inc"
     include "waveforms/waveforms.inc"
     include "waveforms/wf1.inc"
+    include "waveforms/wf2.inc"
 
 ; =====================================================================
 ; OTHER INCLUDES
