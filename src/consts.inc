@@ -35,9 +35,23 @@ gamepad2_data equ $A10005
 ; button_a     equ %01000000
 ; button_start equ %10000000
 
+
+;; tile related ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 screen_w_in_tiles equ 40
 screen_h_in_tiles equ 28
 
-; tile related
 plane_w_in_tiles equ 64 ; 40h
 plane_h_in_tiles equ 64 ; 40h
+
+pixels_per_tile equ 8
+
+;; square (2x2 tiles) related ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+screen_w_in_squares equ 20
+screen_h_in_squares equ 14
+
+plane_w_in_squares equ 32 ; 20h
+plane_h_in_squares equ 32 ; 20h
+
+pixels_per_square equ 16

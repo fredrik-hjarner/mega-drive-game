@@ -37,6 +37,7 @@ rsset $FF0000
     include "vdp.inc"
     include "functions.inc"
     include "timers.inc"
+    include "gamepads.inc"
 
 ; =====================================================================
 ; PROGRAM START (Code begins at $200 because the ROM header is $200 bytes)
@@ -215,6 +216,9 @@ vblank:
         ; place inputs into variables gamepad1_up, gamepad1_down, etc.
         jsr gamepads_get_input.l
 
+        jsr p1_move_left.l
+        jsr p1_move_right.l
+
         jsr update_color.l
 
         ; jsr update_vscroll.l
@@ -289,24 +293,6 @@ error:
 color_index     rs.w
 hscroll_amount  rs.w
 vscroll_amount  rs.w
-
-gamepad1_up     rs.b
-gamepad1_down   rs.b
-gamepad1_left   rs.b
-gamepad1_right  rs.b
-gamepad1_b      rs.b
-gamepad1_c      rs.b
-gamepad1_a      rs.b
-gamepad1_start  rs.b
-
-gamepad2_up     rs.b
-gamepad2_down   rs.b
-gamepad2_left   rs.b
-gamepad2_right  rs.b
-gamepad2_b      rs.b
-gamepad2_c      rs.b
-gamepad2_a      rs.b
-gamepad2_start  rs.b
 
 ;; PAD ROM ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
