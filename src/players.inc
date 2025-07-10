@@ -31,42 +31,45 @@ create_player_sprites:
         move.w #(128 + 8*18) and (1 shl 9 - 1), vdp_data.l
         rts
 
-iterate <dir,  negative,  dim>, \
-        left,  1,         x, \
-        right, 0,         x, \
-        up,    1,         y, \
-        down,  0,         y
+; n is the player number
+iterate n,  1,2
 
-    ; does stuff on "key up"
-    p1_move_#dir:
-            ; if gamepad1_previous_left = 0 and gamepad1_left = 1
-            ; then move left
-            ; moving left means changing some variable that holds the value of
-            ; the player 1 sprite's x position
+    iterate <dir,  negative,  dim>, \
+            left,  1,         x, \
+            right, 0,         x, \
+            up,    1,         y, \
+            down,  0,         y
 
-            tst.b gamepad1_previous_#dir ; test if zero
-            beq.s .end ; skip if prev was not pushed
+            ; does stuff on "key up"
+            p#n#_move_#dir:
+                    ; if gamepad1_previous_left = 0 and gamepad1_left = 1
+                    ; then move left
+                    ; moving left means changing some variable that holds
+                    ; the value of the player 1 sprite's x position
 
-            tst.b gamepad1_#dir ; test if zero
-            bne.s .end ; skip if current is pushed
-        ; move left/right/up/down
-            ; ok so here I want to subtract/add from/to player1_x
-            if negative = 1
-                subi.w #pixels_per_square, player1_#dim
-            else
-                addi.w #pixels_per_square, player1_#dim
-            end if
-            ; and then afterwards put it into vram.
-            set_write_vram player1_#dim#_vram_addr
-            move.w player1_#dim, vdp_data.l
+                    tst.b gamepad#n#_previous_#dir ; test if zero
+                    beq.s .end ; skip if prev was not pushed
 
-        .end:
-            ; update gamepad1_previous_left/right
-            move.b gamepad1_#dir, gamepad1_previous_#dir
+                    tst.b gamepad#n#_#dir ; test if zero
+                    bne.s .end ; skip if current is pushed
+                ; move left/right/up/down
+                    ; ok so here I want to subtract/add from/to player1_x
+                    if negative = 1
+                        subi.w #pixels_per_square, player#n#_#dim
+                    else
+                        addi.w #pixels_per_square, player#n#_#dim
+                    end if
+                    ; and then afterwards put it into vram.
+                    set_write_vram player#n#_#dim#_vram_addr
+                    move.w player#n#_#dim, vdp_data.l
 
-            rts
+                .end:
+                    ; update gamepad1_previous_left/right
+                    move.b gamepad#n#_#dir, gamepad#n#_previous_#dir
 
-end iterate ; iterate <dir, negative>
+                    rts
+    end iterate ; iterate <dir, negative>
+end iterate ; iterate player
 
 ;; CONSTANTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -104,3 +107,9 @@ gamepad1_previous_left      rs.b
 gamepad1_previous_right     rs.b
 gamepad1_previous_up        rs.b
 gamepad1_previous_down      rs.b
+
+;
+gamepad2_previous_left      rs.b
+gamepad2_previous_right     rs.b
+gamepad2_previous_up        rs.b
+gamepad2_previous_down      rs.b

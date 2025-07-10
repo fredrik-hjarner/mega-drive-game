@@ -221,6 +221,11 @@ vblank:
         jsr p1_move_up.l
         jsr p1_move_down.l
 
+        jsr p2_move_left.l
+        jsr p2_move_right.l
+        jsr p2_move_up.l
+        jsr p2_move_down.l
+
         jsr update_color.l
 
         ; jsr update_vscroll.l

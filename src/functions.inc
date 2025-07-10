@@ -6,6 +6,10 @@ init_ram_variables:
     move.w #(128 + 8*18), player1_x
     ; 128 is the first visible row
     move.w #(128 + 8*22), player1_y
+
+    ; and also for player 2
+    move.w #(128 + 8*18), player2_x
+    move.w #(128 + 8*2),  player2_y
     rts
 
 ; arguments:
