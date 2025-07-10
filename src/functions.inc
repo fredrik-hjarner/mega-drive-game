@@ -1,5 +1,11 @@
 ; Intended to be the place where memory variables are initialized.
 init_ram_variables:
+    ; horizontal position
+    ; 128 is the first visible column,
+    ; TODO: Actually 89 should be 16 because "squares" are 2x2 tiles!!!
+    move.w #(128 + 8*18), player1_x
+    ; 128 is the first visible row
+    move.w #(128 + 8*22), player1_y
     rts
 
 ; arguments:

@@ -4,6 +4,7 @@ create_player_sprites:
         ; vertical position
         ; 128 is the first visible row
         ; (1 shl 10 - 1) is the maximum value for a 10-bit number
+        ; TODO: This should use `player_y` and not be hard-coded!!!
         move.w #(128 + 8*22) and (1 shl 10 - 1), vdp_data.l
 
         ; size & next
@@ -14,6 +15,7 @@ create_player_sprites:
         ; horizontal position
         ; 128 is the first visible column
         ; (1 shl 9 - 1) is the maximum value for a 9-bit number
+        ; TODO: This should use `player_x` and not be hard-coded!!!
         move.w #(128 + 8*18) and (1 shl 9 - 1), vdp_data.l
 
     ; Create another hard-coded sprite
@@ -29,17 +31,18 @@ create_player_sprites:
         move.w #(128 + 8*18) and (1 shl 9 - 1), vdp_data.l
         rts
 
+; does stuff on "key up"
 p1_move_left:
         ; if gamepad1_previous_left = 0 and gamepad1_left = 1
         ; then move left
         ; moving left means changing some variable that holds the value of
         ; the player 1 sprite's x position
 
-        cmpi.b #0, gamepad1_previous_left
-        bne.s .end
+        tst.b gamepad1_previous_left ; test if zero
+        beq.s .end ; skip if prev was not pushed
 
         tst.b gamepad1_left ; test if zero
-        beq.s .end ; if zero
+        bne.s .end ; skip if current is pushed
     ; move left
         ; ok so here I want to subtract from player1_x
         subi.w #pixels_per_square, player1_x
@@ -48,15 +51,18 @@ p1_move_left:
         move.w player1_x, vdp_data.l
 
     .end:
+        ; update gamepad1_previous_left
+        move.b gamepad1_left, gamepad1_previous_left
+
         rts
 
 ; TODO: Reduce code duplication between p1_move_left and p1_move_right!
 p1_move_right:
-        cmpi.b #0, gamepad1_previous_right
-        bne.s .end
+        tst.b gamepad1_previous_right ; test if zero
+        beq.s .end ; skip if prev was not pushed
 
         tst.b gamepad1_right ; test if zero
-        beq.s .end ; if zero
+        bne.s .end ; skip if current is pushed
     ; move right
         ; ok so here I want to add to player1_x
         addi.w #pixels_per_square, player1_x
@@ -65,6 +71,9 @@ p1_move_right:
         move.w player1_x, vdp_data.l
 
     .end:
+        ; update gamepad1_previous_right
+        move.b gamepad1_right, gamepad1_previous_right
+
         rts
 
 ;; CONSTANTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -86,6 +95,8 @@ player2_y_vram_addr := vram_sprites_addr + 8 + 0
 ; So to get the pixels right-shift 2 bits, i.e. divide by 4.
 
 ; sprite positions
+; So, `player_x`is located in RAM but will then need to be moved into VRAM,
+; because the sprite's position is in VRAM.
 ; TODO: Somehow I think RAM addresses should be displayed either with dbg prints
 ;       or in listing.
 player1_x       rs.w ; $FF0004 i.e. $4 in RAM because RAM starts at $FF0000
