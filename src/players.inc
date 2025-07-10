@@ -31,50 +31,42 @@ create_player_sprites:
         move.w #(128 + 8*18) and (1 shl 9 - 1), vdp_data.l
         rts
 
-; does stuff on "key up"
-p1_move_left:
-        ; if gamepad1_previous_left = 0 and gamepad1_left = 1
-        ; then move left
-        ; moving left means changing some variable that holds the value of
-        ; the player 1 sprite's x position
+iterate <dir,  negative,  dim>, \
+        left,  1,         x, \
+        right, 0,         x, \
+        up,    1,         y, \
+        down,  0,         y
 
-        tst.b gamepad1_previous_left ; test if zero
-        beq.s .end ; skip if prev was not pushed
+    ; does stuff on "key up"
+    p1_move_#dir:
+            ; if gamepad1_previous_left = 0 and gamepad1_left = 1
+            ; then move left
+            ; moving left means changing some variable that holds the value of
+            ; the player 1 sprite's x position
 
-        tst.b gamepad1_left ; test if zero
-        bne.s .end ; skip if current is pushed
-    ; move left
-        ; ok so here I want to subtract from player1_x
-        subi.w #pixels_per_square, player1_x
-        ; and then afterwards put it into vram.
-        set_write_vram player1_x_vram_addr
-        move.w player1_x, vdp_data.l
+            tst.b gamepad1_previous_#dir ; test if zero
+            beq.s .end ; skip if prev was not pushed
 
-    .end:
-        ; update gamepad1_previous_left
-        move.b gamepad1_left, gamepad1_previous_left
+            tst.b gamepad1_#dir ; test if zero
+            bne.s .end ; skip if current is pushed
+        ; move left/right/up/down
+            ; ok so here I want to subtract/add from/to player1_x
+            if negative = 1
+                subi.w #pixels_per_square, player1_#dim
+            else
+                addi.w #pixels_per_square, player1_#dim
+            end if
+            ; and then afterwards put it into vram.
+            set_write_vram player1_#dim#_vram_addr
+            move.w player1_#dim, vdp_data.l
 
-        rts
+        .end:
+            ; update gamepad1_previous_left/right
+            move.b gamepad1_#dir, gamepad1_previous_#dir
 
-; TODO: Reduce code duplication between p1_move_left and p1_move_right!
-p1_move_right:
-        tst.b gamepad1_previous_right ; test if zero
-        beq.s .end ; skip if prev was not pushed
+            rts
 
-        tst.b gamepad1_right ; test if zero
-        bne.s .end ; skip if current is pushed
-    ; move right
-        ; ok so here I want to add to player1_x
-        addi.w #pixels_per_square, player1_x
-        ; and then afterwards put it into vram.
-        set_write_vram player1_x_vram_addr
-        move.w player1_x, vdp_data.l
-
-    .end:
-        ; update gamepad1_previous_right
-        move.b gamepad1_right, gamepad1_previous_right
-
-        rts
+end iterate ; iterate <dir, negative>
 
 ;; CONSTANTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -108,5 +100,7 @@ player2_x       rs.w
 player2_y       rs.w
 
 ;
-gamepad1_previous_left       rs.b
-gamepad1_previous_right       rs.b
+gamepad1_previous_left      rs.b
+gamepad1_previous_right     rs.b
+gamepad1_previous_up        rs.b
+gamepad1_previous_down      rs.b

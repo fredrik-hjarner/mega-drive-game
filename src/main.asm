@@ -218,6 +218,8 @@ vblank:
 
         jsr p1_move_left.l
         jsr p1_move_right.l
+        jsr p1_move_up.l
+        jsr p1_move_down.l
 
         jsr update_color.l
 
